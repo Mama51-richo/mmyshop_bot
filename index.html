@@ -1530,24 +1530,34 @@
         tg.expand();
 
         // ============================================================
-        // ROLE DETECTION (with temporary URL override)
+        // ROLE DETECTION — TEMPORARY: Hardcoded for testing
         // ============================================================
         function detectUserRole() {
-            // TEMPORARY: URL parameter override for testing
-            const urlParams = new URLSearchParams(window.location.search);
-            const overrideRole = urlParams.get('role');
+            // TEMPORARY: Hardcoded access for testing
+            // Remove this and uncomment the username check below for production
 
-            if (overrideRole === 'owner') {
+            // === HARDCODED ACCESS FOR TESTING ===
+            // Gives both Owner and Seller access to test all features
+            // Remove this block when done testing
+            const urlParams = new URLSearchParams(window.location.search);
+            const roleParam = urlParams.get('role');
+            if (roleParam === 'owner') {
                 isOwner = true;
                 isSeller = false;
                 return 'owner';
             }
-            if (overrideRole === 'seller') {
+            if (roleParam === 'seller') {
                 isSeller = true;
                 isOwner = false;
                 return 'seller';
             }
+            // For testing, uncomment one of these lines to force a role:
+            // isOwner = true; return 'owner';  // Force Owner access
+            // isSeller = true; return 'seller'; // Force Seller access
 
+            // === PRODUCTION ROLE DETECTION ===
+            // Uncomment this block and remove the hardcoded section above for production
+            /*
             const username = tg.initDataUnsafe?.user?.username || '';
 
             if (username === OWNER_USERNAME || username.toLowerCase() === OWNER_USERNAME.toLowerCase()) {
@@ -1561,7 +1571,9 @@
                 isOwner = false;
                 return 'seller';
             }
+            */
 
+            // Default: Buyer
             isOwner = false;
             isSeller = false;
             return 'buyer';

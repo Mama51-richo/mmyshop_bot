@@ -505,7 +505,7 @@
         .product-quick-actions button:hover {
             opacity: 0.8;
         }
-        .btn-scan-order {
+        .btn-buy-now {
             background: var(--secondary);
             color: white;
         }
@@ -578,6 +578,21 @@
         }
         .btn-danger:hover {
             background: #B71C1C;
+        }
+        .btn-warning {
+            background: #FF6F00;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .btn-warning:hover {
+            background: #E65100;
         }
         .btn-switch {
             background: var(--bg-card);
@@ -876,6 +891,14 @@
             background: #FFF3E0;
             color: #E65100;
         }
+        .status-waiting-owner {
+            background: #FFF8E1;
+            color: #F57F17;
+        }
+        .status-completed {
+            background: #E8F5E9;
+            color: #1B5E20;
+        }
 
         /* ============================================================
            ADMIN PANEL
@@ -976,6 +999,28 @@
             font-weight: 700;
             color: var(--primary);
             font-size: 11px;
+        }
+        .stock-table .stock-actions button {
+            padding: 2px 8px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+            margin-right: 2px;
+        }
+        .stock-table .stock-actions button:hover {
+            opacity: 0.8;
+        }
+        .btn-edit-stock {
+            background: #FF6F00;
+            color: white;
+        }
+        .btn-remove-stock {
+            background: #C62828;
+            color: white;
         }
 
         /* ============================================================
@@ -1103,64 +1148,44 @@
         }
 
         /* ============================================================
-           WORKFLOW
+           BUYER ORDER WORKFLOW
            ============================================================ */
-        .workflow-steps {
-            display: flex;
-            justify-content: space-between;
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
             margin: 10px 0;
-            position: relative;
         }
-        .workflow-steps::before {
-            content: '';
-            position: absolute;
-            top: 12px;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: var(--border-color);
-            z-index: 0;
-        }
-        .workflow-step {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1;
-            flex: 1;
-        }
-        .workflow-step .step-circle {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: var(--bg-card);
+        .payment-option {
+            background: var(--bg-primary);
             border: 2px solid var(--border-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 10px;
-            color: var(--warm-gray);
+            border-radius: var(--radius-sm);
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
             transition: var(--transition);
         }
-        .workflow-step.active .step-circle {
-            background: var(--primary);
+        .payment-option:hover {
             border-color: var(--primary);
-            color: white;
         }
-        .workflow-step.done .step-circle {
-            background: #2E7D32;
-            border-color: #2E7D32;
-            color: white;
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: rgba(212, 175, 55, 0.08);
         }
-        .workflow-step .step-label {
-            font-size: 7px;
+        .payment-option .pay-icon {
+            font-size: 24px;
+            display: block;
+        }
+        .payment-option .pay-name {
+            font-size: 11px;
             font-weight: 600;
             margin-top: 2px;
+        }
+        .payment-option .pay-detail {
+            font-size: 9px;
             color: var(--warm-gray);
         }
-        .workflow-step.active .step-label {
-            color: var(--primary);
-        }
+
         .payment-ref-input {
             display: flex;
             gap: 6px;
@@ -1194,6 +1219,33 @@
         }
         .payment-ref-input button:hover {
             background: var(--primary-dark);
+        }
+
+        .screenshot-upload {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 11px;
+            color: var(--warm-gray);
+            margin: 8px 0;
+        }
+        .screenshot-upload:hover {
+            border-color: var(--primary);
+            background: rgba(212, 175, 55, 0.04);
+        }
+        .screenshot-upload .upload-icon {
+            font-size: 24px;
+            display: block;
+        }
+        .screenshot-preview {
+            max-width: 100%;
+            max-height: 120px;
+            border-radius: var(--radius-sm);
+            margin-top: 6px;
+            border: 1px solid var(--border-color);
         }
 
         /* ============================================================
@@ -1265,10 +1317,16 @@
             .hero-banner .hero-logo {
                 font-size: 20px;
             }
+            .payment-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         @media (max-width: 380px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .payment-options {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -1410,6 +1468,10 @@
             background: #C62828;
             color: white;
         }
+        .payment-notif .payment-actions .btn-approve {
+            background: #FF6F00;
+            color: white;
+        }
 
         /* ============================================================
            ADD STOCK MODAL
@@ -1462,6 +1524,20 @@
         .add-stock-form .file-upload-area .upload-icon {
             font-size: 24px;
             display: block;
+        }
+        .add-stock-form .qr-display {
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            padding: 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px solid var(--border-color);
+            margin-top: 4px;
+        }
+        .add-stock-form .qr-display span {
+            font-size: 14px;
         }
     </style>
 </head>
@@ -1544,10 +1620,16 @@
         </div>
     </div>
 
-    <div id="orderWorkflowModal" class="modal">
+    <!-- ============================================================
+    BUYER ORDER MODAL — No Scanner, Just Payment
+    ============================================================ -->
+    <div id="buyerOrderModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h3 id="workflowTitle">🛒 Place Order</h3><button class="close-modal" onclick="closeOrderWorkflow()">&times;</button></div>
-            <div id="workflowContent"></div>
+            <div class="modal-header">
+                <h3 id="buyerOrderTitle">🛒 Place Order</h3>
+                <button class="close-modal" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">&times;</button>
+            </div>
+            <div id="buyerOrderContent"></div>
         </div>
     </div>
 
@@ -1569,7 +1651,7 @@
     </div>
 
     <!-- ============================================================
-    ADD STOCK MODAL
+    ADD STOCK MODAL — Owner
     ============================================================ -->
     <div id="addStockModal" class="modal">
         <div class="modal-content">
@@ -1590,10 +1672,9 @@
                     <input type="file" id="stockImageInput" accept="image/*" style="display:none;" onchange="previewStockImage(event)" />
                 </div>
                 <img id="stockImagePreview" class="image-preview" style="display:none;" />
-                <label>QR Code (scan or enter)</label>
-                <div style="display:flex;gap:6px;">
-                    <input type="text" id="stockQrCode" placeholder="Enter QR code or scan" style="flex:1;" />
-                    <button class="btn-secondary" style="padding:4px 12px;font-size:10px;" onclick="openStockQRScanner()">📷 Scan</button>
+                <label>QR Code (auto-generated)</label>
+                <div class="qr-display">
+                    <span id="stockQrDisplay">SOYAM-PXXX</span>
                 </div>
                 <button class="btn-primary" style="margin-top:12px;" onclick="submitStock()">✅ Add Stock</button>
             </div>
@@ -1601,17 +1682,35 @@
     </div>
 
     <!-- ============================================================
-    QR SCANNER
+    EDIT STOCK MODAL — Owner
+    ============================================================ -->
+    <div id="editStockModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>✏️ Edit Stock</h3><button class="close-modal" onclick="closeModal('editStockModal')">&times;</button></div>
+            <div class="add-stock-form">
+                <label>Product Name</label>
+                <input type="text" id="editStockProductName" />
+                <label>Selling Price (ETB)</label>
+                <input type="number" id="editStockSellPrice" />
+                <label>Buying Price (ETB)</label>
+                <input type="number" id="editStockBuyPrice" />
+                <label>Quantity</label>
+                <input type="number" id="editStockQty" />
+                <button class="btn-primary" style="margin-top:12px;" onclick="saveStockEdit()">💾 Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    QR SCANNER — Seller Only
     ============================================================ -->
     <div id="qrScanner" class="scanner-overlay hidden">
         <div class="scanner-container">
             <video id="qrVideo" autoplay playsinline></video>
             <div class="scanner-frame"></div>
             <div class="scanner-overlay-ui">
-                <p id="scannerInstruction">📷 Scan QR code or upload image</p>
+                <p id="scannerInstruction">📷 Scan product QR code to sell</p>
                 <button class="btn-secondary" onclick="closeScanner()">✕ Close</button>
-                <button class="btn-gallery" onclick="openGallery()">🖼️ Choose from Gallery</button>
-                <input type="file" id="galleryInput" accept="image/*" style="display:none;" onchange="handleGalleryImage(event)" />
             </div>
         </div>
     </div>
@@ -1619,7 +1718,7 @@
     <div id="toast" class="toast hidden"></div>
 
     <!-- ============================================================
-    JAVASCRIPT
+    JAVASCRIPT — FULL APPLICATION
     ============================================================ -->
     <script>
         // ============================================================
@@ -1629,6 +1728,7 @@
         const OWNER_PHONE = '251919096451';
         const SELLER_USERNAME = 'mama51R';
         const SELLER_PHONE = '251920353460';
+        const DELIVERER_PHONE = '251912345678';
         const BUSINESS_LOCATION = 'https://maps.google.com/maps?q=Addis+Ababa,+Ethiopia';
         const BUSINESS_ADDRESS = 'Addis Ababa, Ethiopia';
 
@@ -1649,41 +1749,13 @@
         ];
 
         const TRANSLATIONS = {
-            en: {
-                nav_home: 'Home',
-                nav_search: 'Search',
-                nav_orders: 'Orders',
-                nav_wishlist: 'Wishlist',
-                nav_profile: 'Profile'
-            },
-            am: {
-                nav_home: 'መነሻ',
-                nav_search: 'ፈልግ',
-                nav_orders: 'ትዕዛዞች',
-                nav_wishlist: 'የተመረጡ',
-                nav_profile: 'መገለጫ'
-            },
-            om: {
-                nav_home: 'Mana',
-                nav_search: 'Barbaadi',
-                nav_orders: 'Ajajoota',
-                nav_wishlist: 'Waan Filatame',
-                nav_profile: 'Proofaayilii'
-            },
-            ti: {
-                nav_home: 'ቤት',
-                nav_search: 'ድለይ',
-                nav_orders: 'ትእዛዛት',
-                nav_wishlist: 'ተመሪጾም',
-                nav_profile: 'መገለጺ'
-            },
-            gu: {
-                nav_home: 'ቤት',
-                nav_search: 'ፈልግ',
-                nav_orders: 'ትእዛዝ',
-                nav_wishlist: 'ተመራጭ',
-                nav_profile: 'መገለጫ'
-            }
+            en: { nav_home: 'Home', nav_search: 'Search', nav_orders: 'Orders', nav_wishlist: 'Wishlist',
+                nav_profile: 'Profile' },
+            am: { nav_home: 'መነሻ', nav_search: 'ፈልግ', nav_orders: 'ትዕዛዞች', nav_wishlist: 'የተመረጡ', nav_profile: 'መገለጫ' },
+            om: { nav_home: 'Mana', nav_search: 'Barbaadi', nav_orders: 'Ajajoota', nav_wishlist: 'Waan Filatame',
+                nav_profile: 'Proofaayilii' },
+            ti: { nav_home: 'ቤት', nav_search: 'ድለይ', nav_orders: 'ትእዛዛት', nav_wishlist: 'ተመሪጾም', nav_profile: 'መገለጺ' },
+            gu: { nav_home: 'ቤት', nav_search: 'ፈልግ', nav_orders: 'ትእዛዝ', nav_wishlist: 'ተመራጭ', nav_profile: 'መገለጫ' }
         };
 
         // ============================================================
@@ -1695,11 +1767,14 @@
         let orders = [];
         let wishlist = [];
         let customerRequests = [];
-        let pendingOrder = null;
         let isOwner = false;
         let isSeller = false;
         let stockImageData = null;
-        let currentView = 'dashboard'; // 'dashboard' | 'stock' | 'calendar' | 'approvals'
+        let currentView = 'dashboard';
+        let editingStockId = null;
+        let buyerOrderProduct = null;
+        let buyerOrderStep = 1;
+        let buyerOrderData = {};
 
         // ============================================================
         // PRODUCTS
@@ -1767,6 +1842,35 @@
         }];
 
         // ============================================================
+        // PAYMENT METHODS
+        // ============================================================
+        const paymentMethods = [{
+            id: 'telebirr',
+            name: 'Telebirr',
+            icon: '📱',
+            detail: '+251 919096451',
+            account: 'Telebirr: 0919096451'
+        }, {
+            id: 'cbe',
+            name: 'CBE Birr',
+            icon: '🏦',
+            detail: '1000123456789',
+            account: 'CBE: 1000123456789'
+        }, {
+            id: 'bank',
+            name: 'Bank Transfer',
+            icon: '🏛️',
+            detail: 'Commercial Bank',
+            account: 'CB: 1000123456789'
+        }, {
+            id: 'cash',
+            name: 'Cash',
+            icon: '💰',
+            detail: 'Pay in person',
+            account: 'Cash on pickup'
+        }];
+
+        // ============================================================
         // TELEGRAM INIT
         // ============================================================
         const tg = window.Telegram.WebApp;
@@ -1774,12 +1878,10 @@
         tg.expand();
 
         // ============================================================
-        // ROLE DETECTION — TEMPORARY OWNER ACCESS
+        // ROLE DETECTION
         // ============================================================
         function detectUserRole() {
             const username = tg.initDataUnsafe?.user?.username || '';
-
-            // TEMPORARY: Owner access for @mama51R
             if (username === SELLER_USERNAME || username.toLowerCase() === SELLER_USERNAME.toLowerCase()) {
                 isOwner = true;
                 isSeller = false;
@@ -1802,7 +1904,6 @@
         const roleOptions = ['buyer', 'seller', 'owner'];
 
         function toggleRoleSwitch() {
-            // Only allow switching if owner or seller
             if (currentUser.role === 'buyer') {
                 showToast('⚠️ Only Owner or Seller can switch roles', 'warning');
                 return;
@@ -1810,7 +1911,6 @@
             roleSwitchIndex = (roleSwitchIndex + 1) % 3;
             const newRole = roleOptions[roleSwitchIndex];
             if (newRole === 'buyer' && currentUser.role === 'owner') {
-                // Skip buyer for owner
                 roleSwitchIndex = 1;
             }
             const finalRole = roleOptions[roleSwitchIndex];
@@ -1863,17 +1963,20 @@
             addNotification('✨ Welcome to soYam Cosmo!', 'success');
             addNotification('👤 Role: ' + currentUser.role.toUpperCase(), 'info');
 
-            // Sample orders with unique IDs
+            // Sample orders
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Amber Oud Perfume',
                 price: '1,500 ETB',
-                status: 'pending',
+                status: 'waiting-owner',
                 date: '2026-08-23',
-                type: 'Reservation',
+                type: 'in-person',
                 qrCode: 'SOYAM-P001',
                 customer: 'Abebe K.',
-                notifId: generateUniqueId('NOTIF')
+                paymentMethod: 'Telebirr',
+                paymentRef: 'TBR-2026-08-23-001',
+                notifId: generateUniqueId('NOTIF'),
+                buyerId: generateUniqueId('BUY')
             });
             orders.push({
                 id: generateUniqueId('ORD'),
@@ -1881,25 +1984,30 @@
                 price: '800 ETB',
                 status: 'waiting-payment',
                 date: '2026-08-22',
-                type: 'Delivery',
+                type: 'delivery',
                 tracking: 'SOYAM-4567',
                 qrCode: 'SOYAM-P002',
-                paymentRef: 'TBR-2026-08-22-001',
+                paymentRef: 'CBE-2026-08-22-001',
                 customer: 'Meron T.',
-                notifId: generateUniqueId('NOTIF')
+                paymentMethod: 'CBE Birr',
+                notifId: generateUniqueId('NOTIF'),
+                buyerId: generateUniqueId('BUY')
             });
-            // Add a delivered order for today's revenue
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Face Serum',
                 price: '1,200 ETB',
                 status: 'delivered',
                 date: new Date().toISOString().split('T')[0],
-                type: 'Delivery',
+                type: 'delivery',
                 tracking: 'SOYAM-7890',
                 qrCode: 'SOYAM-P003',
                 customer: 'Sara H.',
-                notifId: generateUniqueId('NOTIF')
+                paymentMethod: 'Telebirr',
+                paymentRef: 'TBR-2026-08-21-001',
+                notifId: generateUniqueId('NOTIF'),
+                buyerId: generateUniqueId('BUY'),
+                completionCode: generateUniqueId('COMP')
             });
 
             addCustomerRequest('Special Perfume', 'Sarah A.', 'Qty: 2', 'SOYAM-P001');
@@ -2065,6 +2173,7 @@
             } else if (currentUser.role === 'seller') {
                 html += renderSellerPanel();
             } else {
+                // Buyer portal — no scanner
                 html += `
                     <div class="category-scroll">
                         ${categories.map(cat => `<button class="category-chip" onclick="filterCategory('${cat}')">${cat}</button>`).join('')}
@@ -2088,7 +2197,7 @@
         }
 
         // ============================================================
-        // RENDER: PRODUCT CARD
+        // RENDER: PRODUCT CARD — Buyer uses "Buy Now" (no scanner)
         // ============================================================
         function renderProductCard(p) {
             const stockClass = p.stock > 5 ? 'stock-in' : p.stock > 0 ? 'stock-low' : 'stock-out';
@@ -2105,7 +2214,7 @@
                         <div class="product-price">${p.price}</div>
                         <div class="product-stock ${stockClass}">${stockText} (${p.stock})</div>
                         <div class="product-quick-actions">
-                            <button class="btn-scan-order" onclick="startOrderWorkflow(${p.id})">📷 Order</button>
+                            <button class="btn-buy-now" onclick="openBuyerOrder(${p.id})">🛒 Buy Now</button>
                             <button class="btn-wish" onclick="addToWishlist(${p.id})">❤️</button>
                         </div>
                     </div>
@@ -2114,7 +2223,377 @@
         }
 
         // ============================================================
-        // RENDER: OWNER PANEL — WITH TABS
+        // BUYER ORDER — No Scanner, Just Payment
+        // ============================================================
+        function openBuyerOrder(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            if (product.stock <= 0) {
+                showToast('❌ Out of stock!', 'error');
+                return;
+            }
+            buyerOrderProduct = product;
+            buyerOrderStep = 1;
+            buyerOrderData = {};
+            openModal('buyerOrderModal');
+            renderBuyerOrderStep();
+        }
+
+        function renderBuyerOrderStep() {
+            const container = document.getElementById('buyerOrderContent');
+            const product = buyerOrderProduct;
+            const step = buyerOrderStep;
+            const t = TRANSLATIONS[currentLanguage] || TRANSLATIONS.en;
+
+            let html = '';
+
+            if (step === 1) {
+                // Step 1: Confirm Product
+                html = `
+                    <div style="text-align:center;">
+                        <img src="${product.image}" style="width:100px;height:100px;border-radius:12px;object-fit:cover;margin-bottom:8px;" />
+                        <h3 style="font-size:16px;">${product.name}</h3>
+                        <p style="font-size:18px;font-weight:700;color:var(--primary);">${product.price}</p>
+                        <p style="font-size:11px;color:var(--warm-gray);">Stock: ${product.stock} available</p>
+                        <p style="font-size:10px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
+                        <div style="display:flex;gap:6px;margin-top:12px;">
+                            <button class="btn-secondary" style="flex:1;font-size:11px;padding:6px;" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">Cancel</button>
+                            <button class="btn-primary" style="flex:2;font-size:11px;padding:6px;" onclick="buyerOrderStep=2;renderBuyerOrderStep();">📝 Select Payment →</button>
+                        </div>
+                    </div>
+                `;
+            } else if (step === 2) {
+                // Step 2: Payment Method
+                html = `
+                    <div style="text-align:center;">
+                        <h4 style="font-size:13px;margin-bottom:6px;">💳 Select Payment Method</h4>
+                        <div class="payment-options">
+                            ${paymentMethods.map(pm => `
+                                <div class="payment-option ${buyerOrderData.paymentMethod === pm.id ? 'selected' : ''}" onclick="selectPaymentMethod('${pm.id}')">
+                                    <span class="pay-icon">${pm.icon}</span>
+                                    <div class="pay-name">${pm.name}</div>
+                                    <div class="pay-detail">${pm.detail}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                        ${buyerOrderData.paymentMethod ? `
+                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:10px;margin:8px 0;font-size:11px;">
+                                <p><strong>Selected:</strong> ${paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.name}</p>
+                                <p><strong>Account:</strong> ${paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.account}</p>
+                            </div>
+                        ` : ''}
+                        <label style="font-size:11px;font-weight:600;display:block;margin-top:8px;">Payment Reference *</label>
+                        <div class="payment-ref-input">
+                            <input type="text" id="buyerPaymentRef" placeholder="Enter reference number" value="${buyerOrderData.paymentRef || ''}" />
+                            <button onclick="savePaymentRef()">Submit</button>
+                        </div>
+                        <label style="font-size:11px;font-weight:600;display:block;margin-top:8px;">Upload Screenshot (optional)</label>
+                        <div class="screenshot-upload" onclick="document.getElementById('buyerScreenshotInput').click()">
+                            <span class="upload-icon">📷</span>
+                            Tap to upload payment screenshot
+                            <input type="file" id="buyerScreenshotInput" accept="image/*" style="display:none;" onchange="previewBuyerScreenshot(event)" />
+                        </div>
+                        <img id="buyerScreenshotPreview" class="screenshot-preview" style="display:none;" />
+                        <div style="display:flex;gap:6px;margin-top:12px;">
+                            <button class="btn-secondary" style="flex:1;font-size:11px;padding:6px;" onclick="buyerOrderStep=1;renderBuyerOrderStep();">← Back</button>
+                            <button class="btn-primary" style="flex:2;font-size:11px;padding:6px;" onclick="submitBuyerOrder()">✅ Place Order</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+            document.getElementById('buyerOrderTitle').textContent = '🛒 Place Order - Step ' + step + '/2';
+        }
+
+        function selectPaymentMethod(id) {
+            buyerOrderData.paymentMethod = id;
+            renderBuyerOrderStep();
+        }
+
+        function savePaymentRef() {
+            const ref = document.getElementById('buyerPaymentRef').value.trim();
+            if (ref) {
+                buyerOrderData.paymentRef = ref;
+                showToast('✅ Reference saved', 'success');
+            }
+        }
+
+        function previewBuyerScreenshot(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const preview = document.getElementById('buyerScreenshotPreview');
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    buyerOrderData.screenshot = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitBuyerOrder() {
+            const ref = document.getElementById('buyerPaymentRef').value.trim();
+            if (!ref) {
+                showToast('⚠️ Please enter payment reference', 'error');
+                return;
+            }
+            if (!buyerOrderData.paymentMethod) {
+                showToast('⚠️ Please select a payment method', 'error');
+                return;
+            }
+
+            buyerOrderData.paymentRef = ref;
+            const product = buyerOrderProduct;
+            const orderId = generateUniqueId('ORD');
+            const buyerId = generateUniqueId('BUY');
+
+            const newOrder = {
+                id: orderId,
+                product: product.name,
+                price: product.price,
+                status: 'waiting-payment',
+                date: new Date().toISOString().split('T')[0],
+                type: 'delivery',
+                tracking: 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)),
+                qrCode: product.qrCode,
+                paymentRef: ref,
+                paymentMethod: paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.name || 'Unknown',
+                customer: currentUser.username || 'Customer',
+                buyerId: buyerId,
+                notifId: generateUniqueId('NOTIF'),
+                screenshot: buyerOrderData.screenshot || null
+            };
+            orders.unshift(newOrder);
+            product.stock--;
+
+            // Notify seller
+            addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ') from ' + newOrder.customer, 'info');
+            addNotification('💳 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
+            addCustomerRequest(product.name, newOrder.customer, 'Order #' + orderId + ' - Payment pending', product.qrCode);
+
+            closeModal('buyerOrderModal');
+            resetBuyerOrder();
+            showToast('✅ Order placed! (🆔 ' + orderId + ')', 'success');
+            navigateTo('orders');
+        }
+
+        function resetBuyerOrder() {
+            buyerOrderProduct = null;
+            buyerOrderStep = 1;
+            buyerOrderData = {};
+            document.getElementById('buyerPaymentRef').value = '';
+            document.getElementById('buyerScreenshotInput').value = '';
+            document.getElementById('buyerScreenshotPreview').style.display = 'none';
+            document.getElementById('buyerScreenshotPreview').src = '';
+        }
+
+        // ============================================================
+        // RENDER: SELLER PANEL
+        // ============================================================
+        function renderSellerPanel() {
+            const pendingOrders = orders.filter(o => o.status === 'waiting-payment' || o.status === 'waiting-owner');
+            const deliveringOrders = orders.filter(o => o.status === 'delivering');
+
+            let html = `
+                <div class="admin-panel">
+                    <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-number">${pendingOrders.length}</div><div class="stat-label">Pending Orders</div></div>
+                        <div class="stat-card"><div class="stat-number">${deliveringOrders.length}</div><div class="stat-label">Delivering</div></div>
+                        <div class="stat-card"><div class="stat-number">${customerRequests.length}</div><div class="stat-label">Requests</div></div>
+                        <div class="stat-card"><div class="stat-number">${products.reduce((s,p) => s + p.stock, 0)}</div><div class="stat-label">Total Stock</div></div>
+                    </div>
+
+                    <h4 style="margin:10px 0 4px;">📋 Orders by Buyer ID</h4>
+                    ${pendingOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No pending orders.</p>' :
+                        pendingOrders.map(o => `
+                            <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : '#F57F17'};">
+                                <div class="order-top">
+                                    <div>
+                                        <div class="order-product">${o.product}</div>
+                                        <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
+                                        <div class="order-meta" style="font-size:9px;">Order: ${o.id} • ${o.type}</div>
+                                        <div class="order-meta" style="font-size:9px;">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
+                                    </div>
+                                    <span class="status-badge ${o.status === 'waiting-payment' ? 'status-waiting-payment' : 'status-waiting-owner'}">${o.status === 'waiting-payment' ? '⏳ Payment Pending' : '⏳ Awaiting Owner'}</span>
+                                </div>
+                                <div class="order-price">${o.price}</div>
+                                ${o.screenshot ? `<div style="margin-top:3px;font-size:9px;color:var(--primary);">📷 Screenshot attached</div>` : ''}
+                                <div class="order-actions">
+                                    ${o.status === 'waiting-payment' ? `
+                                        <button class="btn-success" onclick="sellerConfirmPayment('${o.id}')">✅ Confirm Payment</button>
+                                    ` : ''}
+                                    ${o.status === 'waiting-owner' ? `
+                                        <button class="btn-warning" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Owner Pending</button>
+                                    ` : ''}
+                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:3px 10px;font-size:9px;text-decoration:none;">📞 Call</a>
+                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="btn-secondary" style="padding:3px 10px;font-size:9px;text-decoration:none;">💬 Chat</a>
+                                </div>
+                            </div>
+                        `).join('')
+                    }
+
+                    <h4 style="margin:12px 0 4px;">📦 In-Person Sales (Scan QR)</h4>
+                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:6px 0;padding:8px;font-size:12px;">📷 Scan Product QR to Sell</button>
+
+                    <h4 style="margin:12px 0 4px;">🚚 Active Deliveries</h4>
+                    ${deliveringOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No active deliveries.</p>' :
+                        deliveringOrders.map(o => `
+                            <div class="order-card" style="border-left-color:var(--primary);">
+                                <div class="order-top">
+                                    <div>
+                                        <div class="order-product">${o.product}</div>
+                                        <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
+                                        <div class="order-meta" style="font-size:9px;">Order: ${o.id}</div>
+                                    </div>
+                                    <span class="status-badge status-delivering">🚚 Delivering</span>
+                                </div>
+                                <div class="order-price">${o.price}</div>
+                                ${o.tracking ? `
+                                    <div style="margin-top:3px;font-size:10px;color:var(--primary);">
+                                        📦 Tracking: ${o.tracking}
+                                        <button class="btn-secondary" style="padding:2px 8px;font-size:8px;margin-left:4px;" onclick="showToast('📍 Tracking: ${o.tracking}', 'info')">Track</button>
+                                    </div>
+                                ` : ''}
+                                <div class="order-actions">
+                                    <button class="btn-success" onclick="sellerCompleteDelivery('${o.id}')">✅ Complete Delivery</button>
+                                    <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="sendToDeliverer('${o.id}')">📤 Send to Deliverer</button>
+                                </div>
+                            </div>
+                        `).join('')
+                    }
+
+                    <h4 style="margin:12px 0 4px;">📋 Customer Requests</h4>
+                    ${customerRequests.slice(0, 5).map(r => `
+                        <div class="request-notif">
+                            <div class="req-product">${r.product}</div>
+                            <div class="req-detail">${r.customer} • ${r.detail} • 🆔 ${r.id}</div>
+                            <div class="req-actions">
+                                <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="chat-req">💬 Chat</a>
+                                <a href="tel:+${SELLER_PHONE}" class="call-req">📞 Call</a>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            return html;
+        }
+
+        // ============================================================
+        // SELLER ACTIONS
+        // ============================================================
+        function sellerConfirmPayment(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'waiting-owner';
+                showToast('✅ Payment confirmed! Waiting for owner approval.', 'success');
+                addNotification('✅ Payment confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                // Notify owner
+                addNotification('👑 Owner: Payment approval needed for ' + order.product + ' (🆔 ' + orderId + ')', 'warning');
+                navigateTo('home');
+            }
+        }
+
+        function sellerCompleteDelivery(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                const completionCode = generateUniqueId('COMP');
+                order.status = 'delivered';
+                order.completionCode = completionCode;
+                addNotification('✅ Delivery completed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                addNotification('🔑 Completion code: ' + completionCode, 'info');
+                showToast('✅ Delivery completed! Code: ' + completionCode, 'success');
+                // Deduct stock
+                const p = products.find(pr => pr.name === order.product);
+                if (p) p.stock = Math.max(0, p.stock - 1);
+                navigateTo('home');
+            }
+        }
+
+        function sendToDeliverer(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                showToast('📤 Order ID ' + order.id + ' sent to deliverer!', 'success');
+                addNotification('📤 Order sent to deliverer: ' + order.product + ' (🆔 ' + order.id + ')', 'info');
+                // In production, send via Telegram to deliverer
+                if (tg && tg.sendData) {
+                    tg.sendData(JSON.stringify({
+                        type: 'delivery_order',
+                        orderId: order.id,
+                        product: order.product,
+                        tracking: order.tracking,
+                        customer: order.customer
+                    }));
+                }
+            }
+        }
+
+        // ============================================================
+        // SELLER QR SCANNER — In-Person Sales
+        // ============================================================
+        function openSellerQRScanner() {
+            const scanner = document.getElementById('qrScanner');
+            scanner.classList.remove('hidden');
+
+            const video = document.getElementById('qrVideo');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    .then(function(stream) {
+                        video.srcObject = stream;
+                        video.play();
+                        setTimeout(function() {
+                            const scannedQR = 'SOYAM-P001';
+                            const product = products.find(p => p.qrCode === scannedQR);
+                            if (product) {
+                                if (product.stock <= 0) {
+                                    showToast('❌ Product out of stock!', 'error');
+                                    closeScanner();
+                                    return;
+                                }
+                                const orderId = generateUniqueId('ORD');
+                                const buyerId = generateUniqueId('BUY');
+                                const newOrder = {
+                                    id: orderId,
+                                    product: product.name,
+                                    price: product.price,
+                                    status: 'waiting-owner',
+                                    date: new Date().toISOString().split('T')[0],
+                                    type: 'in-person',
+                                    qrCode: product.qrCode,
+                                    customer: 'In-Person Customer',
+                                    buyerId: buyerId,
+                                    paymentMethod: 'Cash',
+                                    paymentRef: 'IN-PERSON-' + Date.now(),
+                                    notifId: generateUniqueId('NOTIF')
+                                };
+                                orders.unshift(newOrder);
+                                product.stock--;
+                                showToast('✅ In-person sale: ' + product.name + ' (🆔 ' + orderId + ')', 'success');
+                                addNotification('🏪 In-person sale: ' + product.name + ' (🆔 ' + orderId + ')',
+                                'success');
+                                addNotification('👑 Owner: Approve in-person sale for ' + product.name + ' (🆔 ' +
+                                    orderId + ')', 'warning');
+                            } else {
+                                showToast('❌ Product not found for QR: ' + scannedQR, 'error');
+                            }
+                            closeScanner();
+                            navigateTo('home');
+                        }, 3000);
+                    })
+                    .catch(function(err) {
+                        showToast('❌ Camera access denied.', 'error');
+                        closeScanner();
+                    });
+            } else {
+                showToast('❌ Camera not supported.', 'error');
+                closeScanner();
+            }
+        }
+
+        // ============================================================
+        // RENDER: OWNER PANEL
         // ============================================================
         function renderOwnerPanel() {
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
@@ -2123,7 +2602,8 @@
                 return sum + (priceNum * p.stock);
             }, 0);
             const totalBuyValue = products.reduce((sum, p) => sum + (p.buyPrice * p.stock), 0);
-            const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'waiting-payment').length;
+            const pendingApprovals = orders.filter(o => o.status === 'waiting-owner').length;
+            const pendingPayments = orders.filter(o => o.status === 'waiting-payment').length;
 
             const today = new Date().toISOString().split('T')[0];
             const todaySales = orders.filter(o => o.date === today && o.status === 'delivered');
@@ -2132,7 +2612,6 @@
                 return sum + priceNum;
             }, 0);
 
-            // Calendar data
             const daysInMonth = new Date().getDate();
             const monthName = new Date().toLocaleString('default', { month: 'long' });
             const year = new Date().getFullYear();
@@ -2146,13 +2625,14 @@
                         <button class="btn-switch ${currentView === 'stock' ? 'active' : ''}" onclick="switchOwnerView('stock')">📦 Stock</button>
                         <button class="btn-switch ${currentView === 'calendar' ? 'active' : ''}" onclick="switchOwnerView('calendar')">📅 Calendar</button>
                         <button class="btn-switch ${currentView === 'approvals' ? 'active' : ''}" onclick="switchOwnerView('approvals')">✅ Approvals</button>
+                        <button class="btn-switch ${currentView === 'orders' ? 'active' : ''}" onclick="switchOwnerView('orders')">📋 Orders</button>
                     </div>
 
                     ${currentView === 'dashboard' ? `
                         <div class="stats-grid">
                             <div class="stat-card"><div class="stat-number">${orders.length}</div><div class="stat-label">Total Orders</div></div>
                             <div class="stat-card"><div class="stat-number">${totalStock}</div><div class="stat-label">Total Stock</div></div>
-                            <div class="stat-card"><div class="stat-number">${pendingOrders}</div><div class="stat-label">Pending Approval</div></div>
+                            <div class="stat-card"><div class="stat-number">${pendingApprovals + pendingPayments}</div><div class="stat-label">Pending Actions</div></div>
                             <div class="stat-card"><div class="stat-number">${products.length}</div><div class="stat-label">Products</div></div>
                         </div>
 
@@ -2169,11 +2649,11 @@
                             </div>
                         </div>
 
-                        <h4 style="margin:10px 0 4px;">📦 Quick Stock Overview</h4>
+                        <h4 style="margin:10px 0 4px;">📊 Stock Movement Summary</h4>
                         <table class="stock-table">
                             <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th></tr></thead>
                             <tbody>
-                                ${products.slice(0, 4).map(p => {
+                                ${products.slice(0, 5).map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
                                     const value = priceNum * p.stock;
                                     return `
@@ -2186,17 +2666,17 @@
                                         </tr>
                                     `;
                                 }).join('')}
-                                ${products.length > 4 ? `<tr><td colspan="5" style="text-align:center;color:var(--warm-gray);font-size:9px;">+ ${products.length - 4} more products</td></tr>` : ''}
+                                ${products.length > 5 ? `<tr><td colspan="5" style="text-align:center;color:var(--warm-gray);font-size:9px;">+ ${products.length - 5} more</td></tr>` : ''}
                             </tbody>
                         </table>
                         <button class="btn-secondary" style="margin-top:6px;width:100%;font-size:10px;padding:6px;" onclick="switchOwnerView('stock')">📦 View All Stock →</button>
                     ` : ''}
 
                     ${currentView === 'stock' ? `
-                        <h4 style="margin:10px 0 4px;">📦 Full Stock List</h4>
+                        <h4 style="margin:10px 0 4px;">📦 Full Stock Management</h4>
                         <button class="btn-primary" style="margin:6px 0;padding:8px;font-size:12px;" onclick="openAddStockModal()">➕ Add New Stock</button>
                         <table class="stock-table">
-                            <thead><tr><th>Product</th><th>Sell Price</th><th>Buy Price</th><th>Stock</th><th>Value</th></tr></thead>
+                            <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th><th>Actions</th></tr></thead>
                             <tbody>
                                 ${products.map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
@@ -2208,12 +2688,17 @@
                                             <td>${p.buyPrice} ETB</td>
                                             <td>${p.stock}</td>
                                             <td>${value.toLocaleString()} ETB</td>
+                                            <td class="stock-actions">
+                                                <button class="btn-edit-stock" onclick="openEditStock(${p.id})">✏️</button>
+                                                <button class="btn-remove-stock" onclick="removeStock(${p.id})">🗑️</button>
+                                            </td>
                                         </tr>
                                     `;
                                 }).join('')}
                                 <tr>
                                     <td colspan="4" style="text-align:right;font-weight:700;">Total Value:</td>
                                     <td class="stock-total">${totalValue.toLocaleString()} ETB</td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -2255,20 +2740,24 @@
 
                     ${currentView === 'approvals' ? `
                         <h4 style="margin:10px 0 4px;">✅ Pending Approvals</h4>
-                        ${orders.filter(o => o.status === 'waiting-payment' || o.status === 'pending').map(o => `
+                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').map(o => `
                             <div class="payment-notif">
                                 <div class="payment-info">
                                     <div class="amount">${o.price}</div>
                                     <div class="payer">${o.product} • ${o.customer || 'Customer'}</div>
-                                    <div style="font-size:9px;color:var(--warm-gray);">🆔 ${o.id} • ${o.date}</div>
+                                    <div style="font-size:9px;color:var(--warm-gray);">
+                                        🆔 ${o.id} • ${o.date} • ${o.type}
+                                        ${o.buyerId ? ' • Buyer: ' + o.buyerId : ''}
+                                    </div>
+                                    <div style="font-size:9px;color:var(--primary);">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
                                 </div>
                                 <div class="payment-actions">
-                                    <button class="btn-confirm" onclick="ownerConfirmPayment('${o.id}')">✅ Confirm</button>
+                                    <button class="btn-confirm" onclick="ownerApprovePayment('${o.id}')">✅ Approve</button>
                                     <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
                                 </div>
                             </div>
                         `).join('')}
-                        ${orders.filter(o => o.status === 'waiting-payment' || o.status === 'pending').length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No pending approvals.</p>' : ''}
+                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No pending approvals.</p>' : ''}
 
                         <h4 style="margin:14px 0 4px;">📋 Recent Notifications</h4>
                         ${notifications.slice(0, 8).map(n => `
@@ -2278,6 +2767,25 @@
                                 <div class="notif-detail">${n.time || ''}</div>
                             </div>
                         `).join('')}
+                    ` : ''}
+
+                    ${currentView === 'orders' ? `
+                        <h4 style="margin:10px 0 4px;">📋 All Orders with Stock Movement</h4>
+                        <table class="stock-table">
+                            <thead><tr><th>Order ID</th><th>Product</th><th>Price</th><th>Status</th><th>Type</th><th>Buyer ID</th></tr></thead>
+                            <tbody>
+                                ${orders.map(o => `
+                                    <tr>
+                                        <td style="font-size:8px;">${o.id}</td>
+                                        <td>${o.product}</td>
+                                        <td>${o.price}</td>
+                                        <td><span class="status-badge ${o.status === 'delivered' ? 'status-delivered' : o.status === 'delivering' ? 'status-delivering' : o.status === 'waiting-owner' ? 'status-waiting-owner' : o.status === 'waiting-payment' ? 'status-waiting-payment' : 'status-pending'}">${o.status}</span></td>
+                                        <td>${o.type}</td>
+                                        <td style="font-size:8px;">${o.buyerId || 'N/A'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
                     ` : ''}
                 </div>
             `;
@@ -2293,17 +2801,51 @@
         }
 
         // ============================================================
-        // ADD STOCK MODAL
+        // OWNER PAYMENT ACTIONS
+        // ============================================================
+        function ownerApprovePayment(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'approved';
+                const notifId = generateUniqueId('NOTIF');
+                showToast('✅ Payment approved for ' + order.product, 'success');
+                addNotification('💰 Payment approved: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                // If delivery, send to deliverer
+                if (order.type === 'delivery') {
+                    order.status = 'delivering';
+                    addNotification('🚚 Order sent to deliverer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
+                }
+                navigateTo('home');
+            }
+        }
+
+        function ownerRejectPayment(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'cancelled';
+                const notifId = generateUniqueId('NOTIF');
+                showToast('❌ Payment rejected for ' + order.product, 'error');
+                addNotification('❌ Payment rejected: ' + order.product + ' (🆔 ' + orderId + ')', 'error');
+                const p = products.find(pr => pr.name === order.product);
+                if (p) p.stock++;
+                navigateTo('home');
+            }
+        }
+
+        // ============================================================
+        // OWNER STOCK MANAGEMENT
         // ============================================================
         function openAddStockModal() {
             document.getElementById('stockProductName').value = '';
             document.getElementById('stockSellPrice').value = '';
             document.getElementById('stockBuyPrice').value = '';
             document.getElementById('stockQty').value = '';
-            document.getElementById('stockQrCode').value = '';
             document.getElementById('stockImagePreview').style.display = 'none';
             document.getElementById('stockImagePreview').src = '';
             stockImageData = null;
+            // Generate QR code
+            const qrCode = 'SOYAM-P' + String(Math.floor(100 + Math.random() * 900));
+            document.getElementById('stockQrDisplay').textContent = qrCode;
             openModal('addStockModal');
         }
 
@@ -2321,44 +2863,20 @@
             }
         }
 
-        function openStockQRScanner() {
-            // Open QR scanner and set result to stockQrCode field
-            const scanner = document.getElementById('qrScanner');
-            scanner.classList.remove('hidden');
-
-            const video = document.getElementById('qrVideo');
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                    .then(function(stream) {
-                        video.srcObject = stream;
-                        video.play();
-                        setTimeout(function() {
-                            const scannedQR = 'SOYAM-P' + String(Math.floor(100 + Math.random() * 900));
-                            document.getElementById('stockQrCode').value = scannedQR;
-                            closeScanner();
-                            showToast('📷 QR Scanned: ' + scannedQR, 'success');
-                        }, 2500);
-                    })
-                    .catch(function(err) {
-                        showToast('❌ Camera access denied.', 'error');
-                        closeScanner();
-                    });
-            } else {
-                showToast('❌ Camera not supported.', 'error');
-                closeScanner();
-            }
-        }
-
         function submitStock() {
             const name = document.getElementById('stockProductName').value.trim();
             const sellPrice = parseInt(document.getElementById('stockSellPrice').value);
             const buyPrice = parseInt(document.getElementById('stockBuyPrice').value);
             const qty = parseInt(document.getElementById('stockQty').value);
-            const qrCode = document.getElementById('stockQrCode').value.trim() || 'SOYAM-P' + String(Math.floor(100 + Math
-            .random() * 900));
+            const qrCode = document.getElementById('stockQrDisplay').textContent;
 
             if (!name || !sellPrice || !buyPrice || !qty) {
                 showToast('⚠️ Please fill in all required fields', 'error');
+                return;
+            }
+
+            if (sellPrice <= buyPrice) {
+                showToast('⚠️ Selling price must be greater than buying price', 'error');
                 return;
             }
 
@@ -2376,360 +2894,61 @@
 
             products.unshift(newProduct);
             const notifId = generateUniqueId('NOTIF');
-            addNotification('📦 Stock added: ' + name + ' (Qty: ' + qty + ', Sell: ' + sellPrice + ' ETB) (🆔 ' + notifId +
-                ')', 'success');
+            addNotification('📦 Stock added: ' + name + ' (Qty: ' + qty + ', Sell: ' + sellPrice + ' ETB, Buy: ' + buyPrice +
+                ' ETB) (🆔 ' + notifId + ')', 'success');
             showToast('✅ Stock added: ' + name + ' (+' + qty + ')', 'success');
             closeModal('addStockModal');
             navigateTo('home');
         }
 
-        // ============================================================
-        // RENDER: SELLER PANEL
-        // ============================================================
-        function renderSellerPanel() {
-            const activeOrders = orders.filter(o => o.status === 'pending' || o.status === 'approved' || o.status === 'delivering');
-
-            let html = `
-                <div class="admin-panel">
-                    <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
-                    <div class="stats-grid">
-                        <div class="stat-card"><div class="stat-number">${activeOrders.length}</div><div class="stat-label">Active Orders</div></div>
-                        <div class="stat-card"><div class="stat-number">${orders.filter(o => o.status === 'delivering').length}</div><div class="stat-label">Delivering</div></div>
-                        <div class="stat-card"><div class="stat-number">${customerRequests.length}</div><div class="stat-label">Requests</div></div>
-                        <div class="stat-card"><div class="stat-number">${products.reduce((s,p) => s + p.stock, 0)}</div><div class="stat-label">Total Stock</div></div>
-                    </div>
-
-                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:6px 0;padding:8px;font-size:12px;">📷 Scan QR to Register Stock</button>
-
-                    <h4 style="margin:10px 0 4px;">📋 Customer Requests</h4>
-                    ${customerRequests.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No customer requests.</p>' :
-                        customerRequests.map(r => `
-                            <div class="request-notif">
-                                <div class="req-product">${r.product}</div>
-                                <div class="req-detail">${r.customer} • ${r.detail} • 🆔 ${r.id}</div>
-                                <div class="req-actions">
-                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="chat-req">💬 Chat</a>
-                                    <a href="tel:+${SELLER_PHONE}" class="call-req">📞 Call</a>
-                                </div>
-                            </div>
-                        `).join('')
-                    }
-
-                    <h4 style="margin:12px 0 4px;">📦 Active Orders</h4>
-                    ${activeOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No active orders.</p>' :
-                        activeOrders.map(o => `
-                            <div class="order-card" style="border-left-color:${o.status === 'pending' ? '#FF6F00' : o.status === 'approved' ? '#2E7D32' : 'var(--primary)'};">
-                                <div class="order-top">
-                                    <div>
-                                        <div class="order-product">${o.product}</div>
-                                        <div class="order-meta">${o.type} • ${o.date} • 🆔 ${o.id}</div>
-                                        <div class="order-meta" style="font-size:9px;">QR: ${o.qrCode || 'N/A'}</div>
-                                    </div>
-                                    <span class="status-badge ${o.status === 'pending' ? 'status-pending' : o.status === 'approved' ? 'status-approved' : 'status-delivering'}">${o.status === 'pending' ? '⏳ Pending' : o.status === 'approved' ? '✅ Approved' : '🚚 Delivering'}</span>
-                                </div>
-                                <div class="order-price">${o.price}</div>
-                                <div class="order-actions">
-                                    ${o.status === 'pending' ? `<button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm Payment</button>` : ''}
-                                    ${o.status === 'approved' ? `<button class="btn-primary" style="padding:3px 10px;font-size:9px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>` : ''}
-                                    ${o.status === 'delivering' ? `
-                                        <button class="btn-success" onclick="showToast('✅ Delivery completed!', 'success')">Complete</button>
-                                        <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="showToast('📍 Location shared', 'info')">Share Location</button>
-                                    ` : ''}
-                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:3px 10px;font-size:9px;text-decoration:none;">📞 Call</a>
-                                </div>
-                                ${o.tracking ? `<div style="margin-top:3px;font-size:10px;color:var(--primary);">📦 Tracking: ${o.tracking}</div>` : ''}
-                            </div>
-                        `).join('')
-                    }
-                </div>
-            `;
-            return html;
-        }
-
-        // ============================================================
-        // ORDER WORKFLOW
-        // ============================================================
-        function startOrderWorkflow(productId) {
+        function openEditStock(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-            if (product.stock <= 0) {
-                showToast('❌ Out of stock!', 'error');
+            editingStockId = productId;
+            document.getElementById('editStockProductName').value = product.name;
+            document.getElementById('editStockSellPrice').value = parseInt(product.price.replace(/[^0-9]/g, ''));
+            document.getElementById('editStockBuyPrice').value = product.buyPrice;
+            document.getElementById('editStockQty').value = product.stock;
+            openModal('editStockModal');
+        }
+
+        function saveStockEdit() {
+            const product = products.find(p => p.id === editingStockId);
+            if (!product) return;
+            const name = document.getElementById('editStockProductName').value.trim();
+            const sellPrice = parseInt(document.getElementById('editStockSellPrice').value);
+            const buyPrice = parseInt(document.getElementById('editStockBuyPrice').value);
+            const qty = parseInt(document.getElementById('editStockQty').value);
+
+            if (!name || !sellPrice || !buyPrice || !qty) {
+                showToast('⚠️ Please fill in all fields', 'error');
                 return;
             }
-            pendingOrder = { product, step: 1 };
-            openModal('orderWorkflowModal');
-            renderWorkflowStep();
-        }
 
-        function renderWorkflowStep() {
-            if (!pendingOrder) return;
-            const container = document.getElementById('workflowContent');
-            const step = pendingOrder.step;
-            const product = pendingOrder.product;
-
-            const steps = ['Select', 'Scan', 'Pay', 'Confirm'];
-            let stepHtml = `
-                <div class="workflow-steps">
-                    ${steps.map((s, i) => `
-                        <div class="workflow-step ${i + 1 < step ? 'done' : i + 1 === step ? 'active' : ''}">
-                            <div class="step-circle">${i + 1}</div>
-                            <div class="step-label">${s}</div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-
-            let contentHtml = '';
-            switch (step) {
-                case 1:
-                    contentHtml = `
-                        <div style="text-align:center;">
-                            <img src="${product.image}" style="width:80px;height:80px;border-radius:10px;object-fit:cover;margin-bottom:6px;" />
-                            <h3 style="font-size:15px;">${product.name}</h3>
-                            <p style="font-size:16px;font-weight:700;color:var(--primary);">${product.price}</p>
-                            <p style="font-size:11px;color:var(--warm-gray);">Stock: ${product.stock}</p>
-                            <div style="display:flex;gap:6px;margin-top:10px;">
-                                <button class="btn-secondary" style="flex:1;font-size:11px;padding:6px;" onclick="closeOrderWorkflow()">Cancel</button>
-                                <button class="btn-primary" style="flex:2;font-size:11px;padding:6px;" onclick="pendingOrder.step=2;renderWorkflowStep();">📷 Scan QR →</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                case 2:
-                    contentHtml = `
-                        <div style="text-align:center;">
-                            <div style="background:var(--bg-primary);border-radius:var(--radius);padding:16px;margin-bottom:10px;border:2px dashed var(--border-color);">
-                                <div style="font-size:40px;">📷</div>
-                                <p style="font-weight:600;font-size:13px;">Scan Product QR Code</p>
-                                <p style="font-size:10px;color:var(--warm-gray);">Use camera or upload image</p>
-                            </div>
-                            <button class="btn-primary" onclick="openRealScanner()" style="font-size:11px;padding:8px;">📷 Open Camera</button>
-                            <button class="btn-secondary" style="margin-top:4px;width:100%;font-size:11px;padding:6px;" onclick="openGallery()">🖼️ Choose from Gallery</button>
-                            <button class="btn-secondary" style="margin-top:4px;font-size:10px;padding:4px;" onclick="pendingOrder.step=1;renderWorkflowStep();">← Back</button>
-                        </div>
-                    `;
-                    break;
-                case 3:
-                    contentHtml = `
-                        <div style="text-align:center;">
-                            <div style="background:var(--bg-primary);border-radius:var(--radius);padding:12px;margin-bottom:10px;">
-                                <p style="font-weight:600;font-size:12px;">💳 Payment Details</p>
-                                <p style="font-size:18px;font-weight:700;color:var(--primary);">${product.price}</p>
-                                <p style="font-size:10px;color:var(--warm-gray);">Pay via Telebirr, CBE, or Cash</p>
-                                <div style="margin-top:4px;font-size:10px;color:var(--warm-gray);">
-                                    <p>📱 Telebirr: +${OWNER_PHONE}</p>
-                                    <p>🏦 CBE: 1000123456789</p>
-                                </div>
-                            </div>
-                            <div class="payment-ref-input">
-                                <input type="text" id="paymentRefInput" placeholder="Enter payment reference" />
-                                <button onclick="submitPaymentReference()">Submit</button>
-                            </div>
-                            <button class="btn-secondary" style="margin-top:4px;font-size:10px;padding:4px;" onclick="pendingOrder.step=2;renderWorkflowStep();">← Back</button>
-                        </div>
-                    `;
-                    break;
-                case 4:
-                    contentHtml = `
-                        <div style="text-align:center;">
-                            <div style="font-size:40px;">✅</div>
-                            <h3 style="font-size:15px;">Order Placed!</h3>
-                            <p style="font-size:11px;color:var(--warm-gray);">Your order has been submitted.</p>
-                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:10px;margin:8px 0;text-align:left;font-size:11px;">
-                                <p><strong>Product:</strong> ${product.name}</p>
-                                <p><strong>Price:</strong> ${product.price}</p>
-                                <p><strong>Status:</strong> ⏳ Awaiting Approval</p>
-                                <p><strong>🆔 Order ID:</strong> ${pendingOrder.orderId || 'PENDING'}</p>
-                            </div>
-                            <button class="btn-primary" onclick="closeOrderWorkflow();navigateTo('orders');" style="font-size:11px;padding:8px;">📦 View Orders</button>
-                        </div>
-                    `;
-                    break;
-            }
-
-            container.innerHTML = stepHtml + contentHtml;
-            document.getElementById('workflowTitle').textContent = '🛒 ' + (step === 4 ? 'Order Confirmed' : 'Place Order');
-        }
-
-        function submitPaymentReference() {
-            const ref = document.getElementById('paymentRefInput').value.trim();
-            if (!ref) {
-                showToast('⚠️ Please enter payment reference', 'error');
+            if (sellPrice <= buyPrice) {
+                showToast('⚠️ Selling price must be greater than buying price', 'error');
                 return;
             }
-            const orderId = generateUniqueId('ORD');
-            pendingOrder.orderId = orderId;
-            pendingOrder.paymentRef = ref;
-            pendingOrder.step = 4;
 
-            const product = pendingOrder.product;
-            const newOrder = {
-                id: orderId,
-                product: product.name,
-                price: product.price,
-                status: 'waiting-payment',
-                date: new Date().toISOString().split('T')[0],
-                type: 'Delivery',
-                tracking: 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)),
-                qrCode: product.qrCode,
-                paymentRef: ref,
-                customer: currentUser.username || 'Customer',
-                notifId: generateUniqueId('NOTIF')
-            };
-            orders.unshift(newOrder);
-            product.stock--;
+            product.name = name;
+            product.price = sellPrice.toLocaleString() + ' ETB';
+            product.buyPrice = buyPrice;
+            product.stock = qty;
 
-            addNotification('💰 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
-            addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ')', 'info');
-            addCustomerRequest(product.name, currentUser.username || 'Customer', 'Order #' + orderId, product.qrCode);
-
-            renderWorkflowStep();
-            showToast('✅ Order placed! (🆔 ' + orderId + ')', 'success');
+            addNotification('✏️ Stock updated: ' + product.name + ' (🆔 ' + generateUniqueId('NOTIF') + ')', 'success');
+            showToast('✅ Stock updated for ' + product.name, 'success');
+            closeModal('editStockModal');
+            navigateTo('home');
         }
 
-        function closeOrderWorkflow() {
-            pendingOrder = null;
-            closeModal('orderWorkflowModal');
-        }
-
-        // ============================================================
-        // QR SCANNER
-        // ============================================================
-        function openRealScanner() {
-            const scanner = document.getElementById('qrScanner');
-            scanner.classList.remove('hidden');
-
-            const video = document.getElementById('qrVideo');
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                    .then(function(stream) {
-                        video.srcObject = stream;
-                        video.play();
-                        setTimeout(function() {
-                            const scannedQR = 'SOYAM-P001';
-                            handleQRScanned(scannedQR);
-                            closeScanner();
-                        }, 2500);
-                    })
-                    .catch(function(err) {
-                        showToast('❌ Camera access denied.', 'error');
-                        closeScanner();
-                    });
-            } else {
-                showToast('❌ Camera not supported.', 'error');
-                closeScanner();
-            }
-        }
-
-        function handleQRScanned(qrData) {
-            const product = products.find(p => p.qrCode === qrData);
-            if (product) {
-                showToast('✅ Product: ' + product.name + ' | ' + product.price, 'success');
-                if (pendingOrder) {
-                    pendingOrder.product = product;
-                    pendingOrder.step = 3;
-                    renderWorkflowStep();
-                }
-                addNotification('📷 QR Scanned: ' + product.name + ' (🆔 ' + product.qrCode + ')', 'info');
-            } else {
-                showToast('❌ Product not found for QR: ' + qrData, 'error');
-            }
-        }
-
-        function openGallery() {
-            document.getElementById('galleryInput').click();
-        }
-
-        function handleGalleryImage(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            showToast('📷 Image uploaded! Analyzing...', 'info');
-            setTimeout(function() {
-                const randomProduct = products[Math.floor(Math.random() * products.length)];
-                handleQRScanned(randomProduct.qrCode);
-                closeScanner();
-            }, 1500);
-            event.target.value = '';
-        }
-
-        function closeScanner() {
-            document.getElementById('qrScanner').classList.add('hidden');
-            const video = document.getElementById('qrVideo');
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(t => t.stop());
-            }
-        }
-
-        // ============================================================
-        // SELLER QR SCANNER
-        // ============================================================
-        function openSellerQRScanner() {
-            const scanner = document.getElementById('qrScanner');
-            scanner.classList.remove('hidden');
-
-            const video = document.getElementById('qrVideo');
-            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                    .then(function(stream) {
-                        video.srcObject = stream;
-                        video.play();
-                        setTimeout(function() {
-                            const scannedQR = 'SOYAM-P001';
-                            const product = products.find(p => p.qrCode === scannedQR);
-                            if (product) {
-                                const stockToAdd = parseInt(prompt('📦 Stock for: ' + product.name +
-                                    '\nCurrent: ' + product.stock + '\nAdd quantity:'));
-                                if (stockToAdd > 0) {
-                                    product.stock += stockToAdd;
-                                    const notifId = generateUniqueId('NOTIF');
-                                    showToast('✅ Stock updated: ' + product.name + ' (+' + stockToAdd + ')',
-                                        'success');
-                                    addNotification('📦 Stock registered: ' + product.name + ' (+' + stockToAdd +
-                                        ') (🆔 ' + notifId + ')', 'success');
-                                }
-                            }
-                            closeScanner();
-                        }, 3000);
-                    })
-                    .catch(function(err) {
-                        showToast('❌ Camera access denied.', 'error');
-                        closeScanner();
-                    });
-            } else {
-                showToast('❌ Camera not supported.', 'error');
-                closeScanner();
-            }
-        }
-
-        // ============================================================
-        // OWNER PAYMENT ACTIONS
-        // ============================================================
-        function ownerConfirmPayment(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                order.status = 'approved';
-                const notifId = generateUniqueId('NOTIF');
-                showToast('✅ Payment confirmed for ' + order.product, 'success');
-                addNotification('💰 Payment confirmed: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                const p = products.find(pr => pr.name === order.product);
-                if (p) {
-                    p.stock = Math.max(0, p.stock - 1);
-                }
-                navigateTo('home');
-            }
-        }
-
-        function ownerRejectPayment(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                order.status = 'cancelled';
-                const notifId = generateUniqueId('NOTIF');
-                showToast('❌ Payment rejected for ' + order.product, 'error');
-                addNotification('❌ Payment rejected: ' + order.product + ' (🆔 ' + orderId + ')', 'error');
-                const p = products.find(pr => pr.name === order.product);
-                if (p) p.stock++;
-                navigateTo('home');
-            }
+        function removeStock(productId) {
+            if (!confirm('⚠️ Are you sure you want to remove this product?')) return;
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            products = products.filter(p => p.id !== productId);
+            addNotification('🗑️ Stock removed: ' + product.name + ' (🆔 ' + generateUniqueId('NOTIF') + ')', 'warning');
+            showToast('🗑️ Removed: ' + product.name, 'info');
+            navigateTo('home');
         }
 
         // ============================================================
@@ -2784,7 +3003,9 @@
                 delivering: 'status-delivering',
                 delivered: 'status-delivered',
                 cancelled: 'status-cancelled',
-                'waiting-payment': 'status-waiting-payment'
+                'waiting-payment': 'status-waiting-payment',
+                'waiting-owner': 'status-waiting-owner',
+                'completed': 'status-completed'
             };
             const statusLabels = {
                 pending: '⏳ Pending',
@@ -2792,23 +3013,27 @@
                 delivering: '🚚 Delivering',
                 delivered: '✅ Delivered',
                 cancelled: '❌ Cancelled',
-                'waiting-payment': '💳 Waiting Payment'
+                'waiting-payment': '💳 Waiting Payment',
+                'waiting-owner': '⏳ Awaiting Owner',
+                'completed': '✅ Completed'
             };
             return `
                 <div class="section-header"><div class="section-title">📦 <span class="highlight">My Orders</span></div></div>
                 <div style="display:flex;gap:4px;margin-bottom:10px;overflow-x:auto;padding-bottom:4px;">
                     <button class="category-chip active" onclick="filterOrders('all')">All</button>
                     <button class="category-chip" onclick="filterOrders('waiting-payment')">💳 Payment</button>
-                    <button class="category-chip" onclick="filterOrders('pending')">⏳ Pending</button>
+                    <button class="category-chip" onclick="filterOrders('waiting-owner')">⏳ Owner</button>
                     <button class="category-chip" onclick="filterOrders('delivering')">🚚 Delivering</button>
+                    <button class="category-chip" onclick="filterOrders('delivered')">✅ Delivered</button>
                 </div>
                 <div id="ordersList">
                     ${orders.map(o => `
-                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'delivered' ? '#2E7D32' : 'var(--primary)'};">
+                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'waiting-owner' ? '#F57F17' : o.status === 'delivered' ? '#2E7D32' : 'var(--primary)'};">
                             <div class="order-top">
                                 <div>
                                     <div class="order-product">${o.product}</div>
                                     <div class="order-meta">${o.type} • ${o.date} • 🆔 ${o.id}</div>
+                                    ${o.buyerId ? `<div class="order-meta" style="font-size:8px;">Buyer: ${o.buyerId}</div>` : ''}
                                     ${o.qrCode ? `<div class="order-meta" style="font-size:8px;">QR: ${o.qrCode}</div>` : ''}
                                     ${o.paymentRef ? `<div class="order-meta" style="font-size:8px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
                                 </div>
@@ -2818,25 +3043,47 @@
                             ${o.tracking ? `
                                 <div style="margin-top:3px;font-size:10px;color:var(--primary);">
                                     📦 Tracking: ${o.tracking}
-                                    <button class="btn-secondary" style="padding:2px 8px;font-size:8px;margin-left:4px;" onclick="showToast('📍 Tracking: ${o.tracking}', 'info')">Track</button>
+                                    <button class="btn-secondary" style="padding:2px 8px;font-size:8px;margin-left:4px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 Track on Map</button>
+                                </div>
+                            ` : ''}
+                            ${o.completionCode ? `
+                                <div style="margin-top:3px;font-size:10px;color:#2E7D32;">
+                                    🔑 Completion Code: <strong>${o.completionCode}</strong>
                                 </div>
                             ` : ''}
                             <div class="order-actions">
                                 ${o.status === 'waiting-payment' ? `
-                                    <button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm</button>
-                                    <button style="background:#FF6F00;color:white;" onclick="showToast('⏳ Awaiting owner...', 'warning')">⏳ Owner</button>
+                                    <button class="btn-warning" onclick="showToast('⏳ Waiting for seller approval...', 'warning')">⏳ Seller</button>
                                 ` : ''}
-                                ${o.status === 'pending' ? `<button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm</button>` : ''}
-                                ${o.status === 'approved' ? `<button class="btn-primary" style="padding:3px 10px;font-size:9px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>` : ''}
+                                ${o.status === 'waiting-owner' ? `
+                                    <button class="btn-warning" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Owner</button>
+                                ` : ''}
                                 ${o.status === 'delivering' ? `
-                                    <button class="btn-success" onclick="showToast('✅ Delivery completed!', 'success')">Complete</button>
-                                    <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="showToast('📍 Location shared', 'info')">Share Location</button>
+                                    <button class="btn-success" onclick="confirmDelivery('${o.id}')">✅ Confirm Received</button>
+                                    <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 Track</button>
+                                ` : ''}
+                                ${o.status === 'delivered' ? `
+                                    <button class="btn-success" onclick="showToast('✅ Order completed! Thank you!', 'success')">✅ Completed</button>
                                 ` : ''}
                             </div>
                         </div>
                     `).join('')}
                 </div>
             `;
+        }
+
+        function confirmDelivery(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                const completionCode = generateUniqueId('COMP');
+                order.status = 'delivered';
+                order.completionCode = completionCode;
+                showToast('✅ Delivery confirmed! Code: ' + completionCode, 'success');
+                addNotification('✅ Delivery confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                // Notify seller
+                addNotification('📦 Delivery completed by buyer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
+                navigateTo('orders');
+            }
         }
 
         function filterOrders(status) {
@@ -2939,7 +3186,7 @@
                     <button class="btn-secondary" style="flex:1;font-size:10px;padding:5px;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
                     <button class="btn-secondary" style="flex:1;font-size:10px;padding:5px;" onclick="openRequestModal()">📝 Request</button>
                 </div>
-                <button class="btn-primary" onclick="startOrderWorkflow(${product.id})" style="font-size:12px;padding:8px;">📷 Scan & Order</button>
+                <button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:12px;padding:8px;">🛒 Buy Now</button>
                 <div style="margin-top:8px;font-size:10px;color:var(--warm-gray);text-align:center;">
                     <p>📍 ${BUSINESS_ADDRESS}</p>
                     <p>📞 +${SELLER_PHONE}</p>
@@ -3108,6 +3355,17 @@
         }
 
         // ============================================================
+        // CLOSE SCANNER
+        // ============================================================
+        function closeScanner() {
+            document.getElementById('qrScanner').classList.add('hidden');
+            const video = document.getElementById('qrVideo');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(t => t.stop());
+            }
+        }
+
+        // ============================================================
         // INIT LOG
         // ============================================================
         console.log('✨ soYam Cosmo Mini App loaded!');
@@ -3117,8 +3375,9 @@
         console.log('📦 Products:', products.length);
         console.log('📋 Orders:', orders.length);
         console.log('📝 Requests:', customerRequests.length);
-        console.log('💡 TEMPORARY: @mama51R has Owner access');
-        console.log('💡 Click role badge to switch between Buyer/Seller/Owner');
+        console.log('💡 Buyer: No scanner — just select product, choose payment, upload screenshot');
+        console.log('💡 Seller: Scan QR for in-person sales, confirm payments, send to deliverer');
+        console.log('💡 Owner: Full stock management, approvals, revenue, calendar');
     </script>
 
 </body>

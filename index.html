@@ -33,6 +33,10 @@
             --text-primary: #1A1A2E;
             --text-secondary: #5A5A6E;
             --border-color: rgba(212, 175, 55, 0.2);
+            --danger: #C62828;
+            --success: #2E7D32;
+            --warning: #FF6F00;
+            --info: #0D47A1;
         }
         body.dark-theme {
             --bg-primary: #12121F;
@@ -59,7 +63,7 @@
             z-index: 100;
             background: rgba(255, 248, 240, 0.85);
             backdrop-filter: blur(16px);
-            padding: 10px 14px;
+            padding: 8px 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -72,17 +76,17 @@
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
         .logo-icon {
-            font-size: 24px;
+            font-size: 20px;
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             -webkit-background-clip: text;
@@ -96,18 +100,18 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .role-badge-header {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 30px;
-            padding: 3px 10px;
-            font-size: 10px;
+            padding: 2px 8px;
+            font-size: 9px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: var(--transition);
@@ -116,8 +120,8 @@
             border-color: var(--primary);
         }
         .role-dot {
-            width: 6px;
-            height: 6px;
+            width: 5px;
+            height: 5px;
             border-radius: 50%;
             display: inline-block;
         }
@@ -134,13 +138,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 30px;
-            padding: 3px 10px;
-            font-size: 12px;
+            padding: 2px 8px;
+            font-size: 10px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
         }
@@ -150,10 +154,10 @@
         .icon-btn {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
             position: relative;
-            padding: 3px;
+            padding: 2px;
             transition: var(--transition);
         }
         .icon-btn:hover {
@@ -165,11 +169,11 @@
             right: -4px;
             background: var(--secondary);
             color: white;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
             border-radius: 50%;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -190,7 +194,7 @@
             backdrop-filter: blur(16px);
             display: flex;
             justify-content: space-around;
-            padding: 6px 0 12px;
+            padding: 4px 0 10px;
             border-top: 1px solid var(--border-color);
             z-index: 200;
             transition: background 0.3s;
@@ -206,17 +210,17 @@
             align-items: center;
             gap: 1px;
             cursor: pointer;
-            padding: 3px 10px;
+            padding: 2px 8px;
             opacity: 0.5;
             font-family: 'Poppins', sans-serif;
             position: relative;
             transition: var(--transition);
         }
         .nav-item .nav-icon {
-            font-size: 20px;
+            font-size: 18px;
         }
         .nav-item .nav-label {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
             color: var(--warm-gray);
         }
@@ -229,8 +233,8 @@
         .nav-item.active::after {
             content: '';
             position: absolute;
-            top: -4px;
-            width: 16px;
+            top: -3px;
+            width: 14px;
             height: 2px;
             background: var(--primary);
             border-radius: 4px;
@@ -240,7 +244,7 @@
            PAGE
            ============================================================ */
         #page-container {
-            padding: 12px;
+            padding: 10px;
             max-width: 480px;
             margin: 0 auto;
         }
@@ -254,7 +258,7 @@
         @keyframes fadeSlideUp {
             from {
                 opacity: 0;
-                transform: translateY(16px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
@@ -268,9 +272,9 @@
         .hero-banner {
             background: linear-gradient(145deg, var(--secondary), var(--primary-dark));
             border-radius: var(--radius);
-            padding: 18px 16px;
+            padding: 14px 12px;
             color: white;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -278,68 +282,68 @@
         .hero-banner::before {
             content: '✨';
             position: absolute;
-            right: 12px;
-            top: 6px;
-            font-size: 32px;
+            right: 10px;
+            top: 4px;
+            font-size: 28px;
             opacity: 0.12;
         }
         .hero-banner .hero-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 900;
             background: linear-gradient(135deg, #FFD700, #FFF8E1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero-banner .hero-logo-sub {
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 300;
             opacity: 0.8;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             color: #FFF8E1;
             -webkit-text-fill-color: #FFF8E1;
         }
         .hero-banner .hero-tagline {
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 500;
             margin-top: 2px;
             opacity: 0.9;
             font-style: italic;
         }
         .hero-banner .hero-details {
-            margin-top: 8px;
+            margin-top: 6px;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 6px 12px;
-            font-size: 10px;
+            gap: 4px 10px;
+            font-size: 9px;
             opacity: 0.8;
         }
         .hero-banner .hero-details span {
             background: rgba(255, 255, 255, 0.08);
-            padding: 2px 10px;
+            padding: 2px 8px;
             border-radius: 30px;
         }
         .hero-banner .hero-actions {
-            margin-top: 10px;
+            margin-top: 8px;
             display: flex;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
         }
         .hero-btn {
             background: rgba(255, 255, 255, 0.12);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
         }
@@ -367,11 +371,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 14px 0 8px;
+            margin: 10px 0 6px;
         }
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
         }
         .section-title .highlight {
@@ -379,9 +383,9 @@
         }
         .category-scroll {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             overflow-x: auto;
-            padding: 2px 0 10px;
+            padding: 2px 0 8px;
             scrollbar-width: none;
         }
         .category-scroll::-webkit-scrollbar {
@@ -390,9 +394,9 @@
         .category-chip {
             flex-shrink: 0;
             background: var(--bg-card);
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             border: 1px solid var(--border-color);
             cursor: pointer;
@@ -411,7 +415,7 @@
         .product-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
         .product-card {
             background: var(--bg-card);
@@ -432,10 +436,10 @@
             background: #f0ebe4;
         }
         .product-info {
-            padding: 4px 6px 6px;
+            padding: 3px 4px 4px;
         }
         .product-name {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -444,12 +448,12 @@
             line-height: 1.1;
         }
         .product-price {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
             color: var(--primary);
         }
         .product-stock {
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 500;
         }
         .stock-in {
@@ -463,11 +467,11 @@
         }
         .product-badge {
             position: absolute;
-            top: 3px;
-            left: 3px;
-            font-size: 6px;
+            top: 2px;
+            left: 2px;
+            font-size: 5px;
             font-weight: 700;
-            padding: 1px 6px;
+            padding: 1px 5px;
             border-radius: 30px;
             text-transform: uppercase;
         }
@@ -488,15 +492,15 @@
         }
         .product-quick-actions {
             display: flex;
-            gap: 3px;
-            margin-top: 3px;
+            gap: 2px;
+            margin-top: 2px;
         }
         .product-quick-actions button {
             flex: 1;
             padding: 2px 0;
             border: none;
-            border-radius: 10px;
-            font-size: 7px;
+            border-radius: 8px;
+            font-size: 6px;
             font-weight: 600;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
@@ -521,10 +525,10 @@
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 6px 12px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 10px;
             cursor: pointer;
             width: 100%;
             font-family: 'Poppins', sans-serif;
@@ -538,10 +542,10 @@
             background: var(--bg-card);
             color: var(--text-primary);
             border: 1px solid var(--border-color);
-            padding: 6px 14px;
+            padding: 4px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 9px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -553,10 +557,10 @@
             background: #2E7D32;
             color: white;
             border: none;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 10px;
+            font-size: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -568,10 +572,10 @@
             background: #C62828;
             color: white;
             border: none;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 10px;
+            font-size: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -583,10 +587,10 @@
             background: #FF6F00;
             color: white;
             border: none;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 10px;
+            font-size: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -594,12 +598,28 @@
         .btn-warning:hover {
             background: #E65100;
         }
+        .btn-info {
+            background: #0D47A1;
+            color: white;
+            border: none;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .btn-info:hover {
+            background: #0A3A7A;
+        }
+
         .btn-switch {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: 600;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
@@ -645,7 +665,7 @@
             width: 100%;
             max-height: 85vh;
             overflow-y: auto;
-            padding: 16px;
+            padding: 14px;
             transform: translateY(100%);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             color: var(--text-primary);
@@ -657,18 +677,18 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
             border-bottom: 1px solid var(--border-color);
         }
         .modal-header h3 {
             font-family: 'Playfair Display', serif;
-            font-size: 17px;
+            font-size: 15px;
         }
         .close-modal {
             background: none;
             border: none;
-            font-size: 22px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--warm-gray);
             transition: var(--transition);
@@ -712,8 +732,8 @@
         }
         .scanner-frame {
             position: absolute;
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             border: 2px solid var(--primary);
             border-radius: 16px;
             box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.5);
@@ -730,16 +750,16 @@
         }
         .scanner-overlay-ui {
             position: absolute;
-            bottom: 40px;
+            bottom: 30px;
             left: 0;
             right: 0;
             text-align: center;
             color: white;
-            padding: 0 20px;
+            padding: 0 16px;
         }
         .scanner-overlay-ui p {
-            font-size: 13px;
-            margin-bottom: 10px;
+            font-size: 12px;
+            margin-bottom: 8px;
             font-weight: 500;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
         }
@@ -747,26 +767,10 @@
             background: rgba(255, 255, 255, 0.12);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 16px;
-            font-size: 11px;
+            padding: 4px 14px;
+            font-size: 10px;
         }
         .scanner-overlay-ui .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .scanner-overlay-ui .btn-gallery {
-            background: rgba(255, 255, 255, 0.12);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 6px 16px;
-            margin-top: 4px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 11px;
-            transition: var(--transition);
-        }
-        .scanner-overlay-ui .btn-gallery:hover {
             background: rgba(255, 255, 255, 0.2);
         }
 
@@ -775,15 +779,15 @@
            ============================================================ */
         .toast {
             position: fixed;
-            bottom: 90px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(20px);
             background: var(--dark);
             color: white;
-            padding: 8px 16px;
+            padding: 6px 14px;
             border-radius: 30px;
             font-weight: 500;
-            font-size: 11px;
+            font-size: 10px;
             z-index: 500;
             opacity: 0;
             transition: all 0.4s ease;
@@ -814,14 +818,14 @@
         .order-card {
             background: var(--bg-card);
             border-radius: var(--radius-sm);
-            padding: 8px 10px;
-            margin-bottom: 6px;
+            padding: 6px 8px;
+            margin-bottom: 4px;
             box-shadow: var(--shadow);
             border-left: 3px solid var(--primary);
             transition: var(--transition);
         }
         .order-card:hover {
-            transform: translateX(3px);
+            transform: translateX(2px);
         }
         .order-card .order-top {
             display: flex;
@@ -830,29 +834,29 @@
         }
         .order-card .order-product {
             font-weight: 600;
-            font-size: 12px;
+            font-size: 10px;
         }
         .order-card .order-meta {
-            font-size: 10px;
+            font-size: 8px;
             color: var(--warm-gray);
         }
         .order-card .order-price {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 700;
             color: var(--primary);
         }
         .order-card .order-actions {
-            margin-top: 4px;
+            margin-top: 3px;
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 3px;
         }
         .order-card .order-actions button {
-            padding: 3px 10px;
+            padding: 2px 8px;
             border: none;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 9px;
+            font-size: 7px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -862,9 +866,9 @@
         }
         .status-badge {
             display: inline-block;
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 30px;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 600;
         }
         .status-pending {
@@ -904,53 +908,66 @@
            ADMIN PANEL
            ============================================================ */
         .admin-panel {
-            margin-top: 14px;
+            margin-top: 10px;
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 14px;
+            padding: 10px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
         }
         .admin-panel .panel-title {
             font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            margin-bottom: 8px;
+            font-size: 15px;
+            margin-bottom: 6px;
         }
         .admin-panel .panel-title .highlight {
             color: var(--primary);
         }
         .admin-panel .panel-tabs {
             display: flex;
-            gap: 6px;
-            margin-bottom: 10px;
+            gap: 4px;
+            margin-bottom: 8px;
             flex-wrap: wrap;
+        }
+        .admin-panel .panel-tabs .btn-switch {
+            font-size: 7px;
+            padding: 2px 8px;
         }
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-            margin: 6px 0 10px;
+            gap: 4px;
+            margin: 4px 0 8px;
         }
         .stat-card {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
-            padding: 8px;
+            padding: 6px;
             text-align: center;
             border: 1px solid var(--border-color);
         }
         .stat-card .stat-number {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             color: var(--primary);
         }
         .stat-card .stat-label {
-            font-size: 9px;
+            font-size: 7px;
             color: var(--warm-gray);
             font-weight: 500;
         }
         .stat-card .stat-sub {
-            font-size: 8px;
+            font-size: 6px;
             color: var(--warm-gray);
+        }
+        .stat-card.low-stock {
+            border-left: 3px solid var(--danger);
+        }
+        .stat-card.success-card {
+            border-left: 3px solid var(--success);
+        }
+        .stat-card.warning-card {
+            border-left: 3px solid var(--warning);
         }
 
         /* ============================================================
@@ -959,18 +976,18 @@
         .notif-item {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
-            padding: 8px 10px;
-            margin-bottom: 4px;
+            padding: 6px 8px;
+            margin-bottom: 3px;
             border-left: 3px solid var(--primary);
-            font-size: 11px;
+            font-size: 9px;
         }
         .notif-item .notif-id {
             font-weight: 700;
             color: var(--primary);
-            font-size: 9px;
+            font-size: 7px;
         }
         .notif-item .notif-detail {
-            font-size: 10px;
+            font-size: 8px;
             color: var(--warm-gray);
         }
 
@@ -979,37 +996,38 @@
            ============================================================ */
         .stock-table {
             width: 100%;
-            font-size: 10px;
+            font-size: 8px;
             border-collapse: collapse;
-            margin-top: 6px;
+            margin-top: 4px;
         }
         .stock-table th {
             text-align: left;
-            padding: 4px 3px;
+            padding: 3px 2px;
             border-bottom: 2px solid var(--border-color);
             font-weight: 700;
-            font-size: 9px;
+            font-size: 7px;
         }
         .stock-table td {
-            padding: 3px 3px;
+            padding: 2px 2px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-secondary);
+            font-size: 7px;
         }
         .stock-table .stock-total {
             font-weight: 700;
             color: var(--primary);
-            font-size: 11px;
+            font-size: 9px;
         }
         .stock-table .stock-actions button {
-            padding: 2px 8px;
+            padding: 1px 6px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 8px;
+            font-size: 6px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
-            margin-right: 2px;
+            margin-right: 1px;
         }
         .stock-table .stock-actions button:hover {
             opacity: 0.8;
@@ -1022,6 +1040,13 @@
             background: #C62828;
             color: white;
         }
+        .btn-low-stock {
+            background: #E65100;
+            color: white;
+            font-size: 5px;
+            padding: 1px 4px;
+            border-radius: 10px;
+        }
 
         /* ============================================================
            CALENDAR VIEW
@@ -1029,23 +1054,23 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 2px;
-            margin: 6px 0 10px;
+            gap: 1px;
+            margin: 4px 0 8px;
         }
         .calendar-day {
             background: var(--bg-primary);
-            border-radius: 4px;
-            padding: 4px 2px;
+            border-radius: 3px;
+            padding: 3px 1px;
             text-align: center;
-            font-size: 9px;
+            font-size: 7px;
             border: 1px solid var(--border-color);
         }
         .calendar-day .day-num {
             font-weight: 600;
-            font-size: 11px;
+            font-size: 9px;
         }
         .calendar-day .day-revenue {
-            font-size: 7px;
+            font-size: 6px;
             color: var(--primary);
             font-weight: 600;
         }
@@ -1057,11 +1082,11 @@
             border-color: #2E7D32;
         }
         .calendar-header {
-            font-size: 8px;
+            font-size: 6px;
             font-weight: 600;
             color: var(--warm-gray);
             text-align: center;
-            padding: 2px 0;
+            padding: 1px 0;
         }
 
         /* ============================================================
@@ -1070,44 +1095,44 @@
         .profile-card {
             background: var(--bg-card);
             border-radius: var(--radius);
-            padding: 14px;
+            padding: 10px;
             box-shadow: var(--shadow);
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             border: 1px solid var(--border-color);
         }
         .profile-card .avatar {
-            font-size: 40px;
+            font-size: 32px;
         }
         .profile-card .name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
         }
         .profile-card .role {
-            font-size: 11px;
+            font-size: 9px;
             color: var(--warm-gray);
         }
         .profile-card .phone {
-            font-size: 11px;
+            font-size: 9px;
             color: var(--primary);
             font-weight: 600;
         }
         .profile-card .contact-actions {
             display: flex;
-            gap: 6px;
+            gap: 4px;
             justify-content: center;
-            margin-top: 8px;
+            margin-top: 6px;
             flex-wrap: wrap;
         }
         .profile-card .contact-actions a {
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 10px;
+            font-size: 8px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
             transition: var(--transition);
         }
         .profile-card .contact-actions a:hover {
@@ -1129,22 +1154,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 0;
+            padding: 6px 0;
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
-            font-size: 12px;
+            font-size: 10px;
             transition: var(--transition);
         }
         .profile-menu-item:hover {
-            padding-left: 6px;
+            padding-left: 4px;
         }
         .profile-menu-item .menu-left {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .profile-menu-item .menu-icon {
-            font-size: 16px;
+            font-size: 14px;
         }
 
         /* ============================================================
@@ -1153,14 +1178,14 @@
         .payment-options {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            margin: 10px 0;
+            gap: 6px;
+            margin: 6px 0;
         }
         .payment-option {
             background: var(--bg-primary);
             border: 2px solid var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 10px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
@@ -1173,48 +1198,48 @@
             background: rgba(212, 175, 55, 0.08);
         }
         .payment-option .pay-icon {
-            font-size: 24px;
+            font-size: 18px;
             display: block;
         }
         .payment-option .pay-name {
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 600;
             margin-top: 2px;
         }
         .payment-option .pay-detail {
-            font-size: 9px;
+            font-size: 7px;
             color: var(--warm-gray);
         }
 
         .payment-ref-input {
             display: flex;
-            gap: 6px;
-            margin: 8px 0;
+            gap: 4px;
+            margin: 6px 0;
             flex-wrap: wrap;
         }
         .payment-ref-input input {
             flex: 1;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             font-family: 'Poppins', sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             background: var(--bg-primary);
-            min-width: 100px;
+            min-width: 80px;
         }
         .payment-ref-input input:focus {
             outline: none;
             border-color: var(--primary);
         }
         .payment-ref-input button {
-            padding: 6px 14px;
+            padding: 4px 10px;
             border: none;
             border-radius: var(--radius-sm);
             background: var(--primary);
             color: white;
             font-weight: 600;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 9px;
             transition: var(--transition);
         }
         .payment-ref-input button:hover {
@@ -1224,28 +1249,83 @@
         .screenshot-upload {
             border: 2px dashed var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 12px;
+            padding: 8px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 11px;
+            font-size: 9px;
             color: var(--warm-gray);
-            margin: 8px 0;
+            margin: 6px 0;
         }
         .screenshot-upload:hover {
             border-color: var(--primary);
             background: rgba(212, 175, 55, 0.04);
         }
         .screenshot-upload .upload-icon {
-            font-size: 24px;
+            font-size: 18px;
             display: block;
         }
         .screenshot-preview {
             max-width: 100%;
-            max-height: 120px;
+            max-height: 80px;
             border-radius: var(--radius-sm);
-            margin-top: 6px;
+            margin-top: 4px;
             border: 1px solid var(--border-color);
+        }
+
+        .delivery-fee-input {
+            display: flex;
+            gap: 6px;
+            margin: 6px 0;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .delivery-fee-input label {
+            font-size: 9px;
+            font-weight: 600;
+            min-width: 70px;
+        }
+        .delivery-fee-input input {
+            flex: 1;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 10px;
+            background: var(--bg-primary);
+            min-width: 60px;
+        }
+        .delivery-fee-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .buyer-details-form label {
+            display: block;
+            font-weight: 600;
+            margin-top: 6px;
+            margin-bottom: 2px;
+            font-size: 9px;
+        }
+        .buyer-details-form input,
+        .buyer-details-form textarea {
+            width: 100%;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 10px;
+            background: var(--bg-primary);
+            transition: var(--transition);
+        }
+        .buyer-details-form input:focus,
+        .buyer-details-form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .buyer-details-form textarea {
+            resize: vertical;
+            min-height: 40px;
         }
 
         /* ============================================================
@@ -1254,18 +1334,18 @@
         .request-form label {
             display: block;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 6px;
             margin-bottom: 2px;
-            font-size: 11px;
+            font-size: 9px;
         }
         .request-form input,
         .request-form textarea {
             width: 100%;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             font-family: 'Poppins', sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             background: var(--bg-primary);
             transition: var(--transition);
         }
@@ -1276,7 +1356,7 @@
         }
         .request-form textarea {
             resize: vertical;
-            min-height: 50px;
+            min-height: 40px;
         }
 
         /* ============================================================
@@ -1284,17 +1364,17 @@
            ============================================================ */
         .empty-state {
             text-align: center;
-            padding: 24px 12px;
+            padding: 20px 10px;
             color: var(--warm-gray);
         }
         .empty-state .empty-icon {
-            font-size: 32px;
+            font-size: 28px;
         }
         .empty-state h3 {
-            font-size: 14px;
+            font-size: 12px;
         }
         .empty-state p {
-            font-size: 11px;
+            font-size: 9px;
         }
 
         /* ============================================================
@@ -1303,22 +1383,26 @@
         @media (max-width: 480px) {
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 6px;
+                gap: 4px;
             }
             .product-name {
-                font-size: 8px;
-            }
-            .product-price {
-                font-size: 9px;
-            }
-            .product-stock {
                 font-size: 7px;
             }
+            .product-price {
+                font-size: 8px;
+            }
+            .product-stock {
+                font-size: 6px;
+            }
             .hero-banner .hero-logo {
-                font-size: 20px;
+                font-size: 18px;
             }
             .payment-options {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            .admin-panel .panel-tabs .btn-switch {
+                font-size: 6px;
+                padding: 2px 6px;
             }
         }
         @media (max-width: 380px) {
@@ -1332,9 +1416,9 @@
 
         .role-badge {
             display: inline-block;
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 30px;
-            font-size: 9px;
+            font-size: 7px;
             font-weight: 600;
             background: var(--primary);
             color: white;
@@ -1351,10 +1435,10 @@
 
         .search-input {
             width: 100%;
-            padding: 8px 14px;
+            padding: 6px 12px;
             border-radius: 30px;
             border: 1px solid var(--border-color);
-            font-size: 13px;
+            font-size: 11px;
             font-family: 'Poppins', sans-serif;
             background: var(--bg-card);
             transition: var(--transition);
@@ -1366,50 +1450,50 @@
 
         .access-denied {
             text-align: center;
-            padding: 24px 12px;
+            padding: 20px 10px;
         }
         .access-denied .icon {
-            font-size: 40px;
+            font-size: 32px;
         }
         .access-denied h3 {
-            font-size: 16px;
+            font-size: 14px;
             color: #C62828;
         }
         .access-denied p {
             color: var(--warm-gray);
-            font-size: 12px;
+            font-size: 10px;
         }
 
         .request-notif {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
-            padding: 8px 10px;
-            margin-bottom: 4px;
+            padding: 6px 8px;
+            margin-bottom: 3px;
             border-left: 3px solid #0088CC;
         }
         .request-notif .req-product {
             font-weight: 600;
-            font-size: 12px;
+            font-size: 10px;
         }
         .request-notif .req-detail {
-            font-size: 10px;
+            font-size: 8px;
             color: var(--warm-gray);
         }
         .request-notif .req-actions {
             display: flex;
-            gap: 4px;
-            margin-top: 4px;
+            gap: 3px;
+            margin-top: 3px;
             flex-wrap: wrap;
         }
         .request-notif .req-actions a {
-            padding: 2px 10px;
+            padding: 2px 8px;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 9px;
+            font-size: 7px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 2px;
             transition: var(--transition);
         }
         .request-notif .req-actions a:hover {
@@ -1427,32 +1511,32 @@
         .payment-notif {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
-            padding: 8px 10px;
-            margin-bottom: 4px;
+            padding: 6px 8px;
+            margin-bottom: 3px;
             border-left: 3px solid #FF6F00;
             transition: var(--transition);
         }
         .payment-notif .payment-info .amount {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 700;
             color: var(--primary);
         }
         .payment-notif .payment-info .payer {
-            font-size: 10px;
+            font-size: 8px;
             color: var(--warm-gray);
         }
         .payment-notif .payment-actions {
             display: flex;
-            gap: 4px;
-            margin-top: 4px;
+            gap: 3px;
+            margin-top: 3px;
             flex-wrap: wrap;
         }
         .payment-notif .payment-actions button {
-            padding: 2px 10px;
+            padding: 2px 8px;
             border: none;
             border-radius: 20px;
             font-weight: 600;
-            font-size: 8px;
+            font-size: 7px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
             transition: var(--transition);
@@ -1479,18 +1563,18 @@
         .add-stock-form label {
             display: block;
             font-weight: 600;
-            margin-top: 8px;
+            margin-top: 6px;
             margin-bottom: 2px;
-            font-size: 11px;
+            font-size: 9px;
         }
         .add-stock-form input,
         .add-stock-form textarea {
             width: 100%;
-            padding: 6px 10px;
+            padding: 4px 8px;
             border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
             font-family: 'Poppins', sans-serif;
-            font-size: 12px;
+            font-size: 10px;
             background: var(--bg-primary);
             transition: var(--transition);
         }
@@ -1499,9 +1583,9 @@
             border-color: var(--primary);
         }
         .add-stock-form .image-preview {
-            margin-top: 6px;
+            margin-top: 4px;
             max-width: 100%;
-            max-height: 120px;
+            max-height: 80px;
             border-radius: var(--radius-sm);
             object-fit: cover;
             border: 1px solid var(--border-color);
@@ -1509,35 +1593,103 @@
         .add-stock-form .file-upload-area {
             border: 2px dashed var(--border-color);
             border-radius: var(--radius-sm);
-            padding: 16px;
+            padding: 12px;
             text-align: center;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 11px;
+            font-size: 9px;
             color: var(--warm-gray);
-            margin-top: 4px;
+            margin-top: 3px;
         }
         .add-stock-form .file-upload-area:hover {
             border-color: var(--primary);
             background: rgba(212, 175, 55, 0.04);
         }
         .add-stock-form .file-upload-area .upload-icon {
-            font-size: 24px;
+            font-size: 18px;
             display: block;
         }
         .add-stock-form .qr-display {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
-            padding: 8px;
+            padding: 6px;
             text-align: center;
-            font-size: 11px;
+            font-size: 9px;
             font-weight: 600;
             color: var(--primary);
             border: 1px solid var(--border-color);
-            margin-top: 4px;
+            margin-top: 3px;
         }
-        .add-stock-form .qr-display span {
+
+        /* ============================================================
+           TRACKING STATUS
+           ============================================================ */
+        .tracking-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 6px 0;
+        }
+        .tracking-step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            border-left: 3px solid var(--border-color);
+        }
+        .tracking-step .step-icon {
             font-size: 14px;
+        }
+        .tracking-step .step-info {
+            font-size: 8px;
+        }
+        .tracking-step .step-info .step-title {
+            font-weight: 600;
+        }
+        .tracking-step .step-info .step-time {
+            font-size: 7px;
+            color: var(--warm-gray);
+        }
+        .tracking-step.completed {
+            border-left-color: var(--success);
+        }
+        .tracking-step.active {
+            border-left-color: var(--primary);
+        }
+        .tracking-step.pending {
+            border-left-color: var(--border-color);
+        }
+
+        .print-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .print-btn:hover {
+            background: var(--gold-shimmer);
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+                padding: 10px !important;
+            }
+            .admin-panel {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
         }
     </style>
 </head>
@@ -1547,7 +1699,7 @@
     APP
     ============================================================ -->
     <div id="app">
-        <header id="main-header">
+        <header id="main-header" class="no-print">
             <div class="logo-wrapper">
                 <span class="logo-icon">✨</span>
                 <span class="logo-text">soYam <span>Cosmo</span></span>
@@ -1572,7 +1724,7 @@
             <div id="page-container"></div>
         </main>
 
-        <nav id="bottom-nav">
+        <nav id="bottom-nav" class="no-print">
             <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
                 <span class="nav-icon">🏠</span>
                 <span class="nav-label" data-key="nav_home">Home</span>
@@ -1615,13 +1767,13 @@
 
     <div id="productModal" class="modal">
         <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('productModal')" style="float:right;font-size:22px;">&times;</button>
+            <button class="close-modal" onclick="closeModal('productModal')" style="float:right;font-size:20px;">&times;</button>
             <div id="productDetail"></div>
         </div>
     </div>
 
     <!-- ============================================================
-    BUYER ORDER MODAL — No Scanner, Just Payment
+    BUYER ORDER MODAL
     ============================================================ -->
     <div id="buyerOrderModal" class="modal">
         <div class="modal-content">
@@ -1630,6 +1782,16 @@
                 <button class="close-modal" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">&times;</button>
             </div>
             <div id="buyerOrderContent"></div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TRACKING MODAL
+    ============================================================ -->
+    <div id="trackingModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>📍 Track Order</h3><button class="close-modal" onclick="closeModal('trackingModal')">&times;</button></div>
+            <div id="trackingContent"></div>
         </div>
     </div>
 
@@ -1642,16 +1804,16 @@
                 <label>Quantity *</label>
                 <input type="number" id="reqQty" placeholder="Enter quantity" min="1" />
                 <label>Product Image</label>
-                <input type="file" id="reqImageInput" accept="image/*" style="padding:4px;" />
+                <input type="file" id="reqImageInput" accept="image/*" style="padding:3px;" />
                 <label>Additional Notes</label>
                 <textarea id="reqNotes" placeholder="Describe what you're looking for..."></textarea>
-                <button class="btn-primary" style="margin-top:10px;" onclick="submitRequest()">📤 Submit Request</button>
+                <button class="btn-primary" style="margin-top:8px;" onclick="submitRequest()">📤 Submit Request</button>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-    ADD STOCK MODAL — Owner
+    ADD STOCK MODAL — Owner Only
     ============================================================ -->
     <div id="addStockModal" class="modal">
         <div class="modal-content">
@@ -1676,13 +1838,13 @@
                 <div class="qr-display">
                     <span id="stockQrDisplay">SOYAM-PXXX</span>
                 </div>
-                <button class="btn-primary" style="margin-top:12px;" onclick="submitStock()">✅ Add Stock</button>
+                <button class="btn-primary" style="margin-top:8px;" onclick="submitStock()">✅ Add Stock</button>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-    EDIT STOCK MODAL — Owner
+    EDIT STOCK MODAL — Owner Only
     ============================================================ -->
     <div id="editStockModal" class="modal">
         <div class="modal-content">
@@ -1696,25 +1858,28 @@
                 <input type="number" id="editStockBuyPrice" />
                 <label>Quantity</label>
                 <input type="number" id="editStockQty" />
-                <button class="btn-primary" style="margin-top:12px;" onclick="saveStockEdit()">💾 Save Changes</button>
+                <button class="btn-primary" style="margin-top:8px;" onclick="saveStockEdit()">💾 Save Changes</button>
             </div>
         </div>
     </div>
 
     <!-- ============================================================
-    QR SCANNER — Seller Only
+    QR SCANNER — Seller Only (In-Person Sales)
     ============================================================ -->
     <div id="qrScanner" class="scanner-overlay hidden">
         <div class="scanner-container">
             <video id="qrVideo" autoplay playsinline></video>
             <div class="scanner-frame"></div>
             <div class="scanner-overlay-ui">
-                <p id="scannerInstruction">📷 Scan product QR code to sell</p>
+                <p>📷 Scan product QR code to sell</p>
                 <button class="btn-secondary" onclick="closeScanner()">✕ Close</button>
             </div>
         </div>
     </div>
 
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
     <div id="toast" class="toast hidden"></div>
 
     <!-- ============================================================
@@ -1731,6 +1896,8 @@
         const DELIVERER_PHONE = '251912345678';
         const BUSINESS_LOCATION = 'https://maps.google.com/maps?q=Addis+Ababa,+Ethiopia';
         const BUSINESS_ADDRESS = 'Addis Ababa, Ethiopia';
+        const DELIVERY_FEE = 150;
+        const PAYMENT_FEE = 50;
 
         // ============================================================
         // LANGUAGE
@@ -1775,6 +1942,7 @@
         let buyerOrderProduct = null;
         let buyerOrderStep = 1;
         let buyerOrderData = {};
+        let trackingOrderId = null;
 
         // ============================================================
         // PRODUCTS
@@ -1963,51 +2131,73 @@
             addNotification('✨ Welcome to soYam Cosmo!', 'success');
             addNotification('👤 Role: ' + currentUser.role.toUpperCase(), 'info');
 
-            // Sample orders
+            // Sample orders with full details
+            const today = new Date().toISOString().split('T')[0];
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Amber Oud Perfume',
                 price: '1,500 ETB',
+                buyPrice: 1200,
+                stockAtTime: 10,
                 status: 'waiting-owner',
-                date: '2026-08-23',
+                date: today,
                 type: 'in-person',
                 qrCode: 'SOYAM-P001',
                 customer: 'Abebe K.',
+                customerPhone: '+251 911111111',
+                customerAddress: 'Bole, Addis Ababa',
                 paymentMethod: 'Telebirr',
                 paymentRef: 'TBR-2026-08-23-001',
                 notifId: generateUniqueId('NOTIF'),
-                buyerId: generateUniqueId('BUY')
+                buyerId: generateUniqueId('BUY'),
+                deliveryFee: 0,
+                paymentFee: 0,
+                totalPrice: '1,500 ETB'
             });
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Rose Body Lotion',
                 price: '800 ETB',
+                buyPrice: 600,
+                stockAtTime: 5,
                 status: 'waiting-payment',
-                date: '2026-08-22',
+                date: today,
                 type: 'delivery',
                 tracking: 'SOYAM-4567',
                 qrCode: 'SOYAM-P002',
-                paymentRef: 'CBE-2026-08-22-001',
+                paymentRef: 'CBE-2026-08-23-001',
                 customer: 'Meron T.',
+                customerPhone: '+251 922222222',
+                customerAddress: 'Piassa, Addis Ababa',
                 paymentMethod: 'CBE Birr',
                 notifId: generateUniqueId('NOTIF'),
-                buyerId: generateUniqueId('BUY')
+                buyerId: generateUniqueId('BUY'),
+                deliveryFee: 150,
+                paymentFee: 50,
+                totalPrice: '1,000 ETB'
             });
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Face Serum',
                 price: '1,200 ETB',
+                buyPrice: 900,
+                stockAtTime: 3,
                 status: 'delivered',
-                date: new Date().toISOString().split('T')[0],
+                date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
                 type: 'delivery',
                 tracking: 'SOYAM-7890',
                 qrCode: 'SOYAM-P003',
                 customer: 'Sara H.',
+                customerPhone: '+251 933333333',
+                customerAddress: 'CMC, Addis Ababa',
                 paymentMethod: 'Telebirr',
-                paymentRef: 'TBR-2026-08-21-001',
+                paymentRef: 'TBR-2026-08-22-001',
                 notifId: generateUniqueId('NOTIF'),
                 buyerId: generateUniqueId('BUY'),
-                completionCode: generateUniqueId('COMP')
+                completionCode: generateUniqueId('COMP'),
+                deliveryFee: 150,
+                paymentFee: 50,
+                totalPrice: '1,400 ETB'
             });
 
             addCustomerRequest('Special Perfume', 'Sarah A.', 'Qty: 2', 'SOYAM-P001');
@@ -2072,11 +2262,11 @@
             const container = document.getElementById('languageList');
             container.innerHTML = LANGUAGES.map(function(lang) {
                 return `
-                    <div class="lang-item" onclick="selectLanguage('${lang.code}')" style="display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;border-bottom:1px solid var(--border-color);">
-                        <span style="font-size:24px;">${lang.flag}</span>
+                    <div class="lang-item" onclick="selectLanguage('${lang.code}')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;cursor:pointer;border-bottom:1px solid var(--border-color);">
+                        <span style="font-size:20px;">${lang.flag}</span>
                         <div>
-                            <div style="font-weight:600;font-size:14px;">${lang.name}</div>
-                            <div style="font-size:11px;color:var(--warm-gray);">${lang.code.toUpperCase()}</div>
+                            <div style="font-weight:600;font-size:12px;">${lang.name}</div>
+                            <div style="font-size:9px;color:var(--warm-gray);">${lang.code.toUpperCase()}</div>
                         </div>
                         ${currentLanguage === lang.code ? '<span style="margin-left:auto;color:var(--primary);">✅</span>' : ''}
                     </div>
@@ -2138,7 +2328,7 @@
                     <div class="icon">🚫</div>
                     <h3>${title}</h3>
                     <p>${message}</p>
-                    <button class="btn-primary" style="margin-top:10px;width:auto;padding:6px 16px;font-size:11px;" onclick="navigateTo('home')">🏠 Go Home</button>
+                    <button class="btn-primary" style="margin-top:8px;width:auto;padding:4px 14px;font-size:9px;" onclick="navigateTo('home')">🏠 Go Home</button>
                 </div>
             `;
         }
@@ -2173,7 +2363,7 @@
             } else if (currentUser.role === 'seller') {
                 html += renderSellerPanel();
             } else {
-                // Buyer portal — no scanner
+                // Buyer portal
                 html += `
                     <div class="category-scroll">
                         ${categories.map(cat => `<button class="category-chip" onclick="filterCategory('${cat}')">${cat}</button>`).join('')}
@@ -2185,10 +2375,10 @@
                     <div class="product-grid" id="allProducts">
                         ${products.slice(0, 6).map(p => renderProductCard(p)).join('')}
                     </div>
-                    <div style="margin-top:12px;padding:12px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);">
-                        <h3 style="font-family:'Playfair Display',serif;font-size:14px;">📝 <span class="highlight">Can't find what you need?</span></h3>
-                        <p style="color:var(--warm-gray);font-size:11px;margin:2px 0 8px;">Request it and we'll find it for you!</p>
-                        <button class="btn-primary" onclick="openRequestModal()" style="width:auto;padding:6px 16px;font-size:11px;">📝 Request Product</button>
+                    <div style="margin-top:10px;padding:10px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);">
+                        <h3 style="font-family:'Playfair Display',serif;font-size:12px;">📝 <span class="highlight">Can't find what you need?</span></h3>
+                        <p style="color:var(--warm-gray);font-size:9px;margin:2px 0 6px;">Request it and we'll find it for you!</p>
+                        <button class="btn-primary" onclick="openRequestModal()" style="width:auto;padding:4px 14px;font-size:9px;">📝 Request Product</button>
                     </div>
                 `;
             }
@@ -2197,7 +2387,7 @@
         }
 
         // ============================================================
-        // RENDER: PRODUCT CARD — Buyer uses "Buy Now" (no scanner)
+        // RENDER: PRODUCT CARD
         // ============================================================
         function renderProductCard(p) {
             const stockClass = p.stock > 5 ? 'stock-in' : p.stock > 0 ? 'stock-low' : 'stock-out';
@@ -2214,7 +2404,7 @@
                         <div class="product-price">${p.price}</div>
                         <div class="product-stock ${stockClass}">${stockText} (${p.stock})</div>
                         <div class="product-quick-actions">
-                            <button class="btn-buy-now" onclick="openBuyerOrder(${p.id})">🛒 Buy Now</button>
+                            <button class="btn-buy-now" onclick="openBuyerOrder(${p.id})">🛒 Buy</button>
                             <button class="btn-wish" onclick="addToWishlist(${p.id})">❤️</button>
                         </div>
                     </div>
@@ -2223,7 +2413,7 @@
         }
 
         // ============================================================
-        // BUYER ORDER — No Scanner, Just Payment
+        // BUYER ORDER — With Delivery Option + Fees
         // ============================================================
         function openBuyerOrder(productId) {
             const product = products.find(p => p.id === productId);
@@ -2234,7 +2424,11 @@
             }
             buyerOrderProduct = product;
             buyerOrderStep = 1;
-            buyerOrderData = {};
+            buyerOrderData = {
+                deliveryFee: DELIVERY_FEE,
+                paymentFee: PAYMENT_FEE,
+                deliveryType: 'pickup'
+            };
             openModal('buyerOrderModal');
             renderBuyerOrderStep();
         }
@@ -2243,60 +2437,118 @@
             const container = document.getElementById('buyerOrderContent');
             const product = buyerOrderProduct;
             const step = buyerOrderStep;
-            const t = TRANSLATIONS[currentLanguage] || TRANSLATIONS.en;
+            const data = buyerOrderData;
 
             let html = '';
 
             if (step === 1) {
-                // Step 1: Confirm Product
+                // Step 1: Product + Delivery Option + Customer Details
+                const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
+                const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
+                const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
+                const total = basePrice + deliveryFee + paymentFee;
+
                 html = `
                     <div style="text-align:center;">
-                        <img src="${product.image}" style="width:100px;height:100px;border-radius:12px;object-fit:cover;margin-bottom:8px;" />
-                        <h3 style="font-size:16px;">${product.name}</h3>
-                        <p style="font-size:18px;font-weight:700;color:var(--primary);">${product.price}</p>
-                        <p style="font-size:11px;color:var(--warm-gray);">Stock: ${product.stock} available</p>
-                        <p style="font-size:10px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
-                        <div style="display:flex;gap:6px;margin-top:12px;">
-                            <button class="btn-secondary" style="flex:1;font-size:11px;padding:6px;" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">Cancel</button>
-                            <button class="btn-primary" style="flex:2;font-size:11px;padding:6px;" onclick="buyerOrderStep=2;renderBuyerOrderStep();">📝 Select Payment →</button>
+                        <img src="${product.image}" style="width:80px;height:80px;border-radius:10px;object-fit:cover;margin-bottom:4px;" />
+                        <h3 style="font-size:14px;">${product.name}</h3>
+                        <p style="font-size:14px;font-weight:700;color:var(--primary);">${product.price}</p>
+                        <p style="font-size:8px;color:var(--warm-gray);">Stock: ${product.stock} available</p>
+                    </div>
+
+                    <div style="margin:6px 0;">
+                        <label style="font-size:9px;font-weight:600;">Delivery Option</label>
+                        <div style="display:flex;gap:6px;margin-top:3px;">
+                            <button class="btn-secondary ${data.deliveryType === 'pickup' ? 'active' : ''}" style="flex:1;font-size:8px;padding:3px;${data.deliveryType === 'pickup' ? 'border-color:var(--primary);background:rgba(212,175,55,0.08);' : ''}" onclick="buyerOrderData.deliveryType='pickup';renderBuyerOrderStep();">📍 Pickup</button>
+                            <button class="btn-secondary ${data.deliveryType === 'delivery' ? 'active' : ''}" style="flex:1;font-size:8px;padding:3px;${data.deliveryType === 'delivery' ? 'border-color:var(--primary);background:rgba(212,175,55,0.08);' : ''}" onclick="buyerOrderData.deliveryType='delivery';renderBuyerOrderStep();">🚚 Delivery</button>
                         </div>
+                    </div>
+
+                    ${data.deliveryType === 'delivery' ? `
+                        <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin:4px 0;font-size:8px;">
+                            <div style="display:flex;justify-content:space-between;">
+                                <span>Product Price:</span>
+                                <span>${product.price}</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;">
+                                <span>Delivery Fee:</span>
+                                <span>${deliveryFee} ETB</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;">
+                                <span>Payment Fee:</span>
+                                <span>${paymentFee} ETB</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;font-weight:700;color:var(--primary);border-top:1px solid var(--border-color);padding-top:2px;margin-top:2px;">
+                                <span>Total:</span>
+                                <span>${total.toLocaleString()} ETB</span>
+                            </div>
+                        </div>
+                    ` : `
+                        <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:4px;margin:4px 0;font-size:8px;text-align:center;">
+                            <p>Pickup from: ${BUSINESS_ADDRESS}</p>
+                            <p style="font-size:7px;color:var(--warm-gray);">No delivery or payment fees</p>
+                        </div>
+                    `}
+
+                    <div class="buyer-details-form">
+                        <label>Full Name *</label>
+                        <input type="text" id="buyerFullName" placeholder="Enter your full name" value="${data.fullName || ''}" />
+                        <label>Phone Number *</label>
+                        <input type="text" id="buyerPhone" placeholder="Enter phone number" value="${data.phone || ''}" />
+                        ${data.deliveryType === 'delivery' ? `
+                            <label>Address *</label>
+                            <input type="text" id="buyerAddress" placeholder="Enter delivery address" value="${data.address || ''}" />
+                            <label>Exact Location (Google Maps link or description)</label>
+                            <textarea id="buyerLocation" placeholder="Paste Google Maps link or describe location">${data.location || ''}</textarea>
+                        ` : ''}
+                    </div>
+
+                    <div style="display:flex;gap:6px;margin-top:8px;">
+                        <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">Cancel</button>
+                        <button class="btn-primary" style="flex:2;font-size:9px;padding:4px;" onclick="saveBuyerDetails()">📝 Proceed to Payment →</button>
                     </div>
                 `;
             } else if (step === 2) {
-                // Step 2: Payment Method
+                // Step 2: Payment
+                const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
+                const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
+                const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
+                const total = basePrice + deliveryFee + paymentFee;
+
                 html = `
                     <div style="text-align:center;">
-                        <h4 style="font-size:13px;margin-bottom:6px;">💳 Select Payment Method</h4>
+                        <h4 style="font-size:11px;margin-bottom:4px;">💳 Select Payment Method</h4>
                         <div class="payment-options">
                             ${paymentMethods.map(pm => `
-                                <div class="payment-option ${buyerOrderData.paymentMethod === pm.id ? 'selected' : ''}" onclick="selectPaymentMethod('${pm.id}')">
+                                <div class="payment-option ${data.paymentMethod === pm.id ? 'selected' : ''}" onclick="buyerOrderData.paymentMethod='${pm.id}';renderBuyerOrderStep();">
                                     <span class="pay-icon">${pm.icon}</span>
                                     <div class="pay-name">${pm.name}</div>
                                     <div class="pay-detail">${pm.detail}</div>
                                 </div>
                             `).join('')}
                         </div>
-                        ${buyerOrderData.paymentMethod ? `
-                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:10px;margin:8px 0;font-size:11px;">
-                                <p><strong>Selected:</strong> ${paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.name}</p>
-                                <p><strong>Account:</strong> ${paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.account}</p>
+                        ${data.paymentMethod ? `
+                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin:4px 0;font-size:8px;">
+                                <p><strong>Selected:</strong> ${paymentMethods.find(p => p.id === data.paymentMethod)?.name}</p>
+                                <p><strong>Account:</strong> ${paymentMethods.find(p => p.id === data.paymentMethod)?.account}</p>
+                                <p style="font-weight:700;color:var(--primary);">Total: ${total.toLocaleString()} ETB</p>
                             </div>
                         ` : ''}
-                        <label style="font-size:11px;font-weight:600;display:block;margin-top:8px;">Payment Reference *</label>
+                        <label style="font-size:9px;font-weight:600;display:block;margin-top:4px;">Payment Reference *</label>
                         <div class="payment-ref-input">
-                            <input type="text" id="buyerPaymentRef" placeholder="Enter reference number" value="${buyerOrderData.paymentRef || ''}" />
+                            <input type="text" id="buyerPaymentRef" placeholder="Enter reference number" value="${data.paymentRef || ''}" />
                             <button onclick="savePaymentRef()">Submit</button>
                         </div>
-                        <label style="font-size:11px;font-weight:600;display:block;margin-top:8px;">Upload Screenshot (optional)</label>
+                        <label style="font-size:9px;font-weight:600;display:block;margin-top:4px;">Upload Screenshot (optional)</label>
                         <div class="screenshot-upload" onclick="document.getElementById('buyerScreenshotInput').click()">
                             <span class="upload-icon">📷</span>
                             Tap to upload payment screenshot
                             <input type="file" id="buyerScreenshotInput" accept="image/*" style="display:none;" onchange="previewBuyerScreenshot(event)" />
                         </div>
                         <img id="buyerScreenshotPreview" class="screenshot-preview" style="display:none;" />
-                        <div style="display:flex;gap:6px;margin-top:12px;">
-                            <button class="btn-secondary" style="flex:1;font-size:11px;padding:6px;" onclick="buyerOrderStep=1;renderBuyerOrderStep();">← Back</button>
-                            <button class="btn-primary" style="flex:2;font-size:11px;padding:6px;" onclick="submitBuyerOrder()">✅ Place Order</button>
+                        <div style="display:flex;gap:6px;margin-top:8px;">
+                            <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="buyerOrderStep=1;renderBuyerOrderStep();">← Back</button>
+                            <button class="btn-primary" style="flex:2;font-size:9px;padding:4px;" onclick="submitBuyerOrder()">✅ Place Order</button>
                         </div>
                     </div>
                 `;
@@ -2306,8 +2558,27 @@
             document.getElementById('buyerOrderTitle').textContent = '🛒 Place Order - Step ' + step + '/2';
         }
 
-        function selectPaymentMethod(id) {
-            buyerOrderData.paymentMethod = id;
+        function saveBuyerDetails() {
+            const fullName = document.getElementById('buyerFullName').value.trim();
+            const phone = document.getElementById('buyerPhone').value.trim();
+            const address = document.getElementById('buyerAddress')?.value?.trim() || '';
+            const location = document.getElementById('buyerLocation')?.value?.trim() || '';
+
+            if (!fullName || !phone) {
+                showToast('⚠️ Please fill in name and phone number', 'error');
+                return;
+            }
+            if (buyerOrderData.deliveryType === 'delivery' && !address) {
+                showToast('⚠️ Please fill in delivery address', 'error');
+                return;
+            }
+
+            buyerOrderData.fullName = fullName;
+            buyerOrderData.phone = phone;
+            buyerOrderData.address = address;
+            buyerOrderData.location = location;
+
+            buyerOrderStep = 2;
             renderBuyerOrderStep();
         }
 
@@ -2349,21 +2620,35 @@
             const orderId = generateUniqueId('ORD');
             const buyerId = generateUniqueId('BUY');
 
+            const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
+            const deliveryFee = buyerOrderData.deliveryType === 'delivery' ? buyerOrderData.deliveryFee : 0;
+            const paymentFee = buyerOrderData.deliveryType === 'delivery' ? buyerOrderData.paymentFee : 0;
+            const total = basePrice + deliveryFee + paymentFee;
+
             const newOrder = {
                 id: orderId,
                 product: product.name,
                 price: product.price,
+                buyPrice: product.buyPrice,
+                stockAtTime: product.stock,
                 status: 'waiting-payment',
                 date: new Date().toISOString().split('T')[0],
-                type: 'delivery',
-                tracking: 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)),
+                type: buyerOrderData.deliveryType,
+                tracking: buyerOrderData.deliveryType === 'delivery' ? 'SOYAM-' + String(Math.floor(1000 + Math.random() *
+                    9000)) : null,
                 qrCode: product.qrCode,
                 paymentRef: ref,
                 paymentMethod: paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.name || 'Unknown',
-                customer: currentUser.username || 'Customer',
+                customer: buyerOrderData.fullName || currentUser.username || 'Customer',
+                customerPhone: buyerOrderData.phone || '',
+                customerAddress: buyerOrderData.address || '',
+                customerLocation: buyerOrderData.location || '',
                 buyerId: buyerId,
                 notifId: generateUniqueId('NOTIF'),
-                screenshot: buyerOrderData.screenshot || null
+                screenshot: buyerOrderData.screenshot || null,
+                deliveryFee: deliveryFee,
+                paymentFee: paymentFee,
+                totalPrice: total.toLocaleString() + ' ETB'
             };
             orders.unshift(newOrder);
             product.stock--;
@@ -2406,21 +2691,23 @@
                         <div class="stat-card"><div class="stat-number">${products.reduce((s,p) => s + p.stock, 0)}</div><div class="stat-label">Total Stock</div></div>
                     </div>
 
-                    <h4 style="margin:10px 0 4px;">📋 Orders by Buyer ID</h4>
-                    ${pendingOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No pending orders.</p>' :
+                    <h4 style="margin:8px 0 3px;">📋 Orders by Buyer ID</h4>
+                    ${pendingOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No pending orders.</p>' :
                         pendingOrders.map(o => `
                             <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : '#F57F17'};">
                                 <div class="order-top">
                                     <div>
                                         <div class="order-product">${o.product}</div>
                                         <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
-                                        <div class="order-meta" style="font-size:9px;">Order: ${o.id} • ${o.type}</div>
-                                        <div class="order-meta" style="font-size:9px;">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
+                                        <div class="order-meta" style="font-size:7px;">Order: ${o.id} • ${o.type}</div>
+                                        <div class="order-meta" style="font-size:7px;">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
+                                        ${o.customer ? `<div class="order-meta" style="font-size:7px;">👤 ${o.customer} • ${o.customerPhone || ''}</div>` : ''}
+                                        ${o.customerAddress ? `<div class="order-meta" style="font-size:7px;">📍 ${o.customerAddress}</div>` : ''}
                                     </div>
                                     <span class="status-badge ${o.status === 'waiting-payment' ? 'status-waiting-payment' : 'status-waiting-owner'}">${o.status === 'waiting-payment' ? '⏳ Payment Pending' : '⏳ Awaiting Owner'}</span>
                                 </div>
-                                <div class="order-price">${o.price}</div>
-                                ${o.screenshot ? `<div style="margin-top:3px;font-size:9px;color:var(--primary);">📷 Screenshot attached</div>` : ''}
+                                <div class="order-price">${o.totalPrice || o.price}</div>
+                                ${o.screenshot ? `<div style="margin-top:2px;font-size:7px;color:var(--primary);">📷 Screenshot attached</div>` : ''}
                                 <div class="order-actions">
                                     ${o.status === 'waiting-payment' ? `
                                         <button class="btn-success" onclick="sellerConfirmPayment('${o.id}')">✅ Confirm Payment</button>
@@ -2428,44 +2715,47 @@
                                     ${o.status === 'waiting-owner' ? `
                                         <button class="btn-warning" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Owner Pending</button>
                                     ` : ''}
-                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:3px 10px;font-size:9px;text-decoration:none;">📞 Call</a>
-                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="btn-secondary" style="padding:3px 10px;font-size:9px;text-decoration:none;">💬 Chat</a>
+                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">📞 Call</a>
+                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">💬 Chat</a>
+                                    <button class="btn-info" onclick="showToast('📍 ${o.customerAddress || BUSINESS_ADDRESS}', 'info')" style="padding:2px 8px;font-size:7px;">📍 Location</button>
                                 </div>
                             </div>
                         `).join('')
                     }
 
-                    <h4 style="margin:12px 0 4px;">📦 In-Person Sales (Scan QR)</h4>
-                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:6px 0;padding:8px;font-size:12px;">📷 Scan Product QR to Sell</button>
+                    <h4 style="margin:8px 0 3px;">📦 In-Person Sales (Scan QR)</h4>
+                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:4px 0;padding:6px;font-size:10px;">📷 Scan Product QR to Sell</button>
 
-                    <h4 style="margin:12px 0 4px;">🚚 Active Deliveries</h4>
-                    ${deliveringOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No active deliveries.</p>' :
+                    <h4 style="margin:8px 0 3px;">🚚 Active Deliveries</h4>
+                    ${deliveringOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No active deliveries.</p>' :
                         deliveringOrders.map(o => `
                             <div class="order-card" style="border-left-color:var(--primary);">
                                 <div class="order-top">
                                     <div>
                                         <div class="order-product">${o.product}</div>
                                         <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
-                                        <div class="order-meta" style="font-size:9px;">Order: ${o.id}</div>
+                                        <div class="order-meta" style="font-size:7px;">Order: ${o.id}</div>
+                                        ${o.customer ? `<div class="order-meta" style="font-size:7px;">👤 ${o.customer} • ${o.customerPhone || ''}</div>` : ''}
+                                        ${o.customerAddress ? `<div class="order-meta" style="font-size:7px;">📍 ${o.customerAddress}</div>` : ''}
                                     </div>
                                     <span class="status-badge status-delivering">🚚 Delivering</span>
                                 </div>
-                                <div class="order-price">${o.price}</div>
+                                <div class="order-price">${o.totalPrice || o.price}</div>
                                 ${o.tracking ? `
-                                    <div style="margin-top:3px;font-size:10px;color:var(--primary);">
+                                    <div style="margin-top:2px;font-size:8px;color:var(--primary);">
                                         📦 Tracking: ${o.tracking}
-                                        <button class="btn-secondary" style="padding:2px 8px;font-size:8px;margin-left:4px;" onclick="showToast('📍 Tracking: ${o.tracking}', 'info')">Track</button>
+                                        <button class="btn-secondary" style="padding:1px 6px;font-size:6px;margin-left:3px;" onclick="openTracking('${o.id}')">Track</button>
                                     </div>
                                 ` : ''}
                                 <div class="order-actions">
                                     <button class="btn-success" onclick="sellerCompleteDelivery('${o.id}')">✅ Complete Delivery</button>
-                                    <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="sendToDeliverer('${o.id}')">📤 Send to Deliverer</button>
+                                    <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="sendToDeliverer('${o.id}')">📤 Send to Deliverer</button>
                                 </div>
                             </div>
                         `).join('')
                     }
 
-                    <h4 style="margin:12px 0 4px;">📋 Customer Requests</h4>
+                    <h4 style="margin:8px 0 3px;">📋 Customer Requests</h4>
                     ${customerRequests.slice(0, 5).map(r => `
                         <div class="request-notif">
                             <div class="req-product">${r.product}</div>
@@ -2490,7 +2780,6 @@
                 order.status = 'waiting-owner';
                 showToast('✅ Payment confirmed! Waiting for owner approval.', 'success');
                 addNotification('✅ Payment confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                // Notify owner
                 addNotification('👑 Owner: Payment approval needed for ' + order.product + ' (🆔 ' + orderId + ')', 'warning');
                 navigateTo('home');
             }
@@ -2505,9 +2794,10 @@
                 addNotification('✅ Delivery completed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
                 addNotification('🔑 Completion code: ' + completionCode, 'info');
                 showToast('✅ Delivery completed! Code: ' + completionCode, 'success');
-                // Deduct stock
                 const p = products.find(pr => pr.name === order.product);
                 if (p) p.stock = Math.max(0, p.stock - 1);
+                // Notify buyer
+                addNotification('📦 Your order ' + orderId + ' has been delivered!', 'success');
                 navigateTo('home');
             }
         }
@@ -2517,14 +2807,16 @@
             if (order) {
                 showToast('📤 Order ID ' + order.id + ' sent to deliverer!', 'success');
                 addNotification('📤 Order sent to deliverer: ' + order.product + ' (🆔 ' + order.id + ')', 'info');
-                // In production, send via Telegram to deliverer
+                addNotification('📍 Deliverer: ' + order.customerAddress || BUSINESS_ADDRESS, 'info');
                 if (tg && tg.sendData) {
                     tg.sendData(JSON.stringify({
                         type: 'delivery_order',
                         orderId: order.id,
                         product: order.product,
                         tracking: order.tracking,
-                        customer: order.customer
+                        customer: order.customer,
+                        address: order.customerAddress,
+                        phone: order.customerPhone
                     }));
                 }
             }
@@ -2558,15 +2850,22 @@
                                     id: orderId,
                                     product: product.name,
                                     price: product.price,
+                                    buyPrice: product.buyPrice,
+                                    stockAtTime: product.stock,
                                     status: 'waiting-owner',
                                     date: new Date().toISOString().split('T')[0],
                                     type: 'in-person',
                                     qrCode: product.qrCode,
                                     customer: 'In-Person Customer',
+                                    customerPhone: '',
+                                    customerAddress: BUSINESS_ADDRESS,
                                     buyerId: buyerId,
                                     paymentMethod: 'Cash',
                                     paymentRef: 'IN-PERSON-' + Date.now(),
-                                    notifId: generateUniqueId('NOTIF')
+                                    notifId: generateUniqueId('NOTIF'),
+                                    deliveryFee: 0,
+                                    paymentFee: 0,
+                                    totalPrice: product.price
                                 };
                                 orders.unshift(newOrder);
                                 product.stock--;
@@ -2593,7 +2892,7 @@
         }
 
         // ============================================================
-        // RENDER: OWNER PANEL
+        // RENDER: OWNER PANEL — 4 Menus Side by Side
         // ============================================================
         function renderOwnerPanel() {
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
@@ -2606,11 +2905,25 @@
             const pendingPayments = orders.filter(o => o.status === 'waiting-payment').length;
 
             const today = new Date().toISOString().split('T')[0];
-            const todaySales = orders.filter(o => o.date === today && o.status === 'delivered');
-            const todayRevenue = todaySales.reduce((sum, o) => {
-                const priceNum = parseInt(o.price.replace(/[^0-9]/g, ''));
-                return sum + priceNum;
+            const todayOrders = orders.filter(o => o.date === today && (o.status === 'delivered' || o.status === 'waiting-owner' ||
+                o.status === 'waiting-payment'));
+            // Today's Revenue = (Selling Price - Buying Price) of sold/delivered items + pending orders
+            const todayRevenue = orders.filter(o => o.date === today && o.status === 'delivered').reduce((sum, o) => {
+                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                const buyPrice = o.buyPrice || 0;
+                return sum + (sellPrice - buyPrice);
             }, 0);
+            // Include pending orders requested by seller
+            const pendingRevenue = orders.filter(o => o.date === today && (o.status === 'waiting-owner' || o.status ===
+                'waiting-payment')).reduce((sum, o) => {
+                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                const buyPrice = o.buyPrice || 0;
+                return sum + (sellPrice - buyPrice);
+            }, 0);
+            const totalTodayRevenue = todayRevenue + pendingRevenue;
+
+            // Low stock items (stock < 3)
+            const lowStockItems = products.filter(p => p.stock < 3);
 
             const daysInMonth = new Date().getDate();
             const monthName = new Date().toLocaleString('default', { month: 'long' });
@@ -2620,45 +2933,49 @@
                 <div class="admin-panel">
                     <div class="panel-title">👑 <span class="highlight">Owner Dashboard</span></div>
 
+                    <!-- 4 Menus Side by Side -->
                     <div class="panel-tabs">
-                        <button class="btn-switch ${currentView === 'dashboard' ? 'active' : ''}" onclick="switchOwnerView('dashboard')">📊 Dashboard</button>
-                        <button class="btn-switch ${currentView === 'stock' ? 'active' : ''}" onclick="switchOwnerView('stock')">📦 Stock</button>
-                        <button class="btn-switch ${currentView === 'calendar' ? 'active' : ''}" onclick="switchOwnerView('calendar')">📅 Calendar</button>
-                        <button class="btn-switch ${currentView === 'approvals' ? 'active' : ''}" onclick="switchOwnerView('approvals')">✅ Approvals</button>
-                        <button class="btn-switch ${currentView === 'orders' ? 'active' : ''}" onclick="switchOwnerView('orders')">📋 Orders</button>
+                        <button class="btn-switch ${currentView === 'dashboard' ? 'active' : ''}" onclick="switchOwnerView('dashboard')">📊</button>
+                        <button class="btn-switch ${currentView === 'stock' ? 'active' : ''}" onclick="switchOwnerView('stock')">📦</button>
+                        <button class="btn-switch ${currentView === 'approvals' ? 'active' : ''}" onclick="switchOwnerView('approvals')">✅</button>
+                        <button class="btn-switch ${currentView === 'reports' ? 'active' : ''}" onclick="switchOwnerView('reports')">📄</button>
                     </div>
 
                     ${currentView === 'dashboard' ? `
                         <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-number">${orders.length}</div><div class="stat-label">Total Orders</div></div>
-                            <div class="stat-card"><div class="stat-number">${totalStock}</div><div class="stat-label">Total Stock</div></div>
-                            <div class="stat-card"><div class="stat-number">${pendingApprovals + pendingPayments}</div><div class="stat-label">Pending Actions</div></div>
-                            <div class="stat-card"><div class="stat-number">${products.length}</div><div class="stat-label">Products</div></div>
-                        </div>
-
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 10px;">
-                            <div class="stat-card" style="border-left:3px solid #2E7D32;">
-                                <div class="stat-number">${todayRevenue.toLocaleString()} ETB</div>
+                            <div class="stat-card success-card">
+                                <div class="stat-number">${totalTodayRevenue.toLocaleString()} ETB</div>
                                 <div class="stat-label">📊 Today's Revenue</div>
-                                <div class="stat-sub">${todaySales.length} sales</div>
+                                <div class="stat-sub">Sold: ${todayRevenue.toLocaleString()} ETB | Pending: ${pendingRevenue.toLocaleString()} ETB</div>
                             </div>
-                            <div class="stat-card" style="border-left:3px solid var(--primary);">
-                                <div class="stat-number">${(totalValue - totalBuyValue).toLocaleString()} ETB</div>
-                                <div class="stat-label">💰 Total Profit</div>
+                            <div class="stat-card">
+                                <div class="stat-number">${totalValue.toLocaleString()} ETB</div>
+                                <div class="stat-label">💰 Total Stock Value</div>
+                                <div class="stat-sub">${totalStock} items</div>
+                            </div>
+                            <div class="stat-card warning-card">
+                                <div class="stat-number">${totalValue - totalBuyValue}</div>
+                                <div class="stat-label">📈 Total Profit</div>
                                 <div class="stat-sub">${((totalValue - totalBuyValue) / (totalBuyValue || 1) * 100).toFixed(0)}% margin</div>
                             </div>
+                            <div class="stat-card ${lowStockItems.length > 0 ? 'low-stock' : ''}">
+                                <div class="stat-number">${lowStockItems.length}</div>
+                                <div class="stat-label">⚠️ Low Stock Items</div>
+                                <div class="stat-sub">${lowStockItems.map(p => p.name).join(', ') || 'All stocked'}</div>
+                            </div>
                         </div>
 
-                        <h4 style="margin:10px 0 4px;">📊 Stock Movement Summary</h4>
+                        <h4 style="margin:8px 0 3px;">📊 Stock Movement Summary</h4>
                         <table class="stock-table">
                             <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th></tr></thead>
                             <tbody>
-                                ${products.slice(0, 5).map(p => {
+                                ${products.slice(0, 6).map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
                                     const value = priceNum * p.stock;
+                                    const isLow = p.stock < 3;
                                     return `
                                         <tr>
-                                            <td>${p.name}</td>
+                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''}</td>
                                             <td>${p.price}</td>
                                             <td>${p.buyPrice} ETB</td>
                                             <td>${p.stock}</td>
@@ -2666,24 +2983,26 @@
                                         </tr>
                                     `;
                                 }).join('')}
-                                ${products.length > 5 ? `<tr><td colspan="5" style="text-align:center;color:var(--warm-gray);font-size:9px;">+ ${products.length - 5} more</td></tr>` : ''}
+                                ${products.length > 6 ? `<tr><td colspan="5" style="text-align:center;color:var(--warm-gray);font-size:7px;">+ ${products.length - 6} more</td></tr>` : ''}
                             </tbody>
                         </table>
-                        <button class="btn-secondary" style="margin-top:6px;width:100%;font-size:10px;padding:6px;" onclick="switchOwnerView('stock')">📦 View All Stock →</button>
+                        <button class="btn-secondary" style="margin-top:4px;width:100%;font-size:8px;padding:4px;" onclick="switchOwnerView('stock')">📦 View All Stock →</button>
                     ` : ''}
 
                     ${currentView === 'stock' ? `
-                        <h4 style="margin:10px 0 4px;">📦 Full Stock Management</h4>
-                        <button class="btn-primary" style="margin:6px 0;padding:8px;font-size:12px;" onclick="openAddStockModal()">➕ Add New Stock</button>
+                        <h4 style="margin:8px 0 3px;">📦 Full Stock Management</h4>
+                        <button class="btn-primary" style="margin:4px 0;padding:6px;font-size:10px;" onclick="openAddStockModal()">➕ Add New Stock</button>
+                        <button class="btn-secondary" style="margin:4px 0;padding:4px;font-size:8px;width:100%;" onclick="printStockReport()">🖨️ Print Stock Report</button>
                         <table class="stock-table">
                             <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th><th>Actions</th></tr></thead>
                             <tbody>
                                 ${products.map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
                                     const value = priceNum * p.stock;
+                                    const isLow = p.stock < 3;
                                     return `
                                         <tr>
-                                            <td>${p.name}</td>
+                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''}</td>
                                             <td>${p.price}</td>
                                             <td>${p.buyPrice} ETB</td>
                                             <td>${p.stock}</td>
@@ -2704,8 +3023,55 @@
                         </table>
                     ` : ''}
 
-                    ${currentView === 'calendar' ? `
-                        <h4 style="margin:10px 0 4px;">📅 ${monthName} ${year}</h4>
+                    ${currentView === 'approvals' ? `
+                        <h4 style="margin:8px 0 3px;">✅ Pending Approvals</h4>
+                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').map(o => `
+                            <div class="payment-notif">
+                                <div class="payment-info">
+                                    <div class="amount">${o.totalPrice || o.price}</div>
+                                    <div class="payer">${o.product} • ${o.customer || 'Customer'}</div>
+                                    <div style="font-size:7px;color:var(--warm-gray);">
+                                        🆔 ${o.id} • ${o.date} • ${o.type}
+                                        ${o.buyerId ? ' • Buyer: ' + o.buyerId : ''}
+                                    </div>
+                                    <div style="font-size:7px;color:var(--primary);">
+                                        💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}
+                                        ${o.deliveryFee ? ' • Delivery: ' + o.deliveryFee + ' ETB' : ''}
+                                    </div>
+                                    ${o.customerAddress ? `<div style="font-size:7px;color:var(--warm-gray);">📍 ${o.customerAddress}</div>` : ''}
+                                </div>
+                                <div class="payment-actions">
+                                    <button class="btn-confirm" onclick="ownerApprovePayment('${o.id}')">✅ Approve</button>
+                                    <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
+                                </div>
+                            </div>
+                        `).join('')}
+                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No pending approvals.</p>' : ''}
+
+                        <h4 style="margin:10px 0 3px;">📋 Recent Notifications</h4>
+                        ${notifications.slice(0, 8).map(n => `
+                            <div class="notif-item">
+                                <div class="notif-id">🆔 ${n.id || 'N/A'}</div>
+                                <div>${n.message}</div>
+                                <div class="notif-detail">${n.time || ''}</div>
+                            </div>
+                        `).join('')}
+                    ` : ''}
+
+                    ${currentView === 'reports' ? `
+                        <h4 style="margin:8px 0 3px;">📄 Reports & Statements</h4>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:6px 0;">
+                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateDailyReport()">📊 Today's Report</button>
+                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="printStockReport()">🖨️ Print Stock</button>
+                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateOrderReport()">📦 Orders Report</button>
+                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateProfitReport()">💰 Profit Report</button>
+                        </div>
+
+                        <div id="reportContent" style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:8px;margin-top:6px;font-size:8px;max-height:300px;overflow-y:auto;">
+                            <p style="text-align:center;color:var(--warm-gray);">Select a report to view</p>
+                        </div>
+
+                        <h4 style="margin:10px 0 3px;">📅 ${monthName} ${year}</h4>
                         <div class="calendar-grid">
                             <div class="calendar-header">Su</div>
                             <div class="calendar-header">Mo</div>
@@ -2717,10 +3083,11 @@
                             ${Array.from({length: 31}, (_, i) => {
                                 const day = i + 1;
                                 const dateStr = `${year}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                                const dayOrders = orders.filter(o => o.date === dateStr && o.status === 'delivered');
+                                const dayOrders = orders.filter(o => o.date === dateStr && (o.status === 'delivered' || o.status === 'waiting-owner' || o.status === 'waiting-payment'));
                                 const dayRevenue = dayOrders.reduce((sum, o) => {
-                                    const priceNum = parseInt(o.price.replace(/[^0-9]/g, ''));
-                                    return sum + priceNum;
+                                    const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                                    const buyPrice = o.buyPrice || 0;
+                                    return sum + (sellPrice - buyPrice);
                                 }, 0);
                                 const isToday = day === new Date().getDate();
                                 const hasSales = dayOrders.length > 0;
@@ -2732,64 +3099,125 @@
                                 `;
                             }).join('')}
                         </div>
-                        <div style="font-size:9px;color:var(--warm-gray);text-align:center;margin-top:4px;">
-                            <span style="display:inline-block;width:12px;height:12px;background:#2E7D32;border-radius:2px;margin-right:4px;"></span> Has sales &nbsp;
-                            <span style="display:inline-block;width:12px;height:12px;border:1px solid var(--primary);border-radius:2px;margin-left:8px;margin-right:4px;"></span> Today
+                        <div style="font-size:7px;color:var(--warm-gray);text-align:center;margin-top:3px;">
+                            <span style="display:inline-block;width:10px;height:10px;background:#2E7D32;border-radius:2px;margin-right:3px;"></span> Has sales &nbsp;
+                            <span style="display:inline-block;width:10px;height:10px;border:1px solid var(--primary);border-radius:2px;margin-left:6px;margin-right:3px;"></span> Today
                         </div>
-                    ` : ''}
-
-                    ${currentView === 'approvals' ? `
-                        <h4 style="margin:10px 0 4px;">✅ Pending Approvals</h4>
-                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').map(o => `
-                            <div class="payment-notif">
-                                <div class="payment-info">
-                                    <div class="amount">${o.price}</div>
-                                    <div class="payer">${o.product} • ${o.customer || 'Customer'}</div>
-                                    <div style="font-size:9px;color:var(--warm-gray);">
-                                        🆔 ${o.id} • ${o.date} • ${o.type}
-                                        ${o.buyerId ? ' • Buyer: ' + o.buyerId : ''}
-                                    </div>
-                                    <div style="font-size:9px;color:var(--primary);">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
-                                </div>
-                                <div class="payment-actions">
-                                    <button class="btn-confirm" onclick="ownerApprovePayment('${o.id}')">✅ Approve</button>
-                                    <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:11px;">No pending approvals.</p>' : ''}
-
-                        <h4 style="margin:14px 0 4px;">📋 Recent Notifications</h4>
-                        ${notifications.slice(0, 8).map(n => `
-                            <div class="notif-item">
-                                <div class="notif-id">🆔 ${n.id || 'N/A'}</div>
-                                <div>${n.message}</div>
-                                <div class="notif-detail">${n.time || ''}</div>
-                            </div>
-                        `).join('')}
-                    ` : ''}
-
-                    ${currentView === 'orders' ? `
-                        <h4 style="margin:10px 0 4px;">📋 All Orders with Stock Movement</h4>
-                        <table class="stock-table">
-                            <thead><tr><th>Order ID</th><th>Product</th><th>Price</th><th>Status</th><th>Type</th><th>Buyer ID</th></tr></thead>
-                            <tbody>
-                                ${orders.map(o => `
-                                    <tr>
-                                        <td style="font-size:8px;">${o.id}</td>
-                                        <td>${o.product}</td>
-                                        <td>${o.price}</td>
-                                        <td><span class="status-badge ${o.status === 'delivered' ? 'status-delivered' : o.status === 'delivering' ? 'status-delivering' : o.status === 'waiting-owner' ? 'status-waiting-owner' : o.status === 'waiting-payment' ? 'status-waiting-payment' : 'status-pending'}">${o.status}</span></td>
-                                        <td>${o.type}</td>
-                                        <td style="font-size:8px;">${o.buyerId || 'N/A'}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
                     ` : ''}
                 </div>
             `;
             return html;
+        }
+
+        // ============================================================
+        // REPORT GENERATORS
+        // ============================================================
+        function generateDailyReport() {
+            const today = new Date().toISOString().split('T')[0];
+            const dayOrders = orders.filter(o => o.date === today);
+            const delivered = dayOrders.filter(o => o.status === 'delivered');
+            const pending = dayOrders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment');
+
+            let html = `
+                <h4 style="font-size:10px;">📊 Daily Report - ${today}</h4>
+                <table style="width:100%;font-size:7px;border-collapse:collapse;">
+                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Order ID</th><th>Product</th><th>Status</th><th>Profit</th></tr></thead>
+                    <tbody>
+                        ${dayOrders.map(o => {
+                            const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                            const buyPrice = o.buyPrice || 0;
+                            const profit = sellPrice - buyPrice;
+                            return `
+                                <tr>
+                                    <td style="font-size:6px;">${o.id.substring(0,12)}</td>
+                                    <td>${o.product}</td>
+                                    <td>${o.status}</td>
+                                    <td>${profit.toLocaleString()} ETB</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+                <div style="margin-top:4px;font-weight:700;border-top:1px solid var(--border-color);padding-top:4px;">
+                    Total Profit: ${dayOrders.reduce((sum, o) => {
+                        const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                        const buyPrice = o.buyPrice || 0;
+                        return sum + (sellPrice - buyPrice);
+                    }, 0).toLocaleString()} ETB
+                </div>
+            `;
+            document.getElementById('reportContent').innerHTML = html;
+            showToast('📊 Daily report generated', 'success');
+        }
+
+        function generateOrderReport() {
+            let html = `
+                <h4 style="font-size:10px;">📦 All Orders</h4>
+                <table style="width:100%;font-size:7px;border-collapse:collapse;">
+                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Order ID</th><th>Product</th><th>Price</th><th>Status</th><th>Type</th></tr></thead>
+                    <tbody>
+                        ${orders.map(o => `
+                            <tr>
+                                <td style="font-size:6px;">${o.id.substring(0,12)}</td>
+                                <td>${o.product}</td>
+                                <td>${o.price}</td>
+                                <td>${o.status}</td>
+                                <td>${o.type}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+                <div style="margin-top:4px;font-weight:700;border-top:1px solid var(--border-color);padding-top:4px;">
+                    Total Orders: ${orders.length}
+                </div>
+            `;
+            document.getElementById('reportContent').innerHTML = html;
+            showToast('📦 Order report generated', 'success');
+        }
+
+        function generateProfitReport() {
+            const totalProfit = orders.filter(o => o.status === 'delivered' || o.status === 'waiting-owner').reduce((sum, o) => {
+                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
+                const buyPrice = o.buyPrice || 0;
+                return sum + (sellPrice - buyPrice);
+            }, 0);
+
+            let html = `
+                <h4 style="font-size:10px;">💰 Profit Report</h4>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 0;">
+                    <div style="background:var(--bg-card);padding:6px;border-radius:4px;text-align:center;">
+                        <div style="font-weight:700;font-size:12px;color:var(--primary);">${totalProfit.toLocaleString()} ETB</div>
+                        <div style="font-size:7px;">Total Profit</div>
+                    </div>
+                    <div style="background:var(--bg-card);padding:6px;border-radius:4px;text-align:center;">
+                        <div style="font-weight:700;font-size:12px;color:var(--success);">${(totalProfit / (orders.length || 1)).toFixed(0)} ETB</div>
+                        <div style="font-size:7px;">Avg Profit/Order</div>
+                    </div>
+                </div>
+                <table style="width:100%;font-size:7px;border-collapse:collapse;">
+                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Product</th><th>Sell</th><th>Buy</th><th>Profit</th></tr></thead>
+                    <tbody>
+                        ${products.map(p => {
+                            const sellPrice = parseInt(p.price.replace(/[^0-9]/g, ''));
+                            const profit = sellPrice - p.buyPrice;
+                            return `
+                                <tr>
+                                    <td>${p.name}</td>
+                                    <td>${p.price}</td>
+                                    <td>${p.buyPrice} ETB</td>
+                                    <td style="color:${profit > 0 ? 'var(--success)' : 'var(--danger)'};">${profit.toLocaleString()} ETB</td>
+                                </tr>
+                            `;
+                        }).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('reportContent').innerHTML = html;
+            showToast('💰 Profit report generated', 'success');
+        }
+
+        function printStockReport() {
+            window.print();
         }
 
         // ============================================================
@@ -2810,10 +3238,12 @@
                 const notifId = generateUniqueId('NOTIF');
                 showToast('✅ Payment approved for ' + order.product, 'success');
                 addNotification('💰 Payment approved: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                // If delivery, send to deliverer
                 if (order.type === 'delivery') {
                     order.status = 'delivering';
                     addNotification('🚚 Order sent to deliverer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
+                } else if (order.type === 'in-person') {
+                    order.status = 'completed';
+                    addNotification('🏪 In-person sale completed: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
                 }
                 navigateTo('home');
             }
@@ -2843,7 +3273,6 @@
             document.getElementById('stockImagePreview').style.display = 'none';
             document.getElementById('stockImagePreview').src = '';
             stockImageData = null;
-            // Generate QR code
             const qrCode = 'SOYAM-P' + String(Math.floor(100 + Math.random() * 900));
             document.getElementById('stockQrDisplay').textContent = qrCode;
             openModal('addStockModal');
@@ -2956,7 +3385,7 @@
         // ============================================================
         function renderSearch() {
             return `
-                <div style="position:sticky;top:0;background:var(--bg-primary);padding:4px 0 10px;z-index:10;">
+                <div style="position:sticky;top:0;background:var(--bg-primary);padding:3px 0 8px;z-index:10;">
                     <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search products..." oninput="performSearch(this.value)" />
                 </div>
                 <div id="searchResults">
@@ -2984,11 +3413,11 @@
                 return;
             }
             container.innerHTML =
-                `<h3 style="margin:6px 0;font-size:13px;">${results.length} results found</h3><div class="product-grid">${results.slice(0,6).map(p => renderProductCard(p)).join('')}</div>`;
+                `<h3 style="margin:4px 0;font-size:11px;">${results.length} results found</h3><div class="product-grid">${results.slice(0,6).map(p => renderProductCard(p)).join('')}</div>`;
         }
 
         // ============================================================
-        // ORDERS
+        // ORDERS — With Tracking
         // ============================================================
         function renderOrders() {
             if (orders.length === 0) {
@@ -3019,7 +3448,7 @@
             };
             return `
                 <div class="section-header"><div class="section-title">📦 <span class="highlight">My Orders</span></div></div>
-                <div style="display:flex;gap:4px;margin-bottom:10px;overflow-x:auto;padding-bottom:4px;">
+                <div style="display:flex;gap:3px;margin-bottom:8px;overflow-x:auto;padding-bottom:3px;">
                     <button class="category-chip active" onclick="filterOrders('all')">All</button>
                     <button class="category-chip" onclick="filterOrders('waiting-payment')">💳 Payment</button>
                     <button class="category-chip" onclick="filterOrders('waiting-owner')">⏳ Owner</button>
@@ -3033,21 +3462,22 @@
                                 <div>
                                     <div class="order-product">${o.product}</div>
                                     <div class="order-meta">${o.type} • ${o.date} • 🆔 ${o.id}</div>
-                                    ${o.buyerId ? `<div class="order-meta" style="font-size:8px;">Buyer: ${o.buyerId}</div>` : ''}
-                                    ${o.qrCode ? `<div class="order-meta" style="font-size:8px;">QR: ${o.qrCode}</div>` : ''}
-                                    ${o.paymentRef ? `<div class="order-meta" style="font-size:8px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
+                                    ${o.buyerId ? `<div class="order-meta" style="font-size:6px;">Buyer: ${o.buyerId}</div>` : ''}
+                                    ${o.qrCode ? `<div class="order-meta" style="font-size:6px;">QR: ${o.qrCode}</div>` : ''}
+                                    ${o.paymentRef ? `<div class="order-meta" style="font-size:6px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
+                                    ${o.totalPrice ? `<div class="order-meta" style="font-size:6px;font-weight:700;color:var(--primary);">Total: ${o.totalPrice}</div>` : ''}
                                 </div>
                                 <span class="status-badge ${statusMap[o.status] || 'status-pending'}">${statusLabels[o.status] || o.status}</span>
                             </div>
                             <div class="order-price">${o.price}</div>
                             ${o.tracking ? `
-                                <div style="margin-top:3px;font-size:10px;color:var(--primary);">
+                                <div style="margin-top:2px;font-size:8px;color:var(--primary);">
                                     📦 Tracking: ${o.tracking}
-                                    <button class="btn-secondary" style="padding:2px 8px;font-size:8px;margin-left:4px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 Track on Map</button>
+                                    <button class="btn-secondary" style="padding:1px 6px;font-size:6px;margin-left:3px;" onclick="openTracking('${o.id}')">📍 Track</button>
                                 </div>
                             ` : ''}
                             ${o.completionCode ? `
-                                <div style="margin-top:3px;font-size:10px;color:#2E7D32;">
+                                <div style="margin-top:2px;font-size:8px;color:#2E7D32;">
                                     🔑 Completion Code: <strong>${o.completionCode}</strong>
                                 </div>
                             ` : ''}
@@ -3060,7 +3490,7 @@
                                 ` : ''}
                                 ${o.status === 'delivering' ? `
                                     <button class="btn-success" onclick="confirmDelivery('${o.id}')">✅ Confirm Received</button>
-                                    <button class="btn-secondary" style="padding:3px 10px;font-size:9px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 Track</button>
+                                    <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="openTracking('${o.id}')">📍 Track</button>
                                 ` : ''}
                                 ${o.status === 'delivered' ? `
                                     <button class="btn-success" onclick="showToast('✅ Order completed! Thank you!', 'success')">✅ Completed</button>
@@ -3080,10 +3510,73 @@
                 order.completionCode = completionCode;
                 showToast('✅ Delivery confirmed! Code: ' + completionCode, 'success');
                 addNotification('✅ Delivery confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                // Notify seller
                 addNotification('📦 Delivery completed by buyer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
                 navigateTo('orders');
             }
+        }
+
+        // ============================================================
+        // TRACKING
+        // ============================================================
+        function openTracking(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) {
+                showToast('❌ Order not found', 'error');
+                return;
+            }
+            trackingOrderId = orderId;
+            const modal = document.getElementById('trackingModal');
+            const container = document.getElementById('trackingContent');
+
+            const steps = [
+                { status: 'Order Placed', icon: '📦', completed: true },
+                { status: 'Payment Confirmed', icon: '✅', completed: order.status !== 'waiting-payment' },
+                { status: 'Owner Approved', icon: '👑', completed: order.status === 'approved' || order.status ===
+                        'delivering' || order.status === 'delivered' },
+                { status: 'Delivering', icon: '🚚', completed: order.status === 'delivering' || order.status ===
+                    'delivered' },
+                { status: 'Delivered', icon: '📍', completed: order.status === 'delivered' }
+            ];
+
+            let trackingHtml = `
+                <div style="text-align:center;margin-bottom:8px;">
+                    <h4 style="font-size:12px;">📍 Order Tracking</h4>
+                    <p style="font-size:9px;color:var(--warm-gray);">Order: ${order.id}</p>
+                    <p style="font-size:9px;font-weight:600;color:var(--primary);">${order.product}</p>
+                    <p style="font-size:8px;color:var(--warm-gray);">Status: ${order.status}</p>
+                </div>
+                <div class="tracking-steps">
+                    ${steps.map((s, i) => `
+                        <div class="tracking-step ${s.completed ? 'completed' : 'pending'}">
+                            <span class="step-icon">${s.icon}</span>
+                            <div class="step-info">
+                                <div class="step-title">${s.status}</div>
+                                <div class="step-time">${s.completed ? '✅ Completed' : '⏳ Pending'}</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+                ${order.tracking ? `
+                    <div style="text-align:center;margin-top:6px;">
+                        <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 View on Google Maps</button>
+                    </div>
+                ` : ''}
+                ${order.customerAddress ? `
+                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin-top:6px;font-size:8px;">
+                        <strong>Delivery Address:</strong> ${order.customerAddress}
+                        ${order.customerLocation ? `<br /><span style="font-size:7px;color:var(--warm-gray);">${order.customerLocation}</span>` : ''}
+                    </div>
+                ` : ''}
+                ${order.completionCode ? `
+                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin-top:4px;font-size:8px;text-align:center;border:1px solid var(--success);">
+                        <strong>🔑 Completion Code:</strong> ${order.completionCode}
+                    </div>
+                ` : ''}
+                <button class="btn-secondary" style="margin-top:8px;width:100%;font-size:8px;padding:4px;" onclick="closeModal('trackingModal')">Close</button>
+            `;
+
+            container.innerHTML = trackingHtml;
+            modal.classList.add('visible');
         }
 
         function filterOrders(status) {
@@ -3176,23 +3669,23 @@
             const stockClass = product.stock > 5 ? 'stock-in' : product.stock > 0 ? 'stock-low' : 'stock-out';
             const stockText = product.stock > 5 ? '✅ In Stock' : product.stock > 0 ? '⚠️ Low Stock' : '❌ Out of Stock';
             detail.innerHTML = `
-                <img src="${product.image}" style="width:100%;border-radius:10px;margin-bottom:10px;aspect-ratio:1/1;object-fit:cover;" />
-                <h2 style="font-size:17px;">${product.name}</h2>
-                <p style="font-size:18px;font-weight:700;color:var(--primary);">${product.price}</p>
-                <p style="font-size:11px;color:var(--warm-gray);">Category: ${product.category}</p>
-                <p style="font-weight:500;${stockClass};font-size:11px;">${stockText} (${product.stock})</p>
-                <p style="font-size:10px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
-                <div style="display:flex;gap:6px;margin:10px 0;">
-                    <button class="btn-secondary" style="flex:1;font-size:10px;padding:5px;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
-                    <button class="btn-secondary" style="flex:1;font-size:10px;padding:5px;" onclick="openRequestModal()">📝 Request</button>
+                <img src="${product.image}" style="width:100%;border-radius:8px;margin-bottom:8px;aspect-ratio:1/1;object-fit:cover;" />
+                <h2 style="font-size:14px;">${product.name}</h2>
+                <p style="font-size:15px;font-weight:700;color:var(--primary);">${product.price}</p>
+                <p style="font-size:9px;color:var(--warm-gray);">Category: ${product.category}</p>
+                <p style="font-weight:500;${stockClass};font-size:9px;">${stockText} (${product.stock})</p>
+                <p style="font-size:8px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
+                <div style="display:flex;gap:4px;margin:8px 0;">
+                    <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
+                    <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="openRequestModal()">📝 Request</button>
                 </div>
-                <button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:12px;padding:8px;">🛒 Buy Now</button>
-                <div style="margin-top:8px;font-size:10px;color:var(--warm-gray);text-align:center;">
+                <button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:10px;padding:6px;">🛒 Buy Now</button>
+                <div style="margin-top:6px;font-size:8px;color:var(--warm-gray);text-align:center;">
                     <p>📍 ${BUSINESS_ADDRESS}</p>
                     <p>📞 +${SELLER_PHONE}</p>
-                    <div style="display:flex;gap:6px;justify-content:center;margin-top:2px;">
-                        <a href="tel:+${SELLER_PHONE}" style="color:var(--primary);text-decoration:none;font-size:10px;">📞 Call</a>
-                        <a href="https://t.me/${SELLER_USERNAME}" target="_blank" style="color:var(--primary);text-decoration:none;font-size:10px;">💬 Chat</a>
+                    <div style="display:flex;gap:4px;justify-content:center;margin-top:2px;">
+                        <a href="tel:+${SELLER_PHONE}" style="color:var(--primary);text-decoration:none;font-size:8px;">📞 Call</a>
+                        <a href="https://t.me/${SELLER_USERNAME}" target="_blank" style="color:var(--primary);text-decoration:none;font-size:8px;">💬 Chat</a>
                     </div>
                 </div>
             `;
@@ -3221,10 +3714,10 @@
                     <div class="name">${currentUser.username || currentUser.firstName || 'Guest'}</div>
                     <div class="role">${roleLabels[currentUser.role] || 'Customer'} <span class="role-badge ${roleBadgeClass[currentUser.role] || 'buyer'}">${currentUser.role.toUpperCase()}</span></div>
                     <div class="phone">📞 +${SELLER_PHONE}</div>
-                    <div style="font-size:11px;color:var(--warm-gray);">📍 ${BUSINESS_ADDRESS}</div>
+                    <div style="font-size:9px;color:var(--warm-gray);">📍 ${BUSINESS_ADDRESS}</div>
                     ${contactActions}
                 </div>
-                <div style="background:var(--bg-card);border-radius:var(--radius);padding:0 12px;box-shadow:var(--shadow);border:1px solid var(--border-color);">
+                <div style="background:var(--bg-card);border-radius:var(--radius);padding:0 10px;box-shadow:var(--shadow);border:1px solid var(--border-color);">
                     <div class="profile-menu-item" onclick="openRequestModal()">
                         <span class="menu-left"><span class="menu-icon">📝</span>Request a Product</span>
                         <span>→</span>
@@ -3375,9 +3868,9 @@
         console.log('📦 Products:', products.length);
         console.log('📋 Orders:', orders.length);
         console.log('📝 Requests:', customerRequests.length);
-        console.log('💡 Buyer: No scanner — just select product, choose payment, upload screenshot');
-        console.log('💡 Seller: Scan QR for in-person sales, confirm payments, send to deliverer');
-        console.log('💡 Owner: Full stock management, approvals, revenue, calendar');
+        console.log('💡 Delivery Fee:', DELIVERY_FEE, 'ETB | Payment Fee:', PAYMENT_FEE, 'ETB');
+        console.log('💡 Owner: 4 menus - Dashboard | Stock | Approvals | Reports');
+        console.log('💡 Today\'s Revenue = (Sell Price - Buy Price) of sold + pending orders');
     </script>
 
 </body>

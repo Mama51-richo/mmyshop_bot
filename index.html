@@ -7,9 +7,7 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        /* ============================================================
-           ROOT VARIABLES
-           ============================================================ */
+        /* ===== ROOT VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -33,10 +31,6 @@
             --text-primary: #1A1A2E;
             --text-secondary: #5A5A6E;
             --border-color: rgba(212, 175, 55, 0.2);
-            --danger: #C62828;
-            --success: #2E7D32;
-            --warning: #FF6F00;
-            --info: #0D47A1;
         }
         body.dark-theme {
             --bg-primary: #12121F;
@@ -54,9 +48,7 @@
             transition: background 0.3s, color 0.3s;
         }
 
-        /* ============================================================
-           HEADER
-           ============================================================ */
+        /* ===== HEADER ===== */
         #main-header {
             position: sticky;
             top: 0;
@@ -79,7 +71,7 @@
             gap: 4px;
         }
         .logo-icon {
-            font-size: 20px;
+            font-size: 22px;
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -114,10 +106,6 @@
             gap: 3px;
             font-family: 'Poppins', sans-serif;
             cursor: pointer;
-            transition: var(--transition);
-        }
-        .role-badge-header:hover {
-            border-color: var(--primary);
         }
         .role-dot {
             width: 5px;
@@ -139,17 +127,13 @@
             border: 1px solid var(--border-color);
             border-radius: 30px;
             padding: 2px 8px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             gap: 3px;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .lang-btn:hover {
-            border-color: var(--primary);
         }
         .icon-btn {
             background: none;
@@ -158,10 +142,6 @@
             cursor: pointer;
             position: relative;
             padding: 2px;
-            transition: var(--transition);
-        }
-        .icon-btn:hover {
-            transform: scale(1.1);
         }
         .badge {
             position: absolute;
@@ -182,9 +162,7 @@
             display: none;
         }
 
-        /* ============================================================
-           BOTTOM NAV
-           ============================================================ */
+        /* ===== BOTTOM NAV ===== */
         #bottom-nav {
             position: fixed;
             bottom: 0;
@@ -197,7 +175,6 @@
             padding: 4px 0 10px;
             border-top: 1px solid var(--border-color);
             z-index: 200;
-            transition: background 0.3s;
         }
         body.dark-theme #bottom-nav {
             background: rgba(18, 18, 31, 0.92);
@@ -208,13 +185,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1px;
+            gap: 0px;
             cursor: pointer;
             padding: 2px 8px;
             opacity: 0.5;
             font-family: 'Poppins', sans-serif;
             position: relative;
-            transition: var(--transition);
         }
         .nav-item .nav-icon {
             font-size: 18px;
@@ -240,9 +216,7 @@
             border-radius: 4px;
         }
 
-        /* ============================================================
-           PAGE
-           ============================================================ */
+        /* ===== PAGE ===== */
         #page-container {
             padding: 10px;
             max-width: 480px;
@@ -266,9 +240,7 @@
             }
         }
 
-        /* ============================================================
-           HERO BANNER
-           ============================================================ */
+        /* ===== HERO ===== */
         .hero-banner {
             background: linear-gradient(145deg, var(--secondary), var(--primary-dark));
             border-radius: var(--radius);
@@ -345,7 +317,6 @@
             align-items: center;
             gap: 3px;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
         }
         .hero-btn:hover {
             background: rgba(255, 255, 255, 0.2);
@@ -364,9 +335,7 @@
             border-color: #0088CC;
         }
 
-        /* ============================================================
-           PRODUCTS
-           ============================================================ */
+        /* ===== PRODUCTS ===== */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -402,10 +371,6 @@
             cursor: pointer;
             white-space: nowrap;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .category-chip:hover {
-            border-color: var(--primary);
         }
         .category-chip.active {
             background: var(--primary);
@@ -424,10 +389,6 @@
             box-shadow: var(--shadow);
             border: 1px solid var(--border-color);
             cursor: pointer;
-            transition: var(--transition);
-        }
-        .product-card:hover {
-            transform: translateY(-2px);
         }
         .product-image {
             width: 100%;
@@ -504,12 +465,8 @@
             font-weight: 600;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
         }
-        .product-quick-actions button:hover {
-            opacity: 0.8;
-        }
-        .btn-buy-now {
+        .btn-scan-order {
             background: var(--secondary);
             color: white;
         }
@@ -518,9 +475,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* ============================================================
-           BUTTONS
-           ============================================================ */
+        /* ===== BUTTONS ===== */
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             color: white;
@@ -532,11 +487,6 @@
             cursor: pointer;
             width: 100%;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(212, 175, 55, 0.3);
         }
         .btn-secondary {
             background: var(--bg-card);
@@ -548,10 +498,6 @@
             font-size: 9px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-secondary:hover {
-            border-color: var(--primary);
         }
         .btn-success {
             background: #2E7D32;
@@ -563,10 +509,6 @@
             font-size: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-success:hover {
-            background: #1B5E20;
         }
         .btn-danger {
             background: #C62828;
@@ -578,81 +520,9 @@
             font-size: 8px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-danger:hover {
-            background: #B71C1C;
-        }
-        .btn-warning {
-            background: #FF6F00;
-            color: white;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-warning:hover {
-            background: #E65100;
-        }
-        .btn-info {
-            background: #0D47A1;
-            color: white;
-            border: none;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-info:hover {
-            background: #0A3A7A;
-        }
-        .btn-refresh {
-            background: var(--primary);
-            color: var(--dark);
-            border: none;
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .btn-refresh:hover {
-            background: var(--gold-shimmer);
         }
 
-        .btn-switch {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 3px 10px;
-            border-radius: 30px;
-            font-size: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-            color: var(--text-primary);
-        }
-        .btn-switch:hover {
-            border-color: var(--primary);
-        }
-        .btn-switch.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* ============================================================
-           MODALS
-           ============================================================ */
+        /* ===== MODALS ===== */
         .modal {
             position: fixed;
             top: 0;
@@ -706,15 +576,9 @@
             font-size: 20px;
             cursor: pointer;
             color: var(--warm-gray);
-            transition: var(--transition);
-        }
-        .close-modal:hover {
-            transform: rotate(90deg);
         }
 
-        /* ============================================================
-           QR SCANNER
-           ============================================================ */
+        /* ===== QR SCANNER ===== */
         .scanner-overlay {
             position: fixed;
             top: 0;
@@ -773,7 +637,7 @@
             padding: 0 16px;
         }
         .scanner-overlay-ui p {
-            font-size: 12px;
+            font-size: 11px;
             margin-bottom: 8px;
             font-weight: 500;
             text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
@@ -782,16 +646,23 @@
             background: rgba(255, 255, 255, 0.12);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 4px 14px;
-            font-size: 10px;
+            padding: 4px 12px;
+            font-size: 9px;
         }
-        .scanner-overlay-ui .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .scanner-overlay-ui .btn-gallery {
+            background: rgba(255, 255, 255, 0.12);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            margin-top: 3px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 9px;
         }
 
-        /* ============================================================
-           TOAST
-           ============================================================ */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 80px;
@@ -827,20 +698,15 @@
             background: #0D47A1;
         }
 
-        /* ============================================================
-           ORDER CARDS
-           ============================================================ */
+        /* ===== ORDER CARDS ===== */
         .order-card {
             background: var(--bg-card);
             border-radius: var(--radius-sm);
             padding: 6px 8px;
             margin-bottom: 4px;
             box-shadow: var(--shadow);
-            border-left: 3px solid var(--primary);
-            transition: var(--transition);
-        }
-        .order-card:hover {
-            transform: translateX(2px);
+            border-left: 2px solid var(--primary);
+            font-size: 10px;
         }
         .order-card .order-top {
             display: flex;
@@ -874,10 +740,6 @@
             font-size: 7px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .order-card .order-actions button:hover {
-            opacity: 0.8;
         }
         .status-badge {
             display: inline-block;
@@ -910,22 +772,8 @@
             background: #FFF3E0;
             color: #E65100;
         }
-        .status-waiting-owner {
-            background: #FFF8E1;
-            color: #F57F17;
-        }
-        .status-completed {
-            background: #E8F5E9;
-            color: #1B5E20;
-        }
-        .status-refunded {
-            background: #FCE4EC;
-            color: #880E4F;
-        }
 
-        /* ============================================================
-           ADMIN PANEL
-           ============================================================ */
+        /* ===== ADMIN PANEL ===== */
         .admin-panel {
             margin-top: 10px;
             background: var(--bg-card);
@@ -942,25 +790,9 @@
         .admin-panel .panel-title .highlight {
             color: var(--primary);
         }
-        .admin-panel .panel-tabs {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-        }
-        .admin-panel .panel-tabs .btn-switch {
-            font-size: 7px;
-            padding: 2px 8px;
-        }
-        .admin-panel .panel-actions {
-            display: flex;
-            gap: 4px;
-            margin: 4px 0;
-            flex-wrap: wrap;
-        }
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 4px;
             margin: 4px 0 8px;
         }
@@ -972,7 +804,7 @@
             border: 1px solid var(--border-color);
         }
         .stat-card .stat-number {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             color: var(--primary);
         }
@@ -981,44 +813,69 @@
             color: var(--warm-gray);
             font-weight: 500;
         }
-        .stat-card .stat-sub {
-            font-size: 6px;
-            color: var(--warm-gray);
+
+        /* ===== CALENDAR VIEW ===== */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 2px;
+            margin: 6px 0;
         }
-        .stat-card.low-stock {
-            border-left: 3px solid var(--danger);
+        .calendar-grid .day {
+            background: var(--bg-primary);
+            border-radius: 4px;
+            padding: 4px 2px;
+            text-align: center;
+            font-size: 8px;
+            border: 1px solid var(--border-color);
         }
-        .stat-card.success-card {
-            border-left: 3px solid var(--success);
+        .calendar-grid .day .day-num {
+            font-weight: 700;
+            font-size: 10px;
         }
-        .stat-card.warning-card {
-            border-left: 3px solid var(--warning);
+        .calendar-grid .day .day-profit {
+            font-size: 7px;
+            color: #2E7D32;
+        }
+        .calendar-grid .day .day-loss {
+            font-size: 7px;
+            color: #C62828;
+        }
+        .calendar-grid .day.today {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: white;
+        }
+        .calendar-grid .day.today .day-profit {
+            color: white;
+        }
+        .calendar-grid .day.header {
+            font-weight: 700;
+            font-size: 7px;
+            background: transparent;
+            border: none;
         }
 
-        /* ============================================================
-           NOTIFICATION ITEMS
-           ============================================================ */
+        /* ===== NOTIFICATION ITEMS ===== */
         .notif-item {
             background: var(--bg-primary);
             border-radius: var(--radius-sm);
             padding: 6px 8px;
             margin-bottom: 3px;
-            border-left: 3px solid var(--primary);
+            border-left: 2px solid var(--primary);
             font-size: 9px;
         }
         .notif-item .notif-id {
             font-weight: 700;
             color: var(--primary);
-            font-size: 7px;
+            font-size: 8px;
         }
         .notif-item .notif-detail {
             font-size: 8px;
             color: var(--warm-gray);
         }
 
-        /* ============================================================
-           STOCK TABLE
-           ============================================================ */
+        /* ===== STOCK TABLE ===== */
         .stock-table {
             width: 100%;
             font-size: 8px;
@@ -1028,7 +885,7 @@
         .stock-table th {
             text-align: left;
             padding: 3px 2px;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
             font-weight: 700;
             font-size: 7px;
         }
@@ -1036,94 +893,14 @@
             padding: 2px 2px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-secondary);
-            font-size: 7px;
         }
         .stock-table .stock-total {
             font-weight: 700;
             color: var(--primary);
             font-size: 9px;
         }
-        .stock-table .stock-actions button {
-            padding: 1px 6px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 6px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-            margin-right: 1px;
-        }
-        .stock-table .stock-actions button:hover {
-            opacity: 0.8;
-        }
-        .btn-edit-stock {
-            background: #FF6F00;
-            color: white;
-        }
-        .btn-remove-stock {
-            background: #C62828;
-            color: white;
-        }
-        .btn-low-stock {
-            background: #E65100;
-            color: white;
-            font-size: 5px;
-            padding: 1px 4px;
-            border-radius: 10px;
-        }
-        .btn-high-stock {
-            background: #2E7D32;
-            color: white;
-            font-size: 5px;
-            padding: 1px 4px;
-            border-radius: 10px;
-        }
 
-        /* ============================================================
-           CALENDAR VIEW
-           ============================================================ */
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 1px;
-            margin: 4px 0 8px;
-        }
-        .calendar-day {
-            background: var(--bg-primary);
-            border-radius: 3px;
-            padding: 3px 1px;
-            text-align: center;
-            font-size: 7px;
-            border: 1px solid var(--border-color);
-        }
-        .calendar-day .day-num {
-            font-weight: 600;
-            font-size: 9px;
-        }
-        .calendar-day .day-revenue {
-            font-size: 6px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-        .calendar-day.today {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.1);
-        }
-        .calendar-day.has-sales {
-            border-color: #2E7D32;
-        }
-        .calendar-header {
-            font-size: 6px;
-            font-weight: 600;
-            color: var(--warm-gray);
-            text-align: center;
-            padding: 1px 0;
-        }
-
-        /* ============================================================
-           PROFILE
-           ============================================================ */
+        /* ===== PROFILE ===== */
         .profile-card {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -1141,11 +918,11 @@
             font-weight: 700;
         }
         .profile-card .role {
-            font-size: 9px;
+            font-size: 10px;
             color: var(--warm-gray);
         }
         .profile-card .phone {
-            font-size: 9px;
+            font-size: 10px;
             color: var(--primary);
             font-weight: 600;
         }
@@ -1160,15 +937,11 @@
             padding: 3px 10px;
             border-radius: 30px;
             font-weight: 600;
-            font-size: 8px;
+            font-size: 9px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
             gap: 3px;
-            transition: var(--transition);
-        }
-        .profile-card .contact-actions a:hover {
-            transform: translateY(-2px);
         }
         .profile-card .contact-actions .call-btn {
             background: #2E7D32;
@@ -1190,10 +963,6 @@
             border-bottom: 1px solid var(--border-color);
             cursor: pointer;
             font-size: 10px;
-            transition: var(--transition);
-        }
-        .profile-menu-item:hover {
-            padding-left: 4px;
         }
         .profile-menu-item .menu-left {
             display: flex;
@@ -1204,45 +973,62 @@
             font-size: 14px;
         }
 
-        /* ============================================================
-           BUYER ORDER WORKFLOW
-           ============================================================ */
-        .payment-options {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 6px;
-            margin: 6px 0;
+        /* ===== WORKFLOW ===== */
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            position: relative;
         }
-        .payment-option {
-            background: var(--bg-primary);
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+        }
+        .workflow-step .step-circle {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--bg-card);
             border: 2px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .payment-option:hover {
-            border-color: var(--primary);
-        }
-        .payment-option.selected {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.08);
-        }
-        .payment-option .pay-icon {
-            font-size: 18px;
-            display: block;
-        }
-        .payment-option .pay-name {
-            font-size: 9px;
-            font-weight: 600;
-            margin-top: 2px;
-        }
-        .payment-option .pay-detail {
-            font-size: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 8px;
             color: var(--warm-gray);
         }
-
+        .workflow-step.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .workflow-step.done .step-circle {
+            background: #2E7D32;
+            border-color: #2E7D32;
+            color: white;
+        }
+        .workflow-step .step-label {
+            font-size: 6px;
+            font-weight: 600;
+            margin-top: 1px;
+            color: var(--warm-gray);
+        }
+        .workflow-step.active .step-label {
+            color: var(--primary);
+        }
         .payment-ref-input {
             display: flex;
             gap: 4px;
@@ -1259,10 +1045,6 @@
             background: var(--bg-primary);
             min-width: 80px;
         }
-        .payment-ref-input input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
         .payment-ref-input button {
             padding: 4px 10px;
             border: none;
@@ -1272,97 +1054,9 @@
             font-weight: 600;
             cursor: pointer;
             font-size: 9px;
-            transition: var(--transition);
-        }
-        .payment-ref-input button:hover {
-            background: var(--primary-dark);
         }
 
-        .screenshot-upload {
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 9px;
-            color: var(--warm-gray);
-            margin: 6px 0;
-        }
-        .screenshot-upload:hover {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.04);
-        }
-        .screenshot-upload .upload-icon {
-            font-size: 18px;
-            display: block;
-        }
-        .screenshot-preview {
-            max-width: 100%;
-            max-height: 80px;
-            border-radius: var(--radius-sm);
-            margin-top: 4px;
-            border: 1px solid var(--border-color);
-        }
-
-        .delivery-fee-input {
-            display: flex;
-            gap: 6px;
-            margin: 6px 0;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .delivery-fee-input label {
-            font-size: 9px;
-            font-weight: 600;
-            min-width: 70px;
-        }
-        .delivery-fee-input input {
-            flex: 1;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            font-family: 'Poppins', sans-serif;
-            font-size: 10px;
-            background: var(--bg-primary);
-            min-width: 60px;
-        }
-        .delivery-fee-input input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .buyer-details-form label {
-            display: block;
-            font-weight: 600;
-            margin-top: 6px;
-            margin-bottom: 2px;
-            font-size: 9px;
-        }
-        .buyer-details-form input,
-        .buyer-details-form textarea {
-            width: 100%;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            font-family: 'Poppins', sans-serif;
-            font-size: 10px;
-            background: var(--bg-primary);
-            transition: var(--transition);
-        }
-        .buyer-details-form input:focus,
-        .buyer-details-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .buyer-details-form textarea {
-            resize: vertical;
-            min-height: 40px;
-        }
-
-        /* ============================================================
-           REQUEST FORM
-           ============================================================ */
+        /* ===== REQUEST FORM ===== */
         .request-form label {
             display: block;
             font-weight: 600;
@@ -1379,24 +1073,16 @@
             font-family: 'Poppins', sans-serif;
             font-size: 10px;
             background: var(--bg-primary);
-            transition: var(--transition);
-        }
-        .request-form input:focus,
-        .request-form textarea:focus {
-            outline: none;
-            border-color: var(--primary);
         }
         .request-form textarea {
             resize: vertical;
             min-height: 40px;
         }
 
-        /* ============================================================
-           EMPTY STATE
-           ============================================================ */
+        /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
-            padding: 20px 10px;
+            padding: 16px 10px;
             color: var(--warm-gray);
         }
         .empty-state .empty-icon {
@@ -1409,9 +1095,7 @@
             font-size: 9px;
         }
 
-        /* ============================================================
-           RESPONSIVE
-           ============================================================ */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 480px) {
             .product-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -1429,20 +1113,13 @@
             .hero-banner .hero-logo {
                 font-size: 18px;
             }
-            .payment-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .admin-panel .panel-tabs .btn-switch {
-                font-size: 6px;
-                padding: 2px 6px;
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
             }
         }
         @media (max-width: 380px) {
             .product-grid {
                 grid-template-columns: repeat(2, 1fr);
-            }
-            .payment-options {
-                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -1450,7 +1127,7 @@
             display: inline-block;
             padding: 1px 6px;
             border-radius: 30px;
-            font-size: 7px;
+            font-size: 8px;
             font-weight: 600;
             background: var(--primary);
             color: white;
@@ -1473,11 +1150,6 @@
             font-size: 11px;
             font-family: 'Poppins', sans-serif;
             background: var(--bg-card);
-            transition: var(--transition);
-        }
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
         }
 
         .access-denied {
@@ -1501,7 +1173,7 @@
             border-radius: var(--radius-sm);
             padding: 6px 8px;
             margin-bottom: 3px;
-            border-left: 3px solid #0088CC;
+            border-left: 2px solid #0088CC;
         }
         .request-notif .req-product {
             font-weight: 600;
@@ -1515,7 +1187,6 @@
             display: flex;
             gap: 3px;
             margin-top: 3px;
-            flex-wrap: wrap;
         }
         .request-notif .req-actions a {
             padding: 2px 8px;
@@ -1526,10 +1197,6 @@
             display: inline-flex;
             align-items: center;
             gap: 2px;
-            transition: var(--transition);
-        }
-        .request-notif .req-actions a:hover {
-            opacity: 0.8;
         }
         .request-notif .req-actions .chat-req {
             background: #0088CC;
@@ -1545,8 +1212,7 @@
             border-radius: var(--radius-sm);
             padding: 6px 8px;
             margin-bottom: 3px;
-            border-left: 3px solid #FF6F00;
-            transition: var(--transition);
+            border-left: 2px solid #FF6F00;
         }
         .payment-notif .payment-info .amount {
             font-size: 12px;
@@ -1561,7 +1227,6 @@
             display: flex;
             gap: 3px;
             margin-top: 3px;
-            flex-wrap: wrap;
         }
         .payment-notif .payment-actions button {
             padding: 2px 8px;
@@ -1571,10 +1236,6 @@
             font-size: 7px;
             cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .payment-notif .payment-actions button:hover {
-            opacity: 0.8;
         }
         .payment-notif .payment-actions .btn-confirm {
             background: #2E7D32;
@@ -1584,208 +1245,47 @@
             background: #C62828;
             color: white;
         }
-        .payment-notif .payment-actions .btn-approve {
-            background: #FF6F00;
-            color: white;
-        }
 
-        /* ============================================================
-           ADD STOCK MODAL — Owner Only
-           ============================================================ */
-        .add-stock-form label {
-            display: block;
-            font-weight: 600;
-            margin-top: 6px;
-            margin-bottom: 2px;
-            font-size: 9px;
-        }
-        .add-stock-form input,
-        .add-stock-form textarea {
-            width: 100%;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            font-family: 'Poppins', sans-serif;
-            font-size: 10px;
-            background: var(--bg-primary);
-            transition: var(--transition);
-        }
-        .add-stock-form input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        .add-stock-form .image-preview {
-            margin-top: 4px;
-            max-width: 100%;
-            max-height: 80px;
-            border-radius: var(--radius-sm);
-            object-fit: cover;
-            border: 1px solid var(--border-color);
-        }
-        .add-stock-form .file-upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: var(--radius-sm);
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 9px;
-            color: var(--warm-gray);
-            margin-top: 3px;
-        }
-        .add-stock-form .file-upload-area:hover {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.04);
-        }
-        .add-stock-form .file-upload-area .upload-icon {
-            font-size: 18px;
-            display: block;
-        }
-        .add-stock-form .qr-display {
-            background: var(--bg-primary);
-            border-radius: var(--radius-sm);
-            padding: 6px;
-            text-align: center;
-            font-size: 9px;
-            font-weight: 600;
-            color: var(--primary);
-            border: 1px solid var(--border-color);
-            margin-top: 3px;
-        }
-
-        /* ============================================================
-           TRACKING STATUS
-           ============================================================ */
-        .tracking-steps {
+        /* ===== PORTAL SWITCHER ===== */
+        .portal-switcher {
             display: flex;
-            flex-direction: column;
             gap: 4px;
             margin: 6px 0;
+            flex-wrap: wrap;
         }
-        .tracking-step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .portal-switcher button {
+            flex: 1;
             padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-primary);
-            border-left: 3px solid var(--border-color);
-        }
-        .tracking-step .step-icon {
-            font-size: 14px;
-        }
-        .tracking-step .step-info {
-            font-size: 8px;
-        }
-        .tracking-step .step-info .step-title {
-            font-weight: 600;
-        }
-        .tracking-step .step-info .step-time {
-            font-size: 7px;
-            color: var(--warm-gray);
-        }
-        .tracking-step.completed {
-            border-left-color: var(--success);
-        }
-        .tracking-step.active {
-            border-left-color: var(--primary);
-        }
-        .tracking-step.pending {
-            border-left-color: var(--border-color);
-        }
-
-        .print-btn {
-            background: var(--primary);
-            color: var(--dark);
-            border: none;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .print-btn:hover {
-            background: var(--gold-shimmer);
-        }
-
-        .clear-btn {
-            background: #C62828;
-            color: white;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .clear-btn:hover {
-            background: #B71C1C;
-        }
-
-        .refresh-btn {
-            background: #0D47A1;
-            color: white;
-            border: none;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 8px;
-            cursor: pointer;
-            font-family: 'Poppins', sans-serif;
-            transition: var(--transition);
-        }
-        .refresh-btn:hover {
-            background: #0A3A7A;
-        }
-
-        .map-container {
-            width: 100%;
-            height: 200px;
-            border-radius: var(--radius-sm);
             border: 1px solid var(--border-color);
-            overflow: hidden;
-            margin: 6px 0;
+            border-radius: 30px;
+            background: var(--bg-card);
+            font-weight: 600;
+            font-size: 9px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
         }
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        @media print {
-            .no-print {
-                display: none !important;
-            }
-            body {
-                background: white !important;
-                padding: 10px !important;
-            }
-            .admin-panel {
-                box-shadow: none !important;
-                border: 1px solid #ddd !important;
-            }
+        .portal-switcher button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
         }
     </style>
 </head>
 <body>
 
-    <!-- ============================================================
-    APP
-    ============================================================ -->
+    <!-- ===== APP ===== -->
     <div id="app">
-        <header id="main-header" class="no-print">
+        <header id="main-header">
             <div class="logo-wrapper">
                 <span class="logo-icon">✨</span>
                 <span class="logo-text">soYam <span>Cosmo</span></span>
             </div>
             <div class="header-actions">
-                <span class="role-badge-header" id="roleBadgeHeader" onclick="toggleRoleSwitch()">
+                <span class="role-badge-header" id="roleBadgeHeader" onclick="switchPortal()">
                     <span class="role-dot buyer" id="roleDot"></span>
                     <span id="roleLabelHeader">Buyer</span>
+                    <span style="font-size:7px;opacity:0.6;">▼</span>
                 </span>
                 <button id="languageBtn" class="lang-btn">
                     <span id="currentFlag">🇬🇧</span>
@@ -1802,7 +1302,7 @@
             <div id="page-container"></div>
         </main>
 
-        <nav id="bottom-nav" class="no-print">
+        <nav id="bottom-nav">
             <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
                 <span class="nav-icon">🏠</span>
                 <span class="nav-label" data-key="nav_home">Home</span>
@@ -1826,9 +1326,7 @@
         </nav>
     </div>
 
-    <!-- ============================================================
-    MODALS
-    ============================================================ -->
+    <!-- ===== MODALS ===== -->
     <div id="languageModal" class="modal">
         <div class="modal-content">
             <div class="modal-header"><h3>Select Language</h3><button class="close-modal" onclick="closeModal('languageModal')">&times;</button></div>
@@ -1850,36 +1348,10 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    BUYER ORDER MODAL
-    ============================================================ -->
-    <div id="buyerOrderModal" class="modal">
+    <div id="orderWorkflowModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="buyerOrderTitle">🛒 Place Order</h3>
-                <button class="close-modal" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">&times;</button>
-            </div>
-            <div id="buyerOrderContent"></div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    TRACKING MODAL
-    ============================================================ -->
-    <div id="trackingModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>📍 Track Order</h3><button class="close-modal" onclick="closeModal('trackingModal')">&times;</button></div>
-            <div id="trackingContent"></div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    CANCEL ORDER MODAL
-    ============================================================ -->
-    <div id="cancelOrderModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>❌ Cancel Order</h3><button class="close-modal" onclick="closeModal('cancelOrderModal')">&times;</button></div>
-            <div id="cancelOrderContent"></div>
+            <div class="modal-header"><h3 id="workflowTitle">🛒 Place Order</h3><button class="close-modal" onclick="closeOrderWorkflow()">&times;</button></div>
+            <div id="workflowContent"></div>
         </div>
     </div>
 
@@ -1900,78 +1372,24 @@
         </div>
     </div>
 
-    <!-- ============================================================
-    ADD STOCK MODAL — Owner Only
-    ============================================================ -->
-    <div id="addStockModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>📦 Add Stock</h3><button class="close-modal" onclick="closeModal('addStockModal')">&times;</button></div>
-            <div class="add-stock-form">
-                <label>Product Name *</label>
-                <input type="text" id="stockProductName" placeholder="Enter product name" />
-                <label>Selling Price (ETB) *</label>
-                <input type="number" id="stockSellPrice" placeholder="Enter selling price" min="1" />
-                <label>Buying Price (ETB) *</label>
-                <input type="number" id="stockBuyPrice" placeholder="Enter buying price" min="1" />
-                <label>Quantity *</label>
-                <input type="number" id="stockQty" placeholder="Enter quantity" min="1" />
-                <label>Product Image</label>
-                <div class="file-upload-area" onclick="document.getElementById('stockImageInput').click()">
-                    <span class="upload-icon">📷</span>
-                    Tap to upload product image
-                    <input type="file" id="stockImageInput" accept="image/*" style="display:none;" onchange="previewStockImage(event)" />
-                </div>
-                <img id="stockImagePreview" class="image-preview" style="display:none;" />
-                <label>QR Code (auto-generated)</label>
-                <div class="qr-display">
-                    <span id="stockQrDisplay">SOYAM-PXXX</span>
-                </div>
-                <button class="btn-primary" style="margin-top:8px;" onclick="submitStock()">✅ Add Stock</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    EDIT STOCK MODAL — Owner Only
-    ============================================================ -->
-    <div id="editStockModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header"><h3>✏️ Edit Stock</h3><button class="close-modal" onclick="closeModal('editStockModal')">&times;</button></div>
-            <div class="add-stock-form">
-                <label>Product Name</label>
-                <input type="text" id="editStockProductName" />
-                <label>Selling Price (ETB)</label>
-                <input type="number" id="editStockSellPrice" />
-                <label>Buying Price (ETB)</label>
-                <input type="number" id="editStockBuyPrice" />
-                <label>Quantity</label>
-                <input type="number" id="editStockQty" />
-                <button class="btn-primary" style="margin-top:8px;" onclick="saveStockEdit()">💾 Save Changes</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-    QR SCANNER — Seller Only (In-Person Sales)
-    ============================================================ -->
+    <!-- ===== QR SCANNER ===== -->
     <div id="qrScanner" class="scanner-overlay hidden">
         <div class="scanner-container">
             <video id="qrVideo" autoplay playsinline></video>
             <div class="scanner-frame"></div>
             <div class="scanner-overlay-ui">
-                <p>📷 Scan product QR code to sell</p>
+                <p id="scannerInstruction">📷 Scan QR code or upload image</p>
                 <button class="btn-secondary" onclick="closeScanner()">✕ Close</button>
+                <button class="btn-gallery" onclick="openGallery()">🖼️ Choose from Gallery</button>
+                <input type="file" id="galleryInput" accept="image/*" style="display:none;" onchange="handleGalleryImage(event)" />
             </div>
         </div>
     </div>
 
-    <!-- ============================================================
-    TOAST
-    ============================================================ -->
     <div id="toast" class="toast hidden"></div>
 
     <!-- ============================================================
-    JAVASCRIPT — FULL APPLICATION
+    JAVASCRIPT
     ============================================================ -->
     <script>
         // ============================================================
@@ -1981,13 +1399,8 @@
         const OWNER_PHONE = '251919096451';
         const SELLER_USERNAME = 'mama51R';
         const SELLER_PHONE = '251920353460';
-        const DELIVERER_PHONE = '251912345678';
-        const BUSINESS_LOCATION = 'https://www.google.com/maps/dir/?api=1&origin=Addis+Ababa,+Ethiopia&destination=';
+        const BUSINESS_LOCATION = 'https://maps.google.com/maps?q=Addis+Ababa,+Ethiopia';
         const BUSINESS_ADDRESS = 'Addis Ababa, Ethiopia';
-        const DELIVERY_FEE = 150;
-        const PAYMENT_FEE = 50;
-        const SHOP_LAT = 9.0320;
-        const SHOP_LNG = 38.7420;
 
         // ============================================================
         // LANGUAGE
@@ -2006,13 +1419,41 @@
         ];
 
         const TRANSLATIONS = {
-            en: { nav_home: 'Home', nav_search: 'Search', nav_orders: 'Orders', nav_wishlist: 'Wishlist',
-                nav_profile: 'Profile' },
-            am: { nav_home: 'መነሻ', nav_search: 'ፈልግ', nav_orders: 'ትዕዛዞች', nav_wishlist: 'የተመረጡ', nav_profile: 'መገለጫ' },
-            om: { nav_home: 'Mana', nav_search: 'Barbaadi', nav_orders: 'Ajajoota', nav_wishlist: 'Waan Filatame',
-                nav_profile: 'Proofaayilii' },
-            ti: { nav_home: 'ቤት', nav_search: 'ድለይ', nav_orders: 'ትእዛዛት', nav_wishlist: 'ተመሪጾም', nav_profile: 'መገለጺ' },
-            gu: { nav_home: 'ቤት', nav_search: 'ፈልግ', nav_orders: 'ትእዛዝ', nav_wishlist: 'ተመራጭ', nav_profile: 'መገለጫ' }
+            en: {
+                nav_home: 'Home',
+                nav_search: 'Search',
+                nav_orders: 'Orders',
+                nav_wishlist: 'Wishlist',
+                nav_profile: 'Profile'
+            },
+            am: {
+                nav_home: 'መነሻ',
+                nav_search: 'ፈልግ',
+                nav_orders: 'ትዕዛዞች',
+                nav_wishlist: 'የተመረጡ',
+                nav_profile: 'መገለጫ'
+            },
+            om: {
+                nav_home: 'Mana',
+                nav_search: 'Barbaadi',
+                nav_orders: 'Ajajoota',
+                nav_wishlist: 'Waan Filatame',
+                nav_profile: 'Proofaayilii'
+            },
+            ti: {
+                nav_home: 'ቤት',
+                nav_search: 'ድለይ',
+                nav_orders: 'ትእዛዛት',
+                nav_wishlist: 'ተመሪጾም',
+                nav_profile: 'መገለጺ'
+            },
+            gu: {
+                nav_home: 'ቤት',
+                nav_search: 'ፈልግ',
+                nav_orders: 'ትእዛዝ',
+                nav_wishlist: 'ተመራጭ',
+                nav_profile: 'መገለጫ'
+            }
         };
 
         // ============================================================
@@ -2024,20 +1465,16 @@
         let orders = [];
         let wishlist = [];
         let customerRequests = [];
+        let pendingOrder = null;
         let isOwner = false;
         let isSeller = false;
-        let stockImageData = null;
-        let currentView = 'dashboard';
-        let editingStockId = null;
-        let buyerOrderProduct = null;
-        let buyerOrderStep = 1;
-        let buyerOrderData = {};
-        let trackingOrderId = null;
+        let currentPortal = 'owner'; // 'owner' or 'seller'
+        let calendarData = {};
 
         // ============================================================
         // PRODUCTS
         // ============================================================
-        let products = [{
+        const products = [{
             id: 1,
             name: 'Amber Oud Perfume',
             price: '1,500 ETB',
@@ -2100,35 +1537,6 @@
         }];
 
         // ============================================================
-        // PAYMENT METHODS
-        // ============================================================
-        const paymentMethods = [{
-            id: 'telebirr',
-            name: 'Telebirr',
-            icon: '📱',
-            detail: '+251 919096451',
-            account: 'Telebirr: 0919096451'
-        }, {
-            id: 'cbe',
-            name: 'CBE Birr',
-            icon: '🏦',
-            detail: '1000123456789',
-            account: 'CBE: 1000123456789'
-        }, {
-            id: 'bank',
-            name: 'Bank Transfer',
-            icon: '🏛️',
-            detail: 'Commercial Bank',
-            account: 'CB: 1000123456789'
-        }, {
-            id: 'cash',
-            name: 'Cash',
-            icon: '💰',
-            detail: 'Pay in person',
-            account: 'Cash on pickup'
-        }];
-
-        // ============================================================
         // TELEGRAM INIT
         // ============================================================
         const tg = window.Telegram.WebApp;
@@ -2136,46 +1544,27 @@
         tg.expand();
 
         // ============================================================
-        // ROLE DETECTION
+        // ROLE DETECTION — TEMPORARY OWNER ACCESS FOR @mama51R
         // ============================================================
         function detectUserRole() {
             const username = tg.initDataUnsafe?.user?.username || '';
+
+            // --- TEMPORARY: Give Owner access to @mama51R for testing ---
             if (username === SELLER_USERNAME || username.toLowerCase() === SELLER_USERNAME.toLowerCase()) {
                 isOwner = true;
                 isSeller = false;
                 return 'owner';
             }
+
             if (username === OWNER_USERNAME || username.toLowerCase() === OWNER_USERNAME.toLowerCase()) {
                 isOwner = true;
                 isSeller = false;
                 return 'owner';
             }
+
             isOwner = false;
             isSeller = false;
             return 'buyer';
-        }
-
-        // ============================================================
-        // ROLE SWITCHING
-        // ============================================================
-        let roleSwitchIndex = 0;
-        const roleOptions = ['buyer', 'seller', 'owner'];
-
-        function toggleRoleSwitch() {
-            if (currentUser.role === 'buyer') {
-                showToast('⚠️ Only Owner or Seller can switch roles', 'warning');
-                return;
-            }
-            roleSwitchIndex = (roleSwitchIndex + 1) % 3;
-            const newRole = roleOptions[roleSwitchIndex];
-            if (newRole === 'buyer' && currentUser.role === 'owner') {
-                roleSwitchIndex = 1;
-            }
-            const finalRole = roleOptions[roleSwitchIndex];
-            currentUser.role = finalRole;
-            updateRoleUI();
-            showToast('🔄 Switched to: ' + finalRole.toUpperCase(), 'info');
-            navigateTo('home');
         }
 
         // ============================================================
@@ -2218,80 +1607,72 @@
                 });
             });
 
-            addNotification('✨ Welcome to soYam Cosmo!', 'success');
-            addNotification('👤 Role: ' + currentUser.role.toUpperCase(), 'info');
+            addNotification('Welcome to soYam Cosmo!', 'success');
+            addNotification('Role: ' + currentUser.role.toUpperCase(), 'info');
 
-            const today = new Date().toISOString().split('T')[0];
+            // Sample orders with unique IDs
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Amber Oud Perfume',
                 price: '1,500 ETB',
-                buyPrice: 1200,
-                stockAtTime: 10,
-                status: 'waiting-owner',
-                date: today,
-                type: 'in-person',
+                status: 'pending',
+                date: '2026-08-23',
+                type: 'Reservation',
+                timer: 21600,
                 qrCode: 'SOYAM-P001',
                 customer: 'Abebe K.',
-                customerPhone: '+251 911111111',
-                customerAddress: 'Bole, Addis Ababa',
-                paymentMethod: 'Telebirr',
-                paymentRef: 'TBR-2026-08-23-001',
-                notifId: generateUniqueId('NOTIF'),
-                buyerId: generateUniqueId('BUY'),
-                deliveryFee: 0,
-                paymentFee: 0,
-                totalPrice: '1,500 ETB'
+                notifId: generateUniqueId('NOTIF')
             });
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Rose Body Lotion',
                 price: '800 ETB',
-                buyPrice: 600,
-                stockAtTime: 5,
                 status: 'waiting-payment',
-                date: today,
-                type: 'delivery',
+                date: '2026-08-22',
+                type: 'Delivery',
                 tracking: 'SOYAM-4567',
                 qrCode: 'SOYAM-P002',
-                paymentRef: 'CBE-2026-08-23-001',
+                paymentRef: 'TBR-2026-08-22-001',
                 customer: 'Meron T.',
-                customerPhone: '+251 922222222',
-                customerAddress: 'Piassa, Addis Ababa',
-                paymentMethod: 'CBE Birr',
-                notifId: generateUniqueId('NOTIF'),
-                buyerId: generateUniqueId('BUY'),
-                deliveryFee: 150,
-                paymentFee: 50,
-                totalPrice: '1,000 ETB'
+                notifId: generateUniqueId('NOTIF')
             });
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Face Serum',
                 price: '1,200 ETB',
-                buyPrice: 900,
-                stockAtTime: 3,
                 status: 'delivered',
-                date: new Date(Date.now() - 86400000).toISOString().split('T')[0],
-                type: 'delivery',
+                date: '2026-08-21',
+                type: 'Delivery',
                 tracking: 'SOYAM-7890',
                 qrCode: 'SOYAM-P003',
                 customer: 'Sara H.',
-                customerPhone: '+251 933333333',
-                customerAddress: 'CMC, Addis Ababa',
-                paymentMethod: 'Telebirr',
-                paymentRef: 'TBR-2026-08-22-001',
-                notifId: generateUniqueId('NOTIF'),
-                buyerId: generateUniqueId('BUY'),
-                completionCode: generateUniqueId('COMP'),
-                deliveryFee: 150,
-                paymentFee: 50,
-                totalPrice: '1,400 ETB'
+                notifId: generateUniqueId('NOTIF')
             });
+
+            // Sample calendar data
+            generateCalendarData();
 
             addCustomerRequest('Special Perfume', 'Sarah A.', 'Qty: 2', 'SOYAM-P001');
             addCustomerRequest('Organic Face Cream', 'Mikael B.', 'Qty: 1', 'SOYAM-P003');
         });
+
+        // ============================================================
+        // CALENDAR DATA GENERATOR
+        // ============================================================
+        function generateCalendarData() {
+            const today = new Date();
+            for (let i = 0; i < 30; i++) {
+                const d = new Date(today);
+                d.setDate(d.getDate() - i);
+                const key = d.toISOString().split('T')[0];
+                const profit = Math.floor(Math.random() * 5000) + 500;
+                calendarData[key] = {
+                    revenue: profit + Math.floor(Math.random() * 2000),
+                    profit: profit,
+                    orders: Math.floor(Math.random() * 5) + 1
+                };
+            }
+        }
 
         // ============================================================
         // CUSTOMER REQUESTS
@@ -2305,9 +1686,20 @@
                 detail: detail,
                 qrCode: qrCode,
                 time: new Date().toLocaleTimeString(),
+                read: false,
                 notifId: generateUniqueId('NOTIF')
             });
-            addNotification('📝 Request: ' + product + ' from ' + customer + ' (🆔 ' + reqId + ')', 'info');
+            addNotification('📝 New request: ' + product + ' from ' + customer + ' (ID: ' + reqId + ')', 'info');
+        }
+
+        // ============================================================
+        // PORTAL SWITCHER
+        // ============================================================
+        function switchPortal() {
+            if (currentUser.role !== 'owner') return;
+            currentPortal = (currentPortal === 'owner') ? 'seller' : 'owner';
+            showToast('🔄 Switched to ' + currentPortal.toUpperCase() + ' Portal', 'info');
+            navigateTo('home');
         }
 
         // ============================================================
@@ -2417,7 +1809,7 @@
                     <div class="icon">🚫</div>
                     <h3>${title}</h3>
                     <p>${message}</p>
-                    <button class="btn-primary" style="margin-top:8px;width:auto;padding:4px 14px;font-size:9px;" onclick="navigateTo('home')">🏠 Go Home</button>
+                    <button class="btn-primary" style="margin-top:8px;width:auto;padding:4px 14px;font-size:10px;" onclick="navigateTo('home')">🏠 Go Home</button>
                 </div>
             `;
         }
@@ -2448,11 +1840,10 @@
             `;
 
             if (currentUser.role === 'owner') {
-                html += renderOwnerPanel();
+                html += renderOwnerPortal();
             } else if (currentUser.role === 'seller') {
                 html += renderSellerPanel();
             } else {
-                // Buyer portal — only show available stock (no low/high alerts)
                 html += `
                     <div class="category-scroll">
                         ${categories.map(cat => `<button class="category-chip" onclick="filterCategory('${cat}')">${cat}</button>`).join('')}
@@ -2462,7 +1853,7 @@
                         <div class="section-title">✨ <span class="highlight">Products</span></div>
                     </div>
                     <div class="product-grid" id="allProducts">
-                        ${products.filter(p => p.stock > 0).slice(0, 6).map(p => renderProductCard(p)).join('')}
+                        ${products.slice(0, 6).map(p => renderProductCard(p)).join('')}
                     </div>
                     <div style="margin-top:10px;padding:10px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);">
                         <h3 style="font-family:'Playfair Display',serif;font-size:12px;">📝 <span class="highlight">Can't find what you need?</span></h3>
@@ -2476,14 +1867,297 @@
         }
 
         // ============================================================
-        // RENDER: PRODUCT CARD — Buyer only sees available stock
+        // RENDER: OWNER PORTAL — With Calendar & Full Management
+        // ============================================================
+        function renderOwnerPortal() {
+            const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
+            const totalValue = products.reduce((sum, p) => {
+                const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
+                return sum + (priceNum * p.stock);
+            }, 0);
+            const totalBuyValue = products.reduce((sum, p) => sum + (p.buyPrice * p.stock), 0);
+            const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'waiting-payment').length;
+
+            const today = new Date().toISOString().split('T')[0];
+            const todaySales = orders.filter(o => o.date === today && o.status === 'delivered');
+            const todayRevenue = todaySales.reduce((sum, o) => {
+                const priceNum = parseInt(o.price.replace(/[^0-9]/g, ''));
+                return sum + priceNum;
+            }, 0);
+            const todayProfit = todaySales.reduce((sum, o) => {
+                const priceNum = parseInt(o.price.replace(/[^0-9]/g, ''));
+                const product = products.find(p => p.name === o.product);
+                return sum + (product ? priceNum - product.buyPrice : 0);
+            }, 0);
+
+            // Calendar view
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const dayNames = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+            let calendarHtml = `
+                <div style="text-align:center;font-size:11px;font-weight:700;margin:4px 0;">
+                    ${monthNames[month]} ${year}
+                </div>
+                <div class="calendar-grid">
+                    ${dayNames.map(d => `<div class="day header">${d}</div>`).join('')}
+            `;
+
+            for (let i = 0; i < firstDay; i++) {
+                calendarHtml += `<div class="day"></div>`;
+            }
+
+            for (let d = 1; d <= daysInMonth; d++) {
+                const dateKey = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                const isToday = dateKey === today;
+                const data = calendarData[dateKey];
+                const profit = data ? data.profit : 0;
+                const isProfit = profit > 0;
+
+                calendarHtml += `
+                    <div class="day ${isToday ? 'today' : ''}" onclick="showDayDetail('${dateKey}')">
+                        <div class="day-num">${d}</div>
+                        ${data ? `<div class="${isProfit ? 'day-profit' : 'day-loss'}">${profit.toLocaleString()}</div>` : ''}
+                    </div>
+                `;
+            }
+
+            calendarHtml += `</div>`;
+
+            let html = `
+                <div class="portal-switcher">
+                    <button class="${currentPortal === 'owner' ? 'active' : ''}" onclick="currentPortal='owner';navigateTo('home');">👑 Owner</button>
+                    <button class="${currentPortal === 'seller' ? 'active' : ''}" onclick="currentPortal='seller';navigateTo('home');">🛍️ Seller</button>
+                </div>
+                <div class="admin-panel">
+                    <div class="panel-title">👑 <span class="highlight">Owner Dashboard</span></div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-number">${orders.length}</div><div class="stat-label">Total Orders</div></div>
+                        <div class="stat-card"><div class="stat-number">${totalStock}</div><div class="stat-label">Total Stock</div></div>
+                        <div class="stat-card"><div class="stat-number">${pendingOrders}</div><div class="stat-label">Pending</div></div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card" style="border-left:2px solid #2E7D32;">
+                            <div class="stat-number">${todayRevenue.toLocaleString()} ETB</div>
+                            <div class="stat-label">📊 Today's Revenue</div>
+                        </div>
+                        <div class="stat-card" style="border-left:2px solid var(--primary);">
+                            <div class="stat-number">${todayProfit.toLocaleString()} ETB</div>
+                            <div class="stat-label">💰 Today's Profit</div>
+                        </div>
+                        <div class="stat-card" style="border-left:2px solid #FF6F00;">
+                            <div class="stat-number">${(totalValue - totalBuyValue).toLocaleString()} ETB</div>
+                            <div class="stat-label">📈 Total Profit</div>
+                        </div>
+                    </div>
+
+                    <h4 style="margin:8px 0 4px;font-size:11px;">📅 Daily Profit Calendar</h4>
+                    ${calendarHtml}
+
+                    <h4 style="margin:10px 0 4px;">📦 Stock List</h4>
+                    <table class="stock-table">
+                        <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th></tr></thead>
+                        <tbody>
+                            ${products.map(p => {
+                                const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
+                                const value = priceNum * p.stock;
+                                return `
+                                    <tr>
+                                        <td>${p.name}</td>
+                                        <td>${p.price}</td>
+                                        <td>${p.buyPrice} ETB</td>
+                                        <td>${p.stock}</td>
+                                        <td>${value.toLocaleString()}</td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                            <tr>
+                                <td colspan="4" style="text-align:right;font-weight:700;">Total:</td>
+                                <td class="stock-total">${totalValue.toLocaleString()} ETB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px;">
+                        <button class="btn-secondary" onclick="openOwnerAddStock()" style="font-size:8px;padding:4px;">📷 Add Stock</button>
+                        <button class="btn-secondary" onclick="showToast('📊 Report exported!', 'success')" style="font-size:8px;padding:4px;">📊 Export</button>
+                    </div>
+
+                    <h4 style="margin:10px 0 4px;">💳 Payment Approvals</h4>
+                    ${orders.filter(o => o.status === 'waiting-payment').map(o => `
+                        <div class="payment-notif">
+                            <div class="payment-info">
+                                <div class="amount">${o.price}</div>
+                                <div class="payer">${o.product} • ${o.customer || 'Customer'}</div>
+                                <div style="font-size:7px;color:var(--warm-gray);">🆔 ${o.id} • Ref: ${o.paymentRef || 'N/A'} • ${o.date}</div>
+                            </div>
+                            <div class="payment-actions">
+                                <button class="btn-confirm" onclick="ownerConfirmPayment('${o.id}')">✅ Confirm</button>
+                                <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
+                            </div>
+                        </div>
+                    `).join('')}
+                    ${orders.filter(o => o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No pending payments.</p>' : ''}
+
+                    <h4 style="margin:10px 0 4px;">📋 All Notifications</h4>
+                    ${notifications.slice(0, 8).map(n => `
+                        <div class="notif-item">
+                            <div class="notif-id">🆔 ${n.id || 'N/A'}</div>
+                            <div>${n.message}</div>
+                            <div class="notif-detail">${n.time || ''}</div>
+                        </div>
+                    `).join('')}
+                    ${notifications.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No notifications.</p>' : ''}
+                </div>
+            `;
+
+            // If in seller portal mode, show seller content instead
+            if (currentPortal === 'seller') {
+                html = renderSellerPanel();
+            }
+
+            return html;
+        }
+
+        // ============================================================
+        // OWNER: Add Stock with Photo
+        // ============================================================
+        function openOwnerAddStock() {
+            const productNames = products.map(p => `${p.id}: ${p.name}`).join('\n');
+            const productId = prompt('📦 Add Stock\n\n' + productNames + '\n\nEnter product ID:');
+            if (!productId) return;
+            const product = products.find(p => p.id == productId);
+            if (!product) {
+                showToast('❌ Product not found', 'error');
+                return;
+            }
+
+            const buyPrice = parseInt(prompt('💰 Enter buying price for: ' + product.name + '\nCurrent: ' + product.buyPrice +
+                ' ETB'));
+            if (buyPrice > 0) product.buyPrice = buyPrice;
+
+            const quantity = parseInt(prompt('📦 Enter quantity to add:'));
+            if (quantity > 0) {
+                product.stock += quantity;
+                const notifId = generateUniqueId('NOTIF');
+                showToast('✅ Stock updated: ' + product.name + ' (+' + quantity + ')', 'success');
+                addNotification('📦 Stock added: ' + product.name + ' (+' + quantity + ') (🆔 ' + notifId + ')', 'success');
+
+                // Ask for photo
+                const addPhoto = confirm('📷 Add product photo?');
+                if (addPhoto) {
+                    document.getElementById('galleryInput').click();
+                    document.getElementById('galleryInput').onchange = function(e) {
+                        const file = e.target.files[0];
+                        if (file) {
+                            const reader = new FileReader();
+                            reader.onload = function(ev) {
+                                product.image = ev.target.result;
+                                showToast('📷 Photo added for ' + product.name, 'success');
+                                addNotification('📷 Photo updated: ' + product.name, 'info');
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                        this.value = '';
+                    };
+                }
+                navigateTo('home');
+            } else {
+                showToast('⚠️ Invalid quantity', 'error');
+            }
+        }
+
+        // ============================================================
+        // SHOW DAY DETAIL
+        // ============================================================
+        function showDayDetail(dateKey) {
+            const data = calendarData[dateKey];
+            if (!data) {
+                showToast('📅 No sales data for this day', 'info');
+                return;
+            }
+            showToast('📅 ' + dateKey + ' | Revenue: ' + data.revenue + ' ETB | Profit: ' + data.profit + ' ETB | Orders: ' +
+                data.orders, 'info');
+        }
+
+        // ============================================================
+        // RENDER: SELLER PANEL
+        // ============================================================
+        function renderSellerPanel() {
+            const activeOrders = orders.filter(o => o.status === 'pending' || o.status === 'approved' || o.status ===
+            'delivering');
+
+            let html = `
+                <div class="portal-switcher">
+                    <button class="${currentPortal === 'owner' ? 'active' : ''}" onclick="currentPortal='owner';navigateTo('home');">👑 Owner</button>
+                    <button class="${currentPortal === 'seller' ? 'active' : ''}" onclick="currentPortal='seller';navigateTo('home');">🛍️ Seller</button>
+                </div>
+                <div class="admin-panel">
+                    <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
+                    <div class="stats-grid">
+                        <div class="stat-card"><div class="stat-number">${activeOrders.length}</div><div class="stat-label">Active Orders</div></div>
+                        <div class="stat-card"><div class="stat-number">${orders.filter(o => o.status === 'delivering').length}</div><div class="stat-label">Delivering</div></div>
+                        <div class="stat-card"><div class="stat-number">${customerRequests.length}</div><div class="stat-label">Requests</div></div>
+                    </div>
+
+                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:4px 0;padding:6px;font-size:10px;">📷 Scan QR to Register Stock</button>
+
+                    <h4 style="margin:8px 0 4px;">📋 Customer Requests</h4>
+                    ${customerRequests.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No customer requests.</p>' :
+                        customerRequests.map(r => `
+                            <div class="request-notif">
+                                <div class="req-product">${r.product}</div>
+                                <div class="req-detail">${r.customer} • ${r.detail} • 🆔 ${r.id}</div>
+                                <div class="req-actions">
+                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="chat-req">💬 Chat</a>
+                                    <a href="tel:+${SELLER_PHONE}" class="call-req">📞 Call</a>
+                                </div>
+                            </div>
+                        `).join('')
+                    }
+
+                    <h4 style="margin:10px 0 4px;">📦 Active Orders</h4>
+                    ${activeOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No active orders.</p>' :
+                        activeOrders.map(o => `
+                            <div class="order-card" style="border-left-color:${o.status === 'pending' ? '#FF6F00' : o.status === 'approved' ? '#2E7D32' : 'var(--primary)'};">
+                                <div class="order-top">
+                                    <div>
+                                        <div class="order-product">${o.product}</div>
+                                        <div class="order-meta">${o.type} • ${o.date} • 🆔 ${o.id}</div>
+                                        <div class="order-meta" style="font-size:7px;">QR: ${o.qrCode || 'N/A'}</div>
+                                    </div>
+                                    <span class="status-badge ${o.status === 'pending' ? 'status-pending' : o.status === 'approved' ? 'status-approved' : 'status-delivering'}">${o.status === 'pending' ? '⏳ Pending' : o.status === 'approved' ? '✅ Approved' : '🚚 Delivering'}</span>
+                                </div>
+                                <div class="order-price">${o.price}</div>
+                                <div class="order-actions">
+                                    ${o.status === 'pending' ? `<button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm Payment</button>` : ''}
+                                    ${o.status === 'approved' ? `<button class="btn-primary" style="padding:2px 8px;font-size:7px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>` : ''}
+                                    ${o.status === 'delivering' ? `
+                                        <button class="btn-success" onclick="showToast('✅ Delivery completed!', 'success')">Complete</button>
+                                        <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="showToast('📍 Location shared', 'info')">Share Location</button>
+                                    ` : ''}
+                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">📞 Call</a>
+                                </div>
+                                ${o.tracking ? `<div style="margin-top:2px;font-size:8px;color:var(--primary);">📦 Tracking: ${o.tracking}</div>` : ''}
+                            </div>
+                        `).join('')
+                    }
+                </div>
+            `;
+            return html;
+        }
+
+        // ============================================================
+        // RENDER: PRODUCT CARD
         // ============================================================
         function renderProductCard(p) {
-            const stockClass = p.stock > 0 ? 'stock-in' : 'stock-out';
-            const stockText = p.stock > 0 ? p.stock + ' available' : 'Out of Stock';
+            const stockClass = p.stock > 5 ? 'stock-in' : p.stock > 0 ? 'stock-low' : 'stock-out';
+            const stockText = p.stock > 5 ? 'In' : p.stock > 0 ? 'Low' : 'Out';
             const badgeHtml = p.badge ? `<span class="product-badge badge-${p.badge.toLowerCase()}">${p.badge}</span>` : '';
-            // Only show if stock > 0 for buyer
-            if (currentUser.role === 'buyer' && p.stock <= 0) return '';
             return `
                 <div class="product-card">
                     <div class="image-wrapper" onclick="openProduct(${p.id})">
@@ -2493,9 +2167,9 @@
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-price">${p.price}</div>
-                        <div class="product-stock ${stockClass}">${stockText}</div>
+                        <div class="product-stock ${stockClass}">${stockText} (${p.stock})</div>
                         <div class="product-quick-actions">
-                            <button class="btn-buy-now" onclick="openBuyerOrder(${p.id})">🛒 Buy</button>
+                            <button class="btn-scan-order" onclick="startOrderWorkflow(${p.id})">📷 Order</button>
                             <button class="btn-wish" onclick="addToWishlist(${p.id})">❤️</button>
                         </div>
                     </div>
@@ -2504,460 +2178,221 @@
         }
 
         // ============================================================
-        // BUYER ORDER — With Delivery Option + Fees
+        // ORDER WORKFLOW
         // ============================================================
-        function openBuyerOrder(productId) {
+        function startOrderWorkflow(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
             if (product.stock <= 0) {
                 showToast('❌ Out of stock!', 'error');
                 return;
             }
-            buyerOrderProduct = product;
-            buyerOrderStep = 1;
-            buyerOrderData = {
-                deliveryFee: DELIVERY_FEE,
-                paymentFee: PAYMENT_FEE,
-                deliveryType: 'pickup'
-            };
-            openModal('buyerOrderModal');
-            renderBuyerOrderStep();
+            pendingOrder = { product, step: 1 };
+            openModal('orderWorkflowModal');
+            renderWorkflowStep();
         }
 
-        function renderBuyerOrderStep() {
-            const container = document.getElementById('buyerOrderContent');
-            const product = buyerOrderProduct;
-            const step = buyerOrderStep;
-            const data = buyerOrderData;
+        function renderWorkflowStep() {
+            if (!pendingOrder) return;
+            const container = document.getElementById('workflowContent');
+            const step = pendingOrder.step;
+            const product = pendingOrder.product;
 
-            let html = '';
-
-            if (step === 1) {
-                const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
-                const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
-                const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
-                const total = basePrice + deliveryFee + paymentFee;
-
-                html = `
-                    <div style="text-align:center;">
-                        <img src="${product.image}" style="width:80px;height:80px;border-radius:10px;object-fit:cover;margin-bottom:4px;" />
-                        <h3 style="font-size:14px;">${product.name}</h3>
-                        <p style="font-size:14px;font-weight:700;color:var(--primary);">${product.price}</p>
-                        <p style="font-size:8px;color:var(--warm-gray);">Stock: ${product.stock} available</p>
-                    </div>
-
-                    <div style="margin:6px 0;">
-                        <label style="font-size:9px;font-weight:600;">Delivery Option</label>
-                        <div style="display:flex;gap:6px;margin-top:3px;">
-                            <button class="btn-secondary ${data.deliveryType === 'pickup' ? 'active' : ''}" style="flex:1;font-size:8px;padding:3px;${data.deliveryType === 'pickup' ? 'border-color:var(--primary);background:rgba(212,175,55,0.08);' : ''}" onclick="buyerOrderData.deliveryType='pickup';renderBuyerOrderStep();">📍 Pickup</button>
-                            <button class="btn-secondary ${data.deliveryType === 'delivery' ? 'active' : ''}" style="flex:1;font-size:8px;padding:3px;${data.deliveryType === 'delivery' ? 'border-color:var(--primary);background:rgba(212,175,55,0.08);' : ''}" onclick="buyerOrderData.deliveryType='delivery';renderBuyerOrderStep();">🚚 Delivery</button>
-                        </div>
-                    </div>
-
-                    ${data.deliveryType === 'delivery' ? `
-                        <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin:4px 0;font-size:8px;">
-                            <div style="display:flex;justify-content:space-between;">
-                                <span>Product Price:</span>
-                                <span>${product.price}</span>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;">
-                                <span>Delivery Fee:</span>
-                                <span>${deliveryFee} ETB</span>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;">
-                                <span>Payment Fee:</span>
-                                <span>${paymentFee} ETB</span>
-                            </div>
-                            <div style="display:flex;justify-content:space-between;font-weight:700;color:var(--primary);border-top:1px solid var(--border-color);padding-top:2px;margin-top:2px;">
-                                <span>Total:</span>
-                                <span>${total.toLocaleString()} ETB</span>
-                            </div>
-                        </div>
-                    ` : `
-                        <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:4px;margin:4px 0;font-size:8px;text-align:center;">
-                            <p>Pickup from: ${BUSINESS_ADDRESS}</p>
-                            <p style="font-size:7px;color:var(--warm-gray);">No delivery or payment fees</p>
-                        </div>
-                    `}
-
-                    <div class="buyer-details-form">
-                        <label>Full Name *</label>
-                        <input type="text" id="buyerFullName" placeholder="Enter your full name" value="${data.fullName || ''}" />
-                        <label>Phone Number *</label>
-                        <input type="text" id="buyerPhone" placeholder="Enter phone number" value="${data.phone || ''}" />
-                        ${data.deliveryType === 'delivery' ? `
-                            <label>Address *</label>
-                            <input type="text" id="buyerAddress" placeholder="Enter delivery address" value="${data.address || ''}" />
-                            <label>Exact Location (Google Maps link or description)</label>
-                            <textarea id="buyerLocation" placeholder="Paste Google Maps link or describe location">${data.location || ''}</textarea>
-                            <div style="margin-top:4px;font-size:7px;color:var(--warm-gray);">
-                                📍 We'll show live route from shop to your location on Google Maps
-                            </div>
-                        ` : ''}
-                    </div>
-
-                    <div style="display:flex;gap:6px;margin-top:8px;">
-                        <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="closeModal('buyerOrderModal'); resetBuyerOrder();">Cancel</button>
-                        <button class="btn-primary" style="flex:2;font-size:9px;padding:4px;" onclick="saveBuyerDetails()">📝 Proceed to Payment →</button>
-                    </div>
-                `;
-            } else if (step === 2) {
-                const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
-                const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
-                const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
-                const total = basePrice + deliveryFee + paymentFee;
-
-                html = `
-                    <div style="text-align:center;">
-                        <h4 style="font-size:11px;margin-bottom:4px;">💳 Select Payment Method</h4>
-                        <div class="payment-options">
-                            ${paymentMethods.map(pm => `
-                                <div class="payment-option ${data.paymentMethod === pm.id ? 'selected' : ''}" onclick="buyerOrderData.paymentMethod='${pm.id}';renderBuyerOrderStep();">
-                                    <span class="pay-icon">${pm.icon}</span>
-                                    <div class="pay-name">${pm.name}</div>
-                                    <div class="pay-detail">${pm.detail}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-                        ${data.paymentMethod ? `
-                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin:4px 0;font-size:8px;">
-                                <p><strong>Selected:</strong> ${paymentMethods.find(p => p.id === data.paymentMethod)?.name}</p>
-                                <p><strong>Account:</strong> ${paymentMethods.find(p => p.id === data.paymentMethod)?.account}</p>
-                                <p style="font-weight:700;color:var(--primary);">Total: ${total.toLocaleString()} ETB</p>
-                            </div>
-                        ` : ''}
-                        <label style="font-size:9px;font-weight:600;display:block;margin-top:4px;">Payment Reference *</label>
-                        <div class="payment-ref-input">
-                            <input type="text" id="buyerPaymentRef" placeholder="Enter reference number" value="${data.paymentRef || ''}" />
-                            <button onclick="savePaymentRef()">Submit</button>
-                        </div>
-                        <label style="font-size:9px;font-weight:600;display:block;margin-top:4px;">Upload Screenshot (optional)</label>
-                        <div class="screenshot-upload" onclick="document.getElementById('buyerScreenshotInput').click()">
-                            <span class="upload-icon">📷</span>
-                            Tap to upload payment screenshot
-                            <input type="file" id="buyerScreenshotInput" accept="image/*" style="display:none;" onchange="previewBuyerScreenshot(event)" />
-                        </div>
-                        <img id="buyerScreenshotPreview" class="screenshot-preview" style="display:none;" />
-                        <div style="display:flex;gap:6px;margin-top:8px;">
-                            <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="buyerOrderStep=1;renderBuyerOrderStep();">← Back</button>
-                            <button class="btn-primary" style="flex:2;font-size:9px;padding:4px;" onclick="submitBuyerOrder()">✅ Place Order</button>
-                        </div>
-                    </div>
-                `;
-            }
-
-            container.innerHTML = html;
-            document.getElementById('buyerOrderTitle').textContent = '🛒 Place Order - Step ' + step + '/2';
-        }
-
-        function saveBuyerDetails() {
-            const fullName = document.getElementById('buyerFullName').value.trim();
-            const phone = document.getElementById('buyerPhone').value.trim();
-            const address = document.getElementById('buyerAddress')?.value?.trim() || '';
-            const location = document.getElementById('buyerLocation')?.value?.trim() || '';
-
-            if (!fullName || !phone) {
-                showToast('⚠️ Please fill in name and phone number', 'error');
-                return;
-            }
-            if (buyerOrderData.deliveryType === 'delivery' && !address) {
-                showToast('⚠️ Please fill in delivery address', 'error');
-                return;
-            }
-
-            buyerOrderData.fullName = fullName;
-            buyerOrderData.phone = phone;
-            buyerOrderData.address = address;
-            buyerOrderData.location = location;
-
-            buyerOrderStep = 2;
-            renderBuyerOrderStep();
-        }
-
-        function savePaymentRef() {
-            const ref = document.getElementById('buyerPaymentRef').value.trim();
-            if (ref) {
-                buyerOrderData.paymentRef = ref;
-                showToast('✅ Reference saved', 'success');
-            }
-        }
-
-        function previewBuyerScreenshot(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('buyerScreenshotPreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    buyerOrderData.screenshot = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function submitBuyerOrder() {
-            const ref = document.getElementById('buyerPaymentRef').value.trim();
-            if (!ref) {
-                showToast('⚠️ Please enter payment reference', 'error');
-                return;
-            }
-            if (!buyerOrderData.paymentMethod) {
-                showToast('⚠️ Please select a payment method', 'error');
-                return;
-            }
-
-            buyerOrderData.paymentRef = ref;
-            const product = buyerOrderProduct;
-            const orderId = generateUniqueId('ORD');
-            const buyerId = generateUniqueId('BUY');
-
-            const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
-            const deliveryFee = buyerOrderData.deliveryType === 'delivery' ? buyerOrderData.deliveryFee : 0;
-            const paymentFee = buyerOrderData.deliveryType === 'delivery' ? buyerOrderData.paymentFee : 0;
-            const total = basePrice + deliveryFee + paymentFee;
-
-            const newOrder = {
-                id: orderId,
-                product: product.name,
-                price: product.price,
-                buyPrice: product.buyPrice,
-                stockAtTime: product.stock,
-                status: 'waiting-payment',
-                date: new Date().toISOString().split('T')[0],
-                type: buyerOrderData.deliveryType,
-                tracking: buyerOrderData.deliveryType === 'delivery' ? 'SOYAM-' + String(Math.floor(1000 + Math.random() *
-                    9000)) : null,
-                qrCode: product.qrCode,
-                paymentRef: ref,
-                paymentMethod: paymentMethods.find(p => p.id === buyerOrderData.paymentMethod)?.name || 'Unknown',
-                customer: buyerOrderData.fullName || currentUser.username || 'Customer',
-                customerPhone: buyerOrderData.phone || '',
-                customerAddress: buyerOrderData.address || '',
-                customerLocation: buyerOrderData.location || '',
-                buyerId: buyerId,
-                notifId: generateUniqueId('NOTIF'),
-                screenshot: buyerOrderData.screenshot || null,
-                deliveryFee: deliveryFee,
-                paymentFee: paymentFee,
-                totalPrice: total.toLocaleString() + ' ETB'
-            };
-            orders.unshift(newOrder);
-            product.stock--;
-
-            addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ') from ' + newOrder.customer, 'info');
-            addNotification('💳 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
-            addCustomerRequest(product.name, newOrder.customer, 'Order #' + orderId + ' - Payment pending', product.qrCode);
-
-            closeModal('buyerOrderModal');
-            resetBuyerOrder();
-            showToast('✅ Order placed! (🆔 ' + orderId + ')', 'success');
-            navigateTo('orders');
-        }
-
-        function resetBuyerOrder() {
-            buyerOrderProduct = null;
-            buyerOrderStep = 1;
-            buyerOrderData = {};
-            document.getElementById('buyerPaymentRef').value = '';
-            document.getElementById('buyerScreenshotInput').value = '';
-            document.getElementById('buyerScreenshotPreview').style.display = 'none';
-            document.getElementById('buyerScreenshotPreview').src = '';
-        }
-
-        // ============================================================
-        // RENDER: SELLER PANEL — With Low/High Stock Alerts
-        // ============================================================
-        function renderSellerPanel() {
-            const pendingOrders = orders.filter(o => o.status === 'waiting-payment' || o.status === 'waiting-owner');
-            const deliveringOrders = orders.filter(o => o.status === 'delivering');
-            const lowStock = products.filter(p => p.stock < 3 && p.stock > 0);
-            const highStock = products.filter(p => p.stock > 10);
-
-            let html = `
-                <div class="admin-panel">
-                    <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
-
-                    <div style="display:flex;gap:4px;margin:4px 0;flex-wrap:wrap;">
-                        ${lowStock.length > 0 ? `<span style="font-size:7px;background:var(--danger);color:white;padding:2px 8px;border-radius:30px;">⚠️ Low Stock: ${lowStock.map(p => p.name).join(', ')}</span>` : ''}
-                        ${highStock.length > 0 ? `<span style="font-size:7px;background:var(--success);color:white;padding:2px 8px;border-radius:30px;">✅ High Stock: ${highStock.map(p => p.name).join(', ')}</span>` : ''}
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card"><div class="stat-number">${pendingOrders.length}</div><div class="stat-label">Pending Orders</div></div>
-                        <div class="stat-card"><div class="stat-number">${deliveringOrders.length}</div><div class="stat-label">Delivering</div></div>
-                        <div class="stat-card"><div class="stat-number">${customerRequests.length}</div><div class="stat-label">Requests</div></div>
-                        <div class="stat-card"><div class="stat-number">${products.reduce((s,p) => s + p.stock, 0)}</div><div class="stat-label">Total Stock</div></div>
-                    </div>
-
-                    <h4 style="margin:8px 0 3px;">📋 Orders by Buyer ID</h4>
-                    ${pendingOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No pending orders.</p>' :
-                        pendingOrders.map(o => `
-                            <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : '#F57F17'};">
-                                <div class="order-top">
-                                    <div>
-                                        <div class="order-product">${o.product}</div>
-                                        <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
-                                        <div class="order-meta" style="font-size:7px;">Order: ${o.id} • ${o.type}</div>
-                                        <div class="order-meta" style="font-size:7px;">💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}</div>
-                                        ${o.customer ? `<div class="order-meta" style="font-size:7px;">👤 ${o.customer} • ${o.customerPhone || ''}</div>` : ''}
-                                        ${o.customerAddress ? `<div class="order-meta" style="font-size:7px;">📍 ${o.customerAddress}</div>` : ''}
-                                    </div>
-                                    <span class="status-badge ${o.status === 'waiting-payment' ? 'status-waiting-payment' : 'status-waiting-owner'}">${o.status === 'waiting-payment' ? '⏳ Payment Pending' : '⏳ Awaiting Owner'}</span>
-                                </div>
-                                <div class="order-price">${o.totalPrice || o.price}</div>
-                                ${o.screenshot ? `<div style="margin-top:2px;font-size:7px;color:var(--primary);">📷 Screenshot attached</div>` : ''}
-                                <div class="order-actions">
-                                    ${o.status === 'waiting-payment' ? `
-                                        <button class="btn-success" onclick="sellerConfirmPayment('${o.id}')">✅ Confirm Payment</button>
-                                    ` : ''}
-                                    ${o.status === 'waiting-owner' ? `
-                                        <button class="btn-warning" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Owner Pending</button>
-                                    ` : ''}
-                                    <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">📞 Call</a>
-                                    <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">💬 Chat</a>
-                                    <button class="btn-info" onclick="openMapForOrder('${o.id}')" style="padding:2px 8px;font-size:7px;">📍 Map</button>
-                                </div>
-                            </div>
-                        `).join('')
-                    }
-
-                    <h4 style="margin:8px 0 3px;">📦 In-Person Sales (Scan QR)</h4>
-                    <button class="btn-primary" onclick="openSellerQRScanner()" style="margin:4px 0;padding:6px;font-size:10px;">📷 Scan Product QR to Sell</button>
-
-                    <h4 style="margin:8px 0 3px;">🚚 Active Deliveries</h4>
-                    ${deliveringOrders.length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No active deliveries.</p>' :
-                        deliveringOrders.map(o => `
-                            <div class="order-card" style="border-left-color:var(--primary);">
-                                <div class="order-top">
-                                    <div>
-                                        <div class="order-product">${o.product}</div>
-                                        <div class="order-meta">🆔 Buyer: ${o.buyerId || 'N/A'} • ${o.date}</div>
-                                        <div class="order-meta" style="font-size:7px;">Order: ${o.id}</div>
-                                        ${o.customer ? `<div class="order-meta" style="font-size:7px;">👤 ${o.customer} • ${o.customerPhone || ''}</div>` : ''}
-                                        ${o.customerAddress ? `<div class="order-meta" style="font-size:7px;">📍 ${o.customerAddress}</div>` : ''}
-                                    </div>
-                                    <span class="status-badge status-delivering">🚚 Delivering</span>
-                                </div>
-                                <div class="order-price">${o.totalPrice || o.price}</div>
-                                ${o.tracking ? `
-                                    <div style="margin-top:2px;font-size:8px;color:var(--primary);">
-                                        📦 Tracking: ${o.tracking}
-                                        <button class="btn-secondary" style="padding:1px 6px;font-size:6px;margin-left:3px;" onclick="openTracking('${o.id}')">Track</button>
-                                    </div>
-                                ` : ''}
-                                <div class="order-actions">
-                                    <button class="btn-success" onclick="sellerCompleteDelivery('${o.id}')">✅ Complete Delivery</button>
-                                    <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="sendToDeliverer('${o.id}')">📤 Send to Deliverer</button>
-                                    <button class="btn-info" onclick="openMapForOrder('${o.id}')" style="padding:2px 8px;font-size:7px;">📍 Map</button>
-                                </div>
-                            </div>
-                        `).join('')
-                    }
-
-                    <h4 style="margin:8px 0 3px;">📋 Customer Requests</h4>
-                    ${customerRequests.slice(0, 5).map(r => `
-                        <div class="request-notif">
-                            <div class="req-product">${r.product}</div>
-                            <div class="req-detail">${r.customer} • ${r.detail} • 🆔 ${r.id}</div>
-                            <div class="req-actions">
-                                <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="chat-req">💬 Chat</a>
-                                <a href="tel:+${SELLER_PHONE}" class="call-req">📞 Call</a>
-                            </div>
+            const steps = ['Select', 'Scan', 'Pay', 'Confirm'];
+            let stepHtml = `
+                <div class="workflow-steps">
+                    ${steps.map((s, i) => `
+                        <div class="workflow-step ${i + 1 < step ? 'done' : i + 1 === step ? 'active' : ''}">
+                            <div class="step-circle">${i + 1}</div>
+                            <div class="step-label">${s}</div>
                         </div>
                     `).join('')}
                 </div>
             `;
-            return html;
+
+            let contentHtml = '';
+            switch (step) {
+                case 1:
+                    contentHtml = `
+                        <div style="text-align:center;">
+                            <img src="${product.image}" style="width:70px;height:70px;border-radius:8px;object-fit:cover;margin-bottom:4px;" />
+                            <h3 style="font-size:13px;">${product.name}</h3>
+                            <p style="font-size:14px;font-weight:700;color:var(--primary);">${product.price}</p>
+                            <p style="font-size:9px;color:var(--warm-gray);">Stock: ${product.stock}</p>
+                            <div style="display:flex;gap:4px;margin-top:8px;">
+                                <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="closeOrderWorkflow()">Cancel</button>
+                                <button class="btn-primary" style="flex:2;font-size:9px;padding:4px;" onclick="pendingOrder.step=2;renderWorkflowStep();">📷 Scan QR →</button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                case 2:
+                    contentHtml = `
+                        <div style="text-align:center;">
+                            <div style="background:var(--bg-primary);border-radius:var(--radius);padding:12px;margin-bottom:8px;border:2px dashed var(--border-color);">
+                                <div style="font-size:32px;">📷</div>
+                                <p style="font-weight:600;font-size:11px;">Scan Product QR Code</p>
+                                <p style="font-size:8px;color:var(--warm-gray);">Use camera or upload image</p>
+                            </div>
+                            <button class="btn-primary" onclick="openRealScanner()" style="font-size:9px;padding:6px;">📷 Open Camera</button>
+                            <button class="btn-secondary" style="margin-top:3px;width:100%;font-size:9px;padding:4px;" onclick="openGallery()">🖼️ Choose from Gallery</button>
+                            <button class="btn-secondary" style="margin-top:3px;font-size:8px;padding:3px;" onclick="pendingOrder.step=1;renderWorkflowStep();">← Back</button>
+                        </div>
+                    `;
+                    break;
+                case 3:
+                    contentHtml = `
+                        <div style="text-align:center;">
+                            <div style="background:var(--bg-primary);border-radius:var(--radius);padding:10px;margin-bottom:8px;">
+                                <p style="font-weight:600;font-size:10px;">💳 Payment Details</p>
+                                <p style="font-size:16px;font-weight:700;color:var(--primary);">${product.price}</p>
+                                <p style="font-size:8px;color:var(--warm-gray);">Pay via Telebirr, CBE, or Cash</p>
+                                <div style="margin-top:3px;font-size:8px;color:var(--warm-gray);">
+                                    <p>📱 Telebirr: +${OWNER_PHONE}</p>
+                                    <p>🏦 CBE: 1000123456789</p>
+                                </div>
+                            </div>
+                            <div class="payment-ref-input">
+                                <input type="text" id="paymentRefInput" placeholder="Enter payment reference" />
+                                <button onclick="submitPaymentReference()">Submit</button>
+                            </div>
+                            <button class="btn-secondary" style="margin-top:3px;font-size:8px;padding:3px;" onclick="pendingOrder.step=2;renderWorkflowStep();">← Back</button>
+                        </div>
+                    `;
+                    break;
+                case 4:
+                    contentHtml = `
+                        <div style="text-align:center;">
+                            <div style="font-size:32px;">✅</div>
+                            <h3 style="font-size:13px;">Order Placed!</h3>
+                            <p style="font-size:9px;color:var(--warm-gray);">Your order has been submitted.</p>
+                            <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:8px;margin:6px 0;text-align:left;font-size:9px;">
+                                <p><strong>Product:</strong> ${product.name}</p>
+                                <p><strong>Price:</strong> ${product.price}</p>
+                                <p><strong>Status:</strong> ⏳ Awaiting Approval</p>
+                                <p><strong>🆔 Order ID:</strong> ${pendingOrder.orderId || 'PENDING'}</p>
+                            </div>
+                            <button class="btn-primary" onclick="closeOrderWorkflow();navigateTo('orders');" style="font-size:9px;padding:6px;">📦 View Orders</button>
+                        </div>
+                    `;
+                    break;
+            }
+
+            container.innerHTML = stepHtml + contentHtml;
+            document.getElementById('workflowTitle').textContent = '🛒 ' + (step === 4 ? 'Order Confirmed' : 'Place Order');
         }
 
-        // ============================================================
-        // OPEN MAP FOR ORDER — Live Google Maps
-        // ============================================================
-        function openMapForOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) {
-                showToast('❌ Order not found', 'error');
+        function submitPaymentReference() {
+            const ref = document.getElementById('paymentRefInput').value.trim();
+            if (!ref) {
+                showToast('⚠️ Please enter payment reference', 'error');
                 return;
             }
-            const address = order.customerAddress || BUSINESS_ADDRESS;
-            const encodedAddress = encodeURIComponent(address);
-            const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&travelmode=driving`;
+            const orderId = generateUniqueId('ORD');
+            pendingOrder.orderId = orderId;
+            pendingOrder.paymentRef = ref;
+            pendingOrder.step = 4;
 
-            // Show in modal with live map
-            const modal = document.getElementById('trackingModal');
-            const container = document.getElementById('trackingContent');
+            const product = pendingOrder.product;
+            const newOrder = {
+                id: orderId,
+                product: product.name,
+                price: product.price,
+                status: 'waiting-payment',
+                date: new Date().toISOString().split('T')[0],
+                type: 'Delivery',
+                tracking: 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)),
+                qrCode: product.qrCode,
+                paymentRef: ref,
+                customer: currentUser.username || 'Customer',
+                notifId: generateUniqueId('NOTIF')
+            };
+            orders.unshift(newOrder);
+            product.stock--;
 
-            container.innerHTML = `
-                <div style="text-align:center;margin-bottom:8px;">
-                    <h4 style="font-size:12px;">📍 Live Route</h4>
-                    <p style="font-size:9px;color:var(--warm-gray);">From Shop to ${order.customer || 'Customer'}</p>
-                    <p style="font-size:8px;color:var(--primary);">${order.customerAddress || BUSINESS_ADDRESS}</p>
-                </div>
-                <div class="map-container">
-                    <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDk3HwqZjrL6_bQBV7JZ7kL8dN5E5VH1lE&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&mode=driving" allowfullscreen loading="lazy"></iframe>
-                </div>
-                <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
-                    <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('${mapUrl}', '_blank')">🗺️ Open in Google Maps</button>
-                    <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="closeModal('trackingModal')">Close</button>
-                </div>
-            `;
+            addNotification('💰 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
+            addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ')', 'info');
+            addCustomerRequest(product.name, currentUser.username || 'Customer', 'Order #' + orderId, product.qrCode);
 
-            modal.classList.add('visible');
+            renderWorkflowStep();
+            showToast('✅ Order placed! (🆔 ' + orderId + ')', 'success');
+        }
+
+        function closeOrderWorkflow() {
+            pendingOrder = null;
+            closeModal('orderWorkflowModal');
         }
 
         // ============================================================
-        // SELLER ACTIONS
+        // QR SCANNER
         // ============================================================
-        function sellerConfirmPayment(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                order.status = 'waiting-owner';
-                showToast('✅ Payment confirmed! Waiting for owner approval.', 'success');
-                addNotification('✅ Payment confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                addNotification('👑 Owner: Payment approval needed for ' + order.product + ' (🆔 ' + orderId + ')', 'warning');
-                navigateTo('home');
+        function openRealScanner() {
+            const scanner = document.getElementById('qrScanner');
+            scanner.classList.remove('hidden');
+
+            const video = document.getElementById('qrVideo');
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    .then(function(stream) {
+                        video.srcObject = stream;
+                        video.play();
+                        setTimeout(function() {
+                            const scannedQR = 'SOYAM-P001';
+                            handleQRScanned(scannedQR);
+                            closeScanner();
+                        }, 2500);
+                    })
+                    .catch(function(err) {
+                        showToast('❌ Camera access denied.', 'error');
+                        closeScanner();
+                    });
+            } else {
+                showToast('❌ Camera not supported.', 'error');
+                closeScanner();
             }
         }
 
-        function sellerCompleteDelivery(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                const completionCode = generateUniqueId('COMP');
-                order.status = 'delivered';
-                order.completionCode = completionCode;
-                addNotification('✅ Delivery completed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                addNotification('🔑 Completion code: ' + completionCode, 'info');
-                showToast('✅ Delivery completed! Code: ' + completionCode, 'success');
-                const p = products.find(pr => pr.name === order.product);
-                if (p) p.stock = Math.max(0, p.stock - 1);
-                addNotification('📦 Your order ' + orderId + ' has been delivered!', 'success');
-                navigateTo('home');
-            }
-        }
-
-        function sendToDeliverer(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                showToast('📤 Order ID ' + order.id + ' sent to deliverer!', 'success');
-                addNotification('📤 Order sent to deliverer: ' + order.product + ' (🆔 ' + order.id + ')', 'info');
-                addNotification('📍 Deliverer: ' + order.customerAddress || BUSINESS_ADDRESS, 'info');
-                if (tg && tg.sendData) {
-                    tg.sendData(JSON.stringify({
-                        type: 'delivery_order',
-                        orderId: order.id,
-                        product: order.product,
-                        tracking: order.tracking,
-                        customer: order.customer,
-                        address: order.customerAddress,
-                        phone: order.customerPhone
-                    }));
+        function handleQRScanned(qrData) {
+            const product = products.find(p => p.qrCode === qrData);
+            if (product) {
+                showToast('✅ ' + product.name + ' | ' + product.price, 'success');
+                if (pendingOrder) {
+                    pendingOrder.product = product;
+                    pendingOrder.step = 3;
+                    renderWorkflowStep();
                 }
+                addNotification('📷 QR Scanned: ' + product.name + ' (🆔 ' + product.qrCode + ')', 'info');
+            } else {
+                showToast('❌ Product not found for QR: ' + qrData, 'error');
+            }
+        }
+
+        function openGallery() {
+            document.getElementById('galleryInput').click();
+        }
+
+        function handleGalleryImage(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            showToast('📷 Image uploaded! Analyzing...', 'info');
+            setTimeout(function() {
+                const randomProduct = products[Math.floor(Math.random() * products.length)];
+                handleQRScanned(randomProduct.qrCode);
+                closeScanner();
+            }, 1500);
+            event.target.value = '';
+        }
+
+        function closeScanner() {
+            document.getElementById('qrScanner').classList.add('hidden');
+            const video = document.getElementById('qrVideo');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(t => t.stop());
             }
         }
 
         // ============================================================
-        // SELLER QR SCANNER — In-Person Sales
+        // SELLER QR SCANNER
         // ============================================================
         function openSellerQRScanner() {
             const scanner = document.getElementById('qrScanner');
@@ -2973,46 +2408,20 @@
                             const scannedQR = 'SOYAM-P001';
                             const product = products.find(p => p.qrCode === scannedQR);
                             if (product) {
-                                if (product.stock <= 0) {
-                                    showToast('❌ Product out of stock!', 'error');
-                                    closeScanner();
-                                    return;
+                                const stockToAdd = parseInt(prompt('📦 Stock registration for: ' + product.name +
+                                    '\nCurrent stock: ' + product.stock +
+                                    '\nEnter quantity to add:'));
+                                if (stockToAdd > 0) {
+                                    product.stock += stockToAdd;
+                                    const notifId = generateUniqueId('NOTIF');
+                                    showToast('✅ Stock updated: ' + product.name + ' (+' + stockToAdd + ')', 'success');
+                                    addNotification('📦 Stock registered: ' + product.name + ' (+' + stockToAdd +
+                                        ') (🆔 ' + notifId + ')', 'success');
+                                } else {
+                                    showToast('⚠️ Invalid quantity', 'error');
                                 }
-                                const orderId = generateUniqueId('ORD');
-                                const buyerId = generateUniqueId('BUY');
-                                const newOrder = {
-                                    id: orderId,
-                                    product: product.name,
-                                    price: product.price,
-                                    buyPrice: product.buyPrice,
-                                    stockAtTime: product.stock,
-                                    status: 'waiting-owner',
-                                    date: new Date().toISOString().split('T')[0],
-                                    type: 'in-person',
-                                    qrCode: product.qrCode,
-                                    customer: 'In-Person Customer',
-                                    customerPhone: '',
-                                    customerAddress: BUSINESS_ADDRESS,
-                                    buyerId: buyerId,
-                                    paymentMethod: 'Cash',
-                                    paymentRef: 'IN-PERSON-' + Date.now(),
-                                    notifId: generateUniqueId('NOTIF'),
-                                    deliveryFee: 0,
-                                    paymentFee: 0,
-                                    totalPrice: product.price
-                                };
-                                orders.unshift(newOrder);
-                                product.stock--;
-                                showToast('✅ In-person sale: ' + product.name + ' (🆔 ' + orderId + ')', 'success');
-                                addNotification('🏪 In-person sale: ' + product.name + ' (🆔 ' + orderId + ')',
-                                'success');
-                                addNotification('👑 Owner: Approve in-person sale for ' + product.name + ' (🆔 ' +
-                                    orderId + ')', 'warning');
-                            } else {
-                                showToast('❌ Product not found for QR: ' + scannedQR, 'error');
                             }
                             closeScanner();
-                            navigateTo('home');
                         }, 3000);
                     })
                     .catch(function(err) {
@@ -3026,385 +2435,25 @@
         }
 
         // ============================================================
-        // RENDER: OWNER PANEL — 4 Menus + Refresh/Clear
-        // ============================================================
-        function renderOwnerPanel() {
-            const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
-            const totalValue = products.reduce((sum, p) => {
-                const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
-                return sum + (priceNum * p.stock);
-            }, 0);
-            const totalBuyValue = products.reduce((sum, p) => sum + (p.buyPrice * p.stock), 0);
-            const pendingApprovals = orders.filter(o => o.status === 'waiting-owner').length;
-            const pendingPayments = orders.filter(o => o.status === 'waiting-payment').length;
-
-            const today = new Date().toISOString().split('T')[0];
-            const todayRevenue = orders.filter(o => o.date === today && o.status === 'delivered').reduce((sum, o) => {
-                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                const buyPrice = o.buyPrice || 0;
-                return sum + (sellPrice - buyPrice);
-            }, 0);
-            const pendingRevenue = orders.filter(o => o.date === today && (o.status === 'waiting-owner' || o.status ===
-                'waiting-payment')).reduce((sum, o) => {
-                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                const buyPrice = o.buyPrice || 0;
-                return sum + (sellPrice - buyPrice);
-            }, 0);
-            const totalTodayRevenue = todayRevenue + pendingRevenue;
-
-            const lowStock = products.filter(p => p.stock < 3 && p.stock > 0);
-
-            const daysInMonth = new Date().getDate();
-            const monthName = new Date().toLocaleString('default', { month: 'long' });
-            const year = new Date().getFullYear();
-
-            let html = `
-                <div class="admin-panel">
-                    <div class="panel-title">👑 <span class="highlight">Owner Dashboard</span></div>
-
-                    <!-- 4 Menus Side by Side -->
-                    <div class="panel-tabs">
-                        <button class="btn-switch ${currentView === 'dashboard' ? 'active' : ''}" onclick="switchOwnerView('dashboard')">📊</button>
-                        <button class="btn-switch ${currentView === 'stock' ? 'active' : ''}" onclick="switchOwnerView('stock')">📦</button>
-                        <button class="btn-switch ${currentView === 'approvals' ? 'active' : ''}" onclick="switchOwnerView('approvals')">✅</button>
-                        <button class="btn-switch ${currentView === 'reports' ? 'active' : ''}" onclick="switchOwnerView('reports')">📄</button>
-                    </div>
-
-                    <!-- Refresh & Clear Actions -->
-                    <div class="panel-actions">
-                        <button class="refresh-btn" onclick="refreshData()">🔄 Refresh</button>
-                        <button class="clear-btn" onclick="clearAllStock()">🗑️ Clear All Stock</button>
-                        <button class="print-btn" onclick="printStockReport()">🖨️ Print</button>
-                    </div>
-
-                    ${currentView === 'dashboard' ? `
-                        <div class="stats-grid">
-                            <div class="stat-card success-card">
-                                <div class="stat-number">${totalTodayRevenue.toLocaleString()} ETB</div>
-                                <div class="stat-label">📊 Today's Revenue</div>
-                                <div class="stat-sub">Sold: ${todayRevenue.toLocaleString()} ETB | Pending: ${pendingRevenue.toLocaleString()} ETB</div>
-                            </div>
-                            <div class="stat-card">
-                                <div class="stat-number">${totalValue.toLocaleString()} ETB</div>
-                                <div class="stat-label">💰 Total Stock Value</div>
-                                <div class="stat-sub">${totalStock} items</div>
-                            </div>
-                            <div class="stat-card warning-card">
-                                <div class="stat-number">${(totalValue - totalBuyValue).toLocaleString()} ETB</div>
-                                <div class="stat-label">📈 Total Profit</div>
-                                <div class="stat-sub">${((totalValue - totalBuyValue) / (totalBuyValue || 1) * 100).toFixed(0)}% margin</div>
-                            </div>
-                            <div class="stat-card ${lowStock.length > 0 ? 'low-stock' : ''}">
-                                <div class="stat-number">${lowStock.length}</div>
-                                <div class="stat-label">⚠️ Low Stock Items</div>
-                                <div class="stat-sub">${lowStock.map(p => p.name).join(', ') || 'All stocked'}</div>
-                            </div>
-                        </div>
-
-                        <h4 style="margin:8px 0 3px;">📊 Stock Movement Summary</h4>
-                        <table class="stock-table">
-                            <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th></tr></thead>
-                            <tbody>
-                                ${products.slice(0, 6).map(p => {
-                                    const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
-                                    const value = priceNum * p.stock;
-                                    const isLow = p.stock < 3 && p.stock > 0;
-                                    const isHigh = p.stock > 10;
-                                    return `
-                                        <tr>
-                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''} ${isHigh ? '<span class="btn-high-stock">HIGH</span>' : ''}</td>
-                                            <td>${p.price}</td>
-                                            <td>${p.buyPrice} ETB</td>
-                                            <td>${p.stock}</td>
-                                            <td>${value.toLocaleString()} ETB</td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                                ${products.length > 6 ? `<tr><td colspan="5" style="text-align:center;color:var(--warm-gray);font-size:7px;">+ ${products.length - 6} more</td></tr>` : ''}
-                            </tbody>
-                        </table>
-                        <button class="btn-secondary" style="margin-top:4px;width:100%;font-size:8px;padding:4px;" onclick="switchOwnerView('stock')">📦 View All Stock →</button>
-                    ` : ''}
-
-                    ${currentView === 'stock' ? `
-                        <h4 style="margin:8px 0 3px;">📦 Full Stock Management</h4>
-                        <button class="btn-primary" style="margin:4px 0;padding:6px;font-size:10px;" onclick="openAddStockModal()">➕ Add New Stock</button>
-                        <table class="stock-table">
-                            <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th><th>Actions</th></tr></thead>
-                            <tbody>
-                                ${products.map(p => {
-                                    const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
-                                    const value = priceNum * p.stock;
-                                    const isLow = p.stock < 3 && p.stock > 0;
-                                    const isHigh = p.stock > 10;
-                                    return `
-                                        <tr>
-                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''} ${isHigh ? '<span class="btn-high-stock">HIGH</span>' : ''}</td>
-                                            <td>${p.price}</td>
-                                            <td>${p.buyPrice} ETB</td>
-                                            <td>${p.stock}</td>
-                                            <td>${value.toLocaleString()} ETB</td>
-                                            <td class="stock-actions">
-                                                <button class="btn-edit-stock" onclick="openEditStock(${p.id})">✏️</button>
-                                                <button class="btn-remove-stock" onclick="removeStock(${p.id})">🗑️</button>
-                                            </td>
-                                        </tr>
-                                    `;
-                                }).join('')}
-                                <tr>
-                                    <td colspan="4" style="text-align:right;font-weight:700;">Total Value:</td>
-                                    <td class="stock-total">${totalValue.toLocaleString()} ETB</td>
-                                    <td></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    ` : ''}
-
-                    ${currentView === 'approvals' ? `
-                        <h4 style="margin:8px 0 3px;">✅ Pending Approvals</h4>
-                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').map(o => `
-                            <div class="payment-notif">
-                                <div class="payment-info">
-                                    <div class="amount">${o.totalPrice || o.price}</div>
-                                    <div class="payer">${o.product} • ${o.customer || 'Customer'}</div>
-                                    <div style="font-size:7px;color:var(--warm-gray);">
-                                        🆔 ${o.id} • ${o.date} • ${o.type}
-                                        ${o.buyerId ? ' • Buyer: ' + o.buyerId : ''}
-                                    </div>
-                                    <div style="font-size:7px;color:var(--primary);">
-                                        💳 ${o.paymentMethod || 'N/A'} • Ref: ${o.paymentRef || 'N/A'}
-                                        ${o.deliveryFee ? ' • Delivery: ' + o.deliveryFee + ' ETB' : ''}
-                                    </div>
-                                    ${o.customerAddress ? `<div style="font-size:7px;color:var(--warm-gray);">📍 ${o.customerAddress}</div>` : ''}
-                                </div>
-                                <div class="payment-actions">
-                                    <button class="btn-confirm" onclick="ownerApprovePayment('${o.id}')">✅ Approve</button>
-                                    <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
-                                </div>
-                            </div>
-                        `).join('')}
-                        ${orders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:9px;">No pending approvals.</p>' : ''}
-
-                        <h4 style="margin:10px 0 3px;">📋 Recent Notifications</h4>
-                        ${notifications.slice(0, 8).map(n => `
-                            <div class="notif-item">
-                                <div class="notif-id">🆔 ${n.id || 'N/A'}</div>
-                                <div>${n.message}</div>
-                                <div class="notif-detail">${n.time || ''}</div>
-                            </div>
-                        `).join('')}
-                    ` : ''}
-
-                    ${currentView === 'reports' ? `
-                        <h4 style="margin:8px 0 3px;">📄 Reports & Statements</h4>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:6px 0;">
-                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateDailyReport()">📊 Today's Report</button>
-                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="printStockReport()">🖨️ Print Stock</button>
-                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateOrderReport()">📦 Orders Report</button>
-                            <button class="btn-secondary" style="font-size:8px;padding:4px;" onclick="generateProfitReport()">💰 Profit Report</button>
-                        </div>
-
-                        <div id="reportContent" style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:8px;margin-top:6px;font-size:8px;max-height:300px;overflow-y:auto;">
-                            <p style="text-align:center;color:var(--warm-gray);">Select a report to view</p>
-                        </div>
-
-                        <h4 style="margin:10px 0 3px;">📅 ${monthName} ${year}</h4>
-                        <div class="calendar-grid">
-                            <div class="calendar-header">Su</div>
-                            <div class="calendar-header">Mo</div>
-                            <div class="calendar-header">Tu</div>
-                            <div class="calendar-header">We</div>
-                            <div class="calendar-header">Th</div>
-                            <div class="calendar-header">Fr</div>
-                            <div class="calendar-header">Sa</div>
-                            ${Array.from({length: 31}, (_, i) => {
-                                const day = i + 1;
-                                const dateStr = `${year}-${String(new Date().getMonth()+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-                                const dayOrders = orders.filter(o => o.date === dateStr && (o.status === 'delivered' || o.status === 'waiting-owner' || o.status === 'waiting-payment'));
-                                const dayRevenue = dayOrders.reduce((sum, o) => {
-                                    const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                                    const buyPrice = o.buyPrice || 0;
-                                    return sum + (sellPrice - buyPrice);
-                                }, 0);
-                                const isToday = day === new Date().getDate();
-                                const hasSales = dayOrders.length > 0;
-                                return `
-                                    <div class="calendar-day ${isToday ? 'today' : ''} ${hasSales ? 'has-sales' : ''}">
-                                        <div class="day-num">${day}</div>
-                                        ${hasSales ? `<div class="day-revenue">${dayRevenue.toLocaleString()}</div>` : ''}
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                        <div style="font-size:7px;color:var(--warm-gray);text-align:center;margin-top:3px;">
-                            <span style="display:inline-block;width:10px;height:10px;background:#2E7D32;border-radius:2px;margin-right:3px;"></span> Has sales &nbsp;
-                            <span style="display:inline-block;width:10px;height:10px;border:1px solid var(--primary);border-radius:2px;margin-left:6px;margin-right:3px;"></span> Today
-                        </div>
-                    ` : ''}
-                </div>
-            `;
-            return html;
-        }
-
-        // ============================================================
-        // REFRESH DATA
-        // ============================================================
-        function refreshData() {
-            // Re-render all views
-            navigateTo('home');
-            showToast('🔄 Data refreshed!', 'success');
-            addNotification('🔄 Data refreshed by owner', 'info');
-        }
-
-        // ============================================================
-        // CLEAR ALL STOCK — With Confirmation
-        // ============================================================
-        function clearAllStock() {
-            if (!confirm('⚠️ Are you sure you want to CLEAR ALL STOCK? This action cannot be undone!')) return;
-            if (!confirm('⚠️ FINAL WARNING: This will remove all products from the store. Continue?')) return;
-
-            products = [];
-            addNotification('🗑️ All stock cleared by owner (🆔 ' + generateUniqueId('NOTIF') + ')', 'warning');
-            showToast('🗑️ All stock cleared!', 'warning');
-            navigateTo('home');
-        }
-
-        // ============================================================
-        // REPORT GENERATORS
-        // ============================================================
-        function generateDailyReport() {
-            const today = new Date().toISOString().split('T')[0];
-            const dayOrders = orders.filter(o => o.date === today);
-            const delivered = dayOrders.filter(o => o.status === 'delivered');
-            const pending = dayOrders.filter(o => o.status === 'waiting-owner' || o.status === 'waiting-payment');
-
-            let html = `
-                <h4 style="font-size:10px;">📊 Daily Report - ${today}</h4>
-                <table style="width:100%;font-size:7px;border-collapse:collapse;">
-                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Order ID</th><th>Product</th><th>Status</th><th>Profit</th></tr></thead>
-                    <tbody>
-                        ${dayOrders.map(o => {
-                            const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                            const buyPrice = o.buyPrice || 0;
-                            const profit = sellPrice - buyPrice;
-                            return `
-                                <tr>
-                                    <td style="font-size:6px;">${o.id.substring(0,12)}</td>
-                                    <td>${o.product}</td>
-                                    <td>${o.status}</td>
-                                    <td>${profit.toLocaleString()} ETB</td>
-                                </tr>
-                            `;
-                        }).join('')}
-                    </tbody>
-                </table>
-                <div style="margin-top:4px;font-weight:700;border-top:1px solid var(--border-color);padding-top:4px;">
-                    Total Profit: ${dayOrders.reduce((sum, o) => {
-                        const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                        const buyPrice = o.buyPrice || 0;
-                        return sum + (sellPrice - buyPrice);
-                    }, 0).toLocaleString()} ETB
-                </div>
-            `;
-            document.getElementById('reportContent').innerHTML = html;
-            showToast('📊 Daily report generated', 'success');
-        }
-
-        function generateOrderReport() {
-            let html = `
-                <h4 style="font-size:10px;">📦 All Orders</h4>
-                <table style="width:100%;font-size:7px;border-collapse:collapse;">
-                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Order ID</th><th>Product</th><th>Price</th><th>Status</th><th>Type</th></tr></thead>
-                    <tbody>
-                        ${orders.map(o => `
-                            <tr>
-                                <td style="font-size:6px;">${o.id.substring(0,12)}</td>
-                                <td>${o.product}</td>
-                                <td>${o.price}</td>
-                                <td>${o.status}</td>
-                                <td>${o.type}</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-                <div style="margin-top:4px;font-weight:700;border-top:1px solid var(--border-color);padding-top:4px;">
-                    Total Orders: ${orders.length}
-                </div>
-            `;
-            document.getElementById('reportContent').innerHTML = html;
-            showToast('📦 Order report generated', 'success');
-        }
-
-        function generateProfitReport() {
-            const totalProfit = orders.filter(o => o.status === 'delivered' || o.status === 'waiting-owner').reduce((sum, o) => {
-                const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
-                const buyPrice = o.buyPrice || 0;
-                return sum + (sellPrice - buyPrice);
-            }, 0);
-
-            let html = `
-                <h4 style="font-size:10px;">💰 Profit Report</h4>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 0;">
-                    <div style="background:var(--bg-card);padding:6px;border-radius:4px;text-align:center;">
-                        <div style="font-weight:700;font-size:12px;color:var(--primary);">${totalProfit.toLocaleString()} ETB</div>
-                        <div style="font-size:7px;">Total Profit</div>
-                    </div>
-                    <div style="background:var(--bg-card);padding:6px;border-radius:4px;text-align:center;">
-                        <div style="font-weight:700;font-size:12px;color:var(--success);">${(totalProfit / (orders.length || 1)).toFixed(0)} ETB</div>
-                        <div style="font-size:7px;">Avg Profit/Order</div>
-                    </div>
-                </div>
-                <table style="width:100%;font-size:7px;border-collapse:collapse;">
-                    <thead><tr style="border-bottom:1px solid var(--border-color);"><th>Product</th><th>Sell</th><th>Buy</th><th>Profit</th></tr></thead>
-                    <tbody>
-                        ${products.map(p => {
-                            const sellPrice = parseInt(p.price.replace(/[^0-9]/g, ''));
-                            const profit = sellPrice - p.buyPrice;
-                            return `
-                                <tr>
-                                    <td>${p.name}</td>
-                                    <td>${p.price}</td>
-                                    <td>${p.buyPrice} ETB</td>
-                                    <td style="color:${profit > 0 ? 'var(--success)' : 'var(--danger)'};">${profit.toLocaleString()} ETB</td>
-                                </tr>
-                            `;
-                        }).join('')}
-                    </tbody>
-                </table>
-            `;
-            document.getElementById('reportContent').innerHTML = html;
-            showToast('💰 Profit report generated', 'success');
-        }
-
-        function printStockReport() {
-            window.print();
-        }
-
-        // ============================================================
-        // OWNER VIEW SWITCHER
-        // ============================================================
-        function switchOwnerView(view) {
-            currentView = view;
-            navigateTo('home');
-        }
-
-        // ============================================================
         // OWNER PAYMENT ACTIONS
         // ============================================================
-        function ownerApprovePayment(orderId) {
+        function ownerConfirmPayment(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (order) {
                 order.status = 'approved';
-                const notifId = generateUniqueId('NOTIF');
-                showToast('✅ Payment approved for ' + order.product, 'success');
-                addNotification('💰 Payment approved: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                if (order.type === 'delivery') {
-                    order.status = 'delivering';
-                    addNotification('🚚 Order sent to deliverer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
-                } else if (order.type === 'in-person') {
-                    order.status = 'completed';
-                    addNotification('🏪 In-person sale completed: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                showToast('✅ Payment confirmed for ' + order.product, 'success');
+                addNotification('💰 Payment confirmed: ' + order.product + ' (🆔 ' + orderId + ')', 'success');
+                const p = products.find(pr => pr.name === order.product);
+                if (p) {
+                    p.stock = Math.max(0, p.stock - 1);
                 }
+                // Update calendar
+                const today = new Date().toISOString().split('T')[0];
+                if (!calendarData[today]) calendarData[today] = { revenue: 0, profit: 0, orders: 0 };
+                const priceNum = parseInt(order.price.replace(/[^0-9]/g, ''));
+                calendarData[today].revenue += priceNum;
+                calendarData[today].profit += (p ? priceNum - p.buyPrice : 0);
+                calendarData[today].orders += 1;
                 navigateTo('home');
             }
         }
@@ -3413,7 +2462,6 @@
             const order = orders.find(o => o.id === orderId);
             if (order) {
                 order.status = 'cancelled';
-                const notifId = generateUniqueId('NOTIF');
                 showToast('❌ Payment rejected for ' + order.product, 'error');
                 addNotification('❌ Payment rejected: ' + order.product + ' (🆔 ' + orderId + ')', 'error');
                 const p = products.find(pr => pr.name === order.product);
@@ -3423,129 +2471,11 @@
         }
 
         // ============================================================
-        // OWNER STOCK MANAGEMENT
-        // ============================================================
-        function openAddStockModal() {
-            document.getElementById('stockProductName').value = '';
-            document.getElementById('stockSellPrice').value = '';
-            document.getElementById('stockBuyPrice').value = '';
-            document.getElementById('stockQty').value = '';
-            document.getElementById('stockImagePreview').style.display = 'none';
-            document.getElementById('stockImagePreview').src = '';
-            stockImageData = null;
-            const qrCode = 'SOYAM-P' + String(Math.floor(100 + Math.random() * 900));
-            document.getElementById('stockQrDisplay').textContent = qrCode;
-            openModal('addStockModal');
-        }
-
-        function previewStockImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('stockImagePreview');
-                    preview.src = e.target.result;
-                    preview.style.display = 'block';
-                    stockImageData = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function submitStock() {
-            const name = document.getElementById('stockProductName').value.trim();
-            const sellPrice = parseInt(document.getElementById('stockSellPrice').value);
-            const buyPrice = parseInt(document.getElementById('stockBuyPrice').value);
-            const qty = parseInt(document.getElementById('stockQty').value);
-            const qrCode = document.getElementById('stockQrDisplay').textContent;
-
-            if (!name || !sellPrice || !buyPrice || !qty) {
-                showToast('⚠️ Please fill in all required fields', 'error');
-                return;
-            }
-
-            if (sellPrice <= buyPrice) {
-                showToast('⚠️ Selling price must be greater than buying price', 'error');
-                return;
-            }
-
-            const newProduct = {
-                id: products.length + 1,
-                name: name,
-                price: sellPrice.toLocaleString() + ' ETB',
-                buyPrice: buyPrice,
-                stock: qty,
-                image: stockImageData || 'https://images.unsplash.com/photo-1594035910387-fea4773a4610?w=200&h=200&fit=crop',
-                category: 'General',
-                badge: 'NEW',
-                qrCode: qrCode
-            };
-
-            products.unshift(newProduct);
-            const notifId = generateUniqueId('NOTIF');
-            addNotification('📦 Stock added: ' + name + ' (Qty: ' + qty + ', Sell: ' + sellPrice + ' ETB, Buy: ' + buyPrice +
-                ' ETB) (🆔 ' + notifId + ')', 'success');
-            showToast('✅ Stock added: ' + name + ' (+' + qty + ')', 'success');
-            closeModal('addStockModal');
-            navigateTo('home');
-        }
-
-        function openEditStock(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            editingStockId = productId;
-            document.getElementById('editStockProductName').value = product.name;
-            document.getElementById('editStockSellPrice').value = parseInt(product.price.replace(/[^0-9]/g, ''));
-            document.getElementById('editStockBuyPrice').value = product.buyPrice;
-            document.getElementById('editStockQty').value = product.stock;
-            openModal('editStockModal');
-        }
-
-        function saveStockEdit() {
-            const product = products.find(p => p.id === editingStockId);
-            if (!product) return;
-            const name = document.getElementById('editStockProductName').value.trim();
-            const sellPrice = parseInt(document.getElementById('editStockSellPrice').value);
-            const buyPrice = parseInt(document.getElementById('editStockBuyPrice').value);
-            const qty = parseInt(document.getElementById('editStockQty').value);
-
-            if (!name || !sellPrice || !buyPrice || !qty) {
-                showToast('⚠️ Please fill in all fields', 'error');
-                return;
-            }
-
-            if (sellPrice <= buyPrice) {
-                showToast('⚠️ Selling price must be greater than buying price', 'error');
-                return;
-            }
-
-            product.name = name;
-            product.price = sellPrice.toLocaleString() + ' ETB';
-            product.buyPrice = buyPrice;
-            product.stock = qty;
-
-            addNotification('✏️ Stock updated: ' + product.name + ' (🆔 ' + generateUniqueId('NOTIF') + ')', 'success');
-            showToast('✅ Stock updated for ' + product.name, 'success');
-            closeModal('editStockModal');
-            navigateTo('home');
-        }
-
-        function removeStock(productId) {
-            if (!confirm('⚠️ Are you sure you want to remove this product?')) return;
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            products = products.filter(p => p.id !== productId);
-            addNotification('🗑️ Stock removed: ' + product.name + ' (🆔 ' + generateUniqueId('NOTIF') + ')', 'warning');
-            showToast('🗑️ Removed: ' + product.name, 'info');
-            navigateTo('home');
-        }
-
-        // ============================================================
         // SEARCH
         // ============================================================
         function renderSearch() {
             return `
-                <div style="position:sticky;top:0;background:var(--bg-primary);padding:3px 0 8px;z-index:10;">
+                <div style="position:sticky;top:0;background:var(--bg-primary);padding:4px 0 8px;z-index:10;">
                     <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search products..." oninput="performSearch(this.value)" />
                 </div>
                 <div id="searchResults">
@@ -3577,7 +2507,7 @@
         }
 
         // ============================================================
-        // ORDERS — With Cancel Option
+        // ORDERS
         // ============================================================
         function renderOrders() {
             if (orders.length === 0) {
@@ -3592,10 +2522,7 @@
                 delivering: 'status-delivering',
                 delivered: 'status-delivered',
                 cancelled: 'status-cancelled',
-                'waiting-payment': 'status-waiting-payment',
-                'waiting-owner': 'status-waiting-owner',
-                'completed': 'status-completed',
-                'refunded': 'status-refunded'
+                'waiting-payment': 'status-waiting-payment'
             };
             const statusLabels = {
                 pending: '⏳ Pending',
@@ -3603,31 +2530,25 @@
                 delivering: '🚚 Delivering',
                 delivered: '✅ Delivered',
                 cancelled: '❌ Cancelled',
-                'waiting-payment': '💳 Waiting Payment',
-                'waiting-owner': '⏳ Awaiting Owner',
-                'completed': '✅ Completed',
-                'refunded': '💰 Refunded'
+                'waiting-payment': '💳 Waiting Payment'
             };
             return `
                 <div class="section-header"><div class="section-title">📦 <span class="highlight">My Orders</span></div></div>
                 <div style="display:flex;gap:3px;margin-bottom:8px;overflow-x:auto;padding-bottom:3px;">
                     <button class="category-chip active" onclick="filterOrders('all')">All</button>
                     <button class="category-chip" onclick="filterOrders('waiting-payment')">💳 Payment</button>
-                    <button class="category-chip" onclick="filterOrders('waiting-owner')">⏳ Owner</button>
+                    <button class="category-chip" onclick="filterOrders('pending')">⏳ Pending</button>
                     <button class="category-chip" onclick="filterOrders('delivering')">🚚 Delivering</button>
-                    <button class="category-chip" onclick="filterOrders('delivered')">✅ Delivered</button>
                 </div>
                 <div id="ordersList">
                     ${orders.map(o => `
-                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'waiting-owner' ? '#F57F17' : o.status === 'delivered' ? '#2E7D32' : o.status === 'refunded' ? '#880E4F' : 'var(--primary)'};">
+                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'delivered' ? '#2E7D32' : 'var(--primary)'};">
                             <div class="order-top">
                                 <div>
                                     <div class="order-product">${o.product}</div>
                                     <div class="order-meta">${o.type} • ${o.date} • 🆔 ${o.id}</div>
-                                    ${o.buyerId ? `<div class="order-meta" style="font-size:6px;">Buyer: ${o.buyerId}</div>` : ''}
-                                    ${o.qrCode ? `<div class="order-meta" style="font-size:6px;">QR: ${o.qrCode}</div>` : ''}
-                                    ${o.paymentRef ? `<div class="order-meta" style="font-size:6px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
-                                    ${o.totalPrice ? `<div class="order-meta" style="font-size:6px;font-weight:700;color:var(--primary);">Total: ${o.totalPrice}</div>` : ''}
+                                    ${o.qrCode ? `<div class="order-meta" style="font-size:7px;">QR: ${o.qrCode}</div>` : ''}
+                                    ${o.paymentRef ? `<div class="order-meta" style="font-size:7px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
                                 </div>
                                 <span class="status-badge ${statusMap[o.status] || 'status-pending'}">${statusLabels[o.status] || o.status}</span>
                             </div>
@@ -3635,169 +2556,25 @@
                             ${o.tracking ? `
                                 <div style="margin-top:2px;font-size:8px;color:var(--primary);">
                                     📦 Tracking: ${o.tracking}
-                                    <button class="btn-secondary" style="padding:1px 6px;font-size:6px;margin-left:3px;" onclick="openTracking('${o.id}')">📍 Track</button>
-                                </div>
-                            ` : ''}
-                            ${o.completionCode ? `
-                                <div style="margin-top:2px;font-size:8px;color:#2E7D32;">
-                                    🔑 Completion Code: <strong>${o.completionCode}</strong>
+                                    <button class="btn-secondary" style="padding:1px 6px;font-size:7px;margin-left:3px;" onclick="showToast('📍 Tracking: ${o.tracking}', 'info')">Track</button>
                                 </div>
                             ` : ''}
                             <div class="order-actions">
-                                ${o.status === 'waiting-payment' || o.status === 'waiting-owner' ? `
-                                    <button class="btn-danger" onclick="openCancelOrder('${o.id}')">❌ Cancel Order</button>
-                                ` : ''}
                                 ${o.status === 'waiting-payment' ? `
-                                    <button class="btn-warning" onclick="showToast('⏳ Waiting for seller approval...', 'warning')">⏳ Seller</button>
+                                    <button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm</button>
+                                    <button style="background:#FF6F00;color:white;" onclick="showToast('⏳ Awaiting owner...', 'warning')">⏳ Owner</button>
                                 ` : ''}
-                                ${o.status === 'waiting-owner' ? `
-                                    <button class="btn-warning" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Owner</button>
-                                ` : ''}
+                                ${o.status === 'pending' ? `<button class="btn-success" onclick="showToast('✅ Payment confirmed!', 'success')">Confirm</button>` : ''}
+                                ${o.status === 'approved' ? `<button class="btn-primary" style="padding:2px 8px;font-size:7px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>` : ''}
                                 ${o.status === 'delivering' ? `
-                                    <button class="btn-success" onclick="confirmDelivery('${o.id}')">✅ Confirm Received</button>
-                                    <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="openTracking('${o.id}')">📍 Track</button>
-                                ` : ''}
-                                ${o.status === 'delivered' ? `
-                                    <button class="btn-success" onclick="showToast('✅ Order completed! Thank you!', 'success')">✅ Completed</button>
+                                    <button class="btn-success" onclick="showToast('✅ Delivery completed!', 'success')">Complete</button>
+                                    <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="showToast('📍 Location shared', 'info')">Share Location</button>
                                 ` : ''}
                             </div>
                         </div>
                     `).join('')}
                 </div>
             `;
-        }
-
-        // ============================================================
-        // CANCEL ORDER
-        // ============================================================
-        function openCancelOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) {
-                showToast('❌ Order not found', 'error');
-                return;
-            }
-
-            const modal = document.getElementById('cancelOrderModal');
-            const container = document.getElementById('cancelOrderContent');
-
-            container.innerHTML = `
-                <div style="text-align:center;padding:8px 0;">
-                    <div style="font-size:40px;">❌</div>
-                    <h4 style="font-size:14px;">Cancel Order</h4>
-                    <p style="font-size:9px;color:var(--warm-gray);">Order: ${order.id}</p>
-                    <p style="font-size:9px;color:var(--warm-gray);">Product: ${order.product}</p>
-                    <p style="font-size:9px;font-weight:700;color:var(--primary);">${order.totalPrice || order.price}</p>
-                    <div style="margin:8px 0;padding:8px;background:var(--bg-primary);border-radius:var(--radius-sm);font-size:8px;text-align:left;">
-                        <p><strong>Status:</strong> ${order.status}</p>
-                        <p><strong>Payment Method:</strong> ${order.paymentMethod || 'N/A'}</p>
-                        <p><strong>Ref:</strong> ${order.paymentRef || 'N/A'}</p>
-                    </div>
-                    <div style="display:flex;gap:6px;margin-top:8px;">
-                        <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="closeModal('cancelOrderModal')">Go Back</button>
-                        <button class="btn-danger" style="flex:2;font-size:9px;padding:4px;" onclick="confirmCancelOrder('${orderId}')">✅ Confirm Cancel & Refund</button>
-                    </div>
-                </div>
-            `;
-
-            modal.classList.add('visible');
-        }
-
-        function confirmCancelOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-
-            // Restore stock
-            const p = products.find(pr => pr.name === order.product);
-            if (p) p.stock++;
-
-            // Update order status
-            order.status = 'refunded';
-            addNotification('💰 Order cancelled and refunded: ' + order.product + ' (🆔 ' + orderId + ')', 'warning');
-            showToast('✅ Order cancelled and refunded!', 'success');
-
-            closeModal('cancelOrderModal');
-            navigateTo('orders');
-        }
-
-        function confirmDelivery(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (order) {
-                const completionCode = generateUniqueId('COMP');
-                order.status = 'delivered';
-                order.completionCode = completionCode;
-                showToast('✅ Delivery confirmed! Code: ' + completionCode, 'success');
-                addNotification('✅ Delivery confirmed for ' + order.product + ' (🆔 ' + orderId + ')', 'success');
-                addNotification('📦 Delivery completed by buyer: ' + order.product + ' (🆔 ' + orderId + ')', 'info');
-                navigateTo('orders');
-            }
-        }
-
-        // ============================================================
-        // TRACKING
-        // ============================================================
-        function openTracking(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) {
-                showToast('❌ Order not found', 'error');
-                return;
-            }
-            trackingOrderId = orderId;
-            const modal = document.getElementById('trackingModal');
-            const container = document.getElementById('trackingContent');
-
-            const steps = [
-                { status: 'Order Placed', icon: '📦', completed: true },
-                { status: 'Payment Confirmed', icon: '✅', completed: order.status !== 'waiting-payment' },
-                { status: 'Owner Approved', icon: '👑', completed: order.status === 'approved' || order.status ===
-                        'delivering' || order.status === 'delivered' },
-                { status: 'Delivering', icon: '🚚', completed: order.status === 'delivering' || order.status ===
-                    'delivered' },
-                { status: 'Delivered', icon: '📍', completed: order.status === 'delivered' }
-            ];
-
-            let mapHtml = '';
-            if (order.customerAddress) {
-                const encodedAddress = encodeURIComponent(order.customerAddress);
-                mapHtml = `
-                    <div class="map-container">
-                        <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDk3HwqZjrL6_bQBV7JZ7kL8dN5E5VH1lE&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&mode=driving" allowfullscreen loading="lazy"></iframe>
-                    </div>
-                    <div style="text-align:center;margin-top:4px;">
-                        <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&travelmode=driving', '_blank')">🗺️ Open Full Map</button>
-                    </div>
-                `;
-            }
-
-            let trackingHtml = `
-                <div style="text-align:center;margin-bottom:8px;">
-                    <h4 style="font-size:12px;">📍 Order Tracking</h4>
-                    <p style="font-size:9px;color:var(--warm-gray);">Order: ${order.id}</p>
-                    <p style="font-size:9px;font-weight:600;color:var(--primary);">${order.product}</p>
-                    <p style="font-size:8px;color:var(--warm-gray);">Status: ${order.status}</p>
-                    ${order.customerAddress ? `<p style="font-size:8px;color:var(--warm-gray);">📍 ${order.customerAddress}</p>` : ''}
-                </div>
-                <div class="tracking-steps">
-                    ${steps.map((s, i) => `
-                        <div class="tracking-step ${s.completed ? 'completed' : 'pending'}">
-                            <span class="step-icon">${s.icon}</span>
-                            <div class="step-info">
-                                <div class="step-title">${s.status}</div>
-                                <div class="step-time">${s.completed ? '✅ Completed' : '⏳ Pending'}</div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-                ${mapHtml}
-                ${order.completionCode ? `
-                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin-top:4px;font-size:8px;text-align:center;border:1px solid var(--success);">
-                        <strong>🔑 Completion Code:</strong> ${order.completionCode}
-                    </div>
-                ` : ''}
-                <button class="btn-secondary" style="margin-top:8px;width:100%;font-size:8px;padding:4px;" onclick="closeModal('trackingModal')">Close</button>
-            `;
-
-            container.innerHTML = trackingHtml;
-            modal.classList.add('visible');
         }
 
         function filterOrders(status) {
@@ -3885,26 +2662,22 @@
         function openProduct(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
-            if (currentUser.role === 'buyer' && product.stock <= 0) {
-                showToast('❌ Product out of stock', 'error');
-                return;
-            }
             const modal = document.getElementById('productModal');
             const detail = document.getElementById('productDetail');
-            const stockClass = product.stock > 0 ? 'stock-in' : 'stock-out';
-            const stockText = product.stock > 0 ? product.stock + ' available' : 'Out of Stock';
+            const stockClass = product.stock > 5 ? 'stock-in' : product.stock > 0 ? 'stock-low' : 'stock-out';
+            const stockText = product.stock > 5 ? '✅ In Stock' : product.stock > 0 ? '⚠️ Low Stock' : '❌ Out of Stock';
             detail.innerHTML = `
                 <img src="${product.image}" style="width:100%;border-radius:8px;margin-bottom:8px;aspect-ratio:1/1;object-fit:cover;" />
-                <h2 style="font-size:14px;">${product.name}</h2>
-                <p style="font-size:15px;font-weight:700;color:var(--primary);">${product.price}</p>
+                <h2 style="font-size:15px;">${product.name}</h2>
+                <p style="font-size:16px;font-weight:700;color:var(--primary);">${product.price}</p>
                 <p style="font-size:9px;color:var(--warm-gray);">Category: ${product.category}</p>
-                <p style="font-weight:500;${stockClass};font-size:9px;">${stockText}</p>
+                <p style="font-weight:500;${stockClass};font-size:9px;">${stockText} (${product.stock})</p>
                 <p style="font-size:8px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
                 <div style="display:flex;gap:4px;margin:8px 0;">
                     <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
                     <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="openRequestModal()">📝 Request</button>
                 </div>
-                ${product.stock > 0 ? `<button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:10px;padding:6px;">🛒 Buy Now</button>` : `<button class="btn-secondary" style="font-size:10px;padding:6px;width:100%;" disabled>❌ Out of Stock</button>`}
+                <button class="btn-primary" onclick="startOrderWorkflow(${product.id})" style="font-size:10px;padding:6px;">📷 Scan & Order</button>
                 <div style="margin-top:6px;font-size:8px;color:var(--warm-gray);text-align:center;">
                     <p>📍 ${BUSINESS_ADDRESS}</p>
                     <p>📞 +${SELLER_PHONE}</p>
@@ -3982,7 +2755,7 @@
             const container = document.getElementById('allProducts');
             if (!container) return;
             const filtered = category === 'all' ? products : products.filter(p => p.category === category);
-            container.innerHTML = filtered.filter(p => p.stock > 0).slice(0, 6).map(p => renderProductCard(p)).join('');
+            container.innerHTML = filtered.slice(0, 6).map(p => renderProductCard(p)).join('');
             document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.category-chip').forEach(c => {
                 if (c.textContent === category || (category === 'all' && c.textContent === '✨ All')) {
@@ -4073,17 +2846,6 @@
         }
 
         // ============================================================
-        // CLOSE SCANNER
-        // ============================================================
-        function closeScanner() {
-            document.getElementById('qrScanner').classList.add('hidden');
-            const video = document.getElementById('qrVideo');
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(t => t.stop());
-            }
-        }
-
-        // ============================================================
         // INIT LOG
         // ============================================================
         console.log('✨ soYam Cosmo Mini App loaded!');
@@ -4093,12 +2855,7 @@
         console.log('📦 Products:', products.length);
         console.log('📋 Orders:', orders.length);
         console.log('📝 Requests:', customerRequests.length);
-        console.log('💡 Delivery Fee:', DELIVERY_FEE, 'ETB | Payment Fee:', PAYMENT_FEE, 'ETB');
-        console.log('💡 Buyer: Only sees available stock (stock > 0)');
-        console.log('💡 Seller: Sees LOW/HIGH stock alerts');
-        console.log('💡 Owner: Refresh, Clear All Stock, Full management');
-        console.log('💡 Cancel: Buyer can cancel and refund before delivery');
-        console.log('💡 Map: Live Google Maps from shop to customer');
+        console.log('💡 Click role badge to switch between Owner/Seller portals');
     </script>
 
 </body>

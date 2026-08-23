@@ -1485,24 +1485,26 @@
         tg.expand();
 
         // ============================================================
-        // ROLE DETECTION
+        // ROLE DETECTION — TEMPORARY OWNER ACCESS FOR @mama51R
         // ============================================================
         function detectUserRole() {
             const username = tg.initDataUnsafe?.user?.username || '';
             const firstName = tg.initDataUnsafe?.user?.first_name || '';
 
-            // Check Owner
+            // --- TEMPORARY: Give Owner access to @mama51R for testing ---
+            if (username === SELLER_USERNAME || username.toLowerCase() === SELLER_USERNAME.toLowerCase()) {
+                isOwner = true;
+                isSeller = false;
+                return 'owner';
+            }
+
+            // Check Owner (RAHM34)
             if (username === OWNER_USERNAME || username.toLowerCase() === OWNER_USERNAME.toLowerCase()) {
                 isOwner = true;
                 isSeller = false;
                 return 'owner';
             }
-            // Check Seller
-            if (username === SELLER_USERNAME || username.toLowerCase() === SELLER_USERNAME.toLowerCase()) {
-                isSeller = true;
-                isOwner = false;
-                return 'seller';
-            }
+
             // Default Buyer
             isOwner = false;
             isSeller = false;
@@ -1549,11 +1551,9 @@
                 });
             });
 
-            // Sample notifications with unique IDs
             addNotification('Welcome to soYam Cosmo!', 'success');
             addNotification('Role: ' + currentUser.role.toUpperCase(), 'info');
 
-            // Sample orders with unique IDs
             orders.push({
                 id: generateUniqueId('ORD'),
                 product: 'Amber Oud Perfume',
@@ -1580,7 +1580,6 @@
                 notifId: generateUniqueId('NOTIF')
             });
 
-            // Sample customer requests
             addCustomerRequest('Special Perfume', 'Sarah A.', 'Qty: 2', 'SOYAM-P001');
             addCustomerRequest('Organic Face Cream', 'Mikael B.', 'Qty: 1', 'SOYAM-P003');
         });
@@ -1600,7 +1599,6 @@
                 read: false,
                 notifId: generateUniqueId('NOTIF')
             });
-            // Add notification for seller
             addNotification('📝 New request: ' + product + ' from ' + customer + ' (ID: ' + reqId + ')', 'info');
         }
 
@@ -1746,7 +1744,6 @@
             } else if (currentUser.role === 'seller') {
                 html += renderSellerPanel();
             } else {
-                // Buyer portal
                 html += `
                     <div class="category-scroll">
                         ${categories.map(cat => `<button class="category-chip" onclick="filterCategory('${cat}')">${cat}</button>`).join('')}
@@ -1796,7 +1793,7 @@
         }
 
         // ============================================================
-        // RENDER: SELLER PANEL — With Unique IDs
+        // RENDER: SELLER PANEL
         // ============================================================
         function renderSellerPanel() {
             const activeOrders = orders.filter(o => o.status === 'pending' || o.status === 'approved' || o.status === 'delivering');
@@ -1859,7 +1856,7 @@
         }
 
         // ============================================================
-        // RENDER: OWNER PANEL — Full Accounting with Unique IDs
+        // RENDER: OWNER PANEL
         // ============================================================
         function renderOwnerPanel() {
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
@@ -2091,7 +2088,6 @@
             orders.unshift(newOrder);
             product.stock--;
 
-            // Add notification with unique ID
             addNotification('💰 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
             addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ')', 'info');
             addCustomerRequest(product.name, currentUser.username || 'Customer', 'Order #' + orderId, product.qrCode);
@@ -2106,7 +2102,7 @@
         }
 
         // ============================================================
-        // QR SCANNER — Camera + Gallery
+        // QR SCANNER
         // ============================================================
         function openRealScanner() {
             const scanner = document.getElementById('qrScanner');
@@ -2118,7 +2114,6 @@
                     .then(function(stream) {
                         video.srcObject = stream;
                         video.play();
-                        // Simulate QR detection after 2.5 seconds
                         setTimeout(function() {
                             const scannedQR = 'SOYAM-P001';
                             handleQRScanned(scannedQR);
@@ -2175,7 +2170,7 @@
         }
 
         // ============================================================
-        // SELLER QR SCANNER — Register Stock with Product Name Display
+        // SELLER QR SCANNER
         // ============================================================
         function openSellerQRScanner() {
             const scanner = document.getElementById('qrScanner');
@@ -2188,7 +2183,6 @@
                         video.srcObject = stream;
                         video.play();
                         setTimeout(function() {
-                            // Simulate scanning a product
                             const scannedQR = 'SOYAM-P001';
                             const product = products.find(p => p.qrCode === scannedQR);
                             if (product) {
@@ -2219,7 +2213,7 @@
         }
 
         // ============================================================
-        // OWNER QR SCANNER — With Buy Price Input
+        // OWNER QR SCANNER
         // ============================================================
         function openOwnerQRScanner() {
             const scanner = document.getElementById('qrScanner');
@@ -2447,7 +2441,7 @@
         }
 
         // ============================================================
-        // REQUEST MODAL — With Image Upload
+        // REQUEST MODAL
         // ============================================================
         function openRequestModal() {
             closeModal('productModal');
@@ -2469,7 +2463,6 @@
             let imageInfo = '';
             if (file) {
                 imageInfo = ' 📷 Image attached';
-                // In production, upload file to server
             }
 
             const reqId = generateUniqueId('REQ');
@@ -2595,7 +2588,7 @@
         }
 
         // ============================================================
-        // NOTIFICATIONS — With Unique IDs
+        // NOTIFICATIONS
         // ============================================================
         function addNotification(message, type) {
             const id = generateUniqueId('NOTIF');
@@ -2684,7 +2677,8 @@
         console.log('📦 Products:', products.length);
         console.log('📋 Orders:', orders.length);
         console.log('📝 Requests:', customerRequests.length);
+        console.log('💡 TEMPORARY: @mama51R has Owner access');
     </script>
 
 </body>
-</html>
+    </html>

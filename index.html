@@ -613,6 +613,21 @@
         .btn-info:hover {
             background: #0A3A7A;
         }
+        .btn-refresh {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 3px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .btn-refresh:hover {
+            background: var(--gold-shimmer);
+        }
 
         .btn-switch {
             background: var(--bg-card);
@@ -903,6 +918,10 @@
             background: #E8F5E9;
             color: #1B5E20;
         }
+        .status-refunded {
+            background: #FCE4EC;
+            color: #880E4F;
+        }
 
         /* ============================================================
            ADMIN PANEL
@@ -932,6 +951,12 @@
         .admin-panel .panel-tabs .btn-switch {
             font-size: 7px;
             padding: 2px 8px;
+        }
+        .admin-panel .panel-actions {
+            display: flex;
+            gap: 4px;
+            margin: 4px 0;
+            flex-wrap: wrap;
         }
         .stats-grid {
             display: grid;
@@ -1042,6 +1067,13 @@
         }
         .btn-low-stock {
             background: #E65100;
+            color: white;
+            font-size: 5px;
+            padding: 1px 4px;
+            border-radius: 10px;
+        }
+        .btn-high-stock {
+            background: #2E7D32;
             color: white;
             font-size: 5px;
             padding: 1px 4px;
@@ -1558,7 +1590,7 @@
         }
 
         /* ============================================================
-           ADD STOCK MODAL
+           ADD STOCK MODAL — Owner Only
            ============================================================ */
         .add-stock-form label {
             display: block;
@@ -1678,6 +1710,52 @@
             background: var(--gold-shimmer);
         }
 
+        .clear-btn {
+            background: #C62828;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .clear-btn:hover {
+            background: #B71C1C;
+        }
+
+        .refresh-btn {
+            background: #0D47A1;
+            color: white;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 8px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .refresh-btn:hover {
+            background: #0A3A7A;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 200px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            margin: 6px 0;
+        }
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         @media print {
             .no-print {
                 display: none !important;
@@ -1795,6 +1873,16 @@
         </div>
     </div>
 
+    <!-- ============================================================
+    CANCEL ORDER MODAL
+    ============================================================ -->
+    <div id="cancelOrderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header"><h3>❌ Cancel Order</h3><button class="close-modal" onclick="closeModal('cancelOrderModal')">&times;</button></div>
+            <div id="cancelOrderContent"></div>
+        </div>
+    </div>
+
     <div id="requestModal" class="modal">
         <div class="modal-content">
             <div class="modal-header"><h3>📝 Request a Product</h3><button class="close-modal" onclick="closeModal('requestModal')">&times;</button></div>
@@ -1894,10 +1982,12 @@
         const SELLER_USERNAME = 'mama51R';
         const SELLER_PHONE = '251920353460';
         const DELIVERER_PHONE = '251912345678';
-        const BUSINESS_LOCATION = 'https://maps.google.com/maps?q=Addis+Ababa,+Ethiopia';
+        const BUSINESS_LOCATION = 'https://www.google.com/maps/dir/?api=1&origin=Addis+Ababa,+Ethiopia&destination=';
         const BUSINESS_ADDRESS = 'Addis Ababa, Ethiopia';
         const DELIVERY_FEE = 150;
         const PAYMENT_FEE = 50;
+        const SHOP_LAT = 9.0320;
+        const SHOP_LNG = 38.7420;
 
         // ============================================================
         // LANGUAGE
@@ -2131,7 +2221,6 @@
             addNotification('✨ Welcome to soYam Cosmo!', 'success');
             addNotification('👤 Role: ' + currentUser.role.toUpperCase(), 'info');
 
-            // Sample orders with full details
             const today = new Date().toISOString().split('T')[0];
             orders.push({
                 id: generateUniqueId('ORD'),
@@ -2363,7 +2452,7 @@
             } else if (currentUser.role === 'seller') {
                 html += renderSellerPanel();
             } else {
-                // Buyer portal
+                // Buyer portal — only show available stock (no low/high alerts)
                 html += `
                     <div class="category-scroll">
                         ${categories.map(cat => `<button class="category-chip" onclick="filterCategory('${cat}')">${cat}</button>`).join('')}
@@ -2373,7 +2462,7 @@
                         <div class="section-title">✨ <span class="highlight">Products</span></div>
                     </div>
                     <div class="product-grid" id="allProducts">
-                        ${products.slice(0, 6).map(p => renderProductCard(p)).join('')}
+                        ${products.filter(p => p.stock > 0).slice(0, 6).map(p => renderProductCard(p)).join('')}
                     </div>
                     <div style="margin-top:10px;padding:10px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);">
                         <h3 style="font-family:'Playfair Display',serif;font-size:12px;">📝 <span class="highlight">Can't find what you need?</span></h3>
@@ -2387,12 +2476,14 @@
         }
 
         // ============================================================
-        // RENDER: PRODUCT CARD
+        // RENDER: PRODUCT CARD — Buyer only sees available stock
         // ============================================================
         function renderProductCard(p) {
-            const stockClass = p.stock > 5 ? 'stock-in' : p.stock > 0 ? 'stock-low' : 'stock-out';
-            const stockText = p.stock > 5 ? 'In Stock' : p.stock > 0 ? 'Low' : 'Out';
+            const stockClass = p.stock > 0 ? 'stock-in' : 'stock-out';
+            const stockText = p.stock > 0 ? p.stock + ' available' : 'Out of Stock';
             const badgeHtml = p.badge ? `<span class="product-badge badge-${p.badge.toLowerCase()}">${p.badge}</span>` : '';
+            // Only show if stock > 0 for buyer
+            if (currentUser.role === 'buyer' && p.stock <= 0) return '';
             return `
                 <div class="product-card">
                     <div class="image-wrapper" onclick="openProduct(${p.id})">
@@ -2402,7 +2493,7 @@
                     <div class="product-info">
                         <div class="product-name">${p.name}</div>
                         <div class="product-price">${p.price}</div>
-                        <div class="product-stock ${stockClass}">${stockText} (${p.stock})</div>
+                        <div class="product-stock ${stockClass}">${stockText}</div>
                         <div class="product-quick-actions">
                             <button class="btn-buy-now" onclick="openBuyerOrder(${p.id})">🛒 Buy</button>
                             <button class="btn-wish" onclick="addToWishlist(${p.id})">❤️</button>
@@ -2442,7 +2533,6 @@
             let html = '';
 
             if (step === 1) {
-                // Step 1: Product + Delivery Option + Customer Details
                 const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
                 const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
                 const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
@@ -2500,6 +2590,9 @@
                             <input type="text" id="buyerAddress" placeholder="Enter delivery address" value="${data.address || ''}" />
                             <label>Exact Location (Google Maps link or description)</label>
                             <textarea id="buyerLocation" placeholder="Paste Google Maps link or describe location">${data.location || ''}</textarea>
+                            <div style="margin-top:4px;font-size:7px;color:var(--warm-gray);">
+                                📍 We'll show live route from shop to your location on Google Maps
+                            </div>
                         ` : ''}
                     </div>
 
@@ -2509,7 +2602,6 @@
                     </div>
                 `;
             } else if (step === 2) {
-                // Step 2: Payment
                 const basePrice = parseInt(product.price.replace(/[^0-9]/g, ''));
                 const deliveryFee = data.deliveryType === 'delivery' ? data.deliveryFee : 0;
                 const paymentFee = data.deliveryType === 'delivery' ? data.paymentFee : 0;
@@ -2653,7 +2745,6 @@
             orders.unshift(newOrder);
             product.stock--;
 
-            // Notify seller
             addNotification('📦 New order: ' + product.name + ' (🆔 ' + orderId + ') from ' + newOrder.customer, 'info');
             addNotification('💳 Payment pending: ' + product.name + ' (🆔 ' + orderId + ')', 'warning');
             addCustomerRequest(product.name, newOrder.customer, 'Order #' + orderId + ' - Payment pending', product.qrCode);
@@ -2675,15 +2766,23 @@
         }
 
         // ============================================================
-        // RENDER: SELLER PANEL
+        // RENDER: SELLER PANEL — With Low/High Stock Alerts
         // ============================================================
         function renderSellerPanel() {
             const pendingOrders = orders.filter(o => o.status === 'waiting-payment' || o.status === 'waiting-owner');
             const deliveringOrders = orders.filter(o => o.status === 'delivering');
+            const lowStock = products.filter(p => p.stock < 3 && p.stock > 0);
+            const highStock = products.filter(p => p.stock > 10);
 
             let html = `
                 <div class="admin-panel">
                     <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
+
+                    <div style="display:flex;gap:4px;margin:4px 0;flex-wrap:wrap;">
+                        ${lowStock.length > 0 ? `<span style="font-size:7px;background:var(--danger);color:white;padding:2px 8px;border-radius:30px;">⚠️ Low Stock: ${lowStock.map(p => p.name).join(', ')}</span>` : ''}
+                        ${highStock.length > 0 ? `<span style="font-size:7px;background:var(--success);color:white;padding:2px 8px;border-radius:30px;">✅ High Stock: ${highStock.map(p => p.name).join(', ')}</span>` : ''}
+                    </div>
+
                     <div class="stats-grid">
                         <div class="stat-card"><div class="stat-number">${pendingOrders.length}</div><div class="stat-label">Pending Orders</div></div>
                         <div class="stat-card"><div class="stat-number">${deliveringOrders.length}</div><div class="stat-label">Delivering</div></div>
@@ -2717,7 +2816,7 @@
                                     ` : ''}
                                     <a href="tel:+${SELLER_PHONE}" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">📞 Call</a>
                                     <a href="https://t.me/${SELLER_USERNAME}" target="_blank" class="btn-secondary" style="padding:2px 8px;font-size:7px;text-decoration:none;">💬 Chat</a>
-                                    <button class="btn-info" onclick="showToast('📍 ${o.customerAddress || BUSINESS_ADDRESS}', 'info')" style="padding:2px 8px;font-size:7px;">📍 Location</button>
+                                    <button class="btn-info" onclick="openMapForOrder('${o.id}')" style="padding:2px 8px;font-size:7px;">📍 Map</button>
                                 </div>
                             </div>
                         `).join('')
@@ -2750,6 +2849,7 @@
                                 <div class="order-actions">
                                     <button class="btn-success" onclick="sellerCompleteDelivery('${o.id}')">✅ Complete Delivery</button>
                                     <button class="btn-secondary" style="padding:2px 8px;font-size:7px;" onclick="sendToDeliverer('${o.id}')">📤 Send to Deliverer</button>
+                                    <button class="btn-info" onclick="openMapForOrder('${o.id}')" style="padding:2px 8px;font-size:7px;">📍 Map</button>
                                 </div>
                             </div>
                         `).join('')
@@ -2769,6 +2869,41 @@
                 </div>
             `;
             return html;
+        }
+
+        // ============================================================
+        // OPEN MAP FOR ORDER — Live Google Maps
+        // ============================================================
+        function openMapForOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) {
+                showToast('❌ Order not found', 'error');
+                return;
+            }
+            const address = order.customerAddress || BUSINESS_ADDRESS;
+            const encodedAddress = encodeURIComponent(address);
+            const mapUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&travelmode=driving`;
+
+            // Show in modal with live map
+            const modal = document.getElementById('trackingModal');
+            const container = document.getElementById('trackingContent');
+
+            container.innerHTML = `
+                <div style="text-align:center;margin-bottom:8px;">
+                    <h4 style="font-size:12px;">📍 Live Route</h4>
+                    <p style="font-size:9px;color:var(--warm-gray);">From Shop to ${order.customer || 'Customer'}</p>
+                    <p style="font-size:8px;color:var(--primary);">${order.customerAddress || BUSINESS_ADDRESS}</p>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDk3HwqZjrL6_bQBV7JZ7kL8dN5E5VH1lE&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&mode=driving" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+                    <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('${mapUrl}', '_blank')">🗺️ Open in Google Maps</button>
+                    <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="closeModal('trackingModal')">Close</button>
+                </div>
+            `;
+
+            modal.classList.add('visible');
         }
 
         // ============================================================
@@ -2796,7 +2931,6 @@
                 showToast('✅ Delivery completed! Code: ' + completionCode, 'success');
                 const p = products.find(pr => pr.name === order.product);
                 if (p) p.stock = Math.max(0, p.stock - 1);
-                // Notify buyer
                 addNotification('📦 Your order ' + orderId + ' has been delivered!', 'success');
                 navigateTo('home');
             }
@@ -2892,7 +3026,7 @@
         }
 
         // ============================================================
-        // RENDER: OWNER PANEL — 4 Menus Side by Side
+        // RENDER: OWNER PANEL — 4 Menus + Refresh/Clear
         // ============================================================
         function renderOwnerPanel() {
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
@@ -2905,15 +3039,11 @@
             const pendingPayments = orders.filter(o => o.status === 'waiting-payment').length;
 
             const today = new Date().toISOString().split('T')[0];
-            const todayOrders = orders.filter(o => o.date === today && (o.status === 'delivered' || o.status === 'waiting-owner' ||
-                o.status === 'waiting-payment'));
-            // Today's Revenue = (Selling Price - Buying Price) of sold/delivered items + pending orders
             const todayRevenue = orders.filter(o => o.date === today && o.status === 'delivered').reduce((sum, o) => {
                 const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
                 const buyPrice = o.buyPrice || 0;
                 return sum + (sellPrice - buyPrice);
             }, 0);
-            // Include pending orders requested by seller
             const pendingRevenue = orders.filter(o => o.date === today && (o.status === 'waiting-owner' || o.status ===
                 'waiting-payment')).reduce((sum, o) => {
                 const sellPrice = parseInt(o.price.replace(/[^0-9]/g, ''));
@@ -2922,8 +3052,7 @@
             }, 0);
             const totalTodayRevenue = todayRevenue + pendingRevenue;
 
-            // Low stock items (stock < 3)
-            const lowStockItems = products.filter(p => p.stock < 3);
+            const lowStock = products.filter(p => p.stock < 3 && p.stock > 0);
 
             const daysInMonth = new Date().getDate();
             const monthName = new Date().toLocaleString('default', { month: 'long' });
@@ -2941,6 +3070,13 @@
                         <button class="btn-switch ${currentView === 'reports' ? 'active' : ''}" onclick="switchOwnerView('reports')">📄</button>
                     </div>
 
+                    <!-- Refresh & Clear Actions -->
+                    <div class="panel-actions">
+                        <button class="refresh-btn" onclick="refreshData()">🔄 Refresh</button>
+                        <button class="clear-btn" onclick="clearAllStock()">🗑️ Clear All Stock</button>
+                        <button class="print-btn" onclick="printStockReport()">🖨️ Print</button>
+                    </div>
+
                     ${currentView === 'dashboard' ? `
                         <div class="stats-grid">
                             <div class="stat-card success-card">
@@ -2954,14 +3090,14 @@
                                 <div class="stat-sub">${totalStock} items</div>
                             </div>
                             <div class="stat-card warning-card">
-                                <div class="stat-number">${totalValue - totalBuyValue}</div>
+                                <div class="stat-number">${(totalValue - totalBuyValue).toLocaleString()} ETB</div>
                                 <div class="stat-label">📈 Total Profit</div>
                                 <div class="stat-sub">${((totalValue - totalBuyValue) / (totalBuyValue || 1) * 100).toFixed(0)}% margin</div>
                             </div>
-                            <div class="stat-card ${lowStockItems.length > 0 ? 'low-stock' : ''}">
-                                <div class="stat-number">${lowStockItems.length}</div>
+                            <div class="stat-card ${lowStock.length > 0 ? 'low-stock' : ''}">
+                                <div class="stat-number">${lowStock.length}</div>
                                 <div class="stat-label">⚠️ Low Stock Items</div>
-                                <div class="stat-sub">${lowStockItems.map(p => p.name).join(', ') || 'All stocked'}</div>
+                                <div class="stat-sub">${lowStock.map(p => p.name).join(', ') || 'All stocked'}</div>
                             </div>
                         </div>
 
@@ -2972,10 +3108,11 @@
                                 ${products.slice(0, 6).map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
                                     const value = priceNum * p.stock;
-                                    const isLow = p.stock < 3;
+                                    const isLow = p.stock < 3 && p.stock > 0;
+                                    const isHigh = p.stock > 10;
                                     return `
                                         <tr>
-                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''}</td>
+                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''} ${isHigh ? '<span class="btn-high-stock">HIGH</span>' : ''}</td>
                                             <td>${p.price}</td>
                                             <td>${p.buyPrice} ETB</td>
                                             <td>${p.stock}</td>
@@ -2992,17 +3129,17 @@
                     ${currentView === 'stock' ? `
                         <h4 style="margin:8px 0 3px;">📦 Full Stock Management</h4>
                         <button class="btn-primary" style="margin:4px 0;padding:6px;font-size:10px;" onclick="openAddStockModal()">➕ Add New Stock</button>
-                        <button class="btn-secondary" style="margin:4px 0;padding:4px;font-size:8px;width:100%;" onclick="printStockReport()">🖨️ Print Stock Report</button>
                         <table class="stock-table">
                             <thead><tr><th>Product</th><th>Sell</th><th>Buy</th><th>Stock</th><th>Value</th><th>Actions</th></tr></thead>
                             <tbody>
                                 ${products.map(p => {
                                     const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
                                     const value = priceNum * p.stock;
-                                    const isLow = p.stock < 3;
+                                    const isLow = p.stock < 3 && p.stock > 0;
+                                    const isHigh = p.stock > 10;
                                     return `
                                         <tr>
-                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''}</td>
+                                            <td>${p.name} ${isLow ? '<span class="btn-low-stock">LOW</span>' : ''} ${isHigh ? '<span class="btn-high-stock">HIGH</span>' : ''}</td>
                                             <td>${p.price}</td>
                                             <td>${p.buyPrice} ETB</td>
                                             <td>${p.stock}</td>
@@ -3107,6 +3244,29 @@
                 </div>
             `;
             return html;
+        }
+
+        // ============================================================
+        // REFRESH DATA
+        // ============================================================
+        function refreshData() {
+            // Re-render all views
+            navigateTo('home');
+            showToast('🔄 Data refreshed!', 'success');
+            addNotification('🔄 Data refreshed by owner', 'info');
+        }
+
+        // ============================================================
+        // CLEAR ALL STOCK — With Confirmation
+        // ============================================================
+        function clearAllStock() {
+            if (!confirm('⚠️ Are you sure you want to CLEAR ALL STOCK? This action cannot be undone!')) return;
+            if (!confirm('⚠️ FINAL WARNING: This will remove all products from the store. Continue?')) return;
+
+            products = [];
+            addNotification('🗑️ All stock cleared by owner (🆔 ' + generateUniqueId('NOTIF') + ')', 'warning');
+            showToast('🗑️ All stock cleared!', 'warning');
+            navigateTo('home');
         }
 
         // ============================================================
@@ -3417,7 +3577,7 @@
         }
 
         // ============================================================
-        // ORDERS — With Tracking
+        // ORDERS — With Cancel Option
         // ============================================================
         function renderOrders() {
             if (orders.length === 0) {
@@ -3434,7 +3594,8 @@
                 cancelled: 'status-cancelled',
                 'waiting-payment': 'status-waiting-payment',
                 'waiting-owner': 'status-waiting-owner',
-                'completed': 'status-completed'
+                'completed': 'status-completed',
+                'refunded': 'status-refunded'
             };
             const statusLabels = {
                 pending: '⏳ Pending',
@@ -3444,7 +3605,8 @@
                 cancelled: '❌ Cancelled',
                 'waiting-payment': '💳 Waiting Payment',
                 'waiting-owner': '⏳ Awaiting Owner',
-                'completed': '✅ Completed'
+                'completed': '✅ Completed',
+                'refunded': '💰 Refunded'
             };
             return `
                 <div class="section-header"><div class="section-title">📦 <span class="highlight">My Orders</span></div></div>
@@ -3457,7 +3619,7 @@
                 </div>
                 <div id="ordersList">
                     ${orders.map(o => `
-                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'waiting-owner' ? '#F57F17' : o.status === 'delivered' ? '#2E7D32' : 'var(--primary)'};">
+                        <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'waiting-owner' ? '#F57F17' : o.status === 'delivered' ? '#2E7D32' : o.status === 'refunded' ? '#880E4F' : 'var(--primary)'};">
                             <div class="order-top">
                                 <div>
                                     <div class="order-product">${o.product}</div>
@@ -3482,6 +3644,9 @@
                                 </div>
                             ` : ''}
                             <div class="order-actions">
+                                ${o.status === 'waiting-payment' || o.status === 'waiting-owner' ? `
+                                    <button class="btn-danger" onclick="openCancelOrder('${o.id}')">❌ Cancel Order</button>
+                                ` : ''}
                                 ${o.status === 'waiting-payment' ? `
                                     <button class="btn-warning" onclick="showToast('⏳ Waiting for seller approval...', 'warning')">⏳ Seller</button>
                                 ` : ''}
@@ -3500,6 +3665,58 @@
                     `).join('')}
                 </div>
             `;
+        }
+
+        // ============================================================
+        // CANCEL ORDER
+        // ============================================================
+        function openCancelOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) {
+                showToast('❌ Order not found', 'error');
+                return;
+            }
+
+            const modal = document.getElementById('cancelOrderModal');
+            const container = document.getElementById('cancelOrderContent');
+
+            container.innerHTML = `
+                <div style="text-align:center;padding:8px 0;">
+                    <div style="font-size:40px;">❌</div>
+                    <h4 style="font-size:14px;">Cancel Order</h4>
+                    <p style="font-size:9px;color:var(--warm-gray);">Order: ${order.id}</p>
+                    <p style="font-size:9px;color:var(--warm-gray);">Product: ${order.product}</p>
+                    <p style="font-size:9px;font-weight:700;color:var(--primary);">${order.totalPrice || order.price}</p>
+                    <div style="margin:8px 0;padding:8px;background:var(--bg-primary);border-radius:var(--radius-sm);font-size:8px;text-align:left;">
+                        <p><strong>Status:</strong> ${order.status}</p>
+                        <p><strong>Payment Method:</strong> ${order.paymentMethod || 'N/A'}</p>
+                        <p><strong>Ref:</strong> ${order.paymentRef || 'N/A'}</p>
+                    </div>
+                    <div style="display:flex;gap:6px;margin-top:8px;">
+                        <button class="btn-secondary" style="flex:1;font-size:9px;padding:4px;" onclick="closeModal('cancelOrderModal')">Go Back</button>
+                        <button class="btn-danger" style="flex:2;font-size:9px;padding:4px;" onclick="confirmCancelOrder('${orderId}')">✅ Confirm Cancel & Refund</button>
+                    </div>
+                </div>
+            `;
+
+            modal.classList.add('visible');
+        }
+
+        function confirmCancelOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            // Restore stock
+            const p = products.find(pr => pr.name === order.product);
+            if (p) p.stock++;
+
+            // Update order status
+            order.status = 'refunded';
+            addNotification('💰 Order cancelled and refunded: ' + order.product + ' (🆔 ' + orderId + ')', 'warning');
+            showToast('✅ Order cancelled and refunded!', 'success');
+
+            closeModal('cancelOrderModal');
+            navigateTo('orders');
         }
 
         function confirmDelivery(orderId) {
@@ -3538,12 +3755,26 @@
                 { status: 'Delivered', icon: '📍', completed: order.status === 'delivered' }
             ];
 
+            let mapHtml = '';
+            if (order.customerAddress) {
+                const encodedAddress = encodeURIComponent(order.customerAddress);
+                mapHtml = `
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyDk3HwqZjrL6_bQBV7JZ7kL8dN5E5VH1lE&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&mode=driving" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div style="text-align:center;margin-top:4px;">
+                        <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(BUSINESS_ADDRESS)}&destination=${encodedAddress}&travelmode=driving', '_blank')">🗺️ Open Full Map</button>
+                    </div>
+                `;
+            }
+
             let trackingHtml = `
                 <div style="text-align:center;margin-bottom:8px;">
                     <h4 style="font-size:12px;">📍 Order Tracking</h4>
                     <p style="font-size:9px;color:var(--warm-gray);">Order: ${order.id}</p>
                     <p style="font-size:9px;font-weight:600;color:var(--primary);">${order.product}</p>
                     <p style="font-size:8px;color:var(--warm-gray);">Status: ${order.status}</p>
+                    ${order.customerAddress ? `<p style="font-size:8px;color:var(--warm-gray);">📍 ${order.customerAddress}</p>` : ''}
                 </div>
                 <div class="tracking-steps">
                     ${steps.map((s, i) => `
@@ -3556,17 +3787,7 @@
                         </div>
                     `).join('')}
                 </div>
-                ${order.tracking ? `
-                    <div style="text-align:center;margin-top:6px;">
-                        <button class="btn-secondary" style="font-size:8px;padding:3px 10px;" onclick="window.open('${BUSINESS_LOCATION}', '_blank')">📍 View on Google Maps</button>
-                    </div>
-                ` : ''}
-                ${order.customerAddress ? `
-                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin-top:6px;font-size:8px;">
-                        <strong>Delivery Address:</strong> ${order.customerAddress}
-                        ${order.customerLocation ? `<br /><span style="font-size:7px;color:var(--warm-gray);">${order.customerLocation}</span>` : ''}
-                    </div>
-                ` : ''}
+                ${mapHtml}
                 ${order.completionCode ? `
                     <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:6px;margin-top:4px;font-size:8px;text-align:center;border:1px solid var(--success);">
                         <strong>🔑 Completion Code:</strong> ${order.completionCode}
@@ -3664,22 +3885,26 @@
         function openProduct(id) {
             const product = products.find(p => p.id === id);
             if (!product) return;
+            if (currentUser.role === 'buyer' && product.stock <= 0) {
+                showToast('❌ Product out of stock', 'error');
+                return;
+            }
             const modal = document.getElementById('productModal');
             const detail = document.getElementById('productDetail');
-            const stockClass = product.stock > 5 ? 'stock-in' : product.stock > 0 ? 'stock-low' : 'stock-out';
-            const stockText = product.stock > 5 ? '✅ In Stock' : product.stock > 0 ? '⚠️ Low Stock' : '❌ Out of Stock';
+            const stockClass = product.stock > 0 ? 'stock-in' : 'stock-out';
+            const stockText = product.stock > 0 ? product.stock + ' available' : 'Out of Stock';
             detail.innerHTML = `
                 <img src="${product.image}" style="width:100%;border-radius:8px;margin-bottom:8px;aspect-ratio:1/1;object-fit:cover;" />
                 <h2 style="font-size:14px;">${product.name}</h2>
                 <p style="font-size:15px;font-weight:700;color:var(--primary);">${product.price}</p>
                 <p style="font-size:9px;color:var(--warm-gray);">Category: ${product.category}</p>
-                <p style="font-weight:500;${stockClass};font-size:9px;">${stockText} (${product.stock})</p>
+                <p style="font-weight:500;${stockClass};font-size:9px;">${stockText}</p>
                 <p style="font-size:8px;color:var(--warm-gray);">QR: ${product.qrCode}</p>
                 <div style="display:flex;gap:4px;margin:8px 0;">
                     <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
                     <button class="btn-secondary" style="flex:1;font-size:8px;padding:4px;" onclick="openRequestModal()">📝 Request</button>
                 </div>
-                <button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:10px;padding:6px;">🛒 Buy Now</button>
+                ${product.stock > 0 ? `<button class="btn-primary" onclick="openBuyerOrder(${product.id})" style="font-size:10px;padding:6px;">🛒 Buy Now</button>` : `<button class="btn-secondary" style="font-size:10px;padding:6px;width:100%;" disabled>❌ Out of Stock</button>`}
                 <div style="margin-top:6px;font-size:8px;color:var(--warm-gray);text-align:center;">
                     <p>📍 ${BUSINESS_ADDRESS}</p>
                     <p>📞 +${SELLER_PHONE}</p>
@@ -3757,7 +3982,7 @@
             const container = document.getElementById('allProducts');
             if (!container) return;
             const filtered = category === 'all' ? products : products.filter(p => p.category === category);
-            container.innerHTML = filtered.slice(0, 6).map(p => renderProductCard(p)).join('');
+            container.innerHTML = filtered.filter(p => p.stock > 0).slice(0, 6).map(p => renderProductCard(p)).join('');
             document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.category-chip').forEach(c => {
                 if (c.textContent === category || (category === 'all' && c.textContent === '✨ All')) {
@@ -3869,8 +4094,11 @@
         console.log('📋 Orders:', orders.length);
         console.log('📝 Requests:', customerRequests.length);
         console.log('💡 Delivery Fee:', DELIVERY_FEE, 'ETB | Payment Fee:', PAYMENT_FEE, 'ETB');
-        console.log('💡 Owner: 4 menus - Dashboard | Stock | Approvals | Reports');
-        console.log('💡 Today\'s Revenue = (Sell Price - Buy Price) of sold + pending orders');
+        console.log('💡 Buyer: Only sees available stock (stock > 0)');
+        console.log('💡 Seller: Sees LOW/HIGH stock alerts');
+        console.log('💡 Owner: Refresh, Clear All Stock, Full management');
+        console.log('💡 Cancel: Buyer can cancel and refund before delivery');
+        console.log('💡 Map: Live Google Maps from shop to customer');
     </script>
 
 </body>

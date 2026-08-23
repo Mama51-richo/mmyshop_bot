@@ -8,8 +8,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
         /* ============================================================
-                   ROOT VARIABLES & RESET
-                   ============================================================ */
+           ROOT VARIABLES & RESET
+           ============================================================ */
         * {
             margin: 0;
             padding: 0;
@@ -56,23 +56,8 @@
         }
 
         /* ============================================================
-                   SCROLLBAR STYLING
-                   ============================================================ */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-primary);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-
-        /* ============================================================
-                   HEADER
-                   ============================================================ */
+           HEADER
+           ============================================================ */
         #main-header {
             position: sticky;
             top: 0;
@@ -94,17 +79,17 @@
         .logo-wrapper {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .logo-icon {
-            font-size: 28px;
+            font-size: 30px;
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .logo-text {
             font-family: 'Playfair Display', serif;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: 700;
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             -webkit-background-clip: text;
@@ -120,14 +105,33 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+        }
+
+        .role-selector-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        .role-selector-btn:hover {
+            border-color: var(--primary);
         }
 
         .lang-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 30px;
-            padding: 6px 14px;
+            padding: 4px 12px;
             font-size: 13px;
             font-weight: 600;
             color: var(--text-primary);
@@ -177,8 +181,8 @@
         }
 
         /* ============================================================
-                   BOTTOM NAVIGATION
-                   ============================================================ */
+           BOTTOM NAVIGATION
+           ============================================================ */
         #bottom-nav {
             position: fixed;
             bottom: 0;
@@ -242,8 +246,8 @@
         }
 
         /* ============================================================
-                   PAGE CONTAINER
-                   ============================================================ */
+           PAGE CONTAINER
+           ============================================================ */
         #page-container {
             padding: 16px;
             max-width: 480px;
@@ -270,17 +274,18 @@
         }
 
         /* ============================================================
-                   HERO BANNER
-                   ============================================================ */
+           HERO BANNER — CENTERED BRAND
+           ============================================================ */
         .hero-banner {
             background: linear-gradient(145deg, var(--secondary), var(--primary-dark));
             border-radius: var(--radius);
-            padding: 28px 24px 24px;
+            padding: 32px 24px 28px;
             color: white;
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 24px rgba(107, 47, 160, 0.3);
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(107, 47, 160, 0.3);
         }
         .hero-banner::before {
             content: '✨';
@@ -288,7 +293,7 @@
             right: 16px;
             top: 10px;
             font-size: 52px;
-            opacity: 0.2;
+            opacity: 0.15;
         }
         .hero-banner::after {
             content: '🌹';
@@ -298,25 +303,38 @@
             font-size: 72px;
             opacity: 0.1;
         }
-        .hero-banner .hero-title {
+        .hero-banner .hero-logo {
             font-family: 'Playfair Display', serif;
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #FFD700, #FFF8E1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
         }
-        .hero-banner .hero-title .highlight {
-            color: var(--gold-shimmer);
-        }
-        .hero-banner .hero-sub {
-            font-size: 14px;
-            opacity: 0.9;
-            margin-top: 2px;
+        .hero-banner .hero-logo-sub {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
             font-weight: 300;
+            opacity: 0.85;
+            margin-top: -4px;
+            letter-spacing: 6px;
+            color: #FFF8E1;
+            -webkit-text-fill-color: #FFF8E1;
+        }
+        .hero-banner .hero-tagline {
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 8px;
+            opacity: 0.95;
+            font-style: italic;
         }
         .hero-banner .hero-details {
-            margin-top: 12px;
+            margin-top: 14px;
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             gap: 12px 20px;
             font-size: 13px;
             opacity: 0.85;
@@ -325,9 +343,19 @@
             display: flex;
             align-items: center;
             gap: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 14px;
+            border-radius: 30px;
+            backdrop-filter: blur(4px);
+        }
+        .hero-banner .hero-actions {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
         }
         .hero-banner .hero-btn {
-            margin-top: 14px;
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.25);
             color: white;
@@ -344,10 +372,19 @@
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
         }
+        .hero-banner .hero-btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--dark);
+        }
+        .hero-banner .hero-btn-primary:hover {
+            background: var(--gold-shimmer);
+            border-color: var(--gold-shimmer);
+        }
 
         /* ============================================================
-                   SECTION TITLES
-                   ============================================================ */
+           SECTION TITLES
+           ============================================================ */
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -363,20 +400,10 @@
         .section-title .highlight {
             color: var(--primary);
         }
-        .section-link {
-            font-size: 13px;
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .section-link:hover {
-            color: var(--primary-dark);
-        }
 
         /* ============================================================
-                   CATEGORY SCROLL
-                   ============================================================ */
+           CATEGORY SCROLL
+           ============================================================ */
         .category-scroll {
             display: flex;
             gap: 10px;
@@ -416,8 +443,8 @@
         }
 
         /* ============================================================
-                   PRODUCT GRID
-                   ============================================================ */
+           PRODUCT GRID
+           ============================================================ */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -511,6 +538,7 @@
             display: flex;
             gap: 6px;
             margin-top: 8px;
+            flex-wrap: wrap;
         }
         .product-quick-actions button {
             flex: 1;
@@ -522,6 +550,7 @@
             cursor: pointer;
             transition: var(--transition);
             font-family: 'Poppins', sans-serif;
+            min-width: 50px;
         }
         .btn-reserve {
             background: var(--primary);
@@ -545,10 +574,17 @@
         .btn-wish:hover {
             border-color: var(--primary);
         }
+        .btn-scan-order {
+            background: var(--secondary);
+            color: white;
+        }
+        .btn-scan-order:hover {
+            background: #5A258A;
+        }
 
         /* ============================================================
-                   BUTTONS
-                   ============================================================ */
+           BUTTONS
+           ============================================================ */
         .btn-primary {
             background: linear-gradient(135deg, var(--primary), var(--gold-shimmer));
             color: white;
@@ -623,8 +659,8 @@
         }
 
         /* ============================================================
-                   MODALS
-                   ============================================================ */
+           MODALS
+           ============================================================ */
         .modal {
             position: fixed;
             top: 0;
@@ -703,8 +739,8 @@
         }
 
         /* ============================================================
-                   LANGUAGE LIST
-                   ============================================================ */
+           LANGUAGE LIST
+           ============================================================ */
         .lang-item {
             display: flex;
             align-items: center;
@@ -736,8 +772,8 @@
         }
 
         /* ============================================================
-                   QR SCANNER
-                   ============================================================ */
+           QR SCANNER
+           ============================================================ */
         .scanner-overlay {
             position: fixed;
             top: 0;
@@ -819,8 +855,8 @@
         }
 
         /* ============================================================
-                   TOAST NOTIFICATION
-                   ============================================================ */
+           TOAST NOTIFICATION
+           ============================================================ */
         .toast {
             position: fixed;
             bottom: 100px;
@@ -854,10 +890,13 @@
         .toast.warning {
             background: #E65100;
         }
+        .toast.info {
+            background: #0D47A1;
+        }
 
         /* ============================================================
-                   EMPTY STATE
-                   ============================================================ */
+           EMPTY STATE
+           ============================================================ */
         .empty-state {
             text-align: center;
             padding: 48px 20px;
@@ -877,8 +916,8 @@
         }
 
         /* ============================================================
-                   ORDER CARDS
-                   ============================================================ */
+           ORDER CARDS
+           ============================================================ */
         .order-card {
             background: var(--bg-card);
             border-radius: var(--radius-sm);
@@ -953,6 +992,10 @@
             background: #F8D7DA;
             color: #721C24;
         }
+        .status-waiting-payment {
+            background: #FFF3E0;
+            color: #E65100;
+        }
 
         body.dark-theme .status-pending {
             background: #3a2f0a;
@@ -974,10 +1017,14 @@
             background: #3a0a0a;
             color: #ef5350;
         }
+        body.dark-theme .status-waiting-payment {
+            background: #3a2a0a;
+            color: #ffa726;
+        }
 
         /* ============================================================
-                   ADMIN / OWNER DASHBOARD
-                   ============================================================ */
+           ADMIN / OWNER DASHBOARD
+           ============================================================ */
         .admin-panel {
             margin-top: 20px;
             background: var(--bg-card);
@@ -1027,7 +1074,7 @@
             border-radius: var(--radius-sm);
             padding: 14px 16px;
             margin-bottom: 10px;
-            border-left: 4px solid #2E7D32;
+            border-left: 4px solid #FF6F00;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1071,10 +1118,17 @@
         .payment-notif .payment-actions .btn-reject:hover {
             background: #B71C1C;
         }
+        .payment-notif .payment-actions .btn-view {
+            background: var(--secondary);
+            color: white;
+        }
+        .payment-notif .payment-actions .btn-view:hover {
+            background: #5A258A;
+        }
 
         /* ============================================================
-                   PROFILE
-                   ============================================================ */
+           PROFILE
+           ============================================================ */
         .profile-card {
             background: var(--bg-card);
             border-radius: var(--radius);
@@ -1127,8 +1181,42 @@
         }
 
         /* ============================================================
-                   REQUEST FORM
-                   ============================================================ */
+           ROLE SELECTOR MODAL
+           ============================================================ */
+        .role-option {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            border-radius: var(--radius-sm);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 10px;
+        }
+        .role-option:hover {
+            border-color: var(--primary);
+            background: rgba(212, 175, 55, 0.04);
+        }
+        .role-option.active {
+            border-color: var(--primary);
+            background: rgba(212, 175, 55, 0.08);
+        }
+        .role-option .role-icon {
+            font-size: 32px;
+        }
+        .role-option .role-info .role-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+        .role-option .role-info .role-desc {
+            font-size: 13px;
+            color: var(--warm-gray);
+        }
+
+        /* ============================================================
+           REQUEST FORM
+           ============================================================ */
         .request-form label {
             display: block;
             font-weight: 600;
@@ -1162,8 +1250,8 @@
         }
 
         /* ============================================================
-                   SEARCH
-                   ============================================================ */
+           SEARCH
+           ============================================================ */
         .search-input {
             width: 100%;
             padding: 14px 20px;
@@ -1182,8 +1270,8 @@
         }
 
         /* ============================================================
-                   RESPONSIVE
-                   ============================================================ */
+           RESPONSIVE
+           ============================================================ */
         @media (max-width: 480px) {
             .product-grid {
                 gap: 12px;
@@ -1194,17 +1282,24 @@
             .product-name {
                 font-size: 13px;
             }
-            .hero-banner .hero-title {
-                font-size: 22px;
+            .hero-banner .hero-logo {
+                font-size: 28px;
             }
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
+            .hero-banner .hero-details {
+                gap: 8px;
+            }
+            .hero-banner .hero-details span {
+                font-size: 11px;
+                padding: 3px 10px;
+            }
         }
 
         /* ============================================================
-                   SELLER / OWNER TOGGLE IN PROFILE
-                   ============================================================ */
+           ROLE BADGE
+           ============================================================ */
         .role-badge {
             display: inline-block;
             padding: 2px 12px;
@@ -1220,6 +1315,107 @@
         }
         .role-badge.seller {
             background: #2E7D32;
+        }
+
+        /* ============================================================
+           ORDER WORKFLOW STEPS
+           ============================================================ */
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+            position: relative;
+        }
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 18px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+        .workflow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+        }
+        .workflow-step .step-circle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--warm-gray);
+            transition: var(--transition);
+        }
+        .workflow-step.active .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+        .workflow-step.done .step-circle {
+            background: #2E7D32;
+            border-color: #2E7D32;
+            color: white;
+        }
+        .workflow-step .step-label {
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 4px;
+            color: var(--warm-gray);
+            text-align: center;
+        }
+        .workflow-step.active .step-label {
+            color: var(--primary);
+        }
+        .workflow-step.done .step-label {
+            color: #2E7D32;
+        }
+
+        /* ============================================================
+           PAYMENT REFERENCE INPUT
+           ============================================================ */
+        .payment-ref-input {
+            display: flex;
+            gap: 10px;
+            margin: 12px 0;
+        }
+        .payment-ref-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+        .payment-ref-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        .payment-ref-input button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Poppins', sans-serif;
+        }
+        .payment-ref-input button:hover {
+            background: var(--primary-dark);
         }
     </style>
 </head>
@@ -1237,6 +1433,9 @@
                 <span class="logo-text">soYam <span>Cosmo</span></span>
             </div>
             <div class="header-actions">
+                <button class="role-selector-btn" onclick="openRoleSelector()">
+                    👤 <span id="currentRoleLabel">Buyer</span>
+                </button>
                 <button id="languageBtn" class="lang-btn">
                     <span id="currentFlag">🇬🇧</span>
                     <span id="currentLang">EN</span>
@@ -1279,6 +1478,44 @@
     </div>
 
     <!-- ============================================================
+    ROLE SELECTOR MODAL
+    ============================================================ -->
+    <div id="roleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>👤 Select Your Role</h3>
+                <button class="close-modal" onclick="closeModal('roleModal')">&times;</button>
+            </div>
+            <div id="roleList">
+                <div class="role-option active" onclick="selectRole('buyer')">
+                    <span class="role-icon">👤</span>
+                    <div class="role-info">
+                        <div class="role-name">Buyer / Customer</div>
+                        <div class="role-desc">Browse products, place orders, track deliveries</div>
+                    </div>
+                    <span id="roleCheckBuyer">✅</span>
+                </div>
+                <div class="role-option" onclick="selectRole('seller')">
+                    <span class="role-icon">🛍️</span>
+                    <div class="role-info">
+                        <div class="role-name">Seller</div>
+                        <div class="role-desc">Manage orders, scan QR, process deliveries</div>
+                    </div>
+                    <span id="roleCheckSeller"></span>
+                </div>
+                <div class="role-option" onclick="selectRole('owner')">
+                    <span class="role-icon">👑</span>
+                    <div class="role-info">
+                        <div class="role-name">Owner</div>
+                        <div class="role-desc">Full control: payments, stock, sellers, analytics</div>
+                    </div>
+                    <span id="roleCheckOwner"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
     LANGUAGE MODAL
     ============================================================ -->
     <div id="languageModal" class="modal">
@@ -1315,6 +1552,21 @@
     </div>
 
     <!-- ============================================================
+    ORDER WORKFLOW MODAL (Scan → Pay → Confirm)
+    ============================================================ -->
+    <div id="orderWorkflowModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="workflowTitle">🛒 Place Order</h3>
+                <button class="close-modal" onclick="closeOrderWorkflow()">&times;</button>
+            </div>
+            <div id="workflowContent">
+                <!-- Dynamically rendered -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
     REQUEST PRODUCT MODAL
     ============================================================ -->
     <div id="requestModal" class="modal">
@@ -1332,7 +1584,7 @@
                 <input type="text" id="reqImage" placeholder="Paste image URL" />
                 <label>Additional Notes</label>
                 <textarea id="reqNotes" placeholder="Describe what you're looking for..."></textarea>
-                <button class="btn-primary" style="margin-top: 16px;" onclick="submitRequest()">📤 Submit Request</button>
+                <button class="btn-primary" style="margin-top:16px;" onclick="submitRequest()">📤 Submit Request</button>
             </div>
         </div>
     </div>
@@ -1345,7 +1597,7 @@
             <video id="qrVideo" autoplay playsinline></video>
             <div class="scanner-frame"></div>
             <div class="scanner-overlay-ui">
-                <p data-key="scan_qr_instruction">📷 Scan product QR code</p>
+                <p id="scannerInstruction" data-key="scan_qr_instruction">📷 Scan product QR code</p>
                 <button class="btn-secondary" onclick="closeScanner()">✕ Close</button>
             </div>
         </div>
@@ -1393,7 +1645,11 @@
                 request_product: 'Request a Product',
                 request_product_desc: "Can't find what you're looking for? Request it!",
                 admin_panel: 'Owner Dashboard',
-                seller_panel: 'Seller Dashboard'
+                seller_panel: 'Seller Dashboard',
+                step_select: 'Select',
+                step_scan: 'Scan',
+                step_pay: 'Pay',
+                step_confirm: 'Confirm'
             },
             am: {
                 nav_home: 'መነሻ',
@@ -1411,7 +1667,11 @@
                 request_product: 'ምርት ጠይቅ',
                 request_product_desc: 'የሚፈልጉትን አላገኙም? ይጠይቁ!',
                 admin_panel: 'የአስተዳዳሪ ፓነል',
-                seller_panel: 'የሻጭ ፓነል'
+                seller_panel: 'የሻጭ ፓነል',
+                step_select: 'ምረጥ',
+                step_scan: 'ቅኝት',
+                step_pay: 'ክፈል',
+                step_confirm: 'አረጋግጥ'
             },
             om: {
                 nav_home: 'Mana',
@@ -1429,7 +1689,11 @@
                 request_product: 'Produkii kadhadhu',
                 request_product_desc: 'Waan barbaaddan hin argattan? Kadhadhaa!',
                 admin_panel: 'Paaneelii Bulchaa',
-                seller_panel: 'Paaneelii Gurguraa'
+                seller_panel: 'Paaneelii Gurguraa',
+                step_select: 'Filadhu',
+                step_scan: 'Sadarkaa',
+                step_pay: 'Kaffali',
+                step_confirm: 'Mirkaneessi'
             },
             ti: {
                 nav_home: 'ቤት',
@@ -1447,7 +1711,11 @@
                 request_product: 'ምርት ሕቶ',
                 request_product_desc: 'ዝትደልይዎ ኣይረኽቡን? ሕተቱ!',
                 admin_panel: 'ፓነል ኣስተዳዳሪ',
-                seller_panel: 'ፓነል ሻጭ'
+                seller_panel: 'ፓነል ሻጭ',
+                step_select: 'ምረጽ',
+                step_scan: 'ስካን',
+                step_pay: 'ክፈል',
+                step_confirm: 'ኣረጋግጽ'
             },
             gu: {
                 nav_home: 'ቤት',
@@ -1465,7 +1733,11 @@
                 request_product: 'ምርት ጠይቅ',
                 request_product_desc: 'የሚፈልጉትን አላገኙም? ይጠይቁ!',
                 admin_panel: 'የአስተዳዳሪ ፓነል',
-                seller_panel: 'የሻጭ ፓነል'
+                seller_panel: 'የሻጭ ፓነል',
+                step_select: 'ምረጥ',
+                step_scan: 'ቅኝት',
+                step_pay: 'ክፈል',
+                step_confirm: 'አረጋግጥ'
             }
         };
 
@@ -1478,8 +1750,11 @@
         let notifications = [];
         let orders = [];
         let wishlist = [];
+        let pendingOrder = null; // For workflow
 
-        // Mock Products — Cosmetics Catalog
+        // ============================================================
+        // MOCK PRODUCTS — Cosmetics Catalog
+        // ============================================================
         const products = [{
             id: 1,
             name: 'Amber Oud Perfume',
@@ -1487,7 +1762,8 @@
             stock: 10,
             image: 'https://images.unsplash.com/photo-1594035910387-fea4773a4610?w=300&h=300&fit=crop',
             category: 'Fragrances',
-            badge: 'NEW'
+            badge: 'NEW',
+            qrCode: 'SOYAM-P001'
         }, {
             id: 2,
             name: 'Rose Body Lotion',
@@ -1495,7 +1771,8 @@
             stock: 5,
             image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&h=300&fit=crop',
             category: 'Skincare',
-            badge: 'BEST'
+            badge: 'BEST',
+            qrCode: 'SOYAM-P002'
         }, {
             id: 3,
             name: 'Organic Face Serum',
@@ -1503,7 +1780,8 @@
             stock: 3,
             image: 'https://images.unsplash.com/photo-1570194065650-d99fb4adec17?w=300&h=300&fit=crop',
             category: 'Skincare',
-            badge: ''
+            badge: '',
+            qrCode: 'SOYAM-P003'
         }, {
             id: 4,
             name: 'Luxury Lipstick Set',
@@ -1511,7 +1789,8 @@
             stock: 8,
             image: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=300&fit=crop',
             category: 'Makeup',
-            badge: 'NEW'
+            badge: 'NEW',
+            qrCode: 'SOYAM-P004'
         }, {
             id: 5,
             name: "Men's Grooming Kit",
@@ -1519,7 +1798,8 @@
             stock: 4,
             image: 'https://images.unsplash.com/photo-1571875257727-256c39da42af?w=300&h=300&fit=crop',
             category: "Men's",
-            badge: ''
+            badge: '',
+            qrCode: 'SOYAM-P005'
         }, {
             id: 6,
             name: 'Baby Care Set',
@@ -1527,7 +1807,8 @@
             stock: 6,
             image: 'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=300&h=300&fit=crop',
             category: 'Baby',
-            badge: 'LOW'
+            badge: 'LOW',
+            qrCode: 'SOYAM-P006'
         }, {
             id: 7,
             name: 'Hair Growth Oil',
@@ -1535,7 +1816,8 @@
             stock: 7,
             image: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=300&h=300&fit=crop',
             category: 'Hair Care',
-            badge: ''
+            badge: '',
+            qrCode: 'SOYAM-P007'
         }, {
             id: 8,
             name: 'Gift Set Deluxe',
@@ -1543,7 +1825,8 @@
             stock: 2,
             image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=300&h=300&fit=crop',
             category: 'Gift Sets',
-            badge: 'BEST'
+            badge: 'BEST',
+            qrCode: 'SOYAM-P008'
         }];
 
         // ============================================================
@@ -1559,6 +1842,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const savedLang = localStorage.getItem('soyam_lang') || 'en';
             setLanguage(savedLang);
+
+            const savedRole = localStorage.getItem('soyam_role') || 'buyer';
+            currentUser.role = savedRole;
+            updateRoleUI();
 
             if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
                 currentUser.id = tg.initDataUnsafe.user.id;
@@ -1586,7 +1873,7 @@
             addNotification('✨ Welcome to soYam Cosmo!', 'success');
             addNotification('🆕 New products added!', 'info');
 
-            // Sample orders for demo
+            // Sample orders
             orders.push({
                 id: 'ORD-001',
                 product: 'Amber Oud Perfume',
@@ -1594,18 +1881,54 @@
                 status: 'pending',
                 date: '2026-08-23',
                 type: 'Reservation',
-                timer: 21600
+                timer: 21600,
+                qrCode: 'SOYAM-P001'
             });
             orders.push({
                 id: 'ORD-002',
                 product: 'Rose Body Lotion',
                 price: '800 ETB',
-                status: 'delivering',
+                status: 'waiting-payment',
                 date: '2026-08-22',
                 type: 'Delivery',
-                tracking: 'SOYAM-4567'
+                tracking: 'SOYAM-4567',
+                qrCode: 'SOYAM-P002',
+                paymentRef: 'TBR-2026-08-22-001'
             });
         });
+
+        // ============================================================
+        // ROLE MANAGEMENT
+        // ============================================================
+        function openRoleSelector() {
+            openModal('roleModal');
+            updateRoleCheckmarks();
+        }
+
+        function selectRole(role) {
+            currentUser.role = role;
+            localStorage.setItem('soyam_role', role);
+            updateRoleUI();
+            closeModal('roleModal');
+            showToast('👤 Switched to ' + role.charAt(0).toUpperCase() + role.slice(1), 'success');
+            navigateTo('home');
+        }
+
+        function updateRoleUI() {
+            const labels = { buyer: 'Buyer', seller: 'Seller', owner: 'Owner' };
+            document.getElementById('currentRoleLabel').textContent = labels[currentUser.role] || 'Buyer';
+            updateRoleCheckmarks();
+        }
+
+        function updateRoleCheckmarks() {
+            document.getElementById('roleCheckBuyer').textContent = currentUser.role === 'buyer' ? '✅' : '';
+            document.getElementById('roleCheckSeller').textContent = currentUser.role === 'seller' ? '✅' : '';
+            document.getElementById('roleCheckOwner').textContent = currentUser.role === 'owner' ? '✅' : '';
+            document.querySelectorAll('.role-option').forEach(el => el.classList.remove('active'));
+            if (currentUser.role === 'buyer') document.querySelector('.role-option:first-child')?.classList.add('active');
+            if (currentUser.role === 'seller') document.querySelectorAll('.role-option')[1]?.classList.add('active');
+            if (currentUser.role === 'owner') document.querySelectorAll('.role-option')[2]?.classList.add('active');
+        }
 
         // ============================================================
         // LANGUAGE
@@ -1691,7 +2014,7 @@
         }
 
         // ============================================================
-        // RENDER: HOME — Attractive Cosmetics Dashboard
+        // RENDER: HOME — Centered Brand + Expressive Layout
         // ============================================================
         function renderHome() {
             const categories = ['Fragrances', 'Skincare', 'Makeup', 'Hair Care', 'Body Care', "Men's", 'Baby', 'Organic',
@@ -1700,13 +2023,18 @@
 
             let html = `
                         <div class="hero-banner">
-                            <div class="hero-title">soYam <span class="highlight">Cosmo</span></div>
-                            <div class="hero-sub">✨ Your Glow, Our Passion</div>
+                            <div class="hero-logo">soYam Cosmo</div>
+                            <div class="hero-logo-sub">✦ BEAUTY BOUTIQUE ✦</div>
+                            <div class="hero-tagline">"Your Glow, Our Passion"</div>
                             <div class="hero-details">
                                 <span>📍 Addis Ababa, Ethiopia</span>
                                 <span>📞 +251 919096451</span>
+                                <span>⏰ Mon-Sat 9AM-9PM</span>
                             </div>
-                            <button class="hero-btn" onclick="showToast('📍 Located in Addis Ababa, Ethiopia', 'info')">📍 View on Map</button>
+                            <div class="hero-actions">
+                                <button class="hero-btn hero-btn-primary" onclick="showToast('📍 Located in Addis Ababa, Ethiopia', 'info')">📍 View on Map</button>
+                                <button class="hero-btn" onclick="showToast('📞 Call +251 919096451', 'info')">📞 Contact</button>
+                            </div>
                         </div>
 
                         <div class="category-scroll">
@@ -1729,10 +2057,10 @@
                             ${products.map(p => renderProductCard(p)).join('')}
                         </div>
 
-                        <div style="margin-top: 24px; padding: 20px; background: var(--bg-card); border-radius: var(--radius); box-shadow: var(--shadow); border: 1px solid var(--border-color);">
-                            <h3 style="font-family: 'Playfair Display', serif; font-size: 18px;">📝 <span class="highlight">Can't find what you need?</span></h3>
-                            <p style="color: var(--warm-gray); font-size: 14px; margin: 4px 0 12px;" data-key="request_product_desc">Can't find what you're looking for? Request it!</p>
-                            <button class="btn-primary" onclick="openRequestModal()" style="width: auto; padding: 10px 28px;">📝 Request Product</button>
+                        <div style="margin-top:24px;padding:20px;background:var(--bg-card);border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border-color);">
+                            <h3 style="font-family:'Playfair Display',serif;font-size:18px;">📝 <span class="highlight">Can't find what you need?</span></h3>
+                            <p style="color:var(--warm-gray);font-size:14px;margin:4px 0 12px;" data-key="request_product_desc">Can't find what you're looking for? Request it!</p>
+                            <button class="btn-primary" onclick="openRequestModal()" style="width:auto;padding:10px 28px;">📝 Request Product</button>
                         </div>
 
                         ${currentUser.role === 'owner' ? renderOwnerPanel() : ''}
@@ -1742,7 +2070,7 @@
         }
 
         // ============================================================
-        // RENDER: PRODUCT CARD
+        // RENDER: PRODUCT CARD with Scan Order Button
         // ============================================================
         function renderProductCard(p) {
             const stockClass = p.stock > 5 ? 'stock-in' : p.stock > 0 ? 'stock-low' : 'stock-out';
@@ -1750,19 +2078,18 @@
             const badgeHtml = p.badge ? `<span class="product-badge badge-${p.badge.toLowerCase()}">${p.badge}</span>` :
             '';
             return `
-                        <div class="product-card" onclick="openProduct(${p.id})">
-                            <div class="image-wrapper">
+                        <div class="product-card">
+                            <div class="image-wrapper" onclick="openProduct(${p.id})">
                                 <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy" />
                                 ${badgeHtml}
                             </div>
                             <div class="product-info">
-                                <div class="product-name">${p.name}</div>
+                                <div class="product-name" onclick="openProduct(${p.id})">${p.name}</div>
                                 <div class="product-price">${p.price}</div>
                                 <div class="product-stock ${stockClass}">${stockText} (${p.stock})</div>
                                 <div class="product-quick-actions">
-                                    <button class="btn-reserve" onclick="event.stopPropagation(); quickOrder(${p.id}, 'reservation')">🛒 Reserve</button>
-                                    <button class="btn-deliver" onclick="event.stopPropagation(); quickOrder(${p.id}, 'delivery')">🚚 Deliver</button>
-                                    <button class="btn-wish" onclick="event.stopPropagation(); addToWishlist(${p.id})">❤️</button>
+                                    <button class="btn-scan-order" onclick="startOrderWorkflow(${p.id})">📷 Scan & Order</button>
+                                    <button class="btn-wish" onclick="addToWishlist(${p.id})">❤️</button>
                                 </div>
                             </div>
                         </div>
@@ -1770,11 +2097,198 @@
         }
 
         // ============================================================
+        // ORDER WORKFLOW — Step by Step (Scan → Pay → Confirm)
+        // ============================================================
+        function startOrderWorkflow(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            if (product.stock <= 0) {
+                showToast('❌ Out of stock!', 'error');
+                return;
+            }
+
+            pendingOrder = { product, step: 1 };
+            openModal('orderWorkflowModal');
+            renderWorkflowStep();
+        }
+
+        function renderWorkflowStep() {
+            if (!pendingOrder) return;
+            const container = document.getElementById('workflowContent');
+            const t = TRANSLATIONS[currentLanguage] || TRANSLATIONS.en;
+            const step = pendingOrder.step;
+            const product = pendingOrder.product;
+
+            // Workflow steps UI
+            const steps = [
+                { key: 'step_select', label: t.step_select || 'Select' },
+                { key: 'step_scan', label: t.step_scan || 'Scan' },
+                { key: 'step_pay', label: t.step_pay || 'Pay' },
+                { key: 'step_confirm', label: t.step_confirm || 'Confirm' }
+            ];
+
+            let stepHtml = `
+                        <div class="workflow-steps">
+                            ${steps.map((s, i) => `
+                                <div class="workflow-step ${i + 1 < step ? 'done' : i + 1 === step ? 'active' : ''}">
+                                    <div class="step-circle">${i + 1}</div>
+                                    <div class="step-label">${s.label}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+            let contentHtml = '';
+
+            switch (step) {
+                case 1: // Select & Confirm Product
+                    contentHtml = `
+                                <div style="text-align:center;padding:8px 0;">
+                                    <img src="${product.image}" style="width:120px;height:120px;border-radius:16px;object-fit:cover;margin-bottom:12px;" />
+                                    <h3 style="font-family:'Playfair Display',serif;">${product.name}</h3>
+                                    <p style="font-size:22px;font-weight:700;color:var(--primary);">${product.price}</p>
+                                    <p style="color:var(--warm-gray);">Stock: ${product.stock} available</p>
+                                    <p style="font-size:13px;color:var(--warm-gray);margin-top:4px;">QR Code: ${product.qrCode}</p>
+                                    <div style="margin-top:16px;display:flex;gap:10px;">
+                                        <button class="btn-secondary" style="flex:1;" onclick="closeOrderWorkflow()">Cancel</button>
+                                        <button class="btn-primary" style="flex:2;" onclick="pendingOrder.step=2;renderWorkflowStep();">📷 Scan QR →</button>
+                                    </div>
+                                </div>
+                            `;
+                    break;
+
+                case 2: // Scan QR
+                    contentHtml = `
+                                <div style="text-align:center;padding:8px 0;">
+                                    <div style="background:var(--bg-primary);border-radius:var(--radius);padding:30px;margin-bottom:16px;border:2px dashed var(--border-color);">
+                                        <div style="font-size:64px;margin-bottom:8px;">📷</div>
+                                        <p style="font-weight:600;">Scan Product QR Code</p>
+                                        <p style="font-size:13px;color:var(--warm-gray);">Position the QR code in the frame</p>
+                                    </div>
+                                    <button class="btn-primary" onclick="simulateQRScan()">📷 Open Scanner</button>
+                                    <button class="btn-secondary" style="margin-top:8px;" onclick="pendingOrder.step=1;renderWorkflowStep();">← Back</button>
+                                </div>
+                            `;
+                    break;
+
+                case 3: // Payment
+                    contentHtml = `
+                                <div style="text-align:center;padding:8px 0;">
+                                    <div style="background:var(--bg-primary);border-radius:var(--radius);padding:20px;margin-bottom:16px;">
+                                        <p style="font-weight:600;">💳 Payment Details</p>
+                                        <p style="font-size:24px;font-weight:700;color:var(--primary);">${product.price}</p>
+                                        <p style="font-size:13px;color:var(--warm-gray);">Pay via Telebirr, CBE, or Cash</p>
+                                    </div>
+                                    <div class="payment-ref-input">
+                                        <input type="text" id="paymentRefInput" placeholder="Enter payment reference (e.g. TBR-1234)" />
+                                        <button onclick="submitPaymentReference()">Submit</button>
+                                    </div>
+                                    <div style="margin-top:8px;font-size:12px;color:var(--warm-gray);">
+                                        <p>📱 Telebirr: 0919096451</p>
+                                        <p>🏦 CBE: 1000123456789</p>
+                                    </div>
+                                    <button class="btn-secondary" style="margin-top:8px;" onclick="pendingOrder.step=2;renderWorkflowStep();">← Back</button>
+                                </div>
+                            `;
+                    break;
+
+                case 4: // Confirmation
+                    contentHtml = `
+                                <div style="text-align:center;padding:8px 0;">
+                                    <div style="font-size:64px;margin-bottom:8px;">✅</div>
+                                    <h3 style="font-family:'Playfair Display',serif;">Order Placed!</h3>
+                                    <p style="color:var(--warm-gray);">Your order has been submitted successfully.</p>
+                                    <div style="background:var(--bg-primary);border-radius:var(--radius-sm);padding:16px;margin:16px 0;text-align:left;">
+                                        <p><strong>Product:</strong> ${product.name}</p>
+                                        <p><strong>Price:</strong> ${product.price}</p>
+                                        <p><strong>Status:</strong> ⏳ Awaiting Owner Approval</p>
+                                        <p><strong>Reference:</strong> ${pendingOrder.paymentRef || 'PENDING'}</p>
+                                    </div>
+                                    <button class="btn-primary" onclick="closeOrderWorkflow();navigateTo('orders');">📦 View Orders</button>
+                                </div>
+                            `;
+                    break;
+            }
+
+            container.innerHTML = stepHtml + contentHtml;
+            document.getElementById('workflowTitle').textContent = '🛒 ' + (step === 4 ? 'Order Confirmed' : 'Place Order');
+        }
+
+        function simulateQRScan() {
+            showToast('📷 QR Scanned! Product: ' + pendingOrder.product.name, 'success');
+            pendingOrder.step = 3;
+            renderWorkflowStep();
+            addNotification('📷 QR scanned: ' + pendingOrder.product.name, 'info');
+        }
+
+        function submitPaymentReference() {
+            const ref = document.getElementById('paymentRefInput').value.trim();
+            if (!ref) {
+                showToast('⚠️ Please enter payment reference', 'error');
+                return;
+            }
+            pendingOrder.paymentRef = ref;
+            pendingOrder.step = 4;
+
+            // Create order
+            const product = pendingOrder.product;
+            const orderId = 'ORD-' + String(Math.floor(100 + Math.random() * 900));
+            const newOrder = {
+                id: orderId,
+                product: product.name,
+                price: product.price,
+                status: 'waiting-payment',
+                date: new Date().toISOString().split('T')[0],
+                type: 'Delivery',
+                tracking: 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)),
+                qrCode: product.qrCode,
+                paymentRef: ref
+            };
+            orders.unshift(newOrder);
+            product.stock--;
+
+            // Notify Owner (simulated)
+            addNotification('💰 Payment pending: ' + product.name + ' (' + ref + ')', 'warning');
+            addNotification('📦 New order: ' + product.name + ' (#' + orderId + ')', 'info');
+
+            renderWorkflowStep();
+            showToast('✅ Order placed! Awaiting owner approval.', 'success');
+        }
+
+        function closeOrderWorkflow() {
+            pendingOrder = null;
+            closeModal('orderWorkflowModal');
+        }
+
+        // ============================================================
+        // OPEN QR SCANNER (for Seller/Owner)
+        // ============================================================
+        function openQRScanner() {
+            const scanner = document.getElementById('qrScanner');
+            scanner.classList.remove('hidden');
+            setTimeout(() => {
+                closeScanner();
+                showToast('📷 QR Scanned! Product: Amber Oud Perfume (ID: 001)', 'success');
+                addNotification('📦 Stock updated via QR: Perfume +5 units', 'info');
+                const p = products.find(p => p.id === 1);
+                if (p) p.stock += 5;
+            }, 2500);
+        }
+
+        function closeScanner() {
+            document.getElementById('qrScanner').classList.add('hidden');
+            const video = document.getElementById('qrVideo');
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(t => t.stop());
+            }
+        }
+
+        // ============================================================
         // RENDER: SEARCH
         // ============================================================
         function renderSearch() {
             return `
-                        <div style="position: sticky; top: 0; background: var(--bg-primary); padding: 8px 0 16px; z-index: 10;">
+                        <div style="position:sticky;top:0;background:var(--bg-primary);padding:8px 0 16px;z-index:10;">
                             <input type="text" id="searchInput" class="search-input" placeholder="🔍 Search products..." oninput="performSearch(this.value)" />
                         </div>
                         <div id="searchResults">
@@ -1795,14 +2309,14 @@
                 return;
             }
             const results = products.filter(p => p.name.toLowerCase().includes(query.toLowerCase()) || p.category
-            .toLowerCase().includes(query.toLowerCase()));
+                .toLowerCase().includes(query.toLowerCase()));
             if (results.length === 0) {
                 container.innerHTML =
                     `<div class="empty-state"><div class="empty-icon">😕</div><h3>No results found</h3><p>Try a different search term</p></div>`;
                 return;
             }
             container.innerHTML =
-                `<h3 style="margin: 12px 0;">${results.length} results found</h3><div class="product-grid">${results.map(p => renderProductCard(p)).join('')}</div>`;
+                `<h3 style="margin:12px 0;">${results.length} results found</h3><div class="product-grid">${results.map(p => renderProductCard(p)).join('')}</div>`;
         }
 
         // ============================================================
@@ -1815,25 +2329,40 @@
                             <div class="empty-state"><div class="empty-icon">📭</div><h3 data-key="no_orders">No orders yet. Start shopping!</h3><p>Place your first order today 🛍️</p></div>
                         `;
             }
-            const statusMap = { pending: 'status-pending', approved: 'status-approved', delivering: 'status-delivering',
-                delivered: 'status-delivered', cancelled: 'status-cancelled' };
-            const statusLabels = { pending: '⏳ Pending', approved: '✅ Approved', delivering: '🚚 Delivering',
-                delivered: '✅ Delivered', cancelled: '❌ Cancelled' };
+            const statusMap = {
+                pending: 'status-pending',
+                approved: 'status-approved',
+                delivering: 'status-delivering',
+                delivered: 'status-delivered',
+                cancelled: 'status-cancelled',
+                'waiting-payment': 'status-waiting-payment'
+            };
+            const statusLabels = {
+                pending: '⏳ Pending',
+                approved: '✅ Approved',
+                delivering: '🚚 Delivering',
+                delivered: '✅ Delivered',
+                cancelled: '❌ Cancelled',
+                'waiting-payment': '💳 Waiting Payment'
+            };
             return `
                         <div class="section-header"><div class="section-title">📦 <span class="highlight">My Orders</span></div></div>
                         <div style="display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:8px;">
                             <button class="category-chip active" onclick="filterOrders('all')">All</button>
+                            <button class="category-chip" onclick="filterOrders('waiting-payment')">💳 Payment</button>
                             <button class="category-chip" onclick="filterOrders('pending')">⏳ Pending</button>
                             <button class="category-chip" onclick="filterOrders('delivering')">🚚 Delivering</button>
                             <button class="category-chip" onclick="filterOrders('delivered')">✅ Delivered</button>
                         </div>
                         <div id="ordersList">
                             ${orders.map(o => `
-                                <div class="order-card">
+                                <div class="order-card" style="border-left-color:${o.status === 'waiting-payment' ? '#FF6F00' : o.status === 'delivered' ? '#2E7D32' : 'var(--primary)'};">
                                     <div class="order-top">
                                         <div>
                                             <div class="order-product">${o.product}</div>
                                             <div class="order-meta">${o.type} • ${o.date}</div>
+                                            ${o.qrCode ? `<div class="order-meta" style="font-size:11px;">QR: ${o.qrCode}</div>` : ''}
+                                            ${o.paymentRef ? `<div class="order-meta" style="font-size:11px;color:var(--primary);">Ref: ${o.paymentRef}</div>` : ''}
                                         </div>
                                         <div>
                                             <span class="status-badge ${statusMap[o.status] || 'status-pending'}">${statusLabels[o.status] || o.status}</span>
@@ -1847,16 +2376,19 @@
                                         </div>
                                     ` : ''}
                                     <div class="order-actions">
+                                        ${o.status === 'waiting-payment' ? `
+                                            <button class="btn-success" onclick="showToast('✅ Payment confirmed by Owner!', 'success')">Confirm Payment</button>
+                                            <button style="background:#FF6F00;color:white;" onclick="showToast('⏳ Waiting for owner approval...', 'warning')">⏳ Awaiting Owner</button>
+                                        ` : ''}
                                         ${o.status === 'pending' ? `
                                             <button class="btn-success" onclick="showToast('✅ Payment confirmed! Stock updated.', 'success')">Confirm Payment</button>
-                                            <button style="background:#FF6F00;color:white;" onclick="showToast('⏰ 6-hour timer started', 'warning')">⏱️ Start Timer</button>
+                                        ` : ''}
+                                        ${o.status === 'approved' ? `
+                                            <button class="btn-primary" style="padding:6px 16px;font-size:12px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>
                                         ` : ''}
                                         ${o.status === 'delivering' ? `
                                             <button class="btn-success" onclick="showToast('✅ Delivery completed! Stock deducted.', 'success')">Complete Delivery</button>
                                             <button class="btn-secondary" onclick="showToast('📍 Location shared with customer', 'info')">Share Location</button>
-                                        ` : ''}
-                                        ${o.status === 'approved' ? `
-                                            <button class="btn-primary" style="padding:6px 16px;font-size:12px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>
                                         ` : ''}
                                     </div>
                                 </div>
@@ -1934,9 +2466,9 @@
                                 <span class="menu-left"><span class="menu-icon">🌙</span><span>Dark Mode</span></span>
                                 <span>${document.body.classList.contains('dark-theme') ? '✅ On' : 'Off'}</span>
                             </div>
-                            <div class="profile-menu-item" onclick="showToast('🔊 Language: ${currentLanguage.toUpperCase()}', 'info')">
-                                <span class="menu-left"><span class="menu-icon">🌍</span><span>Language</span></span>
-                                <span>${LANGUAGES.find(l => l.code === currentLanguage)?.flag || '🇬🇧'}</span>
+                            <div class="profile-menu-item" onclick="openRoleSelector()">
+                                <span class="menu-left"><span class="menu-icon">👤</span><span>Switch Role</span></span>
+                                <span>${currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1)}</span>
                             </div>
                         </div>
 
@@ -1950,41 +2482,34 @@
         // ============================================================
         function renderOwnerPanel() {
             const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
-            const pendingOrders = orders.filter(o => o.status === 'pending').length;
+            const pendingOrders = orders.filter(o => o.status === 'pending' || o.status === 'waiting-payment').length;
             return `
                         <div class="admin-panel">
                             <div class="panel-title">👑 <span class="highlight">Owner Dashboard</span></div>
                             <div class="stats-grid">
                                 <div class="stat-card"><div class="stat-number">${orders.length}</div><div class="stat-label">Total Orders</div></div>
                                 <div class="stat-card"><div class="stat-number">${totalStock}</div><div class="stat-label">Total Stock</div></div>
-                                <div class="stat-card"><div class="stat-number">${pendingOrders}</div><div class="stat-label">Pending</div></div>
+                                <div class="stat-card"><div class="stat-number">${pendingOrders}</div><div class="stat-label">Pending Approval</div></div>
                                 <div class="stat-card"><div class="stat-number">${products.length}</div><div class="stat-label">Products</div></div>
                             </div>
 
                             <h4 style="margin:12px 0 8px;">💳 Payment Notifications</h4>
                             <div id="paymentNotifications">
-                                <div class="payment-notif">
-                                    <div class="payment-info">
-                                        <div class="amount">1,500 ETB</div>
-                                        <div class="payer">Abebe Kebede via Telebirr</div>
-                                        <div style="font-size:12px;color:var(--warm-gray);">Ref: TBR-2026-08-23-001</div>
+                                ${orders.filter(o => o.status === 'waiting-payment').map(o => `
+                                    <div class="payment-notif">
+                                        <div class="payment-info">
+                                            <div class="amount">${o.price}</div>
+                                            <div class="payer">${o.product} • ${o.paymentRef || 'No ref'}</div>
+                                            <div style="font-size:12px;color:var(--warm-gray);">Order: ${o.id}</div>
+                                        </div>
+                                        <div class="payment-actions">
+                                            <button class="btn-confirm" onclick="ownerConfirmPayment('${o.id}')">✅ Confirm</button>
+                                            <button class="btn-reject" onclick="ownerRejectPayment('${o.id}')">❌ Reject</button>
+                                            <button class="btn-view" onclick="showToast('📋 View order details', 'info')">👁️</button>
+                                        </div>
                                     </div>
-                                    <div class="payment-actions">
-                                        <button class="btn-confirm" onclick="confirmPayment(this)">Confirm</button>
-                                        <button class="btn-reject" onclick="rejectPayment(this)">Reject</button>
-                                    </div>
-                                </div>
-                                <div class="payment-notif">
-                                    <div class="payment-info">
-                                        <div class="amount">800 ETB</div>
-                                        <div class="payer">Meron Tesfaye via CBE</div>
-                                        <div style="font-size:12px;color:var(--warm-gray);">Ref: CBE-2026-08-23-045</div>
-                                    </div>
-                                    <div class="payment-actions">
-                                        <button class="btn-confirm" onclick="confirmPayment(this)">Confirm</button>
-                                        <button class="btn-reject" onclick="rejectPayment(this)">Reject</button>
-                                    </div>
-                                </div>
+                                `).join('')}
+                                ${orders.filter(o => o.status === 'waiting-payment').length === 0 ? '<p style="color:var(--warm-gray);font-size:13px;">No pending payments.</p>' : ''}
                             </div>
 
                             <h4 style="margin:16px 0 8px;">📋 Product Requests</h4>
@@ -2011,11 +2536,41 @@
                     `;
         }
 
+        function ownerConfirmPayment(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'approved';
+                showToast('✅ Payment confirmed for ' + order.product, 'success');
+                addNotification('💰 Payment confirmed: ' + order.product, 'success');
+                // Deduct stock
+                const p = products.find(pr => pr.name === order.product);
+                if (p) {
+                    p.stock = Math.max(0, p.stock - 1);
+                    addNotification('📦 Stock updated: ' + p.name + ' (' + p.stock + ' left)', 'info');
+                }
+                navigateTo('home');
+            }
+        }
+
+        function ownerRejectPayment(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'cancelled';
+                showToast('❌ Payment rejected for ' + order.product, 'error');
+                addNotification('❌ Payment rejected: ' + order.product, 'error');
+                // Restore stock
+                const p = products.find(pr => pr.name === order.product);
+                if (p) p.stock++;
+                navigateTo('home');
+            }
+        }
+
         // ============================================================
         // RENDER: SELLER PANEL
         // ============================================================
         function renderSellerPanel() {
-            const activeOrders = orders.filter(o => o.status === 'pending' || o.status === 'delivering');
+            const activeOrders = orders.filter(o => o.status === 'pending' || o.status === 'approved' || o.status ===
+                'delivering');
             return `
                         <div class="admin-panel">
                             <div class="panel-title">🛍️ <span class="highlight">Seller Dashboard</span></div>
@@ -2029,18 +2584,22 @@
                             <h4 style="margin:16px 0 8px;">📋 Active Orders</h4>
                             ${activeOrders.length === 0 ? '<p style="color:var(--warm-gray);">No active orders.</p>' :
                                 activeOrders.map(o => `
-                                    <div class="order-card" style="border-left-color:${o.status === 'pending' ? '#FF6F00' : '#2E7D32'};">
+                                    <div class="order-card" style="border-left-color:${o.status === 'pending' ? '#FF6F00' : o.status === 'approved' ? '#2E7D32' : 'var(--primary)'};">
                                         <div class="order-top">
                                             <div>
                                                 <div class="order-product">${o.product}</div>
                                                 <div class="order-meta">${o.type} • ${o.date}</div>
+                                                ${o.qrCode ? `<div class="order-meta" style="font-size:11px;">QR: ${o.qrCode}</div>` : ''}
                                             </div>
-                                            <span class="status-badge ${o.status === 'pending' ? 'status-pending' : 'status-delivering'}">${o.status === 'pending' ? '⏳ Pending' : '🚚 Delivering'}</span>
+                                            <span class="status-badge ${o.status === 'pending' ? 'status-pending' : o.status === 'approved' ? 'status-approved' : 'status-delivering'}">${o.status === 'pending' ? '⏳ Pending' : o.status === 'approved' ? '✅ Approved' : '🚚 Delivering'}</span>
                                         </div>
                                         <div class="order-price">${o.price}</div>
                                         <div class="order-actions">
                                             ${o.status === 'pending' ? `
                                                 <button class="btn-success" onclick="showToast('✅ Payment confirmed! Ready for delivery.', 'success')">Confirm Payment</button>
+                                            ` : ''}
+                                            ${o.status === 'approved' ? `
+                                                <button class="btn-primary" style="padding:6px 16px;font-size:12px;" onclick="showToast('🚚 Delivery started!', 'success')">Start Delivery</button>
                                             ` : ''}
                                             ${o.status === 'delivering' ? `
                                                 <button class="btn-success" onclick="showToast('✅ Delivery completed! Stock deducted.', 'success')">Complete Delivery</button>
@@ -2075,12 +2634,12 @@
                         <p style="font-size:24px;font-weight:700;color:var(--primary);">${product.price}</p>
                         <p style="color:var(--warm-gray);margin:4px 0 8px;">Category: ${product.category}</p>
                         <p style="font-weight:500;${stockClass}">${stockText} (${product.stock} available)</p>
+                        <p style="font-size:13px;color:var(--warm-gray);">QR Code: ${product.qrCode}</p>
                         <div style="display:flex;gap:10px;margin:16px 0;">
                             <button class="btn-secondary" style="flex:1;" onclick="addToWishlist(${product.id})">❤️ Wishlist</button>
                             <button class="btn-secondary" style="flex:1;" onclick="openRequestModal()">📝 Request</button>
                         </div>
-                        <button class="btn-primary" onclick="quickOrder(${product.id}, 'reservation')">🛒 Reserve Now (6hr)</button>
-                        <button class="btn-primary" style="margin-top:8px;background:#2E7D32;" onclick="quickOrder(${product.id}, 'delivery')">🚚 Order Delivery</button>
+                        <button class="btn-primary" onclick="startOrderWorkflow(${product.id})">📷 Scan & Order</button>
                         <div style="margin-top:12px;font-size:13px;color:var(--warm-gray);text-align:center;">
                             <p>📍 Pickup: Addis Ababa, Ethiopia</p>
                             <p>📞 Contact: +251 919096451</p>
@@ -2090,57 +2649,18 @@
         }
 
         // ============================================================
-        // QUICK ORDER
-        // ============================================================
-        function quickOrder(productId, type) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-            if (product.stock <= 0) { showToast('❌ Out of stock!', 'error'); return; }
-            const orderId = 'ORD-' + String(Math.floor(100 + Math.random() * 900));
-            const newOrder = {
-                id: orderId,
-                product: product.name,
-                price: product.price,
-                status: 'pending',
-                date: new Date().toISOString().split('T')[0],
-                type: type === 'reservation' ? 'Reservation' : 'Delivery',
-                tracking: type === 'delivery' ? 'SOYAM-' + String(Math.floor(1000 + Math.random() * 9000)) : null,
-                timer: type === 'reservation' ? 21600 : null
-            };
-            orders.unshift(newOrder);
-            closeModal('productModal');
-            product.stock--;
-            if (type === 'reservation') {
-                showToast(`✅ Reserved! Pick up within 6 hours. Order #${orderId}`, 'success');
-                addNotification(`🛒 Reservation: ${product.name} (${orderId})`, 'info');
-                // Start countdown
-                let timeLeft = 21600;
-                const interval = setInterval(() => {
-                    timeLeft--;
-                    if (timeLeft <= 0) {
-                        clearInterval(interval);
-                        product.stock++;
-                        showToast('⏰ Reservation expired! Item released.', 'warning');
-                        addNotification(`⏰ Reservation expired: ${product.name}`, 'warning');
-                    }
-                }, 1000);
-            } else {
-                showToast(`🚚 Delivery ordered! Tracking: ${newOrder.tracking}`, 'success');
-                addNotification(`🚚 Delivery: ${product.name} (${newOrder.tracking})`, 'info');
-            }
-            navigateTo('orders');
-        }
-
-        // ============================================================
         // WISHLIST
         // ============================================================
         function addToWishlist(productId) {
             const product = products.find(p => p.id === productId);
             if (!product) return;
-            if (wishlist.find(p => p.id === productId)) { showToast('❤️ Already in wishlist!', 'info'); return; }
+            if (wishlist.find(p => p.id === productId)) {
+                showToast('❤️ Already in wishlist!', 'info');
+                return;
+            }
             wishlist.push(product);
             showToast('❤️ Added to wishlist!', 'success');
-            addNotification(`❤️ Wishlist: ${product.name}`, 'info');
+            addNotification('❤️ Wishlist: ' + product.name, 'info');
         }
 
         // ============================================================
@@ -2155,9 +2675,12 @@
             const name = document.getElementById('reqName').value.trim();
             const qty = document.getElementById('reqQty').value.trim();
             const notes = document.getElementById('reqNotes').value.trim();
-            if (!name || !qty) { showToast('⚠️ Please fill in product name and quantity', 'error'); return; }
-            showToast(`✅ Request for "${name}" (Qty: ${qty}) sent to admin!`, 'success');
-            addNotification(`📝 New request: ${name} (Qty: ${qty})`, 'info');
+            if (!name || !qty) {
+                showToast('⚠️ Please fill in product name and quantity', 'error');
+                return;
+            }
+            showToast('✅ Request for "' + name + '" (Qty: ' + qty + ') sent to admin!', 'success');
+            addNotification('📝 New request: ' + name + ' (Qty: ' + qty + ')', 'info');
             closeModal('requestModal');
             document.getElementById('reqName').value = '';
             document.getElementById('reqQty').value = '';
@@ -2167,48 +2690,19 @@
         // ============================================================
         // PAYMENT / REQUEST ACTIONS (Owner)
         // ============================================================
-        function confirmPayment(btn) {
-            const card = btn.closest('.payment-notif');
-            if (card) {
-                card.style.borderLeftColor = '#2E7D32';
-                card.style.opacity = '0.7';
-                btn.closest('.payment-actions').innerHTML = '<span style="color:#2E7D32;font-weight:600;">✅ Confirmed</span>';
-                showToast('✅ Payment confirmed! Stock updated.', 'success');
-                addNotification('💰 Payment confirmed! Stock deducted.', 'success');
-                // Deduct stock from a random product (simulate)
-                const p = products.find(p => p.stock > 0);
-                if (p) { p.stock--;
-                    addNotification(`📦 Stock updated: ${p.name} (${p.stock} left)`, 'info'); }
-            }
-        }
-
-        function rejectPayment(btn) {
-            const card = btn.closest('.payment-notif');
-            if (card) {
-                card.style.borderLeftColor = '#C62828';
-                card.style.opacity = '0.5';
-                btn.closest('.payment-actions').innerHTML = '<span style="color:#C62828;font-weight:600;">❌ Rejected</span>';
-                showToast('❌ Payment rejected.', 'error');
-            }
-        }
-
         function approveRequest(btn) {
-            const card = btn.closest('div[style*="background:var(--bg-primary)"]') || btn.closest(
-            '.admin-panel > div');
-            if (card) {
-                btn.closest('.admin-panel > div').innerHTML =
-                    '<span style="color:#2E7D32;font-weight:600;">✅ Approved</span>';
+            const parent = btn.closest('div[style*="background:var(--bg-primary)"]') || btn.closest('.admin-panel > div');
+            if (parent) {
+                parent.innerHTML = '<span style="color:#2E7D32;font-weight:600;">✅ Approved</span>';
                 showToast('✅ Request approved! Customer notified.', 'success');
                 addNotification('📝 Product request approved!', 'success');
             }
         }
 
         function rejectRequest(btn) {
-            const card = btn.closest('div[style*="background:var(--bg-primary)"]') || btn.closest(
-            '.admin-panel > div');
-            if (card) {
-                btn.closest('.admin-panel > div').innerHTML =
-                    '<span style="color:#C62828;font-weight:600;">❌ Rejected</span>';
+            const parent = btn.closest('div[style*="background:var(--bg-primary)"]') || btn.closest('.admin-panel > div');
+            if (parent) {
+                parent.innerHTML = '<span style="color:#C62828;font-weight:600;">❌ Rejected</span>';
                 showToast('❌ Request rejected.', 'error');
             }
         }
@@ -2223,33 +2717,11 @@
             container.innerHTML = filtered.map(p => renderProductCard(p)).join('');
             document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('active'));
             const chips = document.querySelectorAll('.category-chip');
-            chips.forEach(c => { if (c.textContent === category || (category === 'all' && c.textContent === '✨ All')) c
-                    .classList.add('active'); });
+            chips.forEach(c => {
+                if (c.textContent === category || (category === 'all' && c.textContent === '✨ All')) c.classList
+                    .add('active');
+            });
             showToast('📂 Showing: ' + (category === 'all' ? 'All Products' : category), 'info');
-        }
-
-        // ============================================================
-        // QR SCANNER
-        // ============================================================
-        function openQRScanner() {
-            const scanner = document.getElementById('qrScanner');
-            scanner.classList.remove('hidden');
-            // Simulate QR scan after 2.5s
-            setTimeout(() => {
-                closeScanner();
-                showToast('📷 QR Scanned! Product: Amber Oud Perfume (ID: 001)', 'success');
-                addNotification('📦 Stock updated via QR: Perfume +5 units', 'info');
-                const p = products.find(p => p.id === 1);
-                if (p) p.stock += 5;
-            }, 2500);
-        }
-
-        function closeScanner() {
-            document.getElementById('qrScanner').classList.add('hidden');
-            const video = document.getElementById('qrVideo');
-            if (video.srcObject) {
-                video.srcObject.getTracks().forEach(t => t.stop());
-            }
         }
 
         // ============================================================
@@ -2263,8 +2735,12 @@
         function updateNotifBadge() {
             const badge = document.getElementById('notifBadge');
             const count = notifications.filter(n => !n.read).length;
-            if (count > 0) { badge.textContent = count;
-                badge.classList.remove('hidden'); } else { badge.classList.add('hidden'); }
+            if (count > 0) {
+                badge.textContent = count;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
         }
 
         function toggleNotifications() {
@@ -2309,9 +2785,13 @@
         // ============================================================
         // MODAL HELPERS
         // ============================================================
-        function openModal(id) { document.getElementById(id).classList.add('visible'); }
+        function openModal(id) {
+            document.getElementById(id).classList.add('visible');
+        }
 
-        function closeModal(id) { document.getElementById(id).classList.remove('visible'); }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('visible');
+        }
 
         // ============================================================
         // COUNTDOWN TIMERS (Reservation)
@@ -2325,18 +2805,21 @@
                         const h = Math.floor(order.timer / 3600);
                         const m = Math.floor((order.timer % 3600) / 60);
                         const s = order.timer % 60;
-                        const timerText = document.querySelector(
-                            `.order-card:has(.order-meta:contains("Reservation")) .order-actions`);
-                        // Simple update: we'll just show in the UI via re-render when needed
                     }
                 }
             });
         }, 1000);
 
+        // ============================================================
+        // INIT ROLE CHECK
+        // ============================================================
+        updateRoleCheckmarks();
+
         console.log('✨ soYam Cosmo Mini App loaded successfully!');
         console.log('👤 User:', currentUser);
         console.log('📦 Products:', products.length);
         console.log('📋 Orders:', orders.length);
+        console.log('🌍 Language:', currentLanguage);
     </script>
 
 </body>

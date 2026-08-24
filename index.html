@@ -38,6 +38,7 @@
         .badge{position:absolute;top:-4px;right:-4px;background:var(--secondary);color:#fff;font-size:9px;font-weight:700;border-radius:50%;width:17px;height:17px;display:flex;align-items:center;justify-content:center}
         .badge.hidden{display:none}
 
+        /* ===== BOTTOM NAV — BUYER ONLY SHOWS HOME + ORDERS ===== */
         #bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);display:flex;justify-content:space-around;padding:6px 0 12px;border-top:1px solid var(--border-color);z-index:200;transition:background .3s}
         body.dark-theme #bottom-nav{background:rgba(18,18,31,0.92)}
         .nav-item{background:0;border:0;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer;padding:3px 10px;opacity:.5;font-family:'Poppins',sans-serif;position:relative;transition:var(--transition)}
@@ -47,13 +48,18 @@
         .nav-item.active .nav-label{color:var(--primary)}
         .nav-item.active .nav-icon{transform:scale(1.1)}
         .nav-item.active::after{content:'';position:absolute;top:-4px;width:20px;height:3px;background:var(--primary);border-radius:4px}
+        .nav-item.buyer-only{display:flex}
+        .nav-item.seller-owner-only{display:none}
+        body.role-owner .nav-item.seller-owner-only{display:flex}
+        body.role-seller .nav-item.seller-owner-only{display:flex}
+        body.role-buyer .nav-item.buyer-only{display:flex}
+        body.role-buyer .nav-item.seller-owner-only{display:none}
 
         #page-container{padding:12px;max-width:480px;margin:0 auto}
         .page{display:none;animation:fadeSlideUp .4s ease}
         .page.active{display:block}
         @keyframes fadeSlideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-        /* ===== HERO BANNER — MODERN COSMETICS ===== */
         .hero-banner{background:linear-gradient(145deg,var(--secondary),var(--primary-dark));border-radius:var(--radius);padding:28px 20px;color:#fff;margin-bottom:16px;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(107,47,160,0.25)}
         .hero-banner::before{content:'✨';position:absolute;right:16px;top:8px;font-size:48px;opacity:.08}
         .hero-banner::after{content:'🌹';position:absolute;bottom:-8px;right:50px;font-size:64px;opacity:.06}
@@ -84,7 +90,6 @@
         .category-chip:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 12px rgba(212,175,55,0.12)}
         .category-chip.active{background:var(--primary);color:#fff;border-color:var(--primary)}
 
-        /* ===== PRODUCT GRID — MODERN ===== */
         .product-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
         .product-card{background:var(--bg-card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border-color);cursor:pointer;transition:var(--transition);position:relative}
         .product-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover)}
@@ -101,8 +106,6 @@
         .badge-best{background:#E53935;color:#fff}
         .badge-low{background:#FB8C00;color:#fff}
         .image-wrapper{position:relative;overflow:hidden}
-        .image-wrapper .product-overlay{position:absolute;bottom:0;left:0;right:0;padding:8px;background:linear-gradient(transparent,rgba(0,0,0,0.4));opacity:0;transition:var(--transition)}
-        .product-card:hover .product-overlay{opacity:1}
         .product-quick-actions{display:flex;gap:4px;margin-top:6px}
         .product-quick-actions button{flex:1;padding:4px 0;border:0;border-radius:12px;font-size:8px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition)}
         .btn-scan-order{background:var(--secondary);color:#fff}
@@ -121,7 +124,6 @@
         .btn-map{background:#1A73E8;color:#fff;border:0;padding:6px 14px;border-radius:30px;font-weight:600;font-size:10px;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);text-decoration:0;display:inline-flex;align-items:center;gap:4px}
         .btn-map:hover{background:#1557B0}
 
-        /* ===== ACTION BAR — Refresh, Save, View, Print ===== */
         .action-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:10px 0 14px;padding:8px;background:var(--bg-card);border-radius:var(--radius-sm);border:1px solid var(--border-color)}
         .action-btn{background:var(--bg-primary);border:0;border-radius:var(--radius-sm);padding:8px 4px;font-size:9px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;transition:var(--transition);color:var(--text-primary);display:flex;flex-direction:column;align-items:center;gap:2px}
         .action-btn:hover{background:var(--primary);color:#fff;transform:translateY(-2px)}
@@ -308,7 +310,6 @@
         .role-badge.seller{background:#4CAF50}
         .role-badge.buyer{background:#2196F3}
 
-        /* ===== COSMETICS THEME DECORATIONS ===== */
         .cosmetic-deco{position:relative}
         .cosmetic-deco::before{content:'🌸';position:absolute;right:10px;top:-5px;font-size:20px;opacity:0.1}
         .cosmetic-deco::after{content:'💄';position:absolute;left:10px;bottom:-5px;font-size:16px;opacity:0.08}
@@ -346,6 +347,7 @@
 
     <main id="main-content"><div id="page-container"></div></main>
 
+    <!-- ===== BOTTOM NAV — DYNAMIC BASED ON ROLE ===== -->
     <nav id="bottom-nav">
         <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
             <span class="nav-icon">🏠</span>
@@ -355,13 +357,23 @@
             <span class="nav-icon">📦</span>
             <span class="nav-label" data-key="nav_orders">Orders</span>
         </button>
-        <button class="nav-item" data-page="wishlist" onclick="navigateTo('wishlist')">
+        <!-- Buyer-only: No Wishlist, No Profile -->
+        <button class="nav-item buyer-only" data-page="wishlist" onclick="navigateTo('wishlist')" style="display:none;">
             <span class="nav-icon">❤️</span>
             <span class="nav-label" data-key="nav_wishlist">Wishlist</span>
         </button>
-        <button class="nav-item" data-page="profile" onclick="navigateTo('profile')">
+        <button class="nav-item buyer-only" data-page="profile" onclick="navigateTo('profile')" style="display:none;">
             <span class="nav-icon">👤</span>
             <span class="nav-label" data-key="nav_profile">Profile</span>
+        </button>
+        <!-- Seller/Owner only -->
+        <button class="nav-item seller-owner-only" data-page="seller" onclick="navigateTo('seller')" style="display:none;">
+            <span class="nav-icon">🛍️</span>
+            <span class="nav-label">Sell</span>
+        </button>
+        <button class="nav-item seller-owner-only" data-page="admin" onclick="navigateTo('admin')" style="display:none;">
+            <span class="nav-icon">👑</span>
+            <span class="nav-label">Admin</span>
         </button>
     </nav>
 </div>
@@ -404,7 +416,7 @@ const BUSINESS_LOCATION = 'https://maps.google.com/maps?q=Addis+Ababa,+Ethiopia'
 const BUSINESS_ADDRESS = 'Addis Ababa, Ethiopia';
 
 // ============================================================
-// ALLOWED USERS — @mama51R has BOTH Owner AND Seller access
+// ALLOWED USERS
 // ============================================================
 const ALLOWED_USERS = {
     owner: ['RAHM34', 'rahm34', 'mama51R', 'mama51r'],
@@ -444,17 +456,37 @@ let stockHistory = [];
 let dailySales = [];
 
 // ============================================================
-// PRODUCTS
+// LOAD PRODUCTS FROM LOCAL STORAGE
 // ============================================================
-let products = [
-    {id:1,name:'Amber Oud Perfume',price:'1,500 ETB',buyPrice:1200,stock:10,image:'https://images.unsplash.com/photo-1594035910387-fea4773a4610?w=300&h=300&fit=crop',category:'Fragrances',badge:'NEW',qrCode:'SOYAM-P001',stockId:'STK-001',totalValue:15000},
-    {id:2,name:'Rose Body Lotion',price:'800 ETB',buyPrice:600,stock:5,image:'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&h=300&fit=crop',category:'Skincare',badge:'BEST',qrCode:'SOYAM-P002',stockId:'STK-002',totalValue:4000},
-    {id:3,name:'Organic Face Serum',price:'1,200 ETB',buyPrice:900,stock:3,image:'https://images.unsplash.com/photo-1570194065650-d99fb4adec17?w=300&h=300&fit=crop',category:'Skincare',badge:'',qrCode:'SOYAM-P003',stockId:'STK-003',totalValue:3600},
-    {id:4,name:'Luxury Lipstick Set',price:'2,000 ETB',buyPrice:1500,stock:8,image:'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=300&fit=crop',category:'Makeup',badge:'NEW',qrCode:'SOYAM-P004',stockId:'STK-004',totalValue:16000},
-    {id:5,name:"Men's Grooming",price:'1,800 ETB',buyPrice:1300,stock:4,image:'https://images.unsplash.com/photo-1571875257727-256c39da42af?w=300&h=300&fit=crop',category:"Men's",badge:'',qrCode:'SOYAM-P005',stockId:'STK-005',totalValue:7200},
-    {id:6,name:'Baby Care Set',price:'1,200 ETB',buyPrice:850,stock:6,image:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=300&h=300&fit=crop',category:'Baby',badge:'LOW',qrCode:'SOYAM-P006',stockId:'STK-006',totalValue:7200}
-];
+let products = [];
 
+function loadProducts() {
+    const saved = localStorage.getItem('soyam_products');
+    if (saved) {
+        try {
+            products = JSON.parse(saved);
+            return;
+        } catch(e) {}
+    }
+    // Default products
+    products = [
+        {id:1,name:'Amber Oud Perfume',price:'1,500 ETB',buyPrice:1200,stock:10,image:'https://images.unsplash.com/photo-1594035910387-fea4773a4610?w=300&h=300&fit=crop',category:'Fragrances',badge:'NEW',qrCode:'SOYAM-P001',stockId:'STK-001',totalValue:15000},
+        {id:2,name:'Rose Body Lotion',price:'800 ETB',buyPrice:600,stock:5,image:'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=300&h=300&fit=crop',category:'Skincare',badge:'BEST',qrCode:'SOYAM-P002',stockId:'STK-002',totalValue:4000},
+        {id:3,name:'Organic Face Serum',price:'1,200 ETB',buyPrice:900,stock:3,image:'https://images.unsplash.com/photo-1570194065650-d99fb4adec17?w=300&h=300&fit=crop',category:'Skincare',badge:'',qrCode:'SOYAM-P003',stockId:'STK-003',totalValue:3600},
+        {id:4,name:'Luxury Lipstick Set',price:'2,000 ETB',buyPrice:1500,stock:8,image:'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=300&h=300&fit=crop',category:'Makeup',badge:'NEW',qrCode:'SOYAM-P004',stockId:'STK-004',totalValue:16000},
+        {id:5,name:"Men's Grooming",price:'1,800 ETB',buyPrice:1300,stock:4,image:'https://images.unsplash.com/photo-1571875257727-256c39da42af?w=300&h=300&fit=crop',category:"Men's",badge:'',qrCode:'SOYAM-P005',stockId:'STK-005',totalValue:7200},
+        {id:6,name:'Baby Care Set',price:'1,200 ETB',buyPrice:850,stock:6,image:'https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=300&h=300&fit=crop',category:'Baby',badge:'LOW',qrCode:'SOYAM-P006',stockId:'STK-006',totalValue:7200}
+    ];
+    saveProducts();
+}
+
+function saveProducts() {
+    localStorage.setItem('soyam_products', JSON.stringify(products));
+}
+
+// ============================================================
+// TELEGRAM INIT
+// ============================================================
 const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
@@ -490,6 +522,8 @@ function generateUniqueId(prefix) {
 // INIT
 // ============================================================
 document.addEventListener('DOMContentLoaded', function() {
+    loadProducts();
+    
     const savedLang = localStorage.getItem('soyam_lang') || 'en';
     setLanguage(savedLang);
 
@@ -498,6 +532,7 @@ document.addEventListener('DOMContentLoaded', function() {
     currentUser.username = tg.initDataUnsafe?.user?.username || 'Guest';
 
     updateRoleUI();
+    updateBottomNav();
 
     if (tg.colorScheme === 'dark') {
         document.body.classList.add('dark-theme');
@@ -536,6 +571,27 @@ document.addEventListener('DOMContentLoaded', function() {
         completionCode: generateUniqueId('COMP')
     });
 });
+
+// ============================================================
+// UPDATE BOTTOM NAV BASED ON ROLE
+// ============================================================
+function updateBottomNav() {
+    const isBuyer = currentUser.role === 'buyer';
+    const isSellerOrOwner = currentUser.role === 'seller' || currentUser.role === 'owner';
+    
+    // Show/hide buyer-only items (Wishlist, Profile)
+    document.querySelectorAll('.nav-item.buyer-only').forEach(el => {
+        el.style.display = isBuyer ? 'flex' : 'none';
+    });
+    
+    // Show/hide seller/owner items (Sell, Admin)
+    document.querySelectorAll('.nav-item.seller-owner-only').forEach(el => {
+        el.style.display = isSellerOrOwner ? 'flex' : 'none';
+    });
+    
+    // Update body class
+    document.body.className = 'role-' + currentUser.role;
+}
 
 // ============================================================
 // STOCK TOTAL CALCULATOR
@@ -578,6 +634,7 @@ function addStockWithCategory() {
     };
 
     products.push(newProduct);
+    saveProducts();
     stockHistory.push({
         stockId: newProduct.stockId,
         product: name,
@@ -595,7 +652,7 @@ function addStockWithCategory() {
 }
 
 // ============================================================
-// REMOVE STOCK
+// REMOVE STOCK — PERSISTENT
 // ============================================================
 function removeStock() {
     const names = products.map((p, i) => (i+1) + '. ' + p.name + ' (' + p.stock + ' in stock)').join('\n');
@@ -604,6 +661,7 @@ function removeStock() {
     const index = parseInt(choice) - 1;
     if (index >= 0 && index < products.length) {
         const removed = products.splice(index, 1)[0];
+        saveProducts();
         showToast('❌ Removed: ' + removed.name, 'error');
         addNotification('❌ Product removed: ' + removed.name + ' (🆔 ' + removed.stockId + ')', 'error');
         refreshView();
@@ -616,18 +674,18 @@ function removeStock() {
 // REFRESH, SAVE, VIEW, PRINT
 // ============================================================
 function refreshView() {
+    loadProducts();
     showToast('🔄 Refreshed successfully!', 'success');
     navigateTo('home');
 }
 
 function saveData() {
-    // In production, save to backend
+    saveProducts();
     showToast('💾 Data saved successfully!', 'success');
     addNotification('💾 Data saved: ' + new Date().toLocaleString(), 'info');
 }
 
 function viewReport() {
-    // Generate report
     const totalStock = products.reduce((sum, p) => sum + p.stock, 0);
     const totalValue = products.reduce((sum, p) => {
         const priceNum = parseInt(p.price.replace(/[^0-9]/g, ''));
@@ -649,7 +707,7 @@ function printView() {
 }
 
 // ============================================================
-// ROLE SWITCH
+// ROLE SWITCH — Only shows allowed roles
 // ============================================================
 function openRoleSwitch() {
     const modal = document.getElementById('roleSwitchModal');
@@ -660,8 +718,14 @@ function openRoleSwitch() {
     const isSellerAllowed = ALLOWED_USERS.seller.includes(username) || ALLOWED_USERS.seller.includes(username.toLowerCase());
     
     const roles = [];
+    // Only show roles the user is allowed to access
     if (isOwnerAllowed) roles.push({role:'owner', icon:'👑', name:'Owner', desc:'Full control: payments, stock, analytics'});
     if (isSellerAllowed) roles.push({role:'seller', icon:'🛍️', name:'Seller', desc:'Manage orders, scan QR, process deliveries'});
+    // Buyer is always available (but only show if user has no other roles, or always show as fallback)
+    if (roles.length === 0 || isOwnerAllowed || isSellerAllowed) {
+        // Buyer is always the default fallback
+    }
+    // Always add Buyer as the last option
     roles.push({role:'buyer', icon:'👤', name:'Buyer', desc:'Browse products, place orders, track deliveries'});
 
     container.innerHTML = roles.map(r => `
@@ -694,6 +758,7 @@ function switchRole(role) {
     isOwner = (role === 'owner');
     isSeller = (role === 'seller');
     updateRoleUI();
+    updateBottomNav();
     closeModal('roleSwitchModal');
     showToast('👤 Switched to ' + role.charAt(0).toUpperCase() + role.slice(1), 'success');
     navigateTo('home');
@@ -765,6 +830,7 @@ function navigateTo(pageName) {
     page.className = 'page active';
     page.id = 'page-' + pageName;
 
+    // Role-based access
     if (pageName === 'seller' && currentUser.role !== 'seller' && currentUser.role !== 'owner') {
         page.innerHTML = renderAccessDenied('Seller Dashboard', 'Only sellers can access this page.');
     } else if (pageName === 'admin' && currentUser.role !== 'owner') {
@@ -775,6 +841,8 @@ function navigateTo(pageName) {
             case 'orders': page.innerHTML = renderOrders(); break;
             case 'wishlist': page.innerHTML = renderWishlist(); break;
             case 'profile': page.innerHTML = renderProfile(); break;
+            case 'seller': page.innerHTML = renderSellerPanel(); break;
+            case 'admin': page.innerHTML = renderOwnerPanel(); break;
             default: page.innerHTML = '<p>Page not found</p>';
         }
     }
@@ -866,9 +934,6 @@ function renderProductCard(p) {
             <div class="image-wrapper" onclick="openProductBuyer(${p.id})">
                 <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy" />
                 ${badgeHtml}
-                <div class="product-overlay">
-                    <span style="color:#fff;font-size:9px;font-weight:600;">✨ ${p.category}</span>
-                </div>
             </div>
             <div class="product-info">
                 <div class="product-name">${p.name}</div>
@@ -1165,6 +1230,7 @@ function sellerConfirmPayment(orderId) {
         const product = products.find(p => p.name === order.product);
         if (product && product.stock > 0) {
             product.stock--;
+            saveProducts();
             const priceNum = parseInt(order.price.replace(/[^0-9]/g, ''));
             dailySales.push({
                 date: new Date().toISOString().split('T')[0],
@@ -1350,6 +1416,7 @@ function ownerConfirmPayment(orderId) {
         const product = products.find(p => p.name === order.product);
         if (product && product.stock > 0) {
             product.stock--;
+            saveProducts();
             const priceNum = parseInt(order.price.replace(/[^0-9]/g, ''));
             dailySales.push({
                 date: new Date().toISOString().split('T')[0],
@@ -1464,6 +1531,7 @@ function openSellerQRScanner() {
                         const confirmSale = confirm('🛒 Sell: ' + product.name + '\nPrice: ' + product.price + '\nStock: ' + product.stock + '\n\nConfirm sale?');
                         if (confirmSale) {
                             product.stock--;
+                            saveProducts();
                             const priceNum = parseInt(product.price.replace(/[^0-9]/g, ''));
                             dailySales.push({
                                 date: new Date().toISOString().split('T')[0],
@@ -1523,6 +1591,7 @@ function openOwnerQRScanner() {
                             const stockToAdd = parseInt(prompt('📦 Enter quantity to add:'));
                             if (stockToAdd > 0) {
                                 product.stock += stockToAdd;
+                                saveProducts();
                                 stockHistory.push({
                                     stockId: product.stockId,
                                     product: product.name,
@@ -1924,7 +1993,7 @@ console.log('🛍️ Seller:', SELLER_USERNAME);
 console.log('📦 Products:', products.length);
 console.log('📋 Orders:', orders.length);
 console.log('💡 @mama51R has BOTH Owner AND Seller access');
-console.log('💡 Click role badge to switch roles');
+console.log('💡 Buyer menu: Home + Orders only');
 </script>
 </body>
 </html>

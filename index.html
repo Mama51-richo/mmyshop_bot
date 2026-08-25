@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    /* ===== RESET & BASE ===== */
+    /* ===== same as before, plus modal for checkout ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
     :root {
       --gold: #d4af37; --gold-light: #e8c84c; --gold-glow: rgba(212,175,55,0.25);
@@ -24,21 +24,16 @@
     ::-webkit-scrollbar { width:4px; }
     ::-webkit-scrollbar-track { background:transparent; }
     ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:8px; }
-
     #app {
       display: flex; flex-direction: column; height:100vh; max-width:480px; margin:0 auto;
       background:var(--cream); box-shadow:0 0 60px rgba(0,0,0,0.08); position:relative; overflow:hidden;
     }
-
-    /* ===== HEADER — DEEP CHOCOLATE GRADIENT, CENTERED ===== */
     .app-header {
       background:linear-gradient(135deg, var(--choco-dark), var(--choco) 60%, var(--choco-light));
       padding:16px 18px 12px; color:var(--white); flex-shrink:0; z-index:10;
       border-bottom:2px solid var(--gold); box-shadow:0 4px 20px rgba(0,0,0,0.3);
-      text-align:center;
-      position:relative;
+      text-align:center; position:relative;
     }
-    /* Utility row (role + cart) at top right */
     .header-utils {
       display:flex; justify-content:flex-end; align-items:center; gap:12px;
       margin-bottom:4px;
@@ -64,8 +59,6 @@
       color:#fff; font-size:8px; font-weight:700; width:18px; height:18px;
       border-radius:50%; display:flex; align-items:center; justify-content:center;
     }
-
-    /* Centered brand */
     .brand-center {
       display:flex; flex-direction:column; align-items:center;
     }
@@ -89,7 +82,6 @@
       font-family:var(--font-serif); font-size:18px; letter-spacing:0.1em;
       color:var(--gold-light); margin-top:2px; font-weight:400;
     }
-    /* Address directly below brand */
     .brand-address {
       font-size:10px; font-weight:300; letter-spacing:0.04em;
       color:rgba(255,255,255,0.7); margin-top:6px;
@@ -99,8 +91,6 @@
     .brand-address i { color:var(--gold); font-size:11px; }
     .brand-address a { color:var(--gold-light); text-decoration:none; font-weight:500; }
     .brand-address a:hover { text-decoration:underline; }
-
-    /* Language row – compact horizontal */
     .lang-row {
       display:flex; justify-content:center; gap:6px; flex-wrap:wrap;
       margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);
@@ -113,8 +103,6 @@
     }
     .lang-chip:hover, .lang-chip.active { background:var(--gold); color:var(--choco-dark); border-color:var(--gold); }
     .lang-chip.active { font-weight:600; }
-
-    /* Social row – minimalist icons */
     .social-row {
       display:flex; gap:14px; justify-content:center; margin:10px 0 6px;
     }
@@ -125,8 +113,6 @@
       text-decoration:none; border:1px solid rgba(0,0,0,0.04);
     }
     .social-row a:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); color:var(--gold); border-color:var(--gold); }
-
-    /* Portal switcher (Owner only) */
     .portal-switcher {
       display:flex; gap:8px; background:rgba(255,255,255,0.06); border-radius:12px;
       padding:4px; margin-top:6px; justify-content:center;
@@ -140,14 +126,10 @@
     .portal-switcher button.active { background:var(--gold); color:var(--choco-dark); }
     .portal-switcher button:hover:not(.active) { color:var(--white); }
     .hidden { display:none !important; }
-
-    /* ===== MAIN CONTENT ===== */
     .main-content {
       flex:1; overflow-y:auto; padding:12px 16px 80px;
       background:var(--cream); scroll-behavior:smooth;
     }
-
-    /* ===== PROMO CARD ===== */
     .promo-card {
       background:linear-gradient(135deg, var(--choco), var(--choco-light));
       border-radius:var(--radius); padding:14px 18px; margin-bottom:16px;
@@ -156,15 +138,11 @@
     }
     .promo-card h4 { font-family:var(--font-serif); font-size:16px; font-weight:600; color:var(--gold-light); margin-bottom:2px; }
     .promo-card p { font-size:12px; opacity:0.8; font-weight:300; letter-spacing:0.02em; }
-
-    /* ===== SECTION TITLE ===== */
     .section-title {
       font-family:var(--font-serif); font-size:18px; font-weight:600; color:var(--choco);
       margin-bottom:10px; display:flex; align-items:center; gap:8px;
     }
     .section-title i { color:var(--gold); font-size:16px; }
-
-    /* ===== CATEGORY TABS ===== */
     .category-tabs {
       display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px; flex-shrink:0;
       scrollbar-width:none;
@@ -178,8 +156,6 @@
     }
     .cat-tab:hover { border-color:var(--gold); color:var(--choco); }
     .cat-tab.active { background:var(--choco); color:var(--white); border-color:var(--choco); box-shadow:0 4px 12px rgba(44,24,16,0.15); }
-
-    /* ===== PRODUCT GRID ===== */
     .product-grid {
       display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:16px;
     }
@@ -211,8 +187,6 @@
       display:flex; align-items:center; justify-content:center;
     }
     .product-info .add-btn:hover { background:var(--gold); color:var(--choco-dark); transform:scale(1.05); }
-
-    /* ===== REQUEST BUTTON ===== */
     .request-btn {
       display:flex; align-items:center; justify-content:center; gap:8px;
       background:var(--white); border:2px dashed var(--gold); border-radius:var(--radius);
@@ -221,8 +195,6 @@
     }
     .request-btn i { color:var(--gold); font-size:18px; }
     .request-btn:hover { background:rgba(212,175,55,0.06); border-color:var(--choco); }
-
-    /* ===== SELLER DASHBOARD ===== */
     .stat-cards {
       display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;
     }
@@ -234,7 +206,6 @@
     .stat-card .label { font-size:10px; text-transform:uppercase; color:var(--slate-light); letter-spacing:0.06em; font-weight:500; }
     .stat-card.delivery { border-left-color:var(--emerald); }
     .stat-card.pending { border-left-color:var(--amber); }
-
     .order-list { display:flex; flex-direction:column; gap:8px; }
     .order-item {
       background:var(--white); border-radius:12px; padding:12px 14px;
@@ -255,8 +226,11 @@
       font-size:9px; font-weight:600; cursor:pointer; transition:var(--transition);
     }
     .order-item .verify-btn:hover { opacity:0.8; }
-
-    /* ===== SCAN FAB ===== */
+    .order-item .assign-btn {
+      background:var(--gold); color:var(--choco-dark); border:none; padding:4px 12px; border-radius:12px;
+      font-size:9px; font-weight:600; cursor:pointer; transition:var(--transition);
+    }
+    .order-item .assign-btn:hover { opacity:0.8; }
     .scan-fab {
       background:linear-gradient(135deg, var(--gold), var(--gold-light));
       color:var(--choco-dark); border:none; padding:14px 28px; border-radius:40px;
@@ -266,8 +240,6 @@
       gap:10px; z-index:20; letter-spacing:0.04em;
     }
     .scan-fab:hover { transform:scale(1.02); box-shadow:0 12px 40px rgba(212,175,55,0.45); }
-
-    /* ===== OWNER DASHBOARD ===== */
     .metric-tiles {
       display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;
     }
@@ -278,7 +250,6 @@
     .metric-tile .value { font-family:var(--font-serif); font-size:22px; font-weight:700; color:var(--choco); }
     .metric-tile .label { font-size:9px; text-transform:uppercase; color:var(--slate-light); letter-spacing:0.06em; font-weight:500; }
     .metric-tile .change { font-size:10px; font-weight:600; color:var(--emerald); }
-
     .owner-action-grid {
       display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;
     }
@@ -293,7 +264,6 @@
     .owner-action-btn.danger:hover { border-color:var(--ruby); background:rgba(184,59,59,0.04); }
     .owner-action-btn.green i { color:var(--emerald); }
     .owner-action-btn.green:hover { border-color:var(--emerald); background:rgba(45,143,111,0.04); }
-
     .staff-list { display:flex; flex-direction:column; gap:6px; }
     .staff-item {
       background:var(--white); border-radius:10px; padding:10px 14px;
@@ -308,8 +278,6 @@
     .staff-item .actions button { background:none; border:none; font-size:14px; cursor:pointer; color:var(--slate-light); transition:var(--transition); padding:4px; }
     .staff-item .actions button:hover { color:var(--ruby); }
     .staff-item .actions button.edit:hover { color:var(--gold); }
-
-    /* ===== DRIVER ===== */
     .delivery-card {
       background:var(--white); border-radius:var(--radius); padding:14px;
       box-shadow:0 2px 12px rgba(0,0,0,0.04); border-left:4px solid var(--gold);
@@ -330,8 +298,6 @@
       cursor:pointer; transition:var(--transition); font-family:var(--font-sans);
     }
     .delivery-card .nav-btn:hover { background:var(--gold); color:var(--choco-dark); }
-
-    /* ===== CART OVERLAY ===== */
     .cart-overlay {
       position:fixed; bottom:0; left:0; right:0; max-width:480px; margin:0 auto;
       background:var(--white); border-radius:24px 24px 0 0;
@@ -362,8 +328,6 @@
     .cart-actions .checkout { background:var(--choco); color:var(--white); }
     .cart-actions .checkout:hover { background:var(--gold); color:var(--choco-dark); }
     .cart-actions .close-cart { background:rgba(0,0,0,0.05); color:var(--slate); }
-
-    /* ===== BOTTOM NAV ===== */
     .bottom-nav {
       position:fixed; bottom:0; left:0; right:0; max-width:480px; margin:0 auto;
       background:var(--white); border-top:1px solid rgba(0,0,0,0.06);
@@ -383,8 +347,6 @@
       position:absolute; top:2px; right:6px; width:8px; height:8px;
       background:var(--ruby); border-radius:50%;
     }
-
-    /* ===== TOAST ===== */
     .toast {
       position:fixed; bottom:140px; left:50%; transform:translateX(-50%) translateY(20px);
       background:var(--choco); color:var(--white); padding:10px 24px;
@@ -395,8 +357,6 @@
       border:1px solid rgba(212,175,55,0.15);
     }
     .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-
-    /* ===== ADD STOCK MODAL ===== */
     .modal-overlay {
       position:fixed; top:0; left:0; right:0; bottom:0;
       background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
@@ -441,16 +401,25 @@
     .modal-content .modal-actions .edit { background:var(--amber); color:white; }
     .modal-content .modal-actions .discard { background:rgba(0,0,0,0.05); color:var(--slate); }
     .modal-content .modal-actions .discard:hover { background:rgba(0,0,0,0.1); }
-
-    /* ===== GLOBAL SCAN FAB ===== */
     .global-scan { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:30; }
+    /* account switcher (only for demo) */
+    .demo-switcher {
+      position:fixed; top:70px; right:10px; z-index:400;
+      background:var(--white); border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.15);
+      padding:6px 10px; border:1px solid rgba(0,0,0,0.05);
+    }
+    .demo-switcher select {
+      border:none; background:transparent; font-size:10px; font-weight:500;
+      color:var(--choco); font-family:var(--font-sans); cursor:pointer;
+      outline:none; padding:2px;
+    }
+    @media (max-width:420px) { .demo-switcher { top:60px; right:6px; } .demo-switcher select { font-size:9px; } }
   </style>
 </head>
 <body>
 <div id="app">
   <!-- HEADER -->
   <header class="app-header">
-    <!-- Utility row -->
     <div class="header-utils">
       <span class="role-badge" id="roleBadge">
         <span id="roleLabel">👤 BUYER</span>
@@ -458,8 +427,6 @@
       </span>
       <button class="icon-btn" id="cartToggleBtn"><i class="fas fa-shopping-bag"></i><span class="badge" id="cartCount">0</span></button>
     </div>
-
-    <!-- Centered brand -->
     <div class="brand-center">
       <div class="brand-logo">SY</div>
       <div class="brand-name">soYam cosmo <span>✦</span></div>
@@ -471,8 +438,6 @@
         <a href="https://maps.app.goo.gl/FMJMrTvD2wDPGJUv8" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Map</a>
       </div>
     </div>
-
-    <!-- Language row -->
     <div class="lang-row" id="langBar">
       <span class="lang-chip active" data-lang="en">English</span>
       <span class="lang-chip" data-lang="am">አማርኛ</span>
@@ -481,15 +446,11 @@
       <span class="lang-chip" data-lang="gu">Gurage</span>
       <span class="lang-chip" data-lang="so">Soomaali</span>
     </div>
-
-    <!-- Social row -->
     <div class="social-row">
       <a href="#" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
       <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
       <a href="https://wa.me/251919096451" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
     </div>
-
-    <!-- Portal switcher (Owner only) -->
     <div class="portal-switcher hidden" id="portalSwitcher">
       <button class="active" data-portal="owner">👑 Owner</button>
       <button data-portal="seller">🏪 Seller</button>
@@ -498,13 +459,10 @@
 
   <!-- MAIN CONTENT -->
   <div class="main-content" id="mainContent">
-    <!-- Promo block -->
     <div class="promo-card">
       <h4>✨ New Arrivals This Week!</h4>
       <p>Premium skincare &amp; detergents — fresh stock just landed at Betel Building.</p>
     </div>
-
-    <!-- BUYER PORTAL -->
     <div id="buyerPortal">
       <div class="category-tabs" id="categoryTabs">
         <span class="cat-tab active" data-cat="all">All</span>
@@ -517,12 +475,10 @@
       <div class="product-grid" id="productGrid"></div>
       <button class="request-btn" id="requestProductBtn"><i class="fas fa-camera"></i> Can't find a product? Upload Photo or Name</button>
     </div>
-
-    <!-- SELLER PORTAL -->
     <div id="sellerPortal" class="hidden">
       <div class="seller-dashboard">
         <div class="stat-cards">
-          <div class="stat-card"><div class="num">14</div><div class="label">Pending Orders</div></div>
+          <div class="stat-card"><div class="num" id="pendingCount">14</div><div class="label">Pending Orders</div></div>
           <div class="stat-card delivery"><div class="num">8</div><div class="label">In-Store Picks</div></div>
           <div class="stat-card pending"><div class="num">6</div><div class="label">Out for Delivery</div></div>
           <div class="stat-card"><div class="num">₿ 42.3K</div><div class="label">Today's Revenue</div></div>
@@ -540,8 +496,6 @@
         </div>
       </div>
     </div>
-
-    <!-- OWNER PORTAL -->
     <div id="ownerPortal" class="hidden">
       <div class="owner-dashboard">
         <div class="metric-tiles">
@@ -563,8 +517,6 @@
         <div class="order-list" id="inventoryAlert"></div>
       </div>
     </div>
-
-    <!-- DRIVER PORTAL -->
     <div id="driverPortal" class="hidden">
       <div class="section-title"><i class="fas fa-truck-fast"></i> My Deliveries</div>
       <div class="driver-deliveries" id="driverDeliveries"></div>
@@ -604,10 +556,7 @@
       <h2>👑 ADD NEW STOCK ITEM</h2>
       <div class="form-group">
         <label>📂 ITEM CATEGORY</label>
-        <select id="stockCategory">
-          <option>Cosmetics &amp; Beauty</option>
-          <option>Hygiene Detergents</option>
-        </select>
+        <select id="stockCategory"><option>Cosmetics &amp; Beauty</option><option>Hygiene Detergents</option></select>
       </div>
       <div class="form-group">
         <label>🏷️ PRODUCT DETAILS</label>
@@ -632,6 +581,39 @@
       </div>
     </div>
   </div>
+
+  <!-- CHECKOUT DELIVERY DETAILS MODAL -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal-content">
+      <h2>📦 Delivery Details</h2>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" id="deliveryName" placeholder="Your full name" />
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="text" id="deliveryPhone" placeholder="+251 9X XXX XXXX" />
+      </div>
+      <div class="form-group">
+        <label>Drop‑off Address</label>
+        <input type="text" id="deliveryAddress" placeholder="Address, City, Ethiopia" />
+      </div>
+      <div class="modal-actions">
+        <button class="discard" id="cancelDelivery">Cancel</button>
+        <button class="save" id="submitDelivery">Place Order</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO ACCOUNT SWITCHER (visible only in demo) -->
+  <div class="demo-switcher" id="demoSwitcher">
+    <select id="accountSelect">
+      <option value="123456789">🛒 Buyer (Default)</option>
+      <option value="999999999">👑 Owner (@mama51R)</option>
+      <option value="987654321">🏪 Seller (@silencer01m)</option>
+      <option value="777777777">🚚 Driver</option>
+    </select>
+  </div>
 </div>
 
 <script>
@@ -639,9 +621,9 @@
     'use strict';
 
     // ================================================================
-    // DATA
+    // DATA (mutable for runtime)
     // ================================================================
-    const PRODUCTS = [
+    let PRODUCTS = [
       { id:1, name:'Luminous Glow Serum', category:'skincare', price:450, emoji:'✨', tag:'NEW' },
       { id:2, name:'Hydra Dew Cream', category:'skincare', price:320, emoji:'💧', tag:'BEST' },
       { id:3, name:'Velvet Matte Lipstick', category:'makeup', price:280, emoji:'💄', tag:'' },
@@ -656,13 +638,13 @@
       { id:12, name:'Laundry Pearl Detergent', category:'detergent', price:140, emoji:'🧺', tag:'ECO' }
     ];
 
-    const STAFF = [
+    let STAFF = [
       { id:1, name:'Abebe Kebede', username:'@silencer01m', phone:'+251948479301', role:'Seller', status:'Active' },
       { id:2, name:'Tigist Haile', username:'@tigist_h', phone:'+251912345678', role:'Seller', status:'Active' },
       { id:3, name:'Dawit Solomon', username:'@dawit_s', phone:'+251923456789', role:'Seller', status:'Suspended' }
     ];
 
-    const PENDING_ORDERS = [
+    let PENDING_ORDERS = [
       { id:'#1024', customer:'Meron A.', items:3, total:890, status:'pending', type:'Delivery' },
       { id:'#1025', customer:'Samuel K.', items:1, total:280, status:'pending', type:'In-Store' },
       { id:'#1026', customer:'Hanna T.', items:2, total:530, status:'confirmed', type:'Delivery' },
@@ -670,13 +652,13 @@
       { id:'#1028', customer:'Sara W.', items:1, total:720, status:'confirmed', type:'Delivery' }
     ];
 
-    const DISPATCHES = [
+    let DISPATCHES = [
       { driver:'Yonas A.', dest:'Bole, Addis Ababa', order:'#1024', status:'en route' },
       { driver:'Meskerem D.', dest:'Piassa, Addis Ababa', order:'#1026', status:'delivered' },
       { driver:'Kaleb T.', dest:'CMC, Addis Ababa', order:'#1028', status:'assigned' }
     ];
 
-    const DRIVER_DELIVERIES = [
+    let DRIVER_DELIVERIES = [
       { id:'#1024', dest:'Bole, Addis Ababa', customer:'Meron A.', phone:'+251912345678', status:'assigned' },
       { id:'#1028', dest:'CMC, Addis Ababa', customer:'Sara W.', phone:'+251923456789', status:'inprogress' },
       { id:'#1030', dest:'Kazanchis, Addis Ababa', customer:'Fitsum E.', phone:'+251934567890', status:'done' }
@@ -734,6 +716,9 @@
     const navDriver = $('#navDriver');
     const navCart = $('#navCart');
     const addStockModal = $('#addStockModal');
+    const checkoutModal = $('#checkoutModal');
+    const accountSelect = $('#accountSelect');
+    const pendingCount = $('#pendingCount');
 
     // ================================================================
     // TOAST
@@ -749,13 +734,11 @@
     // ================================================================
     // ROLE / PORTAL MANAGEMENT
     // ================================================================
-    // Hardcoded Owner: @mama51R, phone +251920353460 -> ID 999999999
-    // Seller: @silencer01m, phone +251948479301 -> ID 987654321
     function detectRole(telegramId) {
       if (telegramId === '999999999') {
         return { roles: ['OWNER','SELLER'], isOwner: true, username: '@mama51R', phone: '+251920353460' };
       }
-      if (telegramId === '987654321' || telegramId === '888888888') {
+      if (telegramId === '987654321') {
         return { roles: ['SELLER'], isOwner: false, username: '@silencer01m', phone: '+251948479301' };
       }
       if (telegramId === '777777777') {
@@ -776,6 +759,9 @@
       else if (state.authorizedRoles.includes('SELLER')) state.activePortal = 'SELLER';
       else if (state.authorizedRoles.includes('DRIVER')) state.activePortal = 'DRIVER';
       else state.activePortal = 'BUYER';
+
+      // Update the account select to match
+      accountSelect.value = telegramId;
 
       updateRoleBadge();
       updatePortalSwitcher();
@@ -844,6 +830,7 @@
       const count = state.cart.reduce((sum, i) => sum + i.quantity, 0);
       cartCount.textContent = count;
       navCartBadge.style.display = count > 0 ? 'block' : 'none';
+      pendingCount.textContent = PENDING_ORDERS.filter(o => o.status === 'pending').length;
       mainContent.scrollTop = 0;
     }
 
@@ -881,6 +868,15 @@
       let ordersHtml = '';
       PENDING_ORDERS.forEach(o => {
         const cls = o.status === 'pending' ? 'pending' : o.status === 'confirmed' ? 'confirmed' : 'delivered';
+        let actions = '';
+        if (o.status === 'pending') {
+          actions += `<button class="verify-btn" data-order="${o.id}">✓ Verify</button>`;
+          actions += `<button class="assign-btn" data-order="${o.id}">🚚 Assign</button>`;
+        } else if (o.status === 'confirmed') {
+          actions += `<span style="font-size:9px;color:var(--emerald);">✓ Verified</span>`;
+        } else {
+          actions += `<span style="font-size:9px;color:var(--slate-light);">Done</span>`;
+        }
         ordersHtml += `
           <div class="order-item">
             <div>
@@ -890,7 +886,7 @@
             <div style="text-align:right;">
               <span class="order-status ${cls}">${o.status}</span>
               <div class="order-meta">₿ ${o.total}</div>
-              ${o.status === 'pending' ? `<button class="verify-btn" data-order="${o.id}">✓ Verify</button>` : ''}
+              ${actions}
             </div>
           </div>
         `;
@@ -957,7 +953,7 @@
             <span class="status-badge ${cls}">${label}</span>
             <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
               <button class="nav-btn" onclick="window.showToast('Opening Google Maps for ${d.dest}')"><i class="fas fa-map-location-dot"></i> Navigate</button>
-              <button class="nav-btn" style="background:var(--gold);color:var(--choco-dark);" onclick="window.showToast('Marked ${d.id} as delivered')">Mark Done</button>
+              <button class="nav-btn" style="background:var(--gold);color:var(--choco-dark);" onclick="window.markDeliveryDone('${d.id}')">Mark Done</button>
             </div>
           </div>
         `;
@@ -1008,22 +1004,102 @@
       if (state.cart.length === 0) { cartOverlay.classList.remove('open'); state.cartOpen = false; }
     }
 
-    function checkout() {
+    // ================================================================
+    // CHECKOUT WITH DELIVERY DETAILS
+    // ================================================================
+    function openCheckoutModal() {
       if (state.cart.length === 0) { showToast('Your cart is empty!'); return; }
+      checkoutModal.classList.add('open');
+    }
+
+    function submitOrder() {
+      const name = $('#deliveryName').value.trim();
+      const phone = $('#deliveryPhone').value.trim();
+      const address = $('#deliveryAddress').value.trim();
+      if (!name || !phone || !address) {
+        showToast('Please fill all delivery details.');
+        return;
+      }
+      // Create new order
       const total = state.cart.reduce((sum, item) => {
         const p = PRODUCTS.find(pr => pr.id === item.productId);
         return sum + (p ? p.price * item.quantity : 0);
       }, 0);
-      showToast(`✅ Order placed! Total: ₿ ${total} (Pending verification)`);
+      const orderId = '#' + String(1000 + PENDING_ORDERS.length + 1);
+      const newOrder = {
+        id: orderId,
+        customer: name,
+        items: state.cart.reduce((s, i) => s + i.quantity, 0),
+        total: total,
+        status: 'pending',
+        type: 'Delivery'
+      };
+      PENDING_ORDERS.push(newOrder);
+      // Clear cart and close modals
       state.cart = [];
-      renderAll();
+      checkoutModal.classList.remove('open');
       cartOverlay.classList.remove('open');
       state.cartOpen = false;
+      renderAll();
+      showToast(`✅ Order ${orderId} placed! Pending verification.`);
     }
+
+    // ================================================================
+    // SELLER ACTIONS: VERIFY & ASSIGN
+    // ================================================================
+    function verifyOrder(orderId) {
+      const order = PENDING_ORDERS.find(o => o.id === orderId);
+      if (order && order.status === 'pending') {
+        order.status = 'confirmed';
+        showToast(`✅ Payment verified for ${orderId}`);
+        renderAll();
+      }
+    }
+
+    function assignDriver(orderId) {
+      const order = PENDING_ORDERS.find(o => o.id === orderId);
+      if (order && order.status === 'confirmed') {
+        // Simulate assigning a driver
+        const driverName = 'Driver ' + Math.floor(Math.random() * 100);
+        const dest = 'Addis Ababa'; // simplified
+        DISPATCHES.push({ driver: driverName, dest: dest, order: orderId, status: 'assigned' });
+        // Also add to driver deliveries
+        DRIVER_DELIVERIES.push({
+          id: orderId,
+          dest: dest,
+          customer: order.customer,
+          phone: '+2519XXXXXXX', // placeholder
+          status: 'assigned'
+        });
+        order.status = 'delivered'; // move to completed for seller
+        showToast(`🚚 Driver ${driverName} assigned to ${orderId}`);
+        renderAll();
+      } else {
+        showToast('Order must be verified first.');
+      }
+    }
+
+    // ================================================================
+    // DRIVER ACTION: MARK DONE
+    // ================================================================
+    window.markDeliveryDone = function(orderId) {
+      const delivery = DRIVER_DELIVERIES.find(d => d.id === orderId);
+      if (delivery && delivery.status !== 'done') {
+        delivery.status = 'done';
+        // Also update dispatch
+        const dispatch = DISPATCHES.find(d => d.order === orderId);
+        if (dispatch) dispatch.status = 'delivered';
+        showToast(`✅ Delivery ${orderId} marked as done.`);
+        renderAll();
+      } else {
+        showToast('Already delivered.');
+      }
+    };
 
     // ================================================================
     // EVENT BINDING
     // ================================================================
+    // Product add
     productGrid.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action="toggle-cart"]');
       if (btn) { toggleCart(parseInt(btn.dataset.id)); return; }
@@ -1049,21 +1125,29 @@
       cartOverlay.classList.remove('open');
       state.cartOpen = false;
     });
-    $('#checkoutBtn').addEventListener('click', checkout);
+    $('#checkoutBtn').addEventListener('click', openCheckoutModal);
     cartItems.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action="remove-cart"]');
       if (btn) removeCartItem(parseInt(btn.dataset.id));
     });
 
-    // Verify payment (seller)
+    // Checkout modal
+    $('#cancelDelivery').addEventListener('click', () => checkoutModal.classList.remove('open'));
+    $('#submitDelivery').addEventListener('click', submitOrder);
+
+    // Seller verify & assign (delegated)
     document.addEventListener('click', (e) => {
-      const btn = e.target.closest('.verify-btn');
-      if (btn) {
-        const orderId = btn.dataset.order;
-        showToast(`✅ Payment verified for ${orderId}`);
-        btn.textContent = '✓ Verified';
-        btn.disabled = true;
-        btn.style.opacity = '0.6';
+      const verifyBtn = e.target.closest('.verify-btn');
+      if (verifyBtn) {
+        const orderId = verifyBtn.dataset.order;
+        verifyOrder(orderId);
+        return;
+      }
+      const assignBtn = e.target.closest('.assign-btn');
+      if (assignBtn) {
+        const orderId = assignBtn.dataset.order;
+        assignDriver(orderId);
+        return;
       }
     });
 
@@ -1115,7 +1199,6 @@
     // Owner actions
     $('#addStockBtn')?.addEventListener('click', () => {
       addStockModal.classList.add('open');
-      // Pre-fill with sample data for demo
       $('#stockCategory').value = 'Cosmetics & Beauty';
       $('#stockName').value = 'New Product';
       $('#stockPrice').value = '250';
@@ -1134,9 +1217,7 @@
       showToast(`✅ Stock added: ${name} (${qty} units at ${price} ETB)`);
       addStockModal.classList.remove('open');
     });
-    $('#stockEdit')?.addEventListener('click', () => {
-      showToast('✏️ Edit mode: modify fields then click Save');
-    });
+    $('#stockEdit')?.addEventListener('click', () => showToast('✏️ Edit mode: modify fields then click Save'));
     $('#stockGallery')?.addEventListener('click', () => showToast('📂 Gallery picker (simulated)'));
     $('#stockCamera')?.addEventListener('click', () => showToast('📸 Camera scanner (simulated)'));
 
@@ -1150,38 +1231,51 @@
     $('#requestProductBtn')?.addEventListener('click', () => showToast('📸 Upload product photo or name — request sent.'));
 
     // ================================================================
-    // DEMO ACCOUNT SWITCHER (double-click role badge)
+    // DEMO ACCOUNT SWITCHER (dropdown)
     // ================================================================
-    const demoAccounts = [
-      { id:'123456789', label:'🛒 Buyer (Default)', username:'@guest', phone:'' },
-      { id:'999999999', label:'👑 Owner (@mama51R)', username:'@mama51R', phone:'+251920353460' },
-      { id:'987654321', label:'🏪 Seller (@silencer01m)', username:'@silencer01m', phone:'+251948479301' },
-      { id:'777777777', label:'🚚 Driver', username:'@driver_eth', phone:'+251900000000' }
-    ];
-    roleBadge.addEventListener('dblclick', () => {
-      const currentIdx = demoAccounts.findIndex(a => a.id === state.telegramId);
-      const nextIdx = (currentIdx + 1) % demoAccounts.length;
-      const acc = demoAccounts[nextIdx];
-      state.telegramId = acc.id;
-      login(acc.id);
-      showToast(`🔁 Switched to ${acc.label}`);
-    });
-    roleBadge.addEventListener('click', () => {
-      showToast(`Current: ${state.activePortal} · ${state.username} ${state.phone} · Roles: ${state.authorizedRoles.join(', ')}`, 3000);
+    accountSelect.addEventListener('change', (e) => {
+      const id = e.target.value;
+      login(id);
     });
 
     // ================================================================
-    // INIT
+    // INIT - AUTO DETECT TELEGRAM USER
     // ================================================================
-    login('123456789');
+    function getTelegramUserId() {
+      // In production, use Telegram.WebApp.initData
+      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+        try {
+          const params = new URLSearchParams(window.Telegram.WebApp.initData);
+          const user = params.get('user');
+          if (user) {
+            const parsed = JSON.parse(decodeURIComponent(user));
+            return String(parsed.id);
+          }
+        } catch(e) {}
+      }
+      // Fallback: check URL param ?user_id
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get('user_id');
+      if (id) return id;
+      // Default: buyer
+      return '123456789';
+    }
+
+    const userId = getTelegramUserId();
+    login(userId);
+
+    // Expose for driver inline onclick
     window.showToast = showToast;
+    window.markDeliveryDone = window.markDeliveryDone;
+
     if (window.Telegram && window.Telegram.WebApp) {
       Telegram.WebApp.ready();
       Telegram.WebApp.expand();
     }
-    console.log('🚀 soYam cosmo Mini App ready — full feature set.');
+    console.log('🚀 soYam cosmo Mini App ready — full workflow.');
     console.log('👑 Owner: @mama51R (ID 999999999) | 🏪 Seller: @silencer01m (ID 987654321)');
-    console.log('📌 Double‑click the role badge to switch demo accounts.');
+    console.log('📌 Use the dropdown in the top‑right to switch accounts instantly.');
+    console.log('📦 Buyer can add to cart, checkout with delivery details, then seller verifies & assigns driver.');
   })();
 </script>
 </body>

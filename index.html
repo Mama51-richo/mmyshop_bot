@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>soYam cosmo · Buyer Portal</title>
+    <title>soYam cosmo · Mini App</title>
     <!-- Font Awesome 6 (Free) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
@@ -45,7 +45,6 @@
             overflow: hidden;
         }
 
-        /* scrollbar */
         ::-webkit-scrollbar {
             width: 4px;
         }
@@ -88,45 +87,6 @@
             font-size: 10px;
         }
 
-        /* ===== ROLE SWITCHER (top) ===== */
-        .role-switcher {
-            display: flex;
-            gap: 6px;
-            padding: 6px 16px 10px;
-            flex-shrink: 0;
-            background: var(--bg-dark);
-            border-bottom: var(--gold-border);
-        }
-        .role-btn {
-            flex: 1;
-            padding: 8px 0;
-            border: var(--gold-border);
-            border-radius: 30px;
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.4px;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            text-transform: uppercase;
-        }
-        .role-btn i {
-            margin-right: 5px;
-            font-size: 11px;
-        }
-        .role-btn.active {
-            background: var(--gold);
-            color: #121212;
-            border-color: var(--gold);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
-        }
-        .role-btn:not(.active):hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
         /* ===== MAIN VIEWPORT ===== */
         .viewport {
             flex: 1;
@@ -160,10 +120,8 @@
         }
 
         /* ============================================================
-           BUYER VIEW — UPDATED LAYOUT
+           BUYER VIEW (updated layout)
            ============================================================ */
-
-        /* Deep-chocolate gradient header */
         .brand-crown {
             text-align: center;
             padding: 16px 0 14px;
@@ -172,7 +130,7 @@
             background: linear-gradient(145deg, #2b1a0e, #1a0f08);
             border-radius: var(--radius);
             border: var(--gold-border);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
         }
 
         .brand-logo {
@@ -192,7 +150,6 @@
             letter-spacing: 1px;
             position: relative;
         }
-        /* glowing stars around logo */
         .brand-logo::before {
             content: "✦";
             position: absolute;
@@ -200,7 +157,7 @@
             left: -12px;
             font-size: 16px;
             color: var(--gold-light);
-            text-shadow: 0 0 10px rgba(212,175,55,0.8);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
             animation: glowPulse 2s infinite;
         }
         .brand-logo::after {
@@ -210,12 +167,19 @@
             right: -12px;
             font-size: 16px;
             color: var(--gold-light);
-            text-shadow: 0 0 10px rgba(212,175,55,0.8);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
             animation: glowPulse 2s infinite 0.5s;
         }
         @keyframes glowPulse {
-            0%, 100% { opacity: 0.6; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.2); }
+            0%,
+            100% {
+                opacity: 0.6;
+                transform: scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
         }
 
         .brand-name {
@@ -228,7 +192,7 @@
         }
         .brand-name .gold {
             color: var(--gold);
-            text-shadow: 0 0 20px rgba(212,175,55,0.3);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
         .brand-sub {
             font-size: 11px;
@@ -243,10 +207,9 @@
             letter-spacing: 0.1em;
             margin-top: 4px;
             font-weight: 500;
-            text-shadow: 0 0 15px rgba(212,175,55,0.2);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
         }
 
-        /* Address row – only address and map link, no phone number */
         .brand-address {
             font-size: 10px;
             color: var(--text-muted);
@@ -280,7 +243,6 @@
             color: var(--gold-light);
         }
 
-        /* Language Bar */
         .lang-bar {
             display: flex;
             flex-wrap: wrap;
@@ -311,7 +273,6 @@
             font-size: 9px;
         }
 
-        /* Social Row */
         .social-row {
             display: flex;
             gap: 16px;
@@ -340,7 +301,6 @@
             transform: scale(1.05);
         }
 
-        /* Direct Interaction Links (buttons) – no phone number displayed */
         .contact-links {
             display: flex;
             gap: 10px;
@@ -397,7 +357,6 @@
             color: #121212;
         }
 
-        /* Weekly Promotion */
         .promo-card {
             background: linear-gradient(145deg, #1a1108, #0d0a05);
             border: var(--gold-border);
@@ -433,7 +392,6 @@
             color: var(--gold);
         }
 
-        /* Fulfillment Toggle */
         .fulfillment-toggle {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -472,7 +430,6 @@
             color: var(--text-muted);
         }
 
-        /* Category Tabs */
         .cat-tabs {
             display: flex;
             gap: 8px;
@@ -508,7 +465,6 @@
             color: var(--text-primary);
         }
 
-        /* Product Grid */
         .product-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -598,11 +554,7 @@
             transform: scale(1.1);
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
         }
-        .btn-add.added {
-            background: var(--emerald);
-        }
 
-        /* Custom Sourcing */
         .custom-sourcing {
             margin-top: 18px;
             padding: 14px;
@@ -632,7 +584,390 @@
             color: var(--text-primary);
         }
 
-        /* ===== BOTTOM NAV ===== */
+        /* ============================================================
+           SELLER VIEW
+           ============================================================ */
+        .seller-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .metric-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border: var(--gold-border);
+        }
+        .metric-card .label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+        .metric-card .value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2px;
+        }
+        .metric-card .value .gold {
+            color: var(--gold-light);
+        }
+
+        .qr-scan-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px;
+            border-radius: var(--radius);
+            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+            border: 2px solid var(--gold);
+            color: var(--gold-light);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 16px;
+            width: 100%;
+        }
+        .qr-scan-btn:hover {
+            background: var(--gold);
+            color: #121212;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .order-item {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border: var(--gold-border);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .order-item:hover {
+            border-color: var(--gold);
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-id {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold-light);
+        }
+        .order-status {
+            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: var(--amber);
+            color: #121212;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .order-status.delivered {
+            background: var(--emerald);
+        }
+        .order-status.pending {
+            background: var(--amber);
+        }
+        .order-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .order-details i {
+            color: var(--gold);
+            width: 14px;
+        }
+        .order-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 4px;
+            flex-wrap: wrap;
+        }
+        .order-actions button {
+            padding: 5px 14px;
+            border-radius: 20px;
+            border: none;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--bg-input);
+            color: var(--text-secondary);
+        }
+        .order-actions button.primary {
+            background: var(--gold);
+            color: #121212;
+        }
+        .order-actions button.primary:hover {
+            background: var(--gold-light);
+        }
+        .order-actions button.success {
+            background: var(--emerald);
+            color: #121212;
+        }
+        .order-actions button.danger {
+            background: var(--ruby);
+            color: #fff;
+        }
+
+        .receipt-box {
+            margin-top: 6px;
+            padding: 10px 12px;
+            border: 1px dashed rgba(212, 175, 55, 0.3);
+            border-radius: var(--radius-sm);
+            background: rgba(212, 175, 55, 0.04);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .receipt-box i {
+            font-size: 28px;
+            color: var(--gold);
+        }
+        .receipt-box .receipt-info {
+            font-size: 11px;
+            color: var(--text-secondary);
+            flex: 1;
+        }
+        .receipt-box .receipt-info strong {
+            color: var(--text-primary);
+        }
+
+        /* ============================================================
+           OWNER VIEW
+           ============================================================ */
+        .owner-metrics {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .owner-metric {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            border: var(--gold-border);
+        }
+        .owner-metric .label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+        .owner-metric .value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-top: 2px;
+        }
+        .owner-metric .value .gold {
+            color: var(--gold-light);
+        }
+        .owner-metric .change {
+            font-size: 10px;
+            color: var(--emerald);
+            margin-top: 2px;
+        }
+        .owner-metric .change.down {
+            color: var(--ruby);
+        }
+
+        .owner-section {
+            margin-top: 16px;
+        }
+        .owner-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .owner-section-title i {
+            color: var(--gold);
+        }
+
+        .staff-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .staff-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            border: var(--gold-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .staff-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .staff-info .name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .staff-info .handle {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .staff-status {
+            font-size: 10px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background: var(--emerald);
+            color: #121212;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .staff-status.suspended {
+            background: var(--ruby);
+            color: #fff;
+        }
+        .staff-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .staff-actions button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            transition: var(--transition);
+            padding: 4px;
+        }
+        .staff-actions button:hover {
+            color: var(--gold);
+        }
+        .staff-actions button.danger:hover {
+            color: var(--ruby);
+        }
+
+        .inventory-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        .inventory-table th {
+            text-align: left;
+            padding: 8px 6px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: var(--gold-border);
+        }
+        .inventory-table td {
+            padding: 8px 6px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+        }
+        .inventory-table .stock-low {
+            color: var(--amber);
+            font-weight: 600;
+        }
+        .inventory-table .stock-out {
+            color: var(--ruby);
+            font-weight: 600;
+        }
+        .inventory-table .stock-ok {
+            color: var(--emerald);
+        }
+
+        .btn-owner {
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            background: var(--gold);
+            color: #121212;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-owner:hover {
+            background: var(--gold-light);
+            transform: scale(1.02);
+        }
+        .btn-owner.outline {
+            background: transparent;
+            border: var(--gold-border);
+            color: var(--text-secondary);
+        }
+        .btn-owner.outline:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+        .btn-owner.danger {
+            background: var(--ruby);
+            color: #fff;
+        }
+        .btn-owner.danger:hover {
+            background: #c0392b;
+        }
+
+        .eod-panel {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 16px;
+            border: var(--gold-border);
+            margin-top: 10px;
+        }
+        .eod-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .eod-row:last-child {
+            border-bottom: none;
+        }
+        .eod-row .label {
+            color: var(--text-muted);
+        }
+        .eod-row .value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .eod-row .value.gold {
+            color: var(--gold-light);
+        }
+        .eod-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ============================================================
+           BOTTOM NAV (role-based tabs)
+           ============================================================ */
         .bottom-nav {
             position: absolute;
             bottom: 0;
@@ -673,7 +1008,9 @@
             color: var(--text-secondary);
         }
 
-        /* ===== TOAST ===== */
+        /* ============================================================
+           MODALS & OVERLAYS
+           ============================================================ */
         .toast {
             position: fixed;
             bottom: 90px;
@@ -704,37 +1041,6 @@
             color: var(--gold);
         }
 
-        /* ===== RESPONSIVE TWEAKS ===== */
-        @media (max-width: 380px) {
-            .product-grid {
-                gap: 8px;
-            }
-            .product-card {
-                padding: 8px 8px 10px;
-            }
-            .product-name {
-                font-size: 11px;
-            }
-            .product-price {
-                font-size: 13px;
-            }
-            .brand-name {
-                font-size: 20px;
-            }
-            .role-btn {
-                font-size: 10px;
-                padding: 6px 0;
-            }
-        }
-
-        @media (min-width: 431px) {
-            #app {
-                border-left: var(--gold-border);
-                border-right: var(--gold-border);
-            }
-        }
-
-        /* Product detail modal (kept for completeness) */
         .product-detail-modal {
             position: fixed;
             inset: 0;
@@ -812,33 +1118,168 @@
             background: var(--bg-card-hover);
             color: var(--text-primary);
         }
+
+        .scan-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            backdrop-filter: blur(8px);
+        }
+        .scan-overlay.active {
+            display: flex;
+        }
+        .scan-box {
+            width: 220px;
+            height: 220px;
+            border: 3px solid var(--gold);
+            border-radius: var(--radius);
+            position: relative;
+            animation: pulseScan 1.6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .scan-box i {
+            font-size: 64px;
+            color: var(--gold-dim);
+            opacity: 0.5;
+        }
+        .scan-box .corner {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-color: var(--gold);
+            border-style: solid;
+            border-width: 0;
+        }
+        .scan-box .corner.tl {
+            top: -2px;
+            left: -2px;
+            border-top-width: 3px;
+            border-left-width: 3px;
+        }
+        .scan-box .corner.tr {
+            top: -2px;
+            right: -2px;
+            border-top-width: 3px;
+            border-right-width: 3px;
+        }
+        .scan-box .corner.bl {
+            bottom: -2px;
+            left: -2px;
+            border-bottom-width: 3px;
+            border-left-width: 3px;
+        }
+        .scan-box .corner.br {
+            bottom: -2px;
+            right: -2px;
+            border-bottom-width: 3px;
+            border-right-width: 3px;
+        }
+        @keyframes pulseScan {
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+            }
+            50% {
+                box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
+            }
+        }
+        .scan-status {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 24px;
+            letter-spacing: 0.5px;
+        }
+        .scan-status i {
+            color: var(--gold);
+            margin-right: 6px;
+        }
+        .scan-close {
+            margin-top: 28px;
+            padding: 10px 32px;
+            border-radius: 30px;
+            border: var(--gold-border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .scan-close:hover {
+            background: var(--bg-card);
+            color: var(--text-primary);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 380px) {
+            .product-grid {
+                gap: 8px;
+            }
+            .product-card {
+                padding: 8px 8px 10px;
+            }
+            .product-name {
+                font-size: 11px;
+            }
+            .product-price {
+                font-size: 13px;
+            }
+            .brand-name {
+                font-size: 20px;
+            }
+        }
+
+        @media (min-width: 431px) {
+            #app {
+                border-left: var(--gold-border);
+                border-right: var(--gold-border);
+            }
+        }
+
+        /* utility */
+        .mt-1 {
+            margin-top: 6px;
+        }
+        .mt-2 {
+            margin-top: 12px;
+        }
+        .flex-between {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .gap-2 {
+            gap: 8px;
+        }
+        .text-gold {
+            color: var(--gold-light);
+        }
     </style>
 </head>
 <body>
 
     <div id="app">
-        <!-- ===== STATUS ===== -->
+        <!-- ===== STATUS BAR ===== -->
         <div class="status-bar">
             <span><i class="fas fa-signal"></i> 5G</span>
             <span><i class="fas fa-wifi"></i> soYam · 14:28</span>
             <span><i class="fas fa-battery-three-quarters"></i> 82%</span>
         </div>
 
-        <!-- ===== ROLE SWITCHER ===== -->
-        <div class="role-switcher">
-            <button class="role-btn active" data-role="buyer"><i class="fas fa-store"></i> Buyer</button>
-            <button class="role-btn" data-role="seller"><i class="fas fa-clipboard-list"></i> Seller</button>
-            <button class="role-btn" data-role="owner"><i class="fas fa-crown"></i> Owner</button>
-        </div>
-
         <!-- ===== VIEWPORT ===== -->
         <div class="viewport" id="viewport">
 
             <!-- ==========================================================
-            BUYER VIEW (UPDATED LAYOUT)
+            BUYER VIEW
             ========================================================== -->
             <div class="view active" id="view-buyer">
-                <!-- Brand Crown with deep-chocolate gradient & glowing stars -->
                 <div class="brand-crown">
                     <div class="brand-logo">SY</div>
                     <div class="brand-name">soYam <span class="gold">cosmo</span></div>
@@ -847,11 +1288,9 @@
                     <div class="brand-address">
                         <span><i class="fas fa-map-pin"></i> Betel Building, Ground Floor</span>
                         <a href="https://maps.app.goo.gl/FMJMrTvD2wDPGJUv8" target="_blank"><i class="fas fa-location-dot"></i> Google Maps</a>
-                        <!-- Phone number is not displayed as text; only contact buttons below -->
                     </div>
                 </div>
 
-                <!-- Language Bar -->
                 <div class="lang-bar">
                     <span class="lang-chip active"><i class="fas fa-check-circle" style="color:var(--gold);"></i> English</span>
                     <span class="lang-chip">አማርኛ</span>
@@ -861,7 +1300,6 @@
                     <span class="lang-chip">Soomaali</span>
                 </div>
 
-                <!-- Social Row -->
                 <div class="social-row">
                     <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
                     <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -869,7 +1307,6 @@
                     <a href="#" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
                 </div>
 
-                <!-- Direct Interaction Links (no phone number text) -->
                 <div class="contact-links">
                     <a class="contact-link telegram" href="https://t.me/rahm34" target="_blank">
                         <i class="fab fa-telegram-plane"></i> @rahm34
@@ -882,7 +1319,6 @@
                     </a>
                 </div>
 
-                <!-- Weekly Promotion -->
                 <div class="promo-card" onclick="toast('✨ New Arrivals! Check out the latest collection.')">
                     <div class="promo-text">
                         <span class="title"><i class="fas fa-star" style="color:var(--gold);font-size:12px;"></i> New Arrivals This Week!</span>
@@ -891,7 +1327,6 @@
                     <span class="promo-icon">✨</span>
                 </div>
 
-                <!-- Fulfillment Toggle -->
                 <div class="fulfillment-toggle">
                     <div class="fulfillment-option active" onclick="selectFulfillment(this)">
                         <i class="fas fa-store"></i>
@@ -905,7 +1340,6 @@
                     </div>
                 </div>
 
-                <!-- Category Tabs -->
                 <div class="cat-tabs">
                     <span class="cat-tab active">All</span>
                     <span class="cat-tab">Skincare</span>
@@ -915,12 +1349,8 @@
                     <span class="cat-tab">Detergent</span>
                 </div>
 
-                <!-- Product Grid -->
-                <div class="product-grid" id="productGrid">
-                    <!-- injected by JS -->
-                </div>
+                <div class="product-grid" id="productGrid"></div>
 
-                <!-- Custom Sourcing -->
                 <div class="custom-sourcing" onclick="toast('📸 Custom order request sent! We\'ll find it for you.')">
                     <i class="fas fa-camera"></i>
                     <span><strong>Can't find a product?</strong> Upload Photo or Name</span>
@@ -929,28 +1359,99 @@
             </div>
 
             <!-- ==========================================================
-            SELLER VIEW (kept for completeness)
+            SELLER VIEW
             ========================================================== -->
             <div class="view" id="view-seller">
-                <div style="padding:20px;text-align:center;color:var(--text-muted);">
-                    <i class="fas fa-clipboard-list" style="font-size:48px;color:var(--gold);"></i>
-                    <p style="margin-top:12px;">Seller dashboard (simulated)</p>
+                <div class="seller-metrics">
+                    <div class="metric-card">
+                        <div class="label"><i class="fas fa-clock"></i> Pending Orders</div>
+                        <div class="value gold">12</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="label"><i class="fas fa-store"></i> In-Store Picks</div>
+                        <div class="value">8</div>
+                    </div>
                 </div>
+
+                <button class="qr-scan-btn" onclick="openScanner()">
+                    <i class="fas fa-qrcode"></i> SCAN ITEM QR
+                </button>
+
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-size:14px;font-weight:600;">📋 Active Orders</span>
+                    <span style="font-size:11px;color:var(--text-muted);">live</span>
+                </div>
+                <div class="order-list" id="orderList"></div>
             </div>
 
             <!-- ==========================================================
-            OWNER VIEW (kept for completeness)
+            OWNER VIEW
             ========================================================== -->
             <div class="view" id="view-owner">
-                <div style="padding:20px;text-align:center;color:var(--text-muted);">
-                    <i class="fas fa-crown" style="font-size:48px;color:var(--gold);"></i>
-                    <p style="margin-top:12px;">Owner dashboard (simulated)</p>
+                <div class="owner-metrics">
+                    <div class="owner-metric">
+                        <div class="label"><i class="fas fa-coins"></i> Total Revenue</div>
+                        <div class="value"><span class="gold">ETB</span> 284,750</div>
+                        <div class="change"><i class="fas fa-arrow-up"></i> +12.4% vs yesterday</div>
+                    </div>
+                    <div class="owner-metric">
+                        <div class="label"><i class="fas fa-boxes"></i> Stock Capital</div>
+                        <div class="value"><span class="gold">ETB</span> 142,300</div>
+                        <div class="change">46 items in stock</div>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+                    <button class="btn-owner" onclick="toast('📦 Add Stock form opened.')"><i class="fas fa-plus-circle"></i> Add Stock</button>
+                    <button class="btn-owner outline" onclick="toast('🔄 Inventory refreshed.')"><i class="fas fa-sync"></i> Refresh</button>
+                    <button class="btn-owner danger" onclick="toast('⚠️ Product removal mode. Tap a product to remove.')"><i class="fas fa-trash"></i> Remove</button>
+                </div>
+
+                <div class="owner-section">
+                    <div class="owner-section-title"><i class="fas fa-users"></i> Staff Registry</div>
+                    <div class="staff-list" id="staffList"></div>
+                    <button class="btn-owner" style="margin-top:10px;width:100%;" onclick="toast('👤 Add new seller form opened.')">
+                        <i class="fas fa-user-plus"></i> Add New Seller
+                    </button>
+                </div>
+
+                <div class="owner-section">
+                    <div class="owner-section-title"><i class="fas fa-clipboard-list"></i> Live Inventory</div>
+                    <table class="inventory-table">
+                        <thead>
+                            <tr><th>Product</th><th>Category</th><th style="text-align:right;">Stock</th><th style="text-align:right;">Price</th></tr>
+                        </thead>
+                        <tbody id="inventoryBody"></tbody>
+                    </table>
+                </div>
+
+                <div class="owner-section">
+                    <div class="owner-section-title"><i class="fas fa-lock"></i> End-of-Day Reconciliation</div>
+                    <div class="eod-panel">
+                        <div class="eod-row"><span class="label">📅 Date</span><span class="value">2026-08-25</span></div>
+                        <div class="eod-row"><span class="label">🧾 Total Sales (units)</span><span class="value">47</span></div>
+                        <div class="eod-row"><span class="label">💰 Cash in Hand</span><span class="value gold">ETB 18,200</span></div>
+                        <div class="eod-row"><span class="label">📱 Mobile Banking (CBE + Telebirr)</span><span class="value gold">ETB 32,450</span></div>
+                        <div class="eod-row"><span class="label">📊 Expected Revenue</span><span class="value gold">ETB 50,650</span></div>
+                        <div class="eod-row" style="border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:4px;">
+                            <span class="label" style="font-weight:600;color:var(--text-primary);">✅ Variance</span>
+                            <span class="value" style="color:var(--emerald);font-weight:700;">ETB 0 — Matched</span>
+                        </div>
+                        <div class="eod-actions">
+                            <button class="btn-owner" style="flex:1;" onclick="toast('🔒 Daily transactions closed &amp; archived.')">
+                                <i class="fas fa-check-double"></i> Close Daily Transactions
+                            </button>
+                            <button class="btn-owner outline" onclick="toast('📊 EOD report exported.')">
+                                <i class="fas fa-file-export"></i> Export
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div><!-- /viewport -->
 
-        <!-- ===== BOTTOM NAV ===== -->
+        <!-- ===== BOTTOM NAV (role-based) ===== -->
         <div class="bottom-nav" id="bottomNav">
             <button class="nav-item active" data-tab="buyer"><i class="fas fa-store"></i><span>Shop</span></button>
             <button class="nav-item" data-tab="seller"><i class="fas fa-clipboard-list"></i><span>Orders</span></button>
@@ -960,6 +1461,17 @@
 
         <!-- ===== TOAST ===== -->
         <div class="toast" id="toast"><i class="fas fa-star"></i> <span id="toastMsg">Ready</span></div>
+
+        <!-- ===== SCAN OVERLAY ===== -->
+        <div class="scan-overlay" id="scanOverlay">
+            <div class="scan-box">
+                <span class="corner tl"></span><span class="corner tr"></span>
+                <span class="corner bl"></span><span class="corner br"></span>
+                <i class="fas fa-camera"></i>
+            </div>
+            <div class="scan-status"><i class="fas fa-spinner fa-pulse"></i> Scanning barcode / QR...</div>
+            <button class="scan-close" onclick="closeScanner()"><i class="fas fa-times"></i> Cancel</button>
+        </div>
 
         <!-- ===== PRODUCT DETAIL MODAL ===== -->
         <div class="product-detail-modal" id="productModal">
@@ -979,66 +1491,56 @@
 
     <script>
         // ================================================================
-        // DATA (only product data needed for buyer)
+        // DATA
         // ================================================================
 
-        const PRODUCTS = [{
-            id: 1,
-            name: 'Luxury Hydrating Serum',
-            category: 'Skincare',
-            price: 2450,
-            emoji: '💧',
-            desc: 'Deep hydration with hyaluronic acid & vitamin C.'
-        }, {
-            id: 2,
-            name: 'Velvet Matte Lipstick',
-            category: 'Makeup',
-            price: 890,
-            emoji: '💄',
-            desc: 'Long-wear matte finish in rich burgundy.'
-        }, {
-            id: 3,
-            name: 'Oud & Amber Perfume',
-            category: 'Fragrance',
-            price: 3200,
-            emoji: '🌸',
-            desc: 'Exotic oriental blend with precious oud.'
-        }, {
-            id: 4,
-            name: 'Repairing Hair Mask',
-            category: 'Haircare',
-            price: 1650,
-            emoji: '🧖',
-            desc: 'Intensive repair for damaged & dry hair.'
-        }, {
-            id: 5,
-            name: 'Lavender Body Wash',
-            category: 'Detergent',
-            price: 720,
-            emoji: '🧴',
-            desc: 'Gentle cleansing with calming lavender.'
-        }, {
-            id: 6,
-            name: 'Gold Illuminating Cream',
-            category: 'Skincare',
-            price: 2800,
-            emoji: '✨',
-            desc: 'Luxury cream with 24K gold particles.'
-        }, {
-            id: 7,
-            name: 'Matte Foundation Stick',
-            category: 'Makeup',
-            price: 1250,
-            emoji: '🎨',
-            desc: 'Full-coverage matte foundation in 6 shades.'
-        }, {
-            id: 8,
-            name: 'Citrus Detergent Powder',
-            category: 'Detergent',
-            price: 550,
-            emoji: '🍋',
-            desc: 'Eco-friendly, fresh citrus scent.'
-        }];
+        const PRODUCTS = [
+            { id: 1, name: 'Luxury Hydrating Serum', category: 'Skincare', price: 2450, emoji: '💧',
+                desc: 'Deep hydration with hyaluronic acid & vitamin C.' },
+            { id: 2, name: 'Velvet Matte Lipstick', category: 'Makeup', price: 890, emoji: '💄',
+                desc: 'Long-wear matte finish in rich burgundy.' },
+            { id: 3, name: 'Oud & Amber Perfume', category: 'Fragrance', price: 3200, emoji: '🌸',
+                desc: 'Exotic oriental blend with precious oud.' },
+            { id: 4, name: 'Repairing Hair Mask', category: 'Haircare', price: 1650, emoji: '🧖',
+                desc: 'Intensive repair for damaged & dry hair.' },
+            { id: 5, name: 'Lavender Body Wash', category: 'Detergent', price: 720, emoji: '🧴',
+                desc: 'Gentle cleansing with calming lavender.' },
+            { id: 6, name: 'Gold Illuminating Cream', category: 'Skincare', price: 2800, emoji: '✨',
+                desc: 'Luxury cream with 24K gold particles.' },
+            { id: 7, name: 'Matte Foundation Stick', category: 'Makeup', price: 1250, emoji: '🎨',
+                desc: 'Full-coverage matte foundation in 6 shades.' },
+            { id: 8, name: 'Citrus Detergent Powder', category: 'Detergent', price: 550, emoji: '🍋',
+                desc: 'Eco-friendly, fresh citrus scent.' }
+        ];
+
+        const ORDERS = [
+            { id: '#1024', customer: 'Amanuel K.', items: 3, total: 4270, status: 'pending', address: 'Bole, Addis Ababa',
+                receipt: true },
+            { id: '#1023', customer: 'Selam T.', items: 2, total: 3250, status: 'delivered', address: 'Piassa, Addis Ababa',
+                receipt: false },
+            { id: '#1022', customer: 'Dawit M.', items: 5, total: 6100, status: 'pending', address: 'CMC, Addis Ababa',
+                receipt: true },
+            { id: '#1021', customer: 'Hana W.', items: 1, total: 2450, status: 'delivered', address: 'Mexico, Addis Ababa',
+                receipt: false }
+        ];
+
+        const STAFF = [
+            { name: 'Rahel Mulatu', handle: '@mama51R', role: 'Owner', active: true },
+            { name: 'Silencer M.', handle: '@silencer01m', role: 'Seller', active: true },
+            { name: 'Bereket H.', handle: '@bere_h', role: 'Seller', active: true },
+            { name: 'Sami A.', handle: '@sami_a', role: 'Seller', active: false }
+        ];
+
+        const INVENTORY = [
+            { name: 'Hydrating Serum', category: 'Skincare', stock: 24, price: 2450 },
+            { name: 'Matte Lipstick', category: 'Makeup', stock: 42, price: 890 },
+            { name: 'Oud Perfume', category: 'Fragrance', stock: 12, price: 3200 },
+            { name: 'Hair Mask', category: 'Haircare', stock: 8, price: 1650 },
+            { name: 'Lavender Body Wash', category: 'Detergent', stock: 56, price: 720 },
+            { name: 'Gold Cream', category: 'Skincare', stock: 5, price: 2800 },
+            { name: 'Foundation Stick', category: 'Makeup', stock: 18, price: 1250 },
+            { name: 'Citrus Detergent', category: 'Detergent', stock: 31, price: 550 }
+        ];
 
         // ================================================================
         // RENDER FUNCTIONS
@@ -1060,71 +1562,89 @@
                     `).join('');
         }
 
+        function renderOrders() {
+            const list = document.getElementById('orderList');
+            list.innerHTML = ORDERS.map(o => `
+                        <div class="order-item">
+                            <div class="order-header">
+                                <span class="order-id">${o.id}</span>
+                                <span class="order-status ${o.status}">${o.status}</span>
+                            </div>
+                            <div class="order-details">
+                                <span><i class="fas fa-user"></i> ${o.customer}</span>
+                                <span><i class="fas fa-box"></i> ${o.items} items</span>
+                                <span><i class="fas fa-tag"></i> ETB ${o.total.toLocaleString()}</span>
+                                <span><i class="fas fa-map-pin"></i> ${o.address}</span>
+                            </div>
+                            ${o.receipt ? `
+                                <div class="receipt-box">
+                                    <i class="fas fa-receipt"></i>
+                                    <div class="receipt-info">
+                                        <strong>Receipt uploaded</strong> — <span style="font-size:10px;color:var(--text-muted);">Bank transfer screenshot</span>
+                                    </div>
+                                    <button class="btn-add" style="width:auto;padding:4px 14px;border-radius:20px;font-size:11px;background:var(--emerald);color:#121212;" onclick="toast('✅ Payment verified for ${o.id}')">
+                                        <i class="fas fa-check"></i> Verify
+                                    </button>
+                                </div>
+                            ` : ''}
+                            <div class="order-actions">
+                                ${o.status === 'pending' ? `
+                                    <button class="primary" onclick="toast('📦 Order ${o.id} confirmed. Driver assigned.')"><i class="fas fa-check-circle"></i> Confirm</button>
+                                    <button class="success" onclick="toast('✅ Payment verified for ${o.id}')"><i class="fas fa-check"></i> Verify Payment</button>
+                                ` : `
+                                    <button class="primary" onclick="toast('📋 Order ${o.id} details opened.')"><i class="fas fa-eye"></i> View</button>
+                                `}
+                                <button class="danger" onclick="toast('⚠️ Order ${o.id} flagged for review.')"><i class="fas fa-flag"></i></button>
+                            </div>
+                        </div>
+                    `).join('');
+        }
+
+        function renderStaff() {
+            const list = document.getElementById('staffList');
+            list.innerHTML = STAFF.map(s => `
+                        <div class="staff-item">
+                            <div class="staff-info">
+                                <span class="name">${s.name}</span>
+                                <span class="handle">${s.handle} · ${s.role}</span>
+                            </div>
+                            <span class="staff-status ${s.active ? '' : 'suspended'}">${s.active ? 'Active' : 'Suspended'}</span>
+                            <div class="staff-actions">
+                                <button onclick="toast('✏️ Edit permissions for ${s.name}')" title="Edit"><i class="fas fa-pen"></i></button>
+                                <button class="danger" onclick="toast('⚠️ Revoked access for ${s.name}')" title="Revoke"><i class="fas fa-user-slash"></i></button>
+                            </div>
+                        </div>
+                    `).join('');
+        }
+
+        function renderInventory() {
+            const tbody = document.getElementById('inventoryBody');
+            tbody.innerHTML = INVENTORY.map(item => {
+                let stockClass = 'stock-ok';
+                let stockLabel = item.stock;
+                if (item.stock <= 5) { stockClass = 'stock-out';
+                    stockLabel = `${item.stock} ⚠️`; } else if (item.stock <= 15) { stockClass = 'stock-low';
+                    stockLabel = `${item.stock}`; }
+                return `
+                            <tr>
+                                <td style="font-weight:500;color:var(--text-primary);">${item.name}</td>
+                                <td style="font-size:10px;color:var(--text-muted);">${item.category}</td>
+                                <td style="text-align:right;" class="${stockClass}">${stockLabel}</td>
+                                <td style="text-align:right;color:var(--gold-light);">ETB ${item.price.toLocaleString()}</td>
+                            </tr>
+                        `;
+            }).join('');
+        }
+
         // ================================================================
-        // FULFILLMENT TOGGLE
+        // INTERACTIONS
         // ================================================================
 
         function selectFulfillment(el) {
             document.querySelectorAll('.fulfillment-option').forEach(opt => opt.classList.remove('active'));
             el.classList.add('active');
-            const label = el.querySelector('.label')?.textContent || 'option';
-            toast(`📍 ${label} selected as fulfillment method.`);
+            toast(`📍 ${el.querySelector('.label')?.textContent || 'option'} selected.`);
         }
-
-        // ================================================================
-        // CATEGORY FILTER
-        // ================================================================
-
-        document.querySelectorAll('.cat-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                renderProducts(this.textContent.trim());
-            });
-        });
-
-        // ================================================================
-        // ROLE SWITCHING (only buyer view is active by default)
-        // ================================================================
-
-        const roleBtns = document.querySelectorAll('.role-btn');
-        const views = {
-            buyer: document.getElementById('view-buyer'),
-            seller: document.getElementById('view-seller'),
-            owner: document.getElementById('view-owner'),
-        };
-        const navItems = document.querySelectorAll('.nav-item');
-
-        function switchRole(role) {
-            roleBtns.forEach(b => b.classList.toggle('active', b.dataset.role === role));
-            Object.keys(views).forEach(key => views[key].classList.toggle('active', key === role));
-            navItems.forEach(item => {
-                if (item.dataset.tab === 'cart') return;
-                item.classList.toggle('active', item.dataset.tab === role);
-            });
-            document.getElementById('viewport').scrollTop = 0;
-        }
-
-        roleBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                switchRole(this.dataset.role);
-            });
-        });
-
-        navItems.forEach(item => {
-            if (item.dataset.tab === 'cart') return;
-            item.addEventListener('click', function() {
-                const role = this.dataset.tab;
-                if (role === 'buyer' || role === 'seller' || role === 'owner') {
-                    switchRole(role);
-                    roleBtns.forEach(b => b.classList.toggle('active', b.dataset.role === role));
-                }
-            });
-        });
-
-        // ================================================================
-        // PRODUCT DETAIL MODAL
-        // ================================================================
 
         function openProduct(id) {
             const p = PRODUCTS.find(x => x.id === id);
@@ -1143,6 +1663,18 @@
             if (e.target === this) closeModal();
         });
 
+        function openScanner() {
+            document.getElementById('scanOverlay').classList.add('active');
+            setTimeout(() => {
+                closeScanner();
+                toast('📸 Scanned: Product "Luxury Serum" — added to basket.');
+            }, 2500);
+        }
+
+        function closeScanner() {
+            document.getElementById('scanOverlay').classList.remove('active');
+        }
+
         // ================================================================
         // TOAST
         // ================================================================
@@ -1151,22 +1683,75 @@
 
         function toast(msg) {
             const el = document.getElementById('toast');
-            const msgEl = document.getElementById('toastMsg');
-            msgEl.textContent = msg;
+            document.getElementById('toastMsg').textContent = msg;
             el.classList.add('show');
             clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => {
-                el.classList.remove('show');
-            }, 2800);
+            toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
         }
+
+        // ================================================================
+        // ROLE SWITCHING VIA BOTTOM NAV
+        // ================================================================
+
+        const views = {
+            buyer: document.getElementById('view-buyer'),
+            seller: document.getElementById('view-seller'),
+            owner: document.getElementById('view-owner')
+        };
+        const navItems = document.querySelectorAll('.nav-item');
+
+        function switchRole(role) {
+            // update views
+            Object.keys(views).forEach(key => views[key].classList.toggle('active', key === role));
+            // update nav
+            navItems.forEach(item => {
+                if (item.dataset.tab === 'cart') return;
+                item.classList.toggle('active', item.dataset.tab === role);
+            });
+            document.getElementById('viewport').scrollTop = 0;
+        }
+
+        navItems.forEach(item => {
+            if (item.dataset.tab === 'cart') {
+                item.addEventListener('click', () => toast('🛒 Cart opened. 3 items total.'));
+                return;
+            }
+            item.addEventListener('click', function() {
+                switchRole(this.dataset.tab);
+            });
+        });
+
+        // ================================================================
+        // CATEGORY FILTER
+        // ================================================================
+
+        document.querySelectorAll('.cat-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                renderProducts(this.textContent.trim());
+            });
+        });
 
         // ================================================================
         // INIT
         // ================================================================
 
         renderProducts('All');
+        renderOrders();
+        renderStaff();
+        renderInventory();
 
-        console.log('🚀 soYam cosmo · Buyer portal ready');
+        // Simulate live stock update
+        setInterval(() => {
+            const idx = Math.floor(Math.random() * INVENTORY.length);
+            if (Math.random() > 0.6) {
+                INVENTORY[idx].stock = Math.max(0, INVENTORY[idx].stock - 1);
+                renderInventory();
+            }
+        }, 12000);
+
+        console.log('🚀 soYam cosmo · Full app ready (no header role switcher)');
     </script>
 
 </body>

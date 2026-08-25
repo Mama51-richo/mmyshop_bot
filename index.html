@@ -32,6 +32,8 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{wi
 .login{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(145deg,#24130d,#5a3325)}.loginbox{width:100%;max-width:430px;background:#fff;border-radius:22px;padding:20px;text-align:center}.rolecards{display:grid;gap:7px;margin-top:12px}.rolecard{padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;text-align:left}.rolecard strong{font-size:12px;display:block}.rolecard span{font-size:8px;color:var(--muted)}
 .bottom{position:sticky;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid var(--line)}.bottom button{padding:7px 2px;background:#fff;font-size:7px;color:#665b53}.bottom button.active{color:var(--brown);font-weight:800}
 @media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metricgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:125px}}
+
+.stock-mobile-list{display:none}.stock-mobile-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:7px}.stock-mobile-top{display:flex;align-items:center;justify-content:space-between;gap:7px}.stock-item{display:flex;align-items:center;gap:7px;min-width:0}.stock-item-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#f4e9df;flex:0 0 auto}.stock-item b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}.stock-item small{display:block;color:var(--muted);font-size:7px;margin-top:2px}.stock-mobile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:8px}.stock-mobile-grid>div{background:#faf6f1;border-radius:8px;padding:6px;min-width:0}.stock-mobile-grid small{display:block;font-size:6.5px;color:var(--muted);white-space:nowrap}.stock-mobile-grid b{display:block;font-size:8px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stock-actions{display:flex;gap:4px;align-items:center}.stock-actions button{width:25px;height:25px;padding:4px;display:grid;place-items:center;border-radius:7px}.stock-actions svg{width:13px;height:13px}@media(max-width:599px){.stock-desktop-table{display:none}.stock-mobile-list{display:block}.stock-mobile-grid>div:last-child{grid-column:span 1}.tablewrap{overflow:visible}.toolbar{scrollbar-width:none}.toolbar::-webkit-scrollbar,.langbar::-webkit-scrollbar{display:none}}
 </style>
 <style>
 /* v4 visual language: refined cosmetics icon system */
@@ -88,21 +90,44 @@ const seed={
 };
 function loadDB(){try{return JSON.parse(localStorage.getItem(DB_KEY))||structuredClone(seed)}catch(e){return structuredClone(seed)}}
 let db=loadDB();
-function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));window.dispatchEvent(new CustomEvent("soyam:data-updated"))}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));localStorage.setItem("soyam_sync_tick",String(Date.now()));window.dispatchEvent(new CustomEvent("soyam:data-updated"))}
 const MockAPI={
  async login(){
   const tu=tg?.initDataUnsafe?.user||{};
-  const id=tu.id?.toString()||localStorage.getItem("demoTelegramId")||"000000000";
+  const id=tu.id?.toString()||localStorage.getItem("demoTelegramId")||"";
   const username=(tu.username||localStorage.getItem("demoTelegramUsername")||"").replace(/^@/,"");
   const isOwner=username.toLowerCase()==="mama51r";
-  let u=db.users.find(x=>x.telegram_user_id===id||((x.telegram_username||"").toLowerCase()===username.toLowerCase()&&username));
   if(isOwner){
-    if(!u){u={id:Date.now(),telegram_user_id:id,telegram_username:"mama51R",first_name:tu.first_name||"Owner",phone:"",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"};db.users.push(u)}
-    else{u.telegram_user_id=id;u.telegram_username="mama51R";u.roles=["OWNER","SELLER"];u.permissions=["*"];u.account_status="ACTIVE"}
-    saveDB();return u;
+    let u=db.users.find(x=>
+      (x.telegram_user_id&&id&&x.telegram_user_id===id) ||
+      ((x.telegram_username||"").toLowerCase()==="mama51r")
+    );
+    if(!u){
+      u={id:Date.now(),telegram_user_id:id,telegram_username:"mama51R",first_name:tu.first_name||"Owner",phone:"",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"};
+      db.users.push(u);
+    }else{
+      u.telegram_user_id=id||u.telegram_user_id||"";
+      u.telegram_username="mama51R";
+      u.roles=["OWNER","SELLER"];
+      u.permissions=["*"];
+      u.account_status="ACTIVE";
+    }
+    saveDB();
+    return u;
   }
-  if(!u)u={id:Date.now(),telegram_user_id:id,telegram_username:username||"customer",first_name:tu.first_name||"Customer",roles:["BUYER"],permissions:["BUY"],store_id:"STORE001",account_status:"ACTIVE"};
-  return u;
+  // Every non-owner opening the bot starts in the Buyer Portal.
+  // Seller tools remain available only after the authorized owner switches portal.
+  return {
+    id:Date.now(),
+    telegram_user_id:id,
+    telegram_username:username||"customer",
+    first_name:tu.first_name||"Customer",
+    phone:"",
+    roles:["BUYER"],
+    permissions:["BUY"],
+    store_id:"STORE001",
+    account_status:"ACTIVE"
+  };
  },
  products:()=>db.products,
  saveProduct(p){db.products.push(p);saveDB();return p},
@@ -320,11 +345,32 @@ function confirmPickup(id){
 }
 function stockPage(owner=false){
  let rows=db.products.map(p=>{
-  let totalCost=p.stock*p.cost, retail=p.stock*p.price;
-  return `<tr><td><b>${esc(p.id)}</b></td><td>${productIcon(p)} ${esc(p.name)}<br><span class="muted">${esc(p.category)}</span></td><td>${p.stock}</td><td>${money(p.cost)}</td><td>${money(totalCost)}</td><td>${money(p.price)}</td><td>${money(retail)}</td><td><span class="badge ${p.stock<10?"bad":p.stock<20?"pending":"ok"}">${p.stock<10?"LOW":"OK"}</span></td>${owner?`<td><div class="actions"><button class="edit-btn" onclick="editStock('${p.id}')">${ico("edit")}</button><button class="danger delete-btn" onclick="removeStock('${p.id}')">${ico("trash")}</button></div></td>`:""}</tr>`;
+  const totalCost=p.stock*p.cost, retail=p.stock*p.price;
+  const status=p.stock<10?"LOW":p.stock<20?"WATCH":"OK";
+  const statusClass=p.stock<10?"bad":p.stock<20?"pending":"ok";
+  const action=owner?`<div class="stock-actions"><button class="edit-btn" onclick="editStock('${p.id}')" title="Edit">${ico("edit")}</button><button class="danger delete-btn" onclick="removeStock('${p.id}')" title="Remove">${ico("trash")}</button></div>`:"";
+  return `<div class="stock-mobile-card">
+    <div class="stock-mobile-top"><div class="stock-item"><span class="stock-item-icon">${productIcon(p)}</span><div><b>${esc(p.name)}</b><small>${esc(p.id)} · ${esc(p.category)}</small></div></div><span class="badge ${statusClass}">${status}</span></div>
+    <div class="stock-mobile-grid">
+      <div><small>Amount</small><b>${p.stock}</b></div>
+      <div><small>Unit Cost</small><b>${money(p.cost)}</b></div>
+      <div><small>Total Cost</small><b>${money(totalCost)}</b></div>
+      <div><small>Unit Price</small><b>${money(p.price)}</b></div>
+      <div><small>Balance Value</small><b>${money(retail)}</b></div>
+      ${owner?`<div><small>Action</small>${action}</div>`:""}
+    </div>
+  </div>
+  <tr class="stock-desktop-row"><td><b>${esc(p.id)}</b></td><td>${productIcon(p)} ${esc(p.name)}<br><span class="muted">${esc(p.category)}</span></td><td>${p.stock}</td><td>${money(p.cost)}</td><td>${money(totalCost)}</td><td>${money(p.price)}</td><td>${money(retail)}</td><td><span class="badge ${statusClass}">${status}</span></td>${owner?`<td>${action}</td>`:""}</tr>`;
  }).join("");
- return `<div class="panel"><div class="row"><div><h3>📦 Stock Control</h3><span class="muted">Live balance · completed sales automatically deduct stock</span></div>${owner?`<button class="gold" onclick="showAddStock()">＋ Add</button>`:""}</div>
- <div class="tablewrap"><table class="table stocktable"><thead><tr><th>Stock ID</th><th>Item Name</th><th>Amount</th><th>Unit Cost</th><th>Total Cost</th><th>Unit Price</th><th>Balance Value</th><th>Status</th>${owner?"<th>Action</th>":""}</tr></thead><tbody>${rows||`<tr><td colspan="${owner?9:8}">No stock.</td></tr>`}</tbody></table></div></div>`;
+ const desktopRows=rows.replace(/<div class="stock-mobile-card">[\s\S]*?<\/div>\s*<tr class="stock-desktop-row">/g,'<tr class="stock-desktop-row">');
+ // Build desktop rows separately so mobile cards never interfere with the table DOM.
+ const desktop=db.products.map(p=>{
+   const tc=p.stock*p.cost, rv=p.stock*p.price, st=p.stock<10?"LOW":p.stock<20?"WATCH":"OK", sc=p.stock<10?"bad":p.stock<20?"pending":"ok";
+   return `<tr><td><b>${esc(p.id)}</b></td><td>${productIcon(p)} ${esc(p.name)}<br><span class="muted">${esc(p.category)}</span></td><td>${p.stock}</td><td>${money(p.cost)}</td><td>${money(tc)}</td><td>${money(p.price)}</td><td>${money(rv)}</td><td><span class="badge ${sc}">${st}</span></td>${owner?`<td><div class="stock-actions"><button class="edit-btn" onclick="editStock('${p.id}')">${ico("edit")}</button><button class="danger delete-btn" onclick="removeStock('${p.id}')">${ico("trash")}</button></div></td>`:""}</tr>`;
+ }).join("");
+ return `<div class="panel"><div class="row"><div><h3>${ico("stock")} Stock Control</h3><span class="muted">Live balance · sales automatically deduct stock</span></div>${owner?`<button class="gold" onclick="showAddStock()">＋ Add</button>`:""}</div>
+ <div class="stock-mobile-list">${rows.replace(/<tr class="stock-desktop-row">[\s\S]*?<\/tr>/g,"")}</div>
+ <div class="tablewrap stock-desktop-table"><table class="table stocktable"><thead><tr><th>Stock ID</th><th>Item Name</th><th>Amount</th><th>Unit Cost</th><th>Total Cost</th><th>Unit Price</th><th>Balance Value</th><th>Status</th>${owner?"<th>Action</th>":""}</tr></thead><tbody>${desktop||`<tr><td colspan="${owner?9:8}">No stock.</td></tr>`}</tbody></table></div></div>`;
 }
 function removeStock(id){
  let p=db.products.find(x=>x.id===id);if(!p)return;
@@ -433,7 +479,7 @@ function showStoreQR(){
 }
 
 function closeModal(){document.getElementById("checkoutModal")?.remove()}
-window.addEventListener("storage",e=>{if(e.key===DB_KEY){db=loadDB();render()}});window.addEventListener("soyam:data-updated",()=>{db=loadDB();render()});
+window.addEventListener("storage",e=>{if(e.key===DB_KEY||e.key==="soyam_sync_tick"){db=loadDB();render()}});window.addEventListener("soyam:data-updated",()=>{db=loadDB();render()});
 window.showStoreQR=showStoreQR;window.removeStock=removeStock;window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.startScanner=startScanner;window.stopScanner=stopScanner;window.pickScanImage=pickScanImage;window.decodeImageFile=decodeImageFile;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.demoBuyer=demoBuyer;window.setScanMode=setScanMode;window.lookupBarcode=lookupBarcode;window.addScannedItem=addScannedItem;window.externalLookupDemo=externalLookupDemo;window.confirmPickup=confirmPickup;window.showAddStock=showAddStock;window.previewStockImage=previewStockImage;window.openStockScanner=openStockScanner;window.saveStock=saveStock;window.editStock=editStock;window.closeStockModal=closeStockModal;window.showAuthorizedUser=showAuthorizedUser;window.editStock=editStock;window.saveEditedStock=saveEditedStock;window.saveAuthorizedUser=saveAuthorizedUser;
 boot();
 </script>

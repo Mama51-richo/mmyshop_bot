@@ -28,7 +28,18 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{wi
 .progress{height:5px;background:#eee4d9;border-radius:8px;overflow:hidden;margin-top:5px}.progress i{display:block;height:100%;background:var(--gold);border-radius:8px}.quickgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.quick{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 3px;text-align:center;font-size:8px}.statline{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--line)}.statline:last-child{border-bottom:0}.reportcard{display:grid;grid-template-columns:1fr auto;gap:4px;padding:7px 0;border-bottom:1px solid var(--line);font-size:9px}.owner-head,.seller-head{background:linear-gradient(145deg,#24130d,#4d2a1e);color:#fff;margin:8px 10px 0;border-radius:15px;padding:11px}.seller-head{margin:0;border-radius:0}.owner-head small{color:#d9c39d;font-size:7px}.owner-head b{font-size:11px}.product-visual{width:35px;height:35px;border-radius:10px;background:#f3e8dc;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
 .chart{height:120px;display:flex;align-items:end;gap:4px;padding:6px}.bar{flex:1;background:var(--gold);border-radius:5px 5px 2px 2px}
 @media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metricgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:130px}}
-</style>
+
+<style>
+.top-address{display:flex;align-items:center;gap:7px;padding:6px 10px;background:#fff;border-bottom:1px solid var(--line);font-size:8px;color:var(--muted);white-space:nowrap;overflow:hidden}
+.top-address b{color:var(--ink)}.pin{width:23px;height:23px;border-radius:8px;background:#f0e4d8;display:grid;place-items:center;flex:0 0 auto}
+.dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.dashboard-card{border:1px solid var(--line);background:#fff;border-radius:13px;padding:9px;min-width:0}.dashboard-card .value{font-size:17px;font-weight:850}.dashboard-card .label{font-size:7px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dashboard-card .sub{font-size:7px;margin-top:3px}
+.data-list{display:grid;gap:5px}.data-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;align-items:center;padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:0}.data-main{min-width:0}.data-main b,.data-main span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.data-main b{font-size:9px}.data-main span{font-size:7px;color:var(--muted)}
+.report-row{display:grid;grid-template-columns:72px minmax(0,1fr) 62px;gap:6px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line);font-size:8px}.report-row:last-child{border-bottom:0}.report-id{font-weight:850;color:var(--brown);white-space:nowrap}.report-detail{min-width:0}.report-detail b,.report-detail span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.report-detail span{font-size:7px;color:var(--muted)}.report-total{text-align:right;font-weight:800;white-space:nowrap}
+.owner-summary{background:linear-gradient(145deg,#21120d,#5a3326);color:#fff;border-radius:16px;padding:12px}.owner-summary .big{font-size:22px;font-weight:900}.owner-summary .tiny{font-size:7px;color:#ddcbbd}.owner-summary .goldline{height:1px;background:#c9a45b66;margin:8px 0}.switch-mini{display:flex;gap:5px;margin-top:8px}.switch-mini button{flex:1;padding:7px 4px;border-radius:9px;font-size:8px;background:#ffffff18;color:#fff;border:1px solid #ffffff25}.switch-mini button.active{background:var(--gold);color:#24140d}
+.buyer-search{display:flex;gap:6px;padding:8px 10px;background:#fff;border-bottom:1px solid var(--line)}.buyer-search input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;padding:8px 10px;font-size:10px;background:#faf7f3}.buyer-search button{width:36px;border-radius:11px;background:var(--brown);color:#fff}
+.camera-live{position:relative;overflow:hidden;background:#090909;border-radius:16px;height:240px}.camera-live video{width:100%;height:100%;object-fit:cover}.scan-overlay{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}.scan-box{width:190px;height:190px;border:2px solid var(--gold);border-radius:20px;box-shadow:0 0 0 999px #0005}.scan-status{position:absolute;left:8px;right:8px;bottom:8px;padding:7px;border-radius:10px;background:#0009;color:#fff;text-align:center;font-size:8px}
+@media(min-width:560px){.dashboard-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style></style>
 </head>
 <body>
 <div id="root"></div>
@@ -65,7 +76,7 @@ const seed={
 };
 function loadDB(){try{return JSON.parse(localStorage.getItem(DB_KEY))||structuredClone(seed)}catch(e){return structuredClone(seed)}}
 let db=loadDB();
-function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db))}
+function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));window.dispatchEvent(new Event('soyAmDataChanged'));}
 const MockAPI={
  async login(){
   const tgUser=tg?.initDataUnsafe?.user || null;
@@ -150,7 +161,7 @@ function choosePortal(p){
 function renderRevoked(){document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox"><div style="font-size:50px">⛔</div><h2>Access Revoked</h2><p>Your access has been revoked by the Owner.</p><button class="primary full" onclick="demoBuyer()">Return to Storefront</button></div></div>`}
 function demoBuyer(){localStorage.setItem("demoTelegramId","000000000");location.reload()}
 function header(){
- return `<header class="hero">${brandLogo()}<h1>soYam cosmo</h1><h2>ሶያም ኮስሞΤΙΚΣ · COSMETICS & BEAUTY</h2><p>🇪🇹 Ethiopia · Addis Ababa · Betel Building, Ground Floor</p><p>+251 91 909 6451 · <a style="color:#e6c77d" href="https://www.google.com/maps/search/?api=1&query=Betel+Building+Addis+Ababa" target="_blank">📍 Location</a></p></header>
+ return `<header class="hero">${brandLogo()}<h1>soYam cosmo</h1><h2>ሶያም ኮስሞΤΙΚΣ · COSMETICS & BEAUTY</h2><p>🇪🇹 Ethiopia · Addis Ababa · Betel Building, Ground Floor</p><p>+251 91 909 6451 · <a style="color:#e6c77d" href="https://www.google.com/maps/search/?api=1&query=Betel+Building+Addis+Ababa" target="_blank">📍 Location</a></p></header><div class="top-address"><span class="pin">📍</span><span><b>soYam Cosmo</b> · Betel Building, Ground Floor · Addis Ababa</span><span style="margin-left:auto">🇪🇹</span></div>
  <div class="langbar">${["EN","አማ","ትግ","ORO","GUR","SOM"].map((x,i)=>`<button class="${i===0?"active":""}" onclick="toast('${x} selected')">${x}</button>`).join("")}</div>
  <div class="social"><a href="https://www.tiktok.com/" target="_blank">TT</a><a href="https://www.facebook.com/" target="_blank">f</a><a href="https://wa.me/251919096451" target="_blank">WA</a></div>`;
 }
@@ -159,9 +170,10 @@ function bottom(items){
 }
 function go(v){state.view=v;render()}
 function render(){if(state.portal==="BUYER")renderBuyer();else if(state.portal==="SELLER")renderSeller();else if(state.portal==="DRIVER")renderDriver();else renderOwner()}
+function filterBuyerProducts(q){const t=(q||"").toLowerCase().trim();document.querySelectorAll(".product-card-filter").forEach(x=>x.style.display=!t||x.textContent.toLowerCase().includes(t)?"":"none")}
 function productCard(p){
  const inCart=state.cart.find(x=>x.id===p.id)?.qty||0;
- return `<article class="card"><div class="product-img">${p.emoji}</div><div class="card-body">
+ return `<article class="card product-card-filter"><div class="product-img">${p.emoji}</div><div class="card-body">
  <div class="muted">${esc(p.category)}</div><h4>${esc(p.name)}</h4><div class="row"><span class="price">${money(p.price)}</span><span class="muted">${p.stock} in stock</span></div>
  <div class="qty"><button onclick="changeCart('${p.id}',-1)">−</button><b>${inCart}</b><button onclick="changeCart('${p.id}',1)">+</button><button class="primary" style="margin-left:auto;padding:8px 10px" onclick="changeCart('${p.id}',1)">Add</button></div>
  </div></article>`;
@@ -173,7 +185,7 @@ function renderBuyer(){
  else if(state.view==="orders") body=buyerOrders();
  else if(state.view==="requests") body=buyerRequests();
  else if(state.view==="profile") body=buyerProfile();
- document.getElementById("root").innerHTML=`<div class="app">${header()}<main class="view">${body}</main>${bottom([["home","⌂","Home"],["cart","🛒","Cart"],["orders","▣","Orders"],["requests","?","Requests"],["profile","●","Profile"]])}</div>`;
+ document.getElementById("root").innerHTML=`<div class="app">${header()}<div class="buyer-search"><input id="buyerSearch" placeholder="Search cosmetics, skincare, fragrance…" oninput="filterBuyerProducts(this.value)"><button onclick="filterBuyerProducts(document.getElementById('buyerSearch').value)">⌕</button></div><main class="view">${body}</main>${bottom([["home","⌂","Home"],["cart","🛒","Cart"],["orders","▣","Orders"],["requests","?","Requests"],["profile","●","Profile"]])}</div>`;
 }
 function filteredProducts(){return db.products.filter(p=>(state.category==="All"||p.category===state.category)&&(!state.search||p.name.toLowerCase().includes(state.search.toLowerCase())))}
 function setCat(c){state.category=c;render()}
@@ -228,30 +240,16 @@ function renderSeller(){
  document.getElementById("root").innerHTML=`<div class="app">${sellerHeader()}<div class="toolbar"><button class="${state.view==="home"?"active":""}" onclick="go('home')">Dashboard</button><button class="${state.view==="orders"?"active":""}" onclick="go('orders')">Orders</button><button class="${state.view==="scan"?"active":""}" onclick="go('scan')">📷 Scan</button><button class="${state.view==="stock"?"active":""}" onclick="go('stock')">Stock</button><button class="${state.view==="delivery"?"active":""}" onclick="go('delivery')">Delivery</button><button onclick="renderPortalSelector()">🔄 Switch</button></div><main class="view">${body}</main>${bottom([["home","⌂","Home"],["orders","▣","Orders"],["scan","📷","Scan"],["stock","□","Stock"],["delivery","🚚","Delivery"]])}</div>`;
 }
 function sellerDashboard(){
- let pending=db.orders.filter(o=>o.status==="PENDING").length;
- let payments=db.orders.filter(o=>o.payment_status==="SUBMITTED").length;
- let delivery=db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length;
- let low=db.products.filter(p=>p.stock<15).length;
- return `<div class="seller-head">${brandLogo()}<h1>🏪 Seller Hub</h1><p>@${esc(state.user.telegram_username||"seller")} · SoYam Cosmo</p></div>
- <div class="kpi-strip"><div class="kpi"><span>Orders</span><b>${pending}</b></div><div class="kpi"><span>Payment</span><b>${payments}</b></div><div class="kpi"><span>Delivery</span><b>${delivery}</b></div><div class="kpi"><span>Stock Alerts</span><b>${low}</b></div></div>
- <div class="panel"><h3>⚡ Seller Actions</h3><div class="quickgrid"><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('scan')">📷<br>Scan</button><button class="quick" onclick="go('stock')">📦<br>Stock</button><button class="quick" onclick="go('delivery')">🚚<br>Delivery</button></div></div>
- <div class="panel"><h3>📦 Stock Alerts</h3>${db.products.filter(p=>p.stock<15).slice(0,5).map(p=>`<div class="statline"><div class="product-visual">${p.emoji}</div><div style="flex:1"><b style="font-size:9px">${esc(p.name)}</b><div class="muted">${p.category}</div></div><span class="badge ${p.stock<10?"bad":"pending"}">${p.stock} left</span></div>`).join("")||'<p class="muted">Stock levels are healthy.</p>'}</div>`;
-}
-function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
+ const active=db.orders.filter(o=>o.status!=="COMPLETED"), pay=db.orders.filter(o=>o.payment_status==="SUBMITTED"), del=db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED"), low=db.products.filter(p=>p.stock<15);
+ return `<div class="panel"><div class="owner-summary"><div class="row"><div><div class="tiny">SELLER CONTROL CENTER</div><div class="big">${money(db.transactions.filter(t=>t.type==="SALE").reduce((a,t)=>a+Number(t.amount||0),0))}</div><div class="tiny">Recorded sales</div></div><span class="badge ok">STORE LIVE</span></div></div></div>
+ <div class="kpi-strip"><div class="kpi"><span>Orders</span><b>${active.length}</b></div><div class="kpi"><span>Payments</span><b>${pay.length}</b></div><div class="kpi"><span>Delivery</span><b>${del.length}</b></div><div class="kpi"><span>Low Stock</span><b>${low.length}</b></div></div>
+ <div class="panel"><div class="section-title"><h3>⚡ Store operations</h3><span class="muted">one tap</span></div><div class="quickgrid"><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('scan')">📷<br>Scan</button><button class="quick" onclick="go('stock')">📦<br>Stock</button><button class="quick" onclick="go('delivery')">🚚<br>Delivery</button></div></div>
+ <div class="panel"><div class="section-title"><h3>🧾 Latest orders</h3><button class="gold" onclick="go('orders')">View all</button></div>${db.orders.slice(-5).reverse().map(o=>`<div class="report-row"><span class="report-id">${esc(o.id)}</span><span class="report-detail"><b>${esc(o.status||"")} · ${esc(o.payment_status||"")}</b><span>${esc(o.fulfillment||"")} · ${esc(o.dropoff||"Store pickup")}</span></span><span class="report-total">${money(o.total)}</span></div>`).join("")||'<span class="muted">No orders.</span>'}</div>`;
+}function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
 function verifyPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="VERIFIED";o.status="READY";saveDB();audit("PAYMENT_VERIFIED",id);toast("Payment verified");render()}
 function rejectPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="REJECTED";saveDB();audit("PAYMENT_REJECTED",id);render()}
-function scanner(){
- return `<div class="panel"><h3>📷 Scan & Verify</h3>
- <div class="scan-mode">
-  <button id="itemScanBtn" class="primary active" onclick="setScanMode('ITEM')">📦 Item QR / Barcode</button>
-  <button id="orderScanBtn" class="primary" onclick="setScanMode('ORDER')">🧾 Customer Order QR</button>
- </div>
- <div class="scanner"><div><div class="frame"></div><p id="scanHint">Point camera at product QR / barcode</p><small>Camera hardware integration point</small></div></div>
- <input class="input" id="barcode" style="margin-top:10px" placeholder="Demo input: P001 or SOYAM-ORDER-ID">
- <button class="primary full" style="margin-top:10px" onclick="startPhoneScanner()">📷 Open Phone Camera</button><button class="gold full" style="margin-top:6px" onclick="lookupBarcode()">⌕ Lookup Code</button><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden onchange="handleCameraFile(event)">
- <div id="scanResult" class="scan-result"></div></div>`
-}
-let scanMode="ITEM";
+let scanMode="ITEM",scanStream=null,scanTimer=null,barcodeDetector=null;
+function scanner(){return `<div class="panel"><div class="section-title"><h3>📷 Scan & Verify</h3><span class="badge ok">LIVE</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:5px"><button id="itemScanBtn" class="primary active" onclick="setScanMode('ITEM')">📦 Item QR</button><button id="orderScanBtn" class="gold" onclick="setScanMode('ORDER')">🧾 Order QR</button></div><div class="camera-live" style="margin-top:7px"><video id="qrVideo" autoplay muted playsinline></video><div class="scan-overlay"><div class="scan-box"></div></div><div class="scan-status" id="scanStatus">Tap Start Camera</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:7px"><button class="primary" onclick="startQrCamera()">📷 Start</button><button class="gold" onclick="stopQrCamera()">⏹ Stop</button></div><input class="input" id="barcode" style="margin-top:7px" placeholder="P001 or SOYAM-ORDER-ID"><button class="primary full" style="margin-top:6px" onclick="lookupBarcode()">⌕ Lookup / Verify</button><div id="scanResult"></div></div>`}
 function setScanMode(mode){
  scanMode=mode;
  document.getElementById("itemScanBtn").classList.toggle("active",mode==="ITEM");
@@ -342,7 +340,7 @@ function renderOwner(){
  <div class="hero">${brandLogo()}<h1>👑 Owner Command Center</h1><p>soYam cosmo · ሶያም ኮስሞቲክስ · COSMETICS & BEAUTY</p><p>Betel Building, Ground Floor · Addis Ababa · +251 91 909 6451</p></div>
  <div class="panel" style="margin:12px 14px 0;background:#24130d;color:#fff;border:0">
    <div class="row"><div><small style="color:#d9c39d">MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div></div><span class="badge ok">ACTIVE</span></div>
-   <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="renderPortalSelector()">🔄 Switch Portal</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Seller Portal</button><button class="gold" onclick="choosePortal('BUYER')">🛍️ Buyer Portal</button></div>
+   <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="renderPortalSelector()">🔄 Switch Portal</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Seller Portal</button></div>
  </div>
  <div class="toolbar">
  <button class="${state.view==="staff"?"active":""}" onclick="go('staff')">👥 Staff</button>
@@ -354,29 +352,24 @@ function renderOwner(){
  </div><main class="view">${body}</main>${bottom([["home","⌂","Dashboard"],["inventory","□","Inventory"],["orders","▣","Orders"],["audit","✓","Audit"],["reports","◫","Reports"]])}</div>`;
 }
 function ownerDashboard(){
- let revenue=db.transactions.filter(t=>t.type==="SALE").reduce((s,t)=>s+t.amount,0);
- let stockValue=db.products.reduce((s,p)=>s+p.stock*p.cost,0);
- let retailValue=db.products.reduce((s,p)=>s+p.stock*p.price,0);
- let units=db.products.reduce((s,p)=>s+p.stock,0);
- let pending=db.orders.filter(o=>o.status==="PENDING").length;
- let delivery=db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length;
- let low=db.products.filter(p=>p.stock<10);
- let margin=retailValue?Math.round((retailValue-stockValue)/retailValue*100):0;
- return `<div class="owner-head"><div class="row"><div><small>MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div><div style="font-size:8px;color:#e7d8cc">soYam Cosmo · Overall actuals</div></div><span class="badge ok">ACTIVE</span></div></div>
- <div class="kpi-strip"><div class="kpi"><span>Actual Sales</span><b>${money(revenue)}</b></div><div class="kpi"><span>Stock Cost</span><b>${money(stockValue)}</b></div><div class="kpi"><span>Stock Units</span><b>${units}</b></div><div class="kpi"><span>Gross Margin*</span><b>${margin}%</b></div></div>
- <div class="panel"><div class="row"><h3>📊 Live Snapshot</h3><span class="badge ${pending?"pending":"ok"}">${pending} pending</span></div>
-  <div class="statline"><span>💰</span><div style="flex:1"><b style="font-size:10px">Sales / revenue</b><div class="progress"><i style="width:${revenue?75:0}%"></i></div></div><b style="font-size:9px">${money(revenue)}</b></div>
-  <div class="statline"><span>📦</span><div style="flex:1"><b style="font-size:10px">Retail stock value</b><div class="progress"><i style="width:${retailValue?80:0}%"></i></div></div><b style="font-size:9px">${money(retailValue)}</b></div>
-  <div class="statline"><span>🚚</span><div style="flex:1"><b style="font-size:10px">Delivery queue</b></div><b style="font-size:9px">${delivery}</b></div>
- </div>
- <div class="panel"><div class="row"><h3>⚡ Quick Controls</h3><span class="muted">one tap</span></div><div class="quickgrid">
-  <button class="quick" onclick="go('staff')">👥<br>Staff</button><button class="quick" onclick="go('inventory')">📦<br>Inventory</button><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('audit')">💰<br>Audit</button>
- </div></div>
- <div class="panel"><div class="row"><h3>⚠️ Attention</h3><span class="badge ${low.length?"bad":"ok"}">${low.length} low stock</span></div>
- ${low.slice(0,4).map(p=>`<div class="reportcard"><span>🧴 ${esc(p.name)}</span><b>${p.stock} units</b></div>`).join("")||'<p class="muted">No low-stock items.</p>'}</div>
- <div class="panel"><h3>📈 Recent Actual Trend</h3><div class="chart">${[18,35,28,52,42,68,55].map((x,i)=>`<div class="bar" style="height:${x}%"></div>`).join("")}</div><p class="muted">*Gross margin here is a demo catalog calculation; connect real accounting data for production reporting.</p></div>`;
-}
-function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 Authorized Users</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<button class="danger" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
+ const sales=db.transactions.filter(t=>t.type==="SALE"), revenue=sales.reduce((a,t)=>a+Number(t.amount||0),0);
+ const cost=db.products.reduce((a,p)=>a+Number(p.stock||0)*Number(p.cost||0),0);
+ const retail=db.products.reduce((a,p)=>a+Number(p.stock||0)*Number(p.price||0),0);
+ const units=db.products.reduce((a,p)=>a+Number(p.stock||0),0), active=db.orders.filter(o=>o.status!=="COMPLETED").length;
+ const audit=db.transactions.filter(t=>t.status==="OWNER_PENDING").length, low=db.products.filter(p=>p.stock<10).length;
+ const today=new Date().toISOString().slice(0,10), todaySales=sales.filter(t=>(t.created_at||"").slice(0,10)===today).reduce((a,t)=>a+Number(t.amount||0),0);
+ return `<div class="panel"><div class="owner-summary"><div class="row"><div><div class="tiny">OWNER COMMAND CENTER</div><div class="big">${money(todaySales)}</div><div class="tiny">Today's actual sales</div></div><span class="badge ok">LIVE</span></div><div class="goldline"></div><div class="row"><span class="tiny">${db.orders.length} orders</span><span class="tiny">${active} active</span></div><div class="switch-mini"><button class="active">👑 Owner</button><button onclick="choosePortal('SELLER')">🏪 Seller</button></div></div></div>
+ <div class="panel"><div class="section-title"><h3>📊 Business at a glance</h3><span class="badge ${audit?'pending':'ok'}">${audit} audit</span></div><div class="dashboard-grid">
+ <div class="dashboard-card"><div class="label">ACTUAL SALES</div><div class="value">${money(revenue)}</div><div class="sub">${sales.length} sales</div></div>
+ <div class="dashboard-card"><div class="label">STOCK COST</div><div class="value">${money(cost)}</div><div class="sub">${units} units</div></div>
+ <div class="dashboard-card"><div class="label">RETAIL STOCK</div><div class="value">${money(retail)}</div><div class="sub">current value</div></div>
+ <div class="dashboard-card"><div class="label">ACTIVE ORDERS</div><div class="value">${active}</div><div class="sub">${audit?'Audit required':'Operational'}</div></div></div></div>
+ <div class="panel"><div class="section-title"><h3>⚡ Management</h3><span class="muted">tap menu</span></div><div class="quickgrid">
+ <button class="quick" onclick="go('staff')">👥<br>Staff</button><button class="quick" onclick="go('inventory')">📦<br>Inventory</button><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('audit')">💰<br>Audit</button></div><div class="quickgrid" style="margin-top:5px">
+ <button class="quick" onclick="go('reports')">📈<br>Reports</button><button class="quick" onclick="go('settings')">⚙️<br>Settings</button><button class="quick" onclick="go('inventory')">➕<br>Add Stock</button><button class="quick" onclick="closeDay()">🔒<br>Close Day</button></div></div>
+ <div class="panel"><div class="section-title"><h3>⚠️ Stock attention</h3><span class="badge ${low?'bad':'ok'}">${low}</span></div><div class="data-list">${db.products.filter(p=>p.stock<10).slice(0,5).map(p=>`<div class="data-row"><div class="data-main"><b>${p.emoji} ${esc(p.name)}</b><span>${esc(p.category)} · ${money(p.price)}</span></div><span class="badge ${p.stock<5?'bad':'pending'}">${p.stock} left</span></div>`).join("")||'<span class="muted">No low-stock products.</span>'}</div></div>
+ <div class="panel"><div class="section-title"><h3>🧾 Latest orders</h3><button class="gold" onclick="go('reports')">All</button></div>${db.orders.slice(-5).reverse().map(o=>`<div class="report-row"><span class="report-id">${esc(o.id)}</span><span class="report-detail"><b>${esc(o.status||"")} · ${esc(o.payment_status||"")}</b><span>${esc(o.fulfillment||"")} · ${esc(o.dropoff||"Store pickup")}</span></span><span class="report-total">${money(o.total)}</span></div>`).join("")||'<span class="muted">No orders.</span>'}</div>`;
+}function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 Authorized Users</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<button class="danger" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
 function showAuthorizedUser(){document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="userModal"><div class="sheet"><h3>＋ Add Authorized User</h3><div class="formgrid"><input class="input" id="auId" placeholder="Telegram User ID"><input class="input" id="auUsername" placeholder="Telegram Username"><input class="input" id="auName" placeholder="Name"><input class="input" id="auPhone" placeholder="Phone"><select class="input" id="auRole"><option>SELLER</option><option>DRIVER</option></select><select class="input"><option>STORE001 — SoYam Cosmetics</option></select><button class="primary full" onclick="saveAuthorizedUser()">SAVE USER</button><button class="danger full" onclick="document.getElementById('userModal').remove()">DISCARD</button></div></div></div>`)}
 function saveAuthorizedUser(){let u={id:Date.now(),telegram_user_id:document.getElementById('auId').value.trim(),telegram_username:document.getElementById('auUsername').value.trim().replace(/^@/,''),first_name:document.getElementById('auName').value.trim(),phone:document.getElementById('auPhone').value.trim(),roles:[document.getElementById('auRole').value],permissions:[document.getElementById('auRole').value==="SELLER"?"SELL":"DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"};if(!u.telegram_user_id||!u.telegram_username){toast("Telegram ID and username required");return}db.users.push(u);saveDB();audit("AUTHORIZED_USER_ADDED",u.telegram_username);document.getElementById('userModal').remove();toast("Authorized user saved");render()}
 function toggleUser(id){let u=db.users.find(x=>x.id===id);u.account_status=u.account_status==="ACTIVE"?"SUSPENDED":"ACTIVE";saveDB();audit("USER_STATUS_CHANGED",u.telegram_username);toast("User status changed");render()}

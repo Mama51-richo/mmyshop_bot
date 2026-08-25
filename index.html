@@ -171,9 +171,73 @@ function sellerDashboard(){let pending=db.orders.filter(o=>o.status==="PENDING")
 function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
 function verifyPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="VERIFIED";o.status="READY";saveDB();audit("PAYMENT_VERIFIED",id);toast("Payment verified");render()}
 function rejectPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="REJECTED";saveDB();audit("PAYMENT_REJECTED",id);render()}
-function scanner(){return `<div class="panel"><h3>📷 QR / Barcode Scanner</h3><div class="scanner"><div><div class="frame"></div><p>Camera scanner area</p></div></div><input class="input" id="barcode" style="margin-top:10px" placeholder="Demo: enter product ID P001"><button class="primary full" style="margin-top:10px" onclick="lookupBarcode()">Lookup Product</button><div id="scanResult"></div></div>`}
-function lookupBarcode(){let code=document.getElementById("barcode").value.trim();let p=db.products.find(x=>x.id===code);document.getElementById("scanResult").innerHTML=p?`<div class="panel"><h3>${p.emoji} ${esc(p.name)}</h3><p>${p.category} · ${money(p.price)} · Stock ${p.stock}</p><button class="primary" onclick="toast('Added to seller basket')">Add to Basket</button></div>`:`<div class="panel"><p>Not found locally. External barcode lookup adapter would run on the secure backend.</p></div>`}
-function stockPage(){return `<div class="panel"><h3>Inventory</h3>${db.products.map(p=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${p.emoji} ${esc(p.name)}</b><span class="badge ${p.stock<10?"bad":p.stock<20?"pending":"ok"}">${p.stock}</span></div><p class="muted">${money(p.price)} · ${p.category}</p></div>`).join("")}</div>`}
+function scanner(){
+ return `<div class="panel"><h3>📷 Scan & Verify</h3>
+ <div class="scan-mode">
+  <button id="itemScanBtn" class="primary active" onclick="setScanMode('ITEM')">📦 Item QR / Barcode</button>
+  <button id="orderScanBtn" class="primary" onclick="setScanMode('ORDER')">🧾 Customer Order QR</button>
+ </div>
+ <div class="scanner"><div><div class="frame"></div><p id="scanHint">Point camera at product QR / barcode</p><small>Camera hardware integration point</small></div></div>
+ <input class="input" id="barcode" style="margin-top:10px" placeholder="Demo input: P001 or SOYAM-ORDER-ID">
+ <button class="primary full" style="margin-top:10px" onclick="lookupBarcode()">Scan / Lookup</button>
+ <div id="scanResult" class="scan-result"></div></div>`
+}
+let scanMode="ITEM";
+function setScanMode(mode){
+ scanMode=mode;
+ document.getElementById("itemScanBtn").classList.toggle("active",mode==="ITEM");
+ document.getElementById("orderScanBtn").classList.toggle("active",mode==="ORDER");
+ document.getElementById("scanHint").textContent=mode==="ITEM"?"Point camera at product QR / barcode":"Point camera at customer's Order ID / QR";
+ document.getElementById("barcode").placeholder=mode==="ITEM"?"Demo input: P001":"Demo input: SOYAM-ORDER-ID";
+}
+function lookupBarcode(){
+ let code=document.getElementById("barcode").value.trim();
+ if(scanMode==="ORDER"){
+  let o=db.orders.find(x=>x.id===code);
+  document.getElementById("scanResult").innerHTML=o?
+   `<div class="panel"><h3>🧾 ${esc(o.id)}</h3><p><b>Order:</b> ${money(o.total)} · ${o.fulfillment}</p><p><b>Payment:</b> ${o.payment_status}</p><p><b>Status:</b> ${o.status}</p>
+   <div class="actions">${o.payment_status==="SUBMITTED"?`<button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify Payment</button>`:""}${o.fulfillment==="IN_PERSON"?`<button class="gold" onclick="confirmPickup('${o.id}')">Confirm Pickup</button>`:""}</div></div>`
+   :`<div class="panel"><p>Order QR/ID not found in this store.</p></div>`;
+  return;
+ }
+ let p=db.products.find(x=>x.id===code);
+ document.getElementById("scanResult").innerHTML=p?
+  `<div class="panel"><div class="row"><div><h3>${p.emoji} ${esc(p.name)}</h3><p>${p.category} · ${money(p.price)} · Stock ${p.stock}</p></div><div class="preview">${p.emoji}</div></div>
+  <button class="primary full" onclick="addScannedItem('${p.id}')">Add to Checkout Basket</button></div>`
+  :`<div class="panel"><p><b>External lookup required.</b></p><p class="muted">The documented production flow checks the internal catalog first; if no match exists, the backend calls an external retail barcode dictionary and injects product title, category and primary image into the registration form.</p><button class="gold" onclick="externalLookupDemo('${esc(code)}')">Run External Lookup Demo</button></div>`;
+}
+function addScannedItem(id){toast("Scanned item added to seller checkout");audit("ITEM_SCANNED",id)}
+function externalLookupDemo(code){document.getElementById("scanResult").innerHTML=`<div class="panel"><h3>🔎 External Product Match</h3><p><b>Raw code:</b> ${esc(code)}</p><p><b>Product Title:</b> Auto-detected product</p><p><b>Category:</b> Cosmetics & Beauty</p><div class="preview">🧴</div><p class="muted">Only buying unit cost and total inventory count remain for manual entry before SAVE.</p></div>`}
+function confirmPickup(id){let o=db.orders.find(x=>x.id===id);o.status="COMPLETED";saveDB();audit("PICKUP_CONFIRMED",id);toast("Pickup confirmed");render()}
+function stockPage(owner=false){
+ return `<div class="panel"><div class="row"><h3>Inventory Catalog</h3>${owner?`<button class="gold" onclick="showAddStock()">＋ Add Stock</button>`:""}</div>
+ ${db.products.map(p=>`<div style="padding:10px 0;border-bottom:1px solid var(--line)">
+ <div class="row"><div class="row" style="justify-content:flex-start"><div class="preview">${p.emoji}</div><div><b>${esc(p.name)}</b><p class="muted">${p.category}</p></div></div><span class="badge ${p.stock<10?"bad":p.stock<20?"pending":"ok"}">${p.stock} units</span></div>
+ <div class="row" style="margin-top:8px"><span class="muted">Retail Price</span><b>${money(p.price)}</b></div></div>`).join("")}</div>`
+}
+function showAddStock(){
+ document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="stockModal"><div class="sheet">
+ <div class="row"><h3>👑 ADD NEW STOCK ITEM</h3><button onclick="closeStockModal()">✕</button></div>
+ <div class="formgrid">
+  <label>📂 ITEM CATEGORY<select class="input" id="newCat"><option>Cosmetics & Beauty</option><option>Hygiene Detergents</option><option>Skincare</option><option>Makeup</option><option>Fragrance</option><option>Haircare</option></select></label>
+  <label>🏷️ PRODUCT DETAILS<input class="input" id="newName" placeholder="Enter name here..."></label>
+  <div><b>📸 PRODUCT MEDIA ATTACHMENT</b><div class="media-actions" style="margin-top:8px"><button class="primary" onclick="document.getElementById('galleryInput').click()">🖼️ Upload from Gallery</button><button class="gold" onclick="openStockScanner()">📸 Scan via Camera</button></div><input id="galleryInput" type="file" accept="image/*" hidden onchange="previewStockImage(event)"><div id="stockPreview" class="preview" style="margin-top:8px">🧴</div></div>
+  <label>💰 Single Buying Unit Price<input class="input" id="newCost" type="number" placeholder="ETB"></label>
+  <label>📦 Total Number of Items<input class="input" id="newQty" type="number" placeholder="Quantity"></label>
+ </div>
+ <div class="sticky-actions"><button class="primary" onclick="saveStock()">💾 SAVE</button><button class="gold" onclick="editStock()">✏️ EDIT</button><button class="danger" onclick="closeStockModal()">❌ DISCARD</button></div>
+ </div></div>`)
+}
+function previewStockImage(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>document.getElementById("stockPreview").innerHTML=`<img src="${r.result}">`;r.readAsDataURL(f)}
+function openStockScanner(){toast("Camera scanner opened — hardware QR/barcode integration point")}
+function saveStock(){
+ let name=document.getElementById("newName").value.trim(),cat=document.getElementById("newCat").value,cost=Number(document.getElementById("newCost").value||0),qty=Number(document.getElementById("newQty").value||0);
+ if(!name||qty<=0){toast("Enter product name and quantity");return}
+ let p={id:"P"+String(Date.now()).slice(-6),name,category:cat,price:Math.round(cost*1.67),stock:qty,emoji:"🧴",cost};
+ db.products.push(p);saveDB();audit("STOCK_ADDED",p.id);closeStockModal();toast("Stock saved");render()
+}
+function editStock(){toast("Select an existing catalog item to edit")}
+function closeStockModal(){document.getElementById("stockModal")?.remove()}
 function sellerRequests(){return `<div class="panel"><h3>Product Requests</h3>${db.requests.map(r=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><b>${esc(r.name)}</b><p class="muted">${esc(r.note||"")}</p><button class="gold" onclick="offerRequest('${r.id}')">Offer Product</button></div>`).join("")||"<p class='muted'>No requests.</p>"}</div>`}
 function offerRequest(id){let r=db.requests.find(x=>x.id===id);r.status="OFFERED";r.offer={price:500,product:"Available equivalent product"};saveDB();toast("Offer sent to buyer");render()}
 function sellerDelivery(){return `<div class="panel"><h3>Delivery Queue</h3>${db.orders.filter(o=>o.fulfillment==="DELIVERY").map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><b>${o.id}</b><p>${esc(o.dropoff||"No destination")}</p><span class="badge pending">${o.status}</span></div>`).join("")||"<p class='muted'>No delivery orders.</p>"}</div>`}
@@ -205,7 +269,7 @@ function ownerReports(){let revenue=db.transactions.reduce((s,t)=>s+(t.type==="S
 function ownerSettings(){return `<div class="panel"><h3>Platform Settings</h3><p>Store: SoYam Cosmo</p><p>Location: Betel Building, Ground Floor, Addis Ababa</p><p>Phone: +251919096451</p><p>Master Owner: @mama51R</p><button class="danger" onclick="if(confirm('Reset demo database?')){localStorage.removeItem(DB_KEY);location.reload()}">Reset Demo Data</button></div>`}
 function closeDay(){if(db.dailyLedger.status==="CLOSED"){toast("Ledger already closed");return}if(confirm("Close and lock today's transactions?")){db.dailyLedger.status="CLOSED";saveDB();audit("DAILY_LEDGER_CLOSED",db.dailyLedger.date);toast("Daily transactions locked");render()}}
 function closeModal(){document.getElementById("checkoutModal")?.remove()}
-window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.demoBuyer=demoBuyer;
+window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.demoBuyer=demoBuyer;window.setScanMode=setScanMode;window.lookupBarcode=lookupBarcode;window.addScannedItem=addScannedItem;window.externalLookupDemo=externalLookupDemo;window.confirmPickup=confirmPickup;window.showAddStock=showAddStock;window.previewStockImage=previewStockImage;window.openStockScanner=openStockScanner;window.saveStock=saveStock;window.editStock=editStock;window.closeStockModal=closeStockModal;
 boot();
 </script>
 </body>

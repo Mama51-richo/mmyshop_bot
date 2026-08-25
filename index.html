@@ -4,19 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>soYam cosmo · Mini App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* ─── RESET & BASE ─── */
+        /* ─── same styles as before, but keep them clean ─── */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Montserrat', sans-serif;
             background: #0d0b09;
@@ -26,7 +25,6 @@
             min-height: 100vh;
             padding: 12px;
         }
-
         .app-frame {
             max-width: 420px;
             width: 100%;
@@ -35,27 +33,22 @@
             box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 0 2px #d4af37 inset;
             overflow: hidden;
             padding: 18px 14px 22px;
+            transition: background 0.2s;
             position: relative;
         }
-
-        /* ─── BRAND ─── */
-        .brand-crown {
-            text-align: center;
-            margin-bottom: 8px;
-        }
+        .brand-crown { text-align: center; margin-bottom: 8px; }
         .brand-crown .logo-symbol {
             font-size: 44px;
             font-weight: 700;
             font-family: 'Cormorant Garamond', serif;
-            letter-spacing: 0.18em;
-            background: linear-gradient(145deg, #d4af37, #b8952a, #a07d2a);
+            background: linear-gradient(145deg, #d4af37, #b8952a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             line-height: 1;
         }
         .brand-crown .sub-brand {
-            font-size: 13px;
+            font-size: 15px;
             font-weight: 600;
             color: #3d2e1b;
             letter-spacing: 2.5px;
@@ -64,8 +57,8 @@
             padding: 0 16px;
             border-radius: 30px;
             font-family: 'Montserrat', sans-serif;
-            -webkit-text-fill-color: #3d2e1b;
             text-transform: uppercase;
+            font-size: 13px;
         }
         .brand-crown .amharic {
             font-size: 17px;
@@ -86,12 +79,7 @@
             margin-top: 5px;
             border: 1px solid rgba(212, 175, 55, 0.25);
         }
-        .brand-crown .address-mini i {
-            color: #b8952a;
-            margin: 0 2px;
-        }
-
-        /* ─── LANGUAGE ROW ─── */
+        .brand-crown .address-mini i { color: #b8952a; margin: 0 2px; }
         .lang-row {
             display: flex;
             flex-wrap: wrap;
@@ -110,16 +98,12 @@
             padding: 3px 10px;
             border-radius: 40px;
             border: 1px solid rgba(212, 175, 55, 0.2);
-            cursor: default;
-            white-space: nowrap;
         }
         .lang-chip.active {
             background: #d4af37;
             color: #1a150f;
             border-color: #d4af37;
         }
-
-        /* ─── SOCIAL ROW ─── */
         .social-row {
             display: flex;
             justify-content: center;
@@ -131,24 +115,14 @@
             font-size: 22px;
             opacity: 0.75;
             text-decoration: none;
-            transition: 0.2s;
         }
-        .social-icon:hover {
-            opacity: 1;
-            transform: scale(1.08);
-        }
-
-        /* ─── PORTAL CONTAINER ─── */
         .portal-container {
             background: #fcf9f5;
             border-radius: 28px;
             padding: 16px 12px;
-            box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.03);
             min-height: 380px;
             border: 1px solid #e9dfd1;
         }
-
-        /* ─── ROLE SWITCHER ─── */
         .role-switcher {
             display: flex;
             gap: 8px;
@@ -170,16 +144,12 @@
             color: #2d241c;
             cursor: pointer;
             transition: 0.15s;
-            white-space: nowrap;
         }
         .role-btn.active {
             background: #1a150f;
             color: #f0e6d8;
             border-color: #d4af37;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
-
-        /* ─── TABS ─── */
         .nav-tabs {
             display: flex;
             gap: 4px;
@@ -197,18 +167,11 @@
             border-radius: 40px;
             color: #5c4b35;
             cursor: pointer;
-            transition: 0.2s;
-            font-family: 'Montserrat', sans-serif;
         }
         .nav-tab.active {
             background: #d4af37;
             color: #1f1a14;
         }
-        .nav-tab i {
-            margin-right: 4px;
-        }
-
-        /* ─── PRODUCT GRID ─── */
         .product-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -221,7 +184,6 @@
             padding: 10px 8px 12px;
             border: 1px solid #ede5d8;
             text-align: center;
-            transition: 0.15s;
         }
         .product-card .img-placeholder {
             background: #e9dfd1;
@@ -230,21 +192,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6f5e48;
             font-size: 26px;
             margin-bottom: 6px;
         }
-        .product-card .p-name {
-            font-size: 11px;
-            font-weight: 600;
-            color: #1e1710;
-        }
-        .product-card .p-price {
-            font-size: 13px;
-            font-weight: 700;
-            color: #b8952a;
-            margin: 2px 0 6px;
-        }
+        .product-card .p-name { font-size: 11px; font-weight: 600; color: #1e1710; }
+        .product-card .p-price { font-size: 13px; font-weight: 700; color: #b8952a; margin: 2px 0 6px; }
         .btn-add {
             background: #1a150f;
             border: none;
@@ -254,15 +206,9 @@
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: 0.15s;
             font-family: 'Montserrat', sans-serif;
         }
-        .btn-add:hover {
-            background: #d4af37;
-            color: #1a150f;
-        }
-
-        /* ─── STAT CARDS ─── */
+        .btn-add:hover { background: #d4af37; color: #1a150f; }
         .stat-card {
             background: #f3ede6;
             border-radius: 20px;
@@ -276,7 +222,6 @@
             color: #2d241c;
             display: flex;
             justify-content: space-between;
-            align-items: center;
         }
         .stat-card .badge {
             background: #1a150f;
@@ -284,7 +229,6 @@
             padding: 0 12px;
             border-radius: 40px;
             font-size: 9px;
-            font-weight: 600;
         }
         .flex-row {
             display: flex;
@@ -298,10 +242,7 @@
             padding: 4px 12px;
             font-size: 10px;
             border: 1px solid rgba(212, 175, 55, 0.25);
-            cursor: pointer;
         }
-
-        /* ─── ACTION BUTTONS ─── */
         .action-btn {
             background: #d4af37;
             border: none;
@@ -312,36 +253,13 @@
             color: #1a150f;
             width: 100%;
             cursor: pointer;
-            transition: 0.15s;
             font-family: 'Montserrat', sans-serif;
             margin-top: 6px;
-            letter-spacing: 0.4px;
-            text-align: center;
         }
-        .action-btn:hover {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
-        .action-btn.secondary {
-            background: #2b241d;
-            color: #f0e6d8;
-        }
-        .action-btn.danger {
-            background: #9f3a2b;
-            color: white;
-        }
-        .action-btn.success {
-            background: #1a8a4a;
-            color: white;
-        }
-        .action-btn.small {
-            padding: 4px 14px;
-            width: auto;
-            font-size: 10px;
-            margin-top: 0;
-        }
-
-        /* ─── METRIC TILES ─── */
+        .action-btn.secondary { background: #2b241d; color: #f0e6d8; }
+        .action-btn.danger { background: #9f3a2b; color: white; }
+        .action-btn.success { background: #1a8a4a; color: white; }
+        .action-btn.small { padding: 4px 14px; width: auto; font-size: 10px; margin-top: 0; }
         .metric-tiles {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -354,20 +272,8 @@
             border-radius: 20px;
             color: #f0e6d8;
         }
-        .metric-tile .label {
-            font-size: 9px;
-            opacity: 0.7;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .metric-tile .value {
-            font-size: 18px;
-            font-weight: 700;
-            margin-top: 2px;
-            color: #d4af37;
-        }
-
-        /* ─── STAFF LIST ─── */
+        .metric-tile .label { font-size: 9px; opacity: 0.7; text-transform: uppercase; }
+        .metric-tile .value { font-size: 18px; font-weight: 700; color: #d4af37; }
         .staff-item {
             display: flex;
             justify-content: space-between;
@@ -379,16 +285,8 @@
             font-size: 11px;
             border: 1px solid #ede5d8;
         }
-        .staff-item .status {
-            font-size: 9px;
-            font-weight: 600;
-        }
-        .staff-item .status.active {
-            color: #1a8a4a;
-        }
-        .staff-item .status.suspended {
-            color: #9f3a2b;
-        }
+        .staff-item .status.active { color: #1a8a4a; }
+        .staff-item .status.suspended { color: #9f3a2b; }
         .staff-item .actions button {
             background: none;
             border: none;
@@ -396,31 +294,16 @@
             cursor: pointer;
             color: #6f5e48;
             margin-left: 6px;
-            transition: 0.15s;
         }
-        .staff-item .actions button:hover {
-            color: #9f3a2b;
-        }
-
-        /* ─── ADD STOCK FORM ─── */
         .stock-form {
             background: #f3ede6;
             border-radius: 20px;
             padding: 14px;
             margin-top: 10px;
         }
-        .stock-form .form-group {
-            margin-bottom: 10px;
-        }
-        .stock-form label {
-            font-size: 10px;
-            font-weight: 600;
-            color: #2d241c;
-            display: block;
-            margin-bottom: 3px;
-        }
-        .stock-form input,
-        .stock-form select {
+        .stock-form .form-group { margin-bottom: 10px; }
+        .stock-form label { font-size: 10px; font-weight: 600; color: #2d241c; display: block; margin-bottom: 3px; }
+        .stock-form input, .stock-form select {
             width: 100%;
             padding: 8px 12px;
             border-radius: 60px;
@@ -428,16 +311,8 @@
             background: white;
             font-size: 11px;
             font-family: 'Montserrat', sans-serif;
-            outline: none;
         }
-        .stock-form input:focus,
-        .stock-form select:focus {
-            border-color: #d4af37;
-        }
-        .stock-form .media-row {
-            display: flex;
-            gap: 8px;
-        }
+        .stock-form .media-row { display: flex; gap: 8px; }
         .stock-form .media-row button {
             flex: 1;
             padding: 8px;
@@ -447,18 +322,8 @@
             font-size: 10px;
             font-weight: 600;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            transition: 0.15s;
         }
-        .stock-form .media-row button:hover {
-            border-color: #d4af37;
-            background: #fcf9f5;
-        }
-        .stock-form .form-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
+        .stock-form .form-actions { display: flex; gap: 8px; margin-top: 12px; }
         .stock-form .form-actions button {
             flex: 1;
             padding: 8px;
@@ -467,23 +332,10 @@
             font-weight: 700;
             font-size: 11px;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            transition: 0.15s;
         }
-        .stock-form .form-actions .save-btn {
-            background: #d4af37;
-            color: #1a150f;
-        }
-        .stock-form .form-actions .edit-btn {
-            background: #2b241d;
-            color: #f0e6d8;
-        }
-        .stock-form .form-actions .discard-btn {
-            background: #9f3a2b;
-            color: white;
-        }
-
-        /* ─── DRIVER SPECIFIC ─── */
+        .stock-form .form-actions .save-btn { background: #d4af37; color: #1a150f; }
+        .stock-form .form-actions .edit-btn { background: #2b241d; color: #f0e6d8; }
+        .stock-form .form-actions .discard-btn { background: #9f3a2b; color: white; }
         .delivery-card {
             background: white;
             border-radius: 16px;
@@ -491,78 +343,8 @@
             border: 1px solid #ede5d8;
             margin-bottom: 8px;
         }
-        .delivery-card .d-title {
-            font-weight: 600;
-            font-size: 12px;
-            color: #1a150f;
-        }
-        .delivery-card .d-detail {
-            font-size: 10px;
-            color: #6f5e48;
-            margin: 2px 0;
-        }
-
-        /* ─── MGMT ROW ─── */
-        .mgmt-row {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin: 10px 0;
-        }
-        .mgmt-row input {
-            flex: 1;
-            padding: 8px 12px;
-            border-radius: 60px;
-            border: 1px solid #d0c0ac;
-            background: white;
-            font-size: 10px;
-            font-family: 'Montserrat', sans-serif;
-            min-width: 70px;
-            outline: none;
-        }
-        .mgmt-row input:focus {
-            border-color: #d4af37;
-        }
-        .mgmt-row button {
-            background: #1a150f;
-            border: none;
-            color: #f0e6d8;
-            padding: 8px 16px;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 10px;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            transition: 0.15s;
-        }
-        .mgmt-row button:hover {
-            background: #d4af37;
-            color: #1a150f;
-        }
-
-        .flex-between {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .bg-dark {
-            background: #1a150f;
-            color: #f0e6d8;
-            border-radius: 60px;
-            padding: 3px 12px;
-            font-size: 9px;
-            font-weight: 600;
-        }
-        .text-gold {
-            color: #b8952a;
-        }
-        .mt-2 {
-            margin-top: 12px;
-        }
-        .hidden {
-            display: none !important;
-        }
-
+        .delivery-card .d-title { font-weight: 600; font-size: 12px; color: #1a150f; }
+        .delivery-card .d-detail { font-size: 10px; color: #6f5e48; }
         .toast {
             background: #1a150f;
             color: #f0e6d8;
@@ -575,83 +357,30 @@
             border-left: 4px solid #d4af37;
             animation: fadeIn 0.3s;
         }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         .footer-note {
             font-size: 8px;
             color: #6f5e48;
             text-align: center;
             margin-top: 14px;
             opacity: 0.5;
-            letter-spacing: 0.4px;
         }
-
-        /* QR FLOATING BUTTON - prominent gold */
-        .qr-float {
-            display: flex;
-            justify-content: center;
-            margin: 12px 0 8px;
-        }
-        .qr-float-btn {
-            background: #d4af37;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 14px;
-            color: #1a150f;
-            cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .qr-float-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 28px rgba(212, 175, 55, 0.5);
-        }
-        .qr-float-btn i {
-            font-size: 20px;
-        }
-
-        /* user info banner */
-        .user-banner {
+        .bg-dark {
             background: #1a150f;
-            border-radius: 60px;
-            padding: 6px 16px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
             color: #f0e6d8;
-            font-size: 10px;
-            font-weight: 500;
+            border-radius: 60px;
+            padding: 3px 12px;
+            font-size: 9px;
+            font-weight: 600;
         }
-        .user-banner .role-tag {
-            background: #d4af37;
-            color: #1a150f;
-            padding: 0 10px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 8px;
-            text-transform: uppercase;
-        }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        .text-gold { color: #b8952a; }
+        .mt-1 { margin-top: 8px; }
     </style>
 </head>
 <body>
     <div class="app-frame" id="appFrame">
-
-        <!-- BRAND CROWN -->
+        <!-- Brand Crown -->
         <div class="brand-crown">
             <div class="logo-symbol">SY</div>
             <div class="sub-brand">soYam cosmo</div>
@@ -662,7 +391,7 @@
             </div>
         </div>
 
-        <!-- LANGUAGE ROW -->
+        <!-- Language Row -->
         <div class="lang-row">
             <span class="lang-chip active">English</span>
             <span class="lang-chip">አማርኛ</span>
@@ -672,66 +401,108 @@
             <span class="lang-chip">Soomaali</span>
         </div>
 
-        <!-- SOCIAL ROW -->
+        <!-- Social Row -->
         <div class="social-row">
             <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
             <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
             <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
         </div>
 
-        <!-- PORTAL CONTAINER -->
+        <!-- Portal Container -->
         <div class="portal-container" id="portalContainer">
-            <div id="portalContent"></div>
+            <div id="portalContent">Loading...</div>
         </div>
 
         <div class="footer-note">
-            <i class="fas fa-shield-alt" style="color:#d4af37;"></i> secured · role backend · v2.0
+            <i class="fas fa-shield-alt" style="color:#d4af37;"></i> secured · role backend
         </div>
     </div>
 
     <script>
         (function() {
-            'use strict';
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // 1. REAL TELEGRAM USER DETECTION
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            let tgUser = null;
+            let tgWebApp = null;
+
+            try {
+                tgWebApp = window.Telegram?.WebApp;
+                if (tgWebApp) {
+                    const initData = tgWebApp.initDataUnsafe;
+                    if (initData && initData.user) {
+                        tgUser = initData.user;
+                        console.log('✅ Telegram user detected:', tgUser);
+                    } else {
+                        console.warn('⚠️ No user data in initDataUnsafe');
+                    }
+                } else {
+                    console.warn('⚠️ Telegram WebApp SDK not loaded');
+                }
+            } catch (e) {
+                console.error('Error reading Telegram WebApp:', e);
+            }
+
+            // If no Telegram user, create a fallback for testing in browser
+            if (!tgUser) {
+                tgUser = {
+                    id: 111111111,
+                    username: 'test_buyer',
+                    first_name: 'Test',
+                    last_name: 'User'
+                };
+                console.warn('⚠️ Using fallback test user (browser mode)');
+            }
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 1. DATABASE (simulated backend)
+            // 2. ROLE MAPPING (replace with backend call)
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // In production, fetch from your server: /api/get-role?telegram_id=...
+            const ROLE_MAP = {
+                '999999999': { roles: ['OWNER', 'SELLER'], store: 'STORE001' }, // @mama51R
+                '888888888': { roles: ['SELLER'], store: 'STORE001' }, // @silencer01m
+                '777777777': { roles: ['DRIVER'], store: 'STORE001' }, // @driver_abebe
+                // Add more as needed
+            };
+
+            function getUserRoles(telegramId) {
+                const entry = ROLE_MAP[String(telegramId)];
+                if (entry) return entry;
+                // Default: buyer
+                return { roles: ['BUYER'], store: null };
+            }
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // 3. SESSION STATE
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            let currentUser = tgUser;
+            let userRoles = getUserRoles(currentUser.id);
+            let activePortal = userRoles.roles.includes('OWNER') ? 'OWNER' :
+                userRoles.roles.includes('SELLER') ? 'SELLER' :
+                userRoles.roles.includes('DRIVER') ? 'DRIVER' : 'BUYER';
+
+            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // 4. DATABASE (in-memory for demo)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             const DB = {
-                // Hardcoded authorized users (matches spec)
-                authorizedUsers: {
-                    '999999999': { username: 'mama51R', name: 'Rahel Mulatu', phone: '+251920353460',
-                    roles: ['OWNER', 'SELLER'], store: 'STORE001', status: 'ACTIVE' },
-                    '888888888': { username: 'silencer01m', name: 'Abel', phone: '+251948479301',
-                    roles: ['SELLER'], store: 'STORE001', status: 'ACTIVE' },
-                    '777777777': { username: 'driver_abebe', name: 'Abebe', phone: '+251912345678',
-                        roles: ['DRIVER'], store: 'STORE001', status: 'ACTIVE' },
-                    // add more as needed
-                },
                 products: [
-                    { id: 101, name: 'Gold Serum', category: 'Skincare', price: 850, stock: 12,
-                    image: '✨' },
-                    { id: 102, name: 'Velvet Cream', category: 'Makeup', price: 420, stock: 8,
-                    image: '🧴' },
-                    { id: 103, name: 'Oud Fragrance', category: 'Fragrance', price: 1250, stock: 5,
-                        image: '🌸' },
-                    { id: 104, name: 'Detergent Plus', category: 'Detergent', price: 180, stock: 30,
-                        image: '🧺' },
-                    { id: 105, name: 'Rose Toner', category: 'Skincare', price: 320, stock: 15,
-                    image: '🌹' },
-                    { id: 106, name: 'Mascara Pro', category: 'Makeup', price: 290, stock: 9,
-                    image: '👁️' }
+                    { id: 101, name: 'Gold Serum', category: 'Skincare', price: 850, stock: 12, image: '✨' },
+                    { id: 102, name: 'Velvet Cream', category: 'Makeup', price: 420, stock: 8, image: '🧴' },
+                    { id: 103, name: 'Oud Fragrance', category: 'Fragrance', price: 1250, stock: 5, image: '🌸' },
+                    { id: 104, name: 'Detergent Plus', category: 'Detergent', price: 180, stock: 30, image: '🧺' },
+                    { id: 105, name: 'Rose Toner', category: 'Skincare', price: 320, stock: 15, image: '🌹' },
+                    { id: 106, name: 'Mascara Pro', category: 'Makeup', price: 290, stock: 9, image: '👁️' }
                 ],
                 orders: [
-                    { id: 'ORD-1001', status: 'PENDING', total: 1270, buyer: 'buyer_demo',
-                    items: ['Gold Serum', 'Rose Toner'] },
-                    { id: 'ORD-1002', status: 'PENDING', total: 420, buyer: 'hana_abebe',
-                    items: ['Velvet Cream'] },
-                    { id: 'ORD-1003', status: 'DELIVERED', total: 180, buyer: 'kebede_t',
-                    items: ['Detergent Plus'] }
+                    { id: 'ORD-1001', status: 'PENDING', total: 1270, buyer: 'buyer_demo', items: ['Gold Serum',
+                            'Rose Toner'
+                        ] },
+                    { id: 'ORD-1002', status: 'PENDING', total: 420, buyer: 'hana_abebe', items: ['Velvet Cream'] },
+                    { id: 'ORD-1003', status: 'DELIVERED', total: 180, buyer: 'kebede_t', items: ['Detergent Plus'] }
                 ],
                 staff: [
                     { username: 'silencer01m', name: 'Abel', phone: '+251948479301', role: 'SELLER',
-                        status: 'Active' },
+                    status: 'Active' },
                     { username: 'driver_abebe', name: 'Abebe', phone: '+251912345678', role: 'DRIVER',
                         status: 'Active' }
                 ],
@@ -742,141 +513,54 @@
             };
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 2. SESSION — get real Telegram user
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            let tgUser = null;
-            let tgUserId = null;
-            let tgUsername = 'guest';
-
-            try {
-                if (window.Telegram && window.Telegram.WebApp) {
-                    const initData = window.Telegram.WebApp.initDataUnsafe;
-                    if (initData && initData.user) {
-                        tgUser = initData.user;
-                        tgUserId = String(tgUser.id);
-                        tgUsername = tgUser.username || tgUser.first_name || 'user';
-                    }
-                }
-            } catch (e) {
-                console.warn('Telegram WebApp not available, using fallback.');
-            }
-
-            // Fallback for testing outside Telegram
-            if (!tgUserId) {
-                // Use URL param ?user=999999999 for testing
-                const params = new URLSearchParams(window.location.search);
-                const testUser = params.get('user');
-                if (testUser) {
-                    tgUserId = testUser;
-                    tgUsername = 'test_' + testUser;
-                } else {
-                    // Default to buyer for demo
-                    tgUserId = '111111111';
-                    tgUsername = 'buyer_demo';
-                }
-                console.log('🔧 Fallback mode: tgUserId =', tgUserId);
-            }
-
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 3. ROLE RESOLVER
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            function resolveUser(tgId) {
-                const record = DB.authorizedUsers[tgId];
-                if (!record) {
-                    return {
-                        roles: ['BUYER'],
-                        activePortal: 'BUYER',
-                        user: null,
-                        store: null,
-                        isAuthorized: false
-                    };
-                }
-                let roles = record.roles || ['BUYER'];
-                let defaultPortal = roles.includes('OWNER') ? 'OWNER' :
-                    roles.includes('SELLER') ? 'SELLER' :
-                    roles.includes('DRIVER') ? 'DRIVER' : 'BUYER';
-                return {
-                    roles: roles,
-                    activePortal: defaultPortal,
-                    user: record,
-                    store: record.store,
-                    isAuthorized: true
-                };
-            }
-
-            let session = resolveUser(tgUserId);
-            let activePortal = session.activePortal;
-
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 4. RENDER ENGINE
+            // 5. RENDER FUNCTIONS
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             function renderApp() {
                 const container = document.getElementById('portalContent');
-                const isOwner = session.roles.includes('OWNER');
-                const isSeller = session.roles.includes('SELLER');
-                const isDriver = session.roles.includes('DRIVER');
+                const isOwner = userRoles.roles.includes('OWNER');
+                const isSeller = userRoles.roles.includes('SELLER');
+                const isDriver = userRoles.roles.includes('DRIVER');
 
                 let displayPortal = activePortal;
-                // Ensure the active portal is allowed
-                if (isOwner && !['OWNER', 'SELLER'].includes(activePortal)) displayPortal = 'OWNER';
-                else if (isSeller && !['SELLER'].includes(activePortal) && !isOwner) displayPortal = 'SELLER';
-                else if (isDriver && !['DRIVER'].includes(activePortal) && !isOwner && !isSeller) displayPortal =
-                'DRIVER';
+                // if owner and activePortal is seller, show seller
+                // else fallback
+                if (isOwner && activePortal === 'OWNER') displayPortal = 'OWNER';
+                else if (isOwner && activePortal === 'SELLER') displayPortal = 'SELLER';
+                else if (isSeller && !isOwner) displayPortal = 'SELLER';
+                else if (isDriver && !isOwner && !isSeller) displayPortal = 'DRIVER';
                 else if (!isOwner && !isSeller && !isDriver) displayPortal = 'BUYER';
 
                 let html = '';
 
-                // ─── USER BANNER ───
-                const displayName = session.user ? session.user.username : tgUsername;
-                const roleDisplay = session.roles.join(', ');
-                html += `
-                    <div class="flex-between" style="margin-bottom:8px;">
-                        <div class="user-banner">
-                            <i class="fas fa-user-circle" style="color:#d4af37;"></i>
-                            @${displayName}
-                            <span class="role-tag">${roleDisplay}</span>
-                        </div>
-                        <span style="font-size:9px; color:#6f5e48;">ID: ${tgUserId.slice(0,4)}...</span>
-                    </div>
-                `;
-
-                // ─── ROLE SWITCHER (Owner only) ───
+                // Role switcher for Owner
                 if (isOwner) {
-                    const isActiveOwner = (displayPortal === 'OWNER');
-                    const isActiveSeller = (displayPortal === 'SELLER');
                     html += `<div class="role-switcher">
-                        <button class="role-btn ${isActiveOwner ? 'active' : ''}" data-portal="OWNER">👑 Owner Portal</button>
-                        <button class="role-btn ${isActiveSeller ? 'active' : ''}" data-portal="SELLER">🏪 Seller Portal</button>
+                        <button class="role-btn ${displayPortal === 'OWNER' ? 'active' : ''}" data-portal="OWNER">👑 Owner Portal</button>
+                        <button class="role-btn ${displayPortal === 'SELLER' ? 'active' : ''}" data-portal="SELLER">🏪 Seller Portal</button>
                     </div>`;
                 }
 
-                // ─── PORTAL CONTENT ───
-                if (displayPortal === 'OWNER') {
-                    html += renderOwnerPortal();
-                } else if (displayPortal === 'SELLER') {
-                    html += renderSellerPortal();
-                } else if (displayPortal === 'DRIVER') {
-                    html += renderDriverPortal();
-                } else {
-                    html += renderBuyerPortal();
-                }
+                // Render portal
+                if (displayPortal === 'OWNER') html += renderOwnerPortal();
+                else if (displayPortal === 'SELLER') html += renderSellerPortal();
+                else if (displayPortal === 'DRIVER') html += renderDriverPortal();
+                else html += renderBuyerPortal();
 
                 container.innerHTML = html;
 
-                // ─── BIND EVENTS ───
+                // ─── Event Bindings ───
                 // Role switcher
                 document.querySelectorAll('.role-btn[data-portal]').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const newPortal = this.dataset.portal;
-                        if (session.roles.includes('OWNER') && (newPortal === 'OWNER' || newPortal ===
-                                'SELLER')) {
+                        if (userRoles.roles.includes('OWNER')) {
                             activePortal = newPortal;
                             renderApp();
                         }
                     });
                 });
 
-                // Product add
+                // Add to cart
                 document.querySelectorAll('.btn-add[data-product-id]').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -889,7 +573,7 @@
                 // Verify payment
                 document.querySelectorAll('.verify-payment-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        showToast('✅ Payment verified successfully!');
+                        showToast('✅ Payment verified!');
                         this.textContent = '✓ Verified';
                         this.style.background = '#1a8a4a';
                         this.style.color = 'white';
@@ -899,7 +583,7 @@
                 // Assign driver
                 document.querySelectorAll('.assign-driver-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        showToast('🚛 Driver assigned: Abebe (🚗 ABC-1234)');
+                        showToast('🚛 Driver assigned: Abebe (ABC-1234)');
                     });
                 });
 
@@ -915,9 +599,7 @@
                     btn.addEventListener('click', function() {
                         const input = document.querySelector('.seller-input');
                         if (input && input.value.trim()) {
-                            showToast(
-                                `👤 Invitation sent to "${input.value.trim()}" · Code: SOYAM-SELLER-${Math.random().toString(36).substring(2,6).toUpperCase()}`
-                                );
+                            showToast(`👤 Invitation sent to "${input.value.trim()}" · Code: SOYAM-SELLER-${Math.random().toString(36).substring(2,6).toUpperCase()}`);
                             input.value = '';
                         } else {
                             showToast('⚠️ Please enter a Telegram username');
@@ -929,7 +611,7 @@
                 document.querySelectorAll('.revoke-seller-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const name = this.dataset.name || 'seller';
-                        showToast(`🔒 Access revoked for "${name}" · session terminated`);
+                        showToast(`🔒 Access revoked for "${name}"`);
                         const item = this.closest('.staff-item');
                         if (item) {
                             item.style.opacity = '0.4';
@@ -939,10 +621,10 @@
                     });
                 });
 
-                // Save / discard stock
+                // Save stock
                 document.querySelectorAll('.save-stock-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        showToast('📦 Stock item saved successfully!');
+                        showToast('📦 Stock item saved!');
                     });
                 });
                 document.querySelectorAll('.discard-stock-btn').forEach(btn => {
@@ -954,12 +636,12 @@
                 // Driver actions
                 document.querySelectorAll('.start-delivery-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        showToast('🚚 Delivery started · navigating to pickup');
+                        showToast('🚚 Delivery started');
                     });
                 });
                 document.querySelectorAll('.mark-delivered-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        showToast('✅ Delivery marked as COMPLETED');
+                        showToast('✅ Delivery marked COMPLETED');
                     });
                 });
 
@@ -990,63 +672,38 @@
                     });
                 });
 
-                // ─── QR SCANNER ─── (Telegram WebApp scanQrPopup)
-                document.querySelectorAll('.qr-scan-trigger').forEach(btn => {
+                // ─── QR SCAN BUTTON (Telegram native) ───
+                document.querySelectorAll('.scan-qr-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
-                        scanQRCode();
+                        if (tgWebApp && typeof tgWebApp.requestScanQrPopup === 'function') {
+                            tgWebApp.requestScanQrPopup({
+                                text: 'Scan product QR or order code'
+                            }, function(result) {
+                                if (result) {
+                                    showToast(`📷 QR scanned: ${result}`);
+                                    // Here you would send result to backend
+                                } else {
+                                    showToast('Scan cancelled');
+                                }
+                            });
+                        } else {
+                            // Fallback for browser
+                            showToast('📷 QR scan only works inside Telegram app');
+                            // Simulate scan result
+                            setTimeout(() => {
+                                showToast('📷 Simulated QR: PRODUCT-123');
+                            }, 1000);
+                        }
                     });
                 });
             }
 
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 5. QR SCANNER (Telegram WebApp)
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            function scanQRCode() {
-                const webapp = window.Telegram?.WebApp;
-                if (webapp && typeof webapp.scanQrPopup === 'function') {
-                    webapp.scanQrPopup({
-                        text: 'Scan item QR or order code'
-                    }, function(result) {
-                        if (result) {
-                            showToast(`📷 QR scanned: ${result}`);
-                            // Try to find product by code
-                            const product = DB.products.find(p => p.id == result || p.name.toLowerCase().includes(
-                            result.toLowerCase()));
-                            if (product) {
-                                showToast(`✅ Found: ${product.name} · ETB ${product.price}`);
-                            } else {
-                                showToast(`🔍 Code: ${result} — not in catalog`);
-                            }
-                        } else {
-                            showToast('❌ QR scan cancelled');
-                        }
-                    });
-                } else {
-                    // Fallback: use input prompt
-                    const code = prompt('📷 Enter QR code value (Telegram scan not available):');
-                    if (code) {
-                        showToast(`📷 QR entered: ${code}`);
-                        const product = DB.products.find(p => p.id == code || p.name.toLowerCase().includes(code
-                        .toLowerCase()));
-                        if (product) {
-                            showToast(`✅ Found: ${product.name} · ETB ${product.price}`);
-                        } else {
-                            showToast(`🔍 Code: ${code} — not in catalog`);
-                        }
-                    }
-                }
-            }
-
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 6. PORTAL RENDERERS
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-            // ─── BUYER ───
+            // ─── PORTAL RENDERERS ───
             function renderBuyerPortal() {
                 let html = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <div class="flex-between" style="margin-bottom:6px;">
                         <span style="font-size:16px; font-weight:700; color:#1a150f;">🛍️ Buyer</span>
-                        <span style="font-size:9px; color:#6f5e48;"><i class="fas fa-store"></i> Betel Bldg</span>
+                        <span class="bg-dark">${currentUser.username || 'guest'}</span>
                     </div>
                     <div class="nav-tabs">
                         <button class="nav-tab active"><i class="fas fa-th"></i> All</button>
@@ -1072,9 +729,7 @@
                     <div class="fulfillment-toggle flex-row" style="margin-top:14px; justify-content:center;">
                         <span class="pill" style="background:#d4af37; color:#1a150f; cursor:pointer;">📦 In-Person</span>
                         <span class="pill" style="cursor:pointer;">🚚 Delivery</span>
-                        <span class="pill qr-scan-trigger" style="cursor:pointer; background:#2b241d; color:#f0e6d8;">
-                            <i class="fas fa-qrcode"></i> Scan QR
-                        </span>
+                        <span class="pill" style="cursor:pointer;"><i class="fas fa-qrcode"></i> Scan QR</span>
                     </div>
                     <button class="action-btn custom-request-btn" style="margin-top:10px; background:#ede5d8; color:#2d241c;">
                         <i class="fas fa-camera" style="color:#b8952a;"></i> Can't find a product? Upload Photo or Name
@@ -1082,28 +737,26 @@
                     <div style="margin-top:10px; background:#f3ede6; border-radius:16px; padding:10px; font-size:10px; color:#5c4b35; text-align:center;">
                         <i class="fas fa-shopping-cart text-gold"></i> Your cart: 0 items · ETB 0
                     </div>
+                    <button class="action-btn scan-qr-btn" style="margin-top:10px; background:#2b241d; color:#f0e6d8;">
+                        <i class="fas fa-qrcode"></i> Scan QR Code
+                    </button>
                 `;
                 return html;
             }
 
-            // ─── SELLER ───
             function renderSellerPortal() {
                 const pendingOrders = DB.orders.filter(o => o.status === 'PENDING');
-                const pendingCount = pendingOrders.length;
-
                 let html = `
                     <div class="flex-between" style="margin-bottom:6px;">
                         <span style="font-size:16px; font-weight:700; color:#1a150f;">🏪 Seller Hub</span>
-                        <span class="bg-dark">${session.user ? session.user.username : tgUsername}</span>
+                        <span class="bg-dark">${currentUser.username}</span>
                     </div>
-
                     <div class="stat-card">
-                        <h4>📋 Pending Orders <span class="badge">${pendingCount}</span></h4>
+                        <h4>📋 Pending Orders <span class="badge">${pendingOrders.length}</span></h4>
                         <div class="flex-row">
                             ${pendingOrders.map(o => `<span class="pill">🟡 ${o.id}</span>`).join('') || '<span class="pill" style="color:#6f5e48;">No pending orders</span>'}
                         </div>
                     </div>
-
                     <div class="stat-card" style="border-left-color:#2b241d;">
                         <h4>💳 Verify Payment <span class="badge">#1024</span></h4>
                         <div style="background:white; border-radius:16px; padding:8px; margin:6px 0; border:1px dashed #b8952a; font-size:10px;">
@@ -1114,16 +767,10 @@
                             ✓ Verify Payment
                         </button>
                     </div>
-
-                    <div style="display:flex; gap:10px; margin:12px 0; flex-wrap:wrap;">
-                        <button class="action-btn secondary qr-scan-trigger" style="flex:1; padding:10px 0; min-width:100px;">
-                            <i class="fas fa-camera"></i> SCAN ITEM QR
-                        </button>
-                        <button class="action-btn assign-driver-btn" style="flex:1; background:#2b241d; color:#f0e6d8; min-width:100px;">
-                            🚛 Assign Driver
-                        </button>
+                    <div style="display:flex; gap:10px; margin:12px 0;">
+                        <button class="action-btn secondary scan-qr-btn" style="flex:1; padding:10px 0;"><i class="fas fa-camera"></i> SCAN ITEM QR</button>
+                        <button class="action-btn assign-driver-btn" style="flex:1; background:#2b241d; color:#f0e6d8;">🚛 Assign Driver</button>
                     </div>
-
                     <div class="stat-card" style="border-left-color:#6f5e48;">
                         <h4>🚚 Logistics Dispatch</h4>
                         <div style="font-size:11px; color:#3d2e1b; padding:4px 0;">
@@ -1131,7 +778,6 @@
                             <div style="font-size:9px; color:#6f5e48; margin-top:2px;">📍 ORD-1001 · pickup: Betel Bldg</div>
                         </div>
                     </div>
-
                     <div class="stat-card" style="border-left-color:#b8952a;">
                         <h4>📊 Today's Sales <span class="badge">ETB 4,820</span></h4>
                         <div style="font-size:10px; color:#5c4b35;">7 items sold · 4 orders completed</div>
@@ -1140,18 +786,15 @@
                 return html;
             }
 
-            // ─── OWNER ───
             function renderOwnerPortal() {
                 const totalRevenue = 24850;
                 const stockValue = 18200;
                 const staffCount = DB.staff.length;
-
                 let html = `
                     <div class="flex-between" style="margin-bottom:6px;">
                         <span style="font-size:16px; font-weight:700; color:#1a150f;">👑 Owner Command</span>
-                        <span class="bg-dark">${session.user ? session.user.username : tgUsername}</span>
+                        <span class="bg-dark">${currentUser.username}</span>
                     </div>
-
                     <div class="metric-tiles">
                         <div class="metric-tile">
                             <div class="label">Revenue</div>
@@ -1162,7 +805,6 @@
                             <div class="value">ETB ${stockValue.toLocaleString()}</div>
                         </div>
                     </div>
-
                     <div style="background:#eaddd0; border-radius:20px; padding:12px; margin-bottom:12px;">
                         <div style="font-size:10px; font-weight:600; color:#2d241c;">📈 Weekly trend <span style="float:right; color:#1a8a4a;">+12%</span></div>
                         <div style="height:28px; background:#d0c0ac; border-radius:40px; margin:6px 0; display:flex; align-items:center; padding:0 4px;">
@@ -1173,14 +815,12 @@
                             <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
                         </div>
                     </div>
-
                     <div class="stat-card" style="border-left-color:#9f3a2b;">
                         <h4>⚠️ Inventory Alerts</h4>
                         <div style="font-size:11px; color:#9f3a2b;">🔴 Oud Fragrance · 5 left (low)</div>
                         <div style="font-size:11px; color:#b8952a;">🟡 Velvet Cream · 8 left</div>
                         <div style="font-size:11px; color:#1a8a4a;">✅ All others in stock</div>
                     </div>
-
                     <div style="background:#f3ede6; border-radius:20px; padding:12px; margin-bottom:10px;">
                         <div class="flex-between">
                             <span style="font-size:11px; font-weight:600; color:#2d241c;"><i class="fas fa-users"></i> Staff (${staffCount})</span>
@@ -1202,7 +842,6 @@
                             </div>
                         `).join('')}
                     </div>
-
                     <div class="stock-form">
                         <div style="font-size:12px; font-weight:700; color:#1a150f; margin-bottom:8px;">📦 ADD NEW STOCK</div>
                         <div class="form-group">
@@ -1223,7 +862,7 @@
                             <label>📸 Media</label>
                             <div class="media-row">
                                 <button><i class="fas fa-image"></i> Gallery</button>
-                                <button class="qr-scan-trigger"><i class="fas fa-camera"></i> Scan</button>
+                                <button><i class="fas fa-camera"></i> Scan</button>
                             </div>
                         </div>
                         <div class="form-group">
@@ -1240,7 +879,6 @@
                             <button class="discard-stock-btn discard-btn"><i class="fas fa-trash"></i> DISCARD</button>
                         </div>
                     </div>
-
                     <button class="action-btn secondary close-daily-btn" style="margin-top:12px;">
                         <i class="fas fa-lock"></i> Close Daily Transactions
                     </button>
@@ -1248,16 +886,13 @@
                 return html;
             }
 
-            // ─── DRIVER ───
             function renderDriverPortal() {
                 const deliveries = DB.pendingDeliveries;
-
                 let html = `
                     <div class="flex-between" style="margin-bottom:6px;">
                         <span style="font-size:16px; font-weight:700; color:#1a150f;">🚚 Driver</span>
-                        <span class="bg-dark">${session.user ? session.user.username : tgUsername}</span>
+                        <span class="bg-dark">${currentUser.username}</span>
                     </div>
-
                     ${deliveries.map(d => `
                         <div class="delivery-card">
                             <div class="d-title"><i class="fas fa-box text-gold"></i> ${d.id} · ${d.orderId}</div>
@@ -1282,14 +917,12 @@
                             <div style="font-size:12px; margin-top:8px;">No assigned deliveries</div>
                         </div>
                     `}
-
                     <div style="background:#f3ede6; border-radius:16px; padding:12px; margin-top:10px; text-align:center; font-size:10px; color:#5c4b35;">
                         <i class="fas fa-qrcode text-gold"></i> Scan Order QR to verify pickup
-                        <button class="action-btn qr-scan-trigger" style="width:auto; padding:6px 20px; margin-top:6px; background:#2b241d; color:#f0e6d8; font-size:10px;">
-                            <i class="fas fa-camera"></i> Scan QR
-                        </button>
                     </div>
-
+                    <button class="action-btn scan-qr-btn" style="margin-top:10px; background:#2b241d; color:#f0e6d8;">
+                        <i class="fas fa-qrcode"></i> Scan QR Code
+                    </button>
                     <div style="background:#1a150f; border-radius:16px; padding:10px; margin-top:8px; color:#f0e6d8; font-size:10px; display:flex; justify-content:space-between;">
                         <span><i class="fas fa-phone"></i> Contact: +251 91 234 5678</span>
                         <span><i class="fas fa-car"></i> ABC-1234</span>
@@ -1298,59 +931,31 @@
                 return html;
             }
 
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 7. TOAST
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            // ─── TOAST ───
             function showToast(msg) {
                 const container = document.getElementById('portalContainer');
                 const existing = container.querySelector('.toast');
                 if (existing) existing.remove();
-
                 const toast = document.createElement('div');
                 toast.className = 'toast';
                 toast.textContent = msg;
                 container.appendChild(toast);
-
-                setTimeout(() => {
-                    if (toast.parentNode) toast.remove();
-                }, 3500);
+                setTimeout(() => { if (toast.parentNode) toast.remove(); }, 3000);
             }
 
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 8. INIT & TELEGRAM WEBAPP SETUP
-            // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            function init() {
-                // Configure Telegram WebApp
-                try {
-                    const webapp = window.Telegram?.WebApp;
-                    if (webapp) {
-                        webapp.expand();
-                        webapp.enableClosingConfirmation();
-                        webapp.setBackgroundColor('#f6f1eb');
-                        webapp.setHeaderColor('#f6f1eb');
-                        console.log('✅ Telegram WebApp initialized');
-                    }
-                } catch (e) {
-                    console.log('ℹ️ Running outside Telegram WebApp');
-                }
+            // ─── INIT ───
+            renderApp();
 
-                // Show user info
-                console.log(`👤 User: ${tgUserId} (@${tgUsername})`);
-                console.log(`🎭 Roles: ${session.roles.join(', ')}`);
-                console.log(`🚪 Portal: ${activePortal}`);
-
-                renderApp();
+            // Expand Telegram WebApp to full height
+            if (tgWebApp) {
+                tgWebApp.expand();
+                tgWebApp.ready();
             }
 
-            // ─── Expose for debugging ───
-            window.DB = DB;
-            window.tgUserId = tgUserId;
-            window.session = session;
-            window.scanQRCode = scanQRCode;
-            window.renderApp = renderApp;
-
-            // ─── Start ───
-            init();
+            // Log the user
+            console.log('👤 Current user:', currentUser);
+            console.log('🔑 Roles:', userRoles.roles);
+            console.log('📱 Active portal:', activePortal);
 
         })();
     </script>

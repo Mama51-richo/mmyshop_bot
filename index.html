@@ -88,9 +88,44 @@ const seed={
  orders:[],transactions:[],requests:[],deliveries:[],invitations:[],audit:[],
  dailyLedger:{date:new Date().toISOString().slice(0,10),status:"OPEN",cash:0,bank:0,telebirr:0}
 };
-function loadDB(){try{return JSON.parse(localStorage.getItem(DB_KEY))||structuredClone(seed)}catch(e){return structuredClone(seed)}}
+const IDB_NAME="soyam_cosmo_persistent_v1",IDB_STORE="state";
+function loadDB(){try{const raw=localStorage.getItem(DB_KEY);return raw?JSON.parse(raw):structuredClone(seed)}catch(e){return structuredClone(seed)}}
 let db=loadDB();
-function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db));localStorage.setItem("soyam_sync_tick",String(Date.now()));window.dispatchEvent(new CustomEvent("soyam:data-updated"))}
+function openPersistentDB(){
+ return new Promise((resolve,reject)=>{
+  if(!window.indexedDB)return resolve(null);
+  const r=indexedDB.open(IDB_NAME,1);
+  r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(IDB_STORE))r.result.createObjectStore(IDB_STORE)};
+  r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);
+ });
+}
+async function persistSnapshot(snapshot){
+ try{const idb=await openPersistentDB();if(idb){await new Promise((res,rej)=>{const tx=idb.transaction(IDB_STORE,"readwrite");tx.objectStore(IDB_STORE).put(snapshot,"db");tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});idb.close()}}catch(e){}
+}
+function saveDB(){
+ const snapshot=JSON.stringify(db);
+ localStorage.setItem(DB_KEY,snapshot);
+ localStorage.setItem("soyam_sync_tick",String(Date.now()));
+ persistSnapshot(snapshot);
+ window.dispatchEvent(new CustomEvent("soyam:data-updated"));
+}
+async function hydratePersistentData(){
+ try{
+  const idb=await openPersistentDB();
+  if(!idb)return;
+  const snapshot=await new Promise((res,rej)=>{const tx=idb.transaction(IDB_STORE,"readonly");const r=tx.objectStore(IDB_STORE).get("db");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+  idb.close();
+  if(snapshot){
+   const parsed=typeof snapshot==="string"?JSON.parse(snapshot):snapshot;
+   if(parsed&&typeof parsed==="object"){
+    db=parsed;
+    localStorage.setItem(DB_KEY,JSON.stringify(db));
+   }
+  }else{
+   await persistSnapshot(JSON.stringify(db));
+  }
+ }catch(e){}
+}
 const MockAPI={
  async login(){
   const tu=tg?.initDataUnsafe?.user||{};
@@ -457,11 +492,26 @@ function ownerDashboard(){
  <div class="panel"><h3>⚠️ Stock Attention</h3>${db.products.filter(p=>p.stock<10).slice(0,5).map(p=>`<div class="reportcard"><span>${p.emoji} ${esc(p.name)}</span><b>${p.stock} units</b></div>`).join("")||'<p class="muted">All stock levels are currently above the low-stock threshold.</p>'}</div>
  <div class="panel"><h3>📈 Actual Sales Trend</h3><div class="chart">${[18,35,28,52,42,68,55].map(x=>`<div class="bar" style="height:${x}%"></div>`).join("")}</div><p class="muted">Actual figures are calculated from the current local data register.</p></div>`;
 }
-function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 Authorized Users</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<div class="actions"><button class="edit-btn" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button><button class="danger delete-btn" onclick="deleteUser(${u.id})">Delete</button></div>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
+function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 User Management</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<div class="actions"><button class="edit-btn" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button><button class="danger delete-btn" onclick="deleteUser(${u.id})">Delete</button></div>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
 function showAuthorizedUser(){document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="userModal"><div class="sheet"><h3>＋ Add Authorized User</h3><div class="formgrid"><input class="input" id="auId" placeholder="Telegram User ID"><input class="input" id="auUsername" placeholder="Telegram Username"><input class="input" id="auName" placeholder="Name"><input class="input" id="auPhone" placeholder="Phone"><select class="input" id="auRole"><option>SELLER</option><option>DRIVER</option></select><select class="input"><option>STORE001 — SoYam Cosmetics</option></select><button class="primary full" onclick="saveAuthorizedUser()">SAVE USER</button><button class="danger full" onclick="document.getElementById('userModal').remove()">DISCARD</button></div></div></div>`)}
-function saveAuthorizedUser(){let u={id:Date.now(),telegram_user_id:document.getElementById('auId').value.trim(),telegram_username:document.getElementById('auUsername').value.trim().replace(/^@/,''),first_name:document.getElementById('auName').value.trim(),phone:document.getElementById('auPhone').value.trim(),roles:[document.getElementById('auRole').value],permissions:[document.getElementById('auRole').value==="SELLER"?"SELL":"DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"};if(!u.telegram_user_id||!u.telegram_username){toast("Telegram ID and username required");return}db.users.push(u);saveDB();audit("AUTHORIZED_USER_ADDED",u.telegram_username);document.getElementById('userModal').remove();toast("Authorized user saved");render()}
+function saveAuthorizedUser(){
+ let username=document.getElementById('auUsername').value.trim().replace(/^@/,'').toLowerCase();
+ let telegramId=document.getElementById('auId').value.trim();
+ let role=document.getElementById('auRole').value;
+ if(!telegramId||!username){toast("Telegram ID and username required");return}
+ if(username==="mama51r"){toast("Master owner cannot be added or replaced");return}
+ if(db.users.some(x=>(x.telegram_username||"").toLowerCase()===username || (telegramId&&x.telegram_user_id===telegramId))){toast("That Telegram user already exists");return}
+ let u={id:Date.now(),telegram_user_id:telegramId,telegram_username:username,first_name:document.getElementById('auName').value.trim(),phone:document.getElementById('auPhone').value.trim(),roles:[role],permissions:[role==="SELLER"?"SELL":"DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"};
+ db.users.push(u);saveDB();audit("AUTHORIZED_USER_ADDED",u.telegram_username);document.getElementById('userModal').remove();toast("User saved permanently");render()
+}
 function toggleUser(id){let u=db.users.find(x=>x.id===id);u.account_status=u.account_status==="ACTIVE"?"SUSPENDED":"ACTIVE";saveDB();audit("USER_STATUS_CHANGED",u.telegram_username);toast("User status changed");render()}
-function deleteUser(id){let u=db.users.find(x=>x.id===id);if(!u||u.telegram_username==="mama51R")return;if(!confirm("Delete @"+u.telegram_username+" permanently?"))return;db.users=db.users.filter(x=>x.id!==id);saveDB();audit("USER_DELETED",u.telegram_username);toast("User deleted");render()}
+function deleteUser(id){
+ let u=db.users.find(x=>x.id===id);
+ if(!u||String(u.telegram_username).toLowerCase()==="mama51r")return;
+ if(!confirm("Permanently remove @"+u.telegram_username+"? This change is saved immediately."))return;
+ db.users=db.users.filter(x=>x.id!==id);
+ saveDB();audit("USER_DELETED",u.telegram_username);toast("User permanently removed");render()
+}
 function createInvite(){let username=document.getElementById("inviteUser").value;let code="SOYAM-SELLER-"+Math.random().toString(36).slice(2,7).toUpperCase();db.invitations.push({code,username,status:"PENDING"});saveDB();audit("SELLER_INVITATION_CREATED",code);alert("Invitation: "+code);render()}
 function ownerOrders(){
  return `<div class="panel"><div class="row"><div><h3>🧾 Order Register</h3><span class="muted">Order ID · buyer · items · payment · fulfillment · stock</span></div><span class="badge ok">${db.orders.length} total</span></div>
@@ -471,7 +521,8 @@ function ownerAudit(){return `<div class="panel"><div class="row"><h3>💰 Daily
  <div class="metricgrid"><div class="metric"><span>Cash</span><b>${money(db.dailyLedger.cash)}</b></div><div class="metric"><span>Bank</span><b>${money(db.dailyLedger.bank)}</b></div><div class="metric"><span>Telebirr</span><b>${money(db.dailyLedger.telebirr)}</b></div><div class="metric"><span>Ledger</span><b>${db.dailyLedger.status}</b></div></div>
  <div class="tablewrap"><table class="table"><thead><tr><th>Order ID</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead><tbody>${db.transactions.slice().reverse().map(t=>`<tr><td>${esc(t.order_id)}</td><td>${esc(t.type)}</td><td>${money(t.amount)}</td><td><span class="badge ${t.status==="OWNER_PENDING"?"pending":"ok"}">${t.status}</span></td></tr>`).join("")||'<tr><td colspan="4">No transactions.</td></tr>'}</tbody></table></div></div>
  <div class="panel"><h3>Recent Activity</h3>${db.audit.slice().reverse().slice(0,20).map(a=>`<div class="reportcard"><span>${esc(a.action)}<br><span class="muted">${esc(a.detail)}</span></span><b class="muted">${new Date(a.at).toLocaleTimeString()}</b></div>`).join("")||'<p class="muted">No activity.</p>'}</div>`}
-function ownerReports(){let revenue=db.transactions.reduce((s,t)=>s+(t.type==="SALE"?Number(t.amount||0):0),0);return `<div class="panel"><div class="row"><h3>${ico("chart")} ${t("Reports")}</h3><span class="badge ok">${db.orders.length} orders</span></div><div class="metricgrid"><div class="metric"><span>Actual Sales</span><b>${money(revenue)}</b></div><div class="metric"><span>Stock Units</span><b>${db.products.reduce((a,p)=>a+p.stock,0)}</b></div><div class="metric"><span>Completed</span><b>${db.orders.filter(o=>o.status==="COMPLETED").length}</b></div><div class="metric"><span>Pending</span><b>${db.orders.filter(o=>o.status!=="COMPLETED").length}</b></div></div></div><div class="panel"><h3>${ico("orders")} Order Detail Report</h3><div class="tablewrap"><table class="table"><thead><tr><th>Order ID</th><th>Date</th><th>Buyer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th><th>Stock</th></tr></thead><tbody>${db.orders.slice().reverse().map(o=>`<tr><td><b>${esc(o.id)}</b></td><td>${new Date(o.created_at||Date.now()).toLocaleString()}</td><td>${esc(o.buyer_name||o.buyer||"—")}</td><td>${(o.items||[]).map(i=>`${esc(i.product_id)} × ${i.quantity}`).join("; ")}</td><td>${money(o.total)}</td><td>${esc(o.payment_status||"—")}</td><td>${esc(o.status||"—")}</td><td>${o.stock_deducted?"POSTED":"OPEN"}</td></tr>`).join("")||'<tr><td colspan="8">No orders.</td></tr>'}</tbody></table></div></div>`}function ownerSettings(){return `<div class="panel"><h3>Platform Settings</h3><p>Store: SoYam Cosmo</p><p>Location: Betel Building, Ground Floor, Addis Ababa</p><p>Phone: +251919096451</p><p>Master Owner: @mama51R</p><button class="danger" onclick="if(confirm('Reset demo database?')){localStorage.removeItem(DB_KEY);db=loadDB();state.cart=[];saveDB();toast('Data reset to owner defaults');render()}">Reset Demo Data</button></div>`}
+function ownerReports(){let revenue=db.transactions.reduce((s,t)=>s+(t.type==="SALE"?Number(t.amount||0):0),0);return `<div class="panel"><div class="row"><h3>${ico("chart")} ${t("Reports")}</h3><span class="badge ok">${db.orders.length} orders</span></div><div class="metricgrid"><div class="metric"><span>Actual Sales</span><b>${money(revenue)}</b></div><div class="metric"><span>Stock Units</span><b>${db.products.reduce((a,p)=>a+p.stock,0)}</b></div><div class="metric"><span>Completed</span><b>${db.orders.filter(o=>o.status==="COMPLETED").length}</b></div><div class="metric"><span>Pending</span><b>${db.orders.filter(o=>o.status!=="COMPLETED").length}</b></div></div></div><div class="panel"><h3>${ico("orders")} Order Detail Report</h3><div class="tablewrap"><table class="table"><thead><tr><th>Order ID</th><th>Date</th><th>Buyer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th><th>Stock</th></tr></thead><tbody>${db.orders.slice().reverse().map(o=>`<tr><td><b>${esc(o.id)}</b></td><td>${new Date(o.created_at||Date.now()).toLocaleString()}</td><td>${esc(o.buyer_name||o.buyer||"—")}</td><td>${(o.items||[]).map(i=>`${esc(i.product_id)} × ${i.quantity}`).join("; ")}</td><td>${money(o.total)}</td><td>${esc(o.payment_status||"—")}</td><td>${esc(o.status||"—")}</td><td>${o.stock_deducted?"POSTED":"OPEN"}</td></tr>`).join("")||'<tr><td colspan="8">No orders.</td></tr>'}</tbody></table></div></div>`}function ownerSettings(){return `<div class="panel"><h3>Platform Settings</h3><p>Store: SoYam Cosmo</p><p>Location: Betel Building, Ground Floor, Addis Ababa</p><p>Phone: +251919096451</p><p>Master Owner: @mama51R</p><button class="danger" onclick="if(confirm('Reset demo database?')){localStorage.removeItem(DB_KEY);db=structuredClone(seed);state.cart=[];saveDB();toast('Data reset to owner defaults');render()}">Reset Demo Data</button></div>`}
+function persistenceStatus(){toast("Data is saved immediately to browser storage and IndexedDB.");}
 function closeDay(){if(db.dailyLedger.status==="CLOSED"){toast("Ledger already closed");return}if(confirm("Close and lock today's transactions?")){db.dailyLedger.status="CLOSED";saveDB();audit("DAILY_LEDGER_CLOSED",db.dailyLedger.date);toast("Daily transactions locked");render()}}
 function showStoreQR(){
  let url=location.href.split("#")[0];
@@ -480,8 +531,8 @@ function showStoreQR(){
 
 function closeModal(){document.getElementById("checkoutModal")?.remove()}
 window.addEventListener("storage",e=>{if(e.key===DB_KEY||e.key==="soyam_sync_tick"){db=loadDB();render()}});window.addEventListener("soyam:data-updated",()=>{db=loadDB();render()});
-window.showStoreQR=showStoreQR;window.removeStock=removeStock;window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.startScanner=startScanner;window.stopScanner=stopScanner;window.pickScanImage=pickScanImage;window.decodeImageFile=decodeImageFile;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.demoBuyer=demoBuyer;window.setScanMode=setScanMode;window.lookupBarcode=lookupBarcode;window.addScannedItem=addScannedItem;window.externalLookupDemo=externalLookupDemo;window.confirmPickup=confirmPickup;window.showAddStock=showAddStock;window.previewStockImage=previewStockImage;window.openStockScanner=openStockScanner;window.saveStock=saveStock;window.editStock=editStock;window.closeStockModal=closeStockModal;window.showAuthorizedUser=showAuthorizedUser;window.editStock=editStock;window.saveEditedStock=saveEditedStock;window.saveAuthorizedUser=saveAuthorizedUser;
-boot();
+window.showStoreQR=showStoreQR;window.removeStock=removeStock;window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.startScanner=startScanner;window.stopScanner=stopScanner;window.pickScanImage=pickScanImage;window.decodeImageFile=decodeImageFile;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.persistenceStatus=persistenceStatus;window.demoBuyer=demoBuyer;window.setScanMode=setScanMode;window.lookupBarcode=lookupBarcode;window.addScannedItem=addScannedItem;window.externalLookupDemo=externalLookupDemo;window.confirmPickup=confirmPickup;window.showAddStock=showAddStock;window.previewStockImage=previewStockImage;window.openStockScanner=openStockScanner;window.saveStock=saveStock;window.editStock=editStock;window.closeStockModal=closeStockModal;window.showAuthorizedUser=showAuthorizedUser;window.editStock=editStock;window.saveEditedStock=saveEditedStock;window.saveAuthorizedUser=saveAuthorizedUser;
+hydratePersistentData().finally(()=>boot());
 </script>
 </body>
 </html>

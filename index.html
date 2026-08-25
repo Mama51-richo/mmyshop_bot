@@ -1,1282 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>soYam cosmo · Telegram Mini App</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ===== same as before, plus modal for checkout ===== */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    :root {
-      --gold: #d4af37; --gold-light: #e8c84c; --gold-glow: rgba(212,175,55,0.25);
-      --choco: #2c1810; --choco-light: #4a2c20; --choco-dark: #1a0e08;
-      --cream: #faf6ef; --slate: #2d2a2a; --slate-light: #4a4747;
-      --white: #ffffff; --black: #0a0808;
-      --emerald: #2d8f6f; --ruby: #b83b3b; --amber: #c98b2b;
-      --radius: 16px; --shadow: 0 8px 32px rgba(0,0,0,0.25);
-      --font-serif: 'Cormorant Garamond', serif;
-      --font-sans: 'Montserrat', sans-serif;
-      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
-    }
-    html, body { height:100%; background:var(--cream); font-family:var(--font-sans); color:var(--choco); overflow:hidden; }
-    ::-webkit-scrollbar { width:4px; }
-    ::-webkit-scrollbar-track { background:transparent; }
-    ::-webkit-scrollbar-thumb { background:var(--gold); border-radius:8px; }
-    #app {
-      display: flex; flex-direction: column; height:100vh; max-width:480px; margin:0 auto;
-      background:var(--cream); box-shadow:0 0 60px rgba(0,0,0,0.08); position:relative; overflow:hidden;
-    }
-    .app-header {
-      background:linear-gradient(135deg, var(--choco-dark), var(--choco) 60%, var(--choco-light));
-      padding:16px 18px 12px; color:var(--white); flex-shrink:0; z-index:10;
-      border-bottom:2px solid var(--gold); box-shadow:0 4px 20px rgba(0,0,0,0.3);
-      text-align:center; position:relative;
-    }
-    .header-utils {
-      display:flex; justify-content:flex-end; align-items:center; gap:12px;
-      margin-bottom:4px;
-    }
-    .role-badge {
-      background:rgba(212,175,55,0.2); border:1px solid rgba(212,175,55,0.3);
-      padding:4px 12px; border-radius:20px; font-size:9px; font-weight:600;
-      text-transform:uppercase; letter-spacing:0.08em; color:var(--gold-light);
-      cursor:pointer; transition:var(--transition);
-      display:flex; align-items:center; gap:4px;
-    }
-    .role-badge:hover { background:rgba(212,175,55,0.35); }
-    .role-badge .user-tag { font-weight:300; font-size:7px; opacity:0.7; }
-    .icon-btn {
-      background:rgba(255,255,255,0.08); border:none; color:var(--white);
-      width:34px; height:34px; border-radius:50%; font-size:16px;
-      cursor:pointer; transition:var(--transition); position:relative;
-      display:flex; align-items:center; justify-content:center;
-    }
-    .icon-btn:hover { background:rgba(212,175,55,0.25); }
-    .icon-btn .badge {
-      position:absolute; top:-4px; right:-4px; background:var(--ruby);
-      color:#fff; font-size:8px; font-weight:700; width:18px; height:18px;
-      border-radius:50%; display:flex; align-items:center; justify-content:center;
-    }
-    .brand-center {
-      display:flex; flex-direction:column; align-items:center;
-    }
-    .brand-logo {
-      width:60px; height:60px; background:radial-gradient(circle at 30% 30%, var(--gold-light), var(--gold));
-      border-radius:50%; display:flex; align-items:center; justify-content:center;
-      font-family:var(--font-serif); font-weight:700; font-size:28px; color:var(--choco-dark);
-      box-shadow:0 0 40px var(--gold-glow); margin-bottom:6px;
-      border:2px solid rgba(212,175,55,0.3);
-    }
-    .brand-name {
-      font-family:var(--font-serif); font-weight:700; font-size:24px; letter-spacing:0.18em;
-      color:var(--gold-light);
-    }
-    .brand-name span { font-weight:400; font-size:18px; color:rgba(255,255,255,0.5); letter-spacing:0.08em; }
-    .brand-sub {
-      font-size:11px; text-transform:uppercase; letter-spacing:0.3em;
-      color:rgba(255,255,255,0.7); font-weight:300; margin-top:2px;
-    }
-    .brand-amharic {
-      font-family:var(--font-serif); font-size:18px; letter-spacing:0.1em;
-      color:var(--gold-light); margin-top:2px; font-weight:400;
-    }
-    .brand-address {
-      font-size:10px; font-weight:300; letter-spacing:0.04em;
-      color:rgba(255,255,255,0.7); margin-top:6px;
-      display:flex; align-items:center; justify-content:center; gap:6px;
-      flex-wrap:wrap;
-    }
-    .brand-address i { color:var(--gold); font-size:11px; }
-    .brand-address a { color:var(--gold-light); text-decoration:none; font-weight:500; }
-    .brand-address a:hover { text-decoration:underline; }
-    .lang-row {
-      display:flex; justify-content:center; gap:6px; flex-wrap:wrap;
-      margin-top:10px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);
-    }
-    .lang-chip {
-      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);
-      padding:3px 12px; border-radius:20px; font-size:9px; font-weight:500;
-      color:rgba(255,255,255,0.8); cursor:pointer; transition:var(--transition);
-      font-family:var(--font-sans); letter-spacing:0.02em; white-space:nowrap;
-    }
-    .lang-chip:hover, .lang-chip.active { background:var(--gold); color:var(--choco-dark); border-color:var(--gold); }
-    .lang-chip.active { font-weight:600; }
-    .social-row {
-      display:flex; gap:14px; justify-content:center; margin:10px 0 6px;
-    }
-    .social-row a {
-      width:38px; height:38px; border-radius:50%; background:var(--white);
-      box-shadow:0 2px 12px rgba(0,0,0,0.06); display:flex; align-items:center; justify-content:center;
-      color:var(--choco); font-size:18px; transition:var(--transition);
-      text-decoration:none; border:1px solid rgba(0,0,0,0.04);
-    }
-    .social-row a:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.1); color:var(--gold); border-color:var(--gold); }
-    .portal-switcher {
-      display:flex; gap:8px; background:rgba(255,255,255,0.06); border-radius:12px;
-      padding:4px; margin-top:6px; justify-content:center;
-    }
-    .portal-switcher button {
-      background:transparent; border:none; padding:4px 14px; border-radius:8px;
-      font-size:10px; font-weight:500; color:rgba(255,255,255,0.6);
-      cursor:pointer; transition:var(--transition); font-family:var(--font-sans);
-      letter-spacing:0.04em;
-    }
-    .portal-switcher button.active { background:var(--gold); color:var(--choco-dark); }
-    .portal-switcher button:hover:not(.active) { color:var(--white); }
-    .hidden { display:none !important; }
-    .main-content {
-      flex:1; overflow-y:auto; padding:12px 16px 80px;
-      background:var(--cream); scroll-behavior:smooth;
-    }
-    .promo-card {
-      background:linear-gradient(135deg, var(--choco), var(--choco-light));
-      border-radius:var(--radius); padding:14px 18px; margin-bottom:16px;
-      color:var(--white); box-shadow:0 4px 20px rgba(44,24,16,0.2);
-      border-left:4px solid var(--gold);
-    }
-    .promo-card h4 { font-family:var(--font-serif); font-size:16px; font-weight:600; color:var(--gold-light); margin-bottom:2px; }
-    .promo-card p { font-size:12px; opacity:0.8; font-weight:300; letter-spacing:0.02em; }
-    .section-title {
-      font-family:var(--font-serif); font-size:18px; font-weight:600; color:var(--choco);
-      margin-bottom:10px; display:flex; align-items:center; gap:8px;
-    }
-    .section-title i { color:var(--gold); font-size:16px; }
-    .category-tabs {
-      display:flex; gap:6px; overflow-x:auto; padding-bottom:6px; margin-bottom:14px; flex-shrink:0;
-      scrollbar-width:none;
-    }
-    .category-tabs::-webkit-scrollbar { display:none; }
-    .cat-tab {
-      background:var(--white); border:1px solid rgba(0,0,0,0.06); padding:6px 16px;
-      border-radius:20px; font-size:11px; font-weight:500; color:var(--slate);
-      cursor:pointer; white-space:nowrap; transition:var(--transition);
-      font-family:var(--font-sans); box-shadow:0 1px 4px rgba(0,0,0,0.02);
-    }
-    .cat-tab:hover { border-color:var(--gold); color:var(--choco); }
-    .cat-tab.active { background:var(--choco); color:var(--white); border-color:var(--choco); box-shadow:0 4px 12px rgba(44,24,16,0.15); }
-    .product-grid {
-      display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:16px;
-    }
-    .product-card {
-      background:var(--white); border-radius:var(--radius); overflow:hidden;
-      box-shadow:0 2px 12px rgba(0,0,0,0.04); transition:var(--transition);
-      border:1px solid rgba(0,0,0,0.03); cursor:pointer;
-    }
-    .product-card:hover { transform:translateY(-3px); box-shadow:0 8px 28px rgba(0,0,0,0.08); }
-    .product-img {
-      width:100%; aspect-ratio:1/1; background:linear-gradient(135deg, #f5f0ea, #ede8e0);
-      display:flex; align-items:center; justify-content:center; font-size:36px;
-      color:var(--choco-light); position:relative;
-    }
-    .product-img .tag {
-      position:absolute; top:8px; left:8px; background:var(--gold);
-      color:var(--choco-dark); font-size:7px; font-weight:700; text-transform:uppercase;
-      padding:2px 8px; border-radius:10px; letter-spacing:0.06em;
-    }
-    .product-info { padding:10px 12px 12px; }
-    .product-info h5 { font-size:13px; font-weight:600; color:var(--choco); margin-bottom:2px; font-family:var(--font-serif); }
-    .product-info .category-label { font-size:9px; text-transform:uppercase; color:var(--slate-light); letter-spacing:0.06em; font-weight:500; }
-    .product-info .price-row { display:flex; align-items:center; justify-content:space-between; margin-top:6px; }
-    .product-info .price { font-weight:700; font-size:15px; color:var(--choco); }
-    .product-info .price small { font-weight:400; font-size:10px; color:var(--slate-light); }
-    .product-info .add-btn {
-      background:var(--choco); color:var(--white); border:none; width:28px; height:28px;
-      border-radius:50%; font-size:14px; cursor:pointer; transition:var(--transition);
-      display:flex; align-items:center; justify-content:center;
-    }
-    .product-info .add-btn:hover { background:var(--gold); color:var(--choco-dark); transform:scale(1.05); }
-    .request-btn {
-      display:flex; align-items:center; justify-content:center; gap:8px;
-      background:var(--white); border:2px dashed var(--gold); border-radius:var(--radius);
-      padding:14px; margin-top:6px; cursor:pointer; transition:var(--transition);
-      color:var(--choco); font-weight:500; font-size:13px; font-family:var(--font-sans); width:100%;
-    }
-    .request-btn i { color:var(--gold); font-size:18px; }
-    .request-btn:hover { background:rgba(212,175,55,0.06); border-color:var(--choco); }
-    .stat-cards {
-      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;
-    }
-    .stat-card {
-      background:var(--white); border-radius:var(--radius); padding:14px;
-      box-shadow:0 2px 12px rgba(0,0,0,0.04); border-left:3px solid var(--gold);
-    }
-    .stat-card .num { font-family:var(--font-serif); font-size:24px; font-weight:700; color:var(--choco); }
-    .stat-card .label { font-size:10px; text-transform:uppercase; color:var(--slate-light); letter-spacing:0.06em; font-weight:500; }
-    .stat-card.delivery { border-left-color:var(--emerald); }
-    .stat-card.pending { border-left-color:var(--amber); }
-    .order-list { display:flex; flex-direction:column; gap:8px; }
-    .order-item {
-      background:var(--white); border-radius:12px; padding:12px 14px;
-      box-shadow:0 1px 6px rgba(0,0,0,0.04); display:flex; align-items:center;
-      justify-content:space-between; border:1px solid rgba(0,0,0,0.03);
-    }
-    .order-item .order-id { font-weight:600; font-size:13px; color:var(--choco); }
-    .order-item .order-status {
-      font-size:9px; font-weight:600; text-transform:uppercase;
-      padding:3px 10px; border-radius:12px; letter-spacing:0.04em;
-    }
-    .order-status.pending { background:rgba(201,139,43,0.12); color:var(--amber); }
-    .order-status.confirmed { background:rgba(45,143,111,0.12); color:var(--emerald); }
-    .order-status.delivered { background:rgba(44,24,16,0.08); color:var(--slate); }
-    .order-item .order-meta { font-size:10px; color:var(--slate-light); }
-    .order-item .verify-btn {
-      background:var(--emerald); color:white; border:none; padding:4px 12px; border-radius:12px;
-      font-size:9px; font-weight:600; cursor:pointer; transition:var(--transition);
-    }
-    .order-item .verify-btn:hover { opacity:0.8; }
-    .order-item .assign-btn {
-      background:var(--gold); color:var(--choco-dark); border:none; padding:4px 12px; border-radius:12px;
-      font-size:9px; font-weight:600; cursor:pointer; transition:var(--transition);
-    }
-    .order-item .assign-btn:hover { opacity:0.8; }
-    .scan-fab {
-      background:linear-gradient(135deg, var(--gold), var(--gold-light));
-      color:var(--choco-dark); border:none; padding:14px 28px; border-radius:40px;
-      font-weight:700; font-size:14px; font-family:var(--font-sans);
-      box-shadow:0 8px 32px rgba(212,175,55,0.35); cursor:pointer;
-      transition:var(--transition); display:flex; align-items:center;
-      gap:10px; z-index:20; letter-spacing:0.04em;
-    }
-    .scan-fab:hover { transform:scale(1.02); box-shadow:0 12px 40px rgba(212,175,55,0.45); }
-    .metric-tiles {
-      display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:12px;
-    }
-    .metric-tile {
-      background:var(--white); border-radius:var(--radius); padding:14px;
-      box-shadow:0 2px 12px rgba(0,0,0,0.04); border-top:3px solid var(--gold);
-    }
-    .metric-tile .value { font-family:var(--font-serif); font-size:22px; font-weight:700; color:var(--choco); }
-    .metric-tile .label { font-size:9px; text-transform:uppercase; color:var(--slate-light); letter-spacing:0.06em; font-weight:500; }
-    .metric-tile .change { font-size:10px; font-weight:600; color:var(--emerald); }
-    .owner-action-grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;
-    }
-    .owner-action-btn {
-      background:var(--white); border:1px solid rgba(0,0,0,0.06); border-radius:12px;
-      padding:12px; text-align:center; cursor:pointer; transition:var(--transition);
-      font-family:var(--font-sans); font-weight:500; font-size:11px; color:var(--choco);
-    }
-    .owner-action-btn i { display:block; font-size:22px; margin-bottom:4px; color:var(--gold); }
-    .owner-action-btn:hover { border-color:var(--gold); background:rgba(212,175,55,0.04); transform:translateY(-2px); }
-    .owner-action-btn.danger i { color:var(--ruby); }
-    .owner-action-btn.danger:hover { border-color:var(--ruby); background:rgba(184,59,59,0.04); }
-    .owner-action-btn.green i { color:var(--emerald); }
-    .owner-action-btn.green:hover { border-color:var(--emerald); background:rgba(45,143,111,0.04); }
-    .staff-list { display:flex; flex-direction:column; gap:6px; }
-    .staff-item {
-      background:var(--white); border-radius:10px; padding:10px 14px;
-      display:flex; align-items:center; justify-content:space-between;
-      border:1px solid rgba(0,0,0,0.04);
-    }
-    .staff-item .info { display:flex; flex-direction:column; }
-    .staff-item .name { font-weight:600; font-size:13px; color:var(--choco); }
-    .staff-item .username { font-size:10px; color:var(--slate-light); }
-    .staff-item .role-tag { font-size:8px; text-transform:uppercase; background:rgba(212,175,55,0.12); padding:2px 10px; border-radius:10px; font-weight:600; color:var(--gold); }
-    .staff-item .actions { display:flex; gap:6px; }
-    .staff-item .actions button { background:none; border:none; font-size:14px; cursor:pointer; color:var(--slate-light); transition:var(--transition); padding:4px; }
-    .staff-item .actions button:hover { color:var(--ruby); }
-    .staff-item .actions button.edit:hover { color:var(--gold); }
-    .delivery-card {
-      background:var(--white); border-radius:var(--radius); padding:14px;
-      box-shadow:0 2px 12px rgba(0,0,0,0.04); border-left:4px solid var(--gold);
-      margin-bottom:10px;
-    }
-    .delivery-card .dest { font-weight:600; font-size:14px; color:var(--choco); }
-    .delivery-card .meta { font-size:11px; color:var(--slate-light); margin-top:4px; }
-    .delivery-card .status-badge {
-      font-size:9px; font-weight:600; text-transform:uppercase;
-      padding:3px 12px; border-radius:12px; display:inline-block; margin-top:6px;
-    }
-    .status-badge.assigned { background:rgba(45,143,111,0.12); color:var(--emerald); }
-    .status-badge.inprogress { background:rgba(201,139,43,0.12); color:var(--amber); }
-    .status-badge.done { background:rgba(44,24,16,0.06); color:var(--slate); }
-    .delivery-card .nav-btn {
-      margin-top:8px; background:var(--choco); color:var(--white); border:none;
-      padding:6px 16px; border-radius:20px; font-size:11px; font-weight:500;
-      cursor:pointer; transition:var(--transition); font-family:var(--font-sans);
-    }
-    .delivery-card .nav-btn:hover { background:var(--gold); color:var(--choco-dark); }
-    .cart-overlay {
-      position:fixed; bottom:0; left:0; right:0; max-width:480px; margin:0 auto;
-      background:var(--white); border-radius:24px 24px 0 0;
-      box-shadow:0 -8px 40px rgba(0,0,0,0.15); padding:20px 20px 30px;
-      transform:translateY(100%); transition:transform 0.4s cubic-bezier(0.4,0,0.2,1);
-      z-index:100; max-height:80vh; overflow-y:auto;
-    }
-    .cart-overlay.open { transform:translateY(0); }
-    .cart-overlay .handle { width:40px; height:4px; background:rgba(0,0,0,0.15); border-radius:4px; margin:0 auto 14px; }
-    .cart-overlay h3 { font-family:var(--font-serif); font-size:20px; color:var(--choco); margin-bottom:12px; }
-    .cart-item {
-      display:flex; align-items:center; gap:12px; padding:10px 0;
-      border-bottom:1px solid rgba(0,0,0,0.04);
-    }
-    .cart-item .qty { background:var(--cream); padding:2px 10px; border-radius:12px; font-size:13px; font-weight:600; }
-    .cart-item .name { flex:1; font-size:13px; font-weight:500; }
-    .cart-item .price { font-weight:600; font-size:14px; }
-    .cart-item .remove { background:none; border:none; color:var(--ruby); cursor:pointer; font-size:16px; }
-    .cart-total {
-      display:flex; justify-content:space-between; padding:14px 0;
-      font-weight:700; font-size:18px; border-top:2px solid var(--gold); margin-top:6px;
-    }
-    .cart-actions { display:flex; gap:10px; margin-top:10px; }
-    .cart-actions button {
-      flex:1; padding:12px; border:none; border-radius:12px; font-weight:600; font-size:14px;
-      cursor:pointer; transition:var(--transition); font-family:var(--font-sans);
-    }
-    .cart-actions .checkout { background:var(--choco); color:var(--white); }
-    .cart-actions .checkout:hover { background:var(--gold); color:var(--choco-dark); }
-    .cart-actions .close-cart { background:rgba(0,0,0,0.05); color:var(--slate); }
-    .bottom-nav {
-      position:fixed; bottom:0; left:0; right:0; max-width:480px; margin:0 auto;
-      background:var(--white); border-top:1px solid rgba(0,0,0,0.06);
-      display:flex; justify-content:space-around; padding:6px 0 12px;
-      z-index:50; box-shadow:0 -4px 20px rgba(0,0,0,0.04);
-    }
-    .bottom-nav button {
-      background:none; border:none; display:flex; flex-direction:column;
-      align-items:center; gap:2px; font-size:9px; font-weight:500;
-      color:var(--slate-light); cursor:pointer; transition:var(--transition);
-      font-family:var(--font-sans); padding:4px 12px; border-radius:8px; position:relative;
-    }
-    .bottom-nav button i { font-size:20px; transition:var(--transition); }
-    .bottom-nav button.active { color:var(--gold); }
-    .bottom-nav button.active i { color:var(--gold); }
-    .bottom-nav button .badge-dot {
-      position:absolute; top:2px; right:6px; width:8px; height:8px;
-      background:var(--ruby); border-radius:50%;
-    }
-    .toast {
-      position:fixed; bottom:140px; left:50%; transform:translateX(-50%) translateY(20px);
-      background:var(--choco); color:var(--white); padding:10px 24px;
-      border-radius:30px; font-size:13px; font-weight:500;
-      box-shadow:0 8px 32px rgba(0,0,0,0.25); opacity:0;
-      transition:all 0.4s cubic-bezier(0.4,0,0.2,1); z-index:200;
-      pointer-events:none; font-family:var(--font-sans);
-      border:1px solid rgba(212,175,55,0.15);
-    }
-    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-    .modal-overlay {
-      position:fixed; top:0; left:0; right:0; bottom:0;
-      background:rgba(0,0,0,0.5); backdrop-filter:blur(4px);
-      display:flex; align-items:center; justify-content:center;
-      z-index:300; opacity:0; pointer-events:none;
-      transition:opacity 0.3s ease;
-    }
-    .modal-overlay.open { opacity:1; pointer-events:auto; }
-    .modal-content {
-      background:var(--white); border-radius:var(--radius); max-width:420px; width:90%;
-      padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.3);
-      max-height:90vh; overflow-y:auto;
-    }
-    .modal-content h2 { font-family:var(--font-serif); color:var(--choco); margin-bottom:16px; }
-    .modal-content .form-group { margin-bottom:14px; }
-    .modal-content label { display:block; font-size:11px; font-weight:600; color:var(--slate-light); margin-bottom:4px; text-transform:uppercase; letter-spacing:0.06em; }
-    .modal-content select, .modal-content input {
-      width:100%; padding:10px 12px; border:1px solid rgba(0,0,0,0.1); border-radius:10px;
-      font-size:14px; font-family:var(--font-sans); background:var(--cream);
-      transition:border-color 0.2s;
-    }
-    .modal-content select:focus, .modal-content input:focus { outline:none; border-color:var(--gold); }
-    .modal-content .media-btns {
-      display:flex; gap:10px; margin-top:6px;
-    }
-    .modal-content .media-btns button {
-      flex:1; padding:10px; border:2px dashed rgba(0,0,0,0.1); border-radius:10px;
-      background:var(--cream); cursor:pointer; font-family:var(--font-sans);
-      font-weight:500; font-size:12px; transition:var(--transition);
-    }
-    .modal-content .media-btns button:hover { border-color:var(--gold); background:rgba(212,175,55,0.04); }
-    .modal-content .modal-actions {
-      display:flex; gap:8px; margin-top:20px;
-    }
-    .modal-content .modal-actions button {
-      flex:1; padding:12px; border:none; border-radius:10px;
-      font-weight:600; font-size:14px; cursor:pointer;
-      transition:var(--transition); font-family:var(--font-sans);
-    }
-    .modal-content .modal-actions .save { background:var(--choco); color:white; }
-    .modal-content .modal-actions .save:hover { background:var(--gold); color:var(--choco-dark); }
-    .modal-content .modal-actions .edit { background:var(--amber); color:white; }
-    .modal-content .modal-actions .discard { background:rgba(0,0,0,0.05); color:var(--slate); }
-    .modal-content .modal-actions .discard:hover { background:rgba(0,0,0,0.1); }
-    .global-scan { position:fixed; bottom:90px; left:50%; transform:translateX(-50%); z-index:30; }
-    /* account switcher (only for demo) */
-    .demo-switcher {
-      position:fixed; top:70px; right:10px; z-index:400;
-      background:var(--white); border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.15);
-      padding:6px 10px; border:1px solid rgba(0,0,0,0.05);
-    }
-    .demo-switcher select {
-      border:none; background:transparent; font-size:10px; font-weight:500;
-      color:var(--choco); font-family:var(--font-sans); cursor:pointer;
-      outline:none; padding:2px;
-    }
-    @media (max-width:420px) { .demo-switcher { top:60px; right:6px; } .demo-switcher select { font-size:9px; } }
-  </style>
-</head>
-<body>
-<div id="app">
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="header-utils">
-      <span class="role-badge" id="roleBadge">
-        <span id="roleLabel">👤 BUYER</span>
-        <span class="user-tag" id="userTag">@guest</span>
-      </span>
-      <button class="icon-btn" id="cartToggleBtn"><i class="fas fa-shopping-bag"></i><span class="badge" id="cartCount">0</span></button>
-    </div>
-    <div class="brand-center">
-      <div class="brand-logo">SY</div>
-      <div class="brand-name">soYam cosmo <span>✦</span></div>
-      <div class="brand-sub">COSMETICS &amp; BEAUTY</div>
-      <div class="brand-amharic">ሶያም ኮስሞቲክስ</div>
-      <div class="brand-address">
-        <i class="fas fa-location-dot"></i> Betel Commercial Building, Ground Floor, Addis Ababa
-        <span>·</span> <i class="fas fa-phone"></i> +251 91 909 6451
-        <a href="https://maps.app.goo.gl/FMJMrTvD2wDPGJUv8" target="_blank"><i class="fas fa-arrow-up-right-from-square"></i> Map</a>
-      </div>
-    </div>
-    <div class="lang-row" id="langBar">
-      <span class="lang-chip active" data-lang="en">English</span>
-      <span class="lang-chip" data-lang="am">አማርኛ</span>
-      <span class="lang-chip" data-lang="ti">ትግርኛ</span>
-      <span class="lang-chip" data-lang="or">Oromiffa</span>
-      <span class="lang-chip" data-lang="gu">Gurage</span>
-      <span class="lang-chip" data-lang="so">Soomaali</span>
-    </div>
-    <div class="social-row">
-      <a href="#" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="#" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://wa.me/251919096451" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <div class="portal-switcher hidden" id="portalSwitcher">
-      <button class="active" data-portal="owner">👑 Owner</button>
-      <button data-portal="seller">🏪 Seller</button>
-    </div>
-  </header>
-
-  <!-- MAIN CONTENT -->
-  <div class="main-content" id="mainContent">
-    <div class="promo-card">
-      <h4>✨ New Arrivals This Week!</h4>
-      <p>Premium skincare &amp; detergents — fresh stock just landed at Betel Building.</p>
-    </div>
-    <div id="buyerPortal">
-      <div class="category-tabs" id="categoryTabs">
-        <span class="cat-tab active" data-cat="all">All</span>
-        <span class="cat-tab" data-cat="skincare">Skincare</span>
-        <span class="cat-tab" data-cat="makeup">Makeup</span>
-        <span class="cat-tab" data-cat="fragrance">Fragrance</span>
-        <span class="cat-tab" data-cat="haircare">Haircare</span>
-        <span class="cat-tab" data-cat="detergent">Detergent</span>
-      </div>
-      <div class="product-grid" id="productGrid"></div>
-      <button class="request-btn" id="requestProductBtn"><i class="fas fa-camera"></i> Can't find a product? Upload Photo or Name</button>
-    </div>
-    <div id="sellerPortal" class="hidden">
-      <div class="seller-dashboard">
-        <div class="stat-cards">
-          <div class="stat-card"><div class="num" id="pendingCount">14</div><div class="label">Pending Orders</div></div>
-          <div class="stat-card delivery"><div class="num">8</div><div class="label">In-Store Picks</div></div>
-          <div class="stat-card pending"><div class="num">6</div><div class="label">Out for Delivery</div></div>
-          <div class="stat-card"><div class="num">₿ 42.3K</div><div class="label">Today's Revenue</div></div>
-        </div>
-        <div class="section-title"><i class="fas fa-clock"></i> Pending Orders</div>
-        <div class="order-list" id="sellerOrderList"></div>
-        <div style="margin-top:8px;">
-          <button class="scan-fab" id="scanFab" style="position:static;transform:none;width:100%;justify-content:center;border-radius:14px;padding:14px;">
-            <i class="fas fa-qrcode"></i> SCAN ITEM QR
-          </button>
-        </div>
-        <div style="margin-top:12px;">
-          <div class="section-title"><i class="fas fa-truck"></i> Logistics Dispatch</div>
-          <div class="order-list" id="dispatchList"></div>
-        </div>
-      </div>
-    </div>
-    <div id="ownerPortal" class="hidden">
-      <div class="owner-dashboard">
-        <div class="metric-tiles">
-          <div class="metric-tile"><div class="value">₿ 284.7K</div><div class="label">Total Revenue <span class="change">↑ 12%</span></div></div>
-          <div class="metric-tile"><div class="value">₿ 142.3K</div><div class="label">Stock Capital Value</div></div>
-        </div>
-        <div class="section-title"><i class="fas fa-chart-line"></i> Quick Actions</div>
-        <div class="owner-action-grid">
-          <button class="owner-action-btn green" id="addStockBtn"><i class="fas fa-plus-circle"></i> Add Stock</button>
-          <button class="owner-action-btn" id="editPricesBtn"><i class="fas fa-pen"></i> Edit Prices</button>
-          <button class="owner-action-btn danger" id="removeProductBtn"><i class="fas fa-trash-can"></i> Remove Product</button>
-          <button class="owner-action-btn" id="refreshInventoryBtn"><i class="fas fa-rotate"></i> Refresh Inventory</button>
-          <button class="owner-action-btn" id="closeDailyBtn"><i class="fas fa-lock"></i> Close Daily</button>
-          <button class="owner-action-btn green" id="addSellerBtn"><i class="fas fa-user-plus"></i> Add Seller</button>
-        </div>
-        <div class="section-title"><i class="fas fa-users"></i> Staff Management</div>
-        <div class="staff-list" id="staffList"></div>
-        <div class="section-title" style="margin-top:8px;"><i class="fas fa-box"></i> Inventory Alert</div>
-        <div class="order-list" id="inventoryAlert"></div>
-      </div>
-    </div>
-    <div id="driverPortal" class="hidden">
-      <div class="section-title"><i class="fas fa-truck-fast"></i> My Deliveries</div>
-      <div class="driver-deliveries" id="driverDeliveries"></div>
-    </div>
-  </div>
-
-  <!-- CART OVERLAY -->
-  <div class="cart-overlay" id="cartOverlay">
-    <div class="handle"></div>
-    <h3><i class="fas fa-shopping-bag" style="color:var(--gold);"></i> Your Cart</h3>
-    <div id="cartItems"></div>
-    <div class="cart-total"><span>Total</span><span id="cartTotal">₿ 0</span></div>
-    <div class="cart-actions">
-      <button class="close-cart" id="closeCartBtn">Close</button>
-      <button class="checkout" id="checkoutBtn">Checkout</button>
-    </div>
-  </div>
-
-  <!-- BOTTOM NAV -->
-  <nav class="bottom-nav" id="bottomNav">
-    <button class="active" data-tab="buyer" id="navBuyer"><i class="fas fa-store"></i> Shop</button>
-    <button data-tab="seller" id="navSeller" class="hidden"><i class="fas fa-clipboard-list"></i> Seller</button>
-    <button data-tab="owner" id="navOwner" class="hidden"><i class="fas fa-crown"></i> Owner</button>
-    <button data-tab="driver" id="navDriver" class="hidden"><i class="fas fa-truck"></i> Driver</button>
-    <button data-tab="cart" id="navCart"><i class="fas fa-shopping-bag"></i> Cart <span class="badge-dot" id="navCartBadge"></span></button>
-  </nav>
-
-  <!-- TOAST -->
-  <div class="toast" id="toast"></div>
-
-  <!-- GLOBAL SCAN FAB -->
-  <button class="scan-fab global-scan hidden" id="globalScanFab"><i class="fas fa-qrcode"></i> SCAN ITEM QR</button>
-
-  <!-- ADD STOCK MODAL -->
-  <div class="modal-overlay" id="addStockModal">
-    <div class="modal-content">
-      <h2>👑 ADD NEW STOCK ITEM</h2>
-      <div class="form-group">
-        <label>📂 ITEM CATEGORY</label>
-        <select id="stockCategory"><option>Cosmetics &amp; Beauty</option><option>Hygiene Detergents</option></select>
-      </div>
-      <div class="form-group">
-        <label>🏷️ PRODUCT DETAILS</label>
-        <input type="text" id="stockName" placeholder="Enter product name..." />
-      </div>
-      <div class="form-group">
-        <label>📸 PRODUCT MEDIA ATTACHMENT</label>
-        <div class="media-btns">
-          <button id="stockGallery"><i class="fas fa-image"></i> Upload from Gallery</button>
-          <button id="stockCamera"><i class="fas fa-camera"></i> Scan via Hardware Camera</button>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>💰 FINANCIAL METRICS</label>
-        <input type="text" id="stockPrice" placeholder="Single Buying Unit Price (ETB)" />
-        <input type="text" id="stockQty" placeholder="Total Number of Items" style="margin-top:6px;" />
-      </div>
-      <div class="modal-actions">
-        <button class="save" id="stockSave">💾 SAVE</button>
-        <button class="edit" id="stockEdit">✏️ EDIT</button>
-        <button class="discard" id="stockDiscard">❌ DISCARD</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKOUT DELIVERY DETAILS MODAL -->
-  <div class="modal-overlay" id="checkoutModal">
-    <div class="modal-content">
-      <h2>📦 Delivery Details</h2>
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" id="deliveryName" placeholder="Your full name" />
-      </div>
-      <div class="form-group">
-        <label>Phone Number</label>
-        <input type="text" id="deliveryPhone" placeholder="+251 9X XXX XXXX" />
-      </div>
-      <div class="form-group">
-        <label>Drop‑off Address</label>
-        <input type="text" id="deliveryAddress" placeholder="Address, City, Ethiopia" />
-      </div>
-      <div class="modal-actions">
-        <button class="discard" id="cancelDelivery">Cancel</button>
-        <button class="save" id="submitDelivery">Place Order</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- DEMO ACCOUNT SWITCHER (visible only in demo) -->
-  <div class="demo-switcher" id="demoSwitcher">
-    <select id="accountSelect">
-      <option value="123456789">🛒 Buyer (Default)</option>
-      <option value="999999999">👑 Owner (@mama51R)</option>
-      <option value="987654321">🏪 Seller (@silencer01m)</option>
-      <option value="777777777">🚚 Driver</option>
-    </select>
-  </div>
-</div>
-
-<script>
-  (function() {
-    'use strict';
-
-    // ================================================================
-    // DATA (mutable for runtime)
-    // ================================================================
-    let PRODUCTS = [
-      { id:1, name:'Luminous Glow Serum', category:'skincare', price:450, emoji:'✨', tag:'NEW' },
-      { id:2, name:'Hydra Dew Cream', category:'skincare', price:320, emoji:'💧', tag:'BEST' },
-      { id:3, name:'Velvet Matte Lipstick', category:'makeup', price:280, emoji:'💄', tag:'' },
-      { id:4, name:'Fleur Noir Perfume', category:'fragrance', price:890, emoji:'🌸', tag:'LUXE' },
-      { id:5, name:'Silk Shine Shampoo', category:'haircare', price:210, emoji:'🧴', tag:'' },
-      { id:6, name:'Oxy White Detergent', category:'detergent', price:180, emoji:'🧼', tag:'' },
-      { id:7, name:'Rosewater Mist', category:'skincare', price:160, emoji:'🌹', tag:'' },
-      { id:8, name:'Brow Define Pencil', category:'makeup', price:150, emoji:'✏️', tag:'' },
-      { id:9, name:'Vanilla Bean Body Lotion', category:'skincare', price:260, emoji:'🧴', tag:'' },
-      { id:10, name:'Cedar & Spice Cologne', category:'fragrance', price:720, emoji:'🪵', tag:'' },
-      { id:11, name:'Repair Mask Hair', category:'haircare', price:195, emoji:'🌿', tag:'' },
-      { id:12, name:'Laundry Pearl Detergent', category:'detergent', price:140, emoji:'🧺', tag:'ECO' }
-    ];
-
-    let STAFF = [
-      { id:1, name:'Abebe Kebede', username:'@silencer01m', phone:'+251948479301', role:'Seller', status:'Active' },
-      { id:2, name:'Tigist Haile', username:'@tigist_h', phone:'+251912345678', role:'Seller', status:'Active' },
-      { id:3, name:'Dawit Solomon', username:'@dawit_s', phone:'+251923456789', role:'Seller', status:'Suspended' }
-    ];
-
-    let PENDING_ORDERS = [
-      { id:'#1024', customer:'Meron A.', items:3, total:890, status:'pending', type:'Delivery' },
-      { id:'#1025', customer:'Samuel K.', items:1, total:280, status:'pending', type:'In-Store' },
-      { id:'#1026', customer:'Hanna T.', items:2, total:530, status:'confirmed', type:'Delivery' },
-      { id:'#1027', customer:'Biruk M.', items:4, total:1120, status:'pending', type:'In-Store' },
-      { id:'#1028', customer:'Sara W.', items:1, total:720, status:'confirmed', type:'Delivery' }
-    ];
-
-    let DISPATCHES = [
-      { driver:'Yonas A.', dest:'Bole, Addis Ababa', order:'#1024', status:'en route' },
-      { driver:'Meskerem D.', dest:'Piassa, Addis Ababa', order:'#1026', status:'delivered' },
-      { driver:'Kaleb T.', dest:'CMC, Addis Ababa', order:'#1028', status:'assigned' }
-    ];
-
-    let DRIVER_DELIVERIES = [
-      { id:'#1024', dest:'Bole, Addis Ababa', customer:'Meron A.', phone:'+251912345678', status:'assigned' },
-      { id:'#1028', dest:'CMC, Addis Ababa', customer:'Sara W.', phone:'+251923456789', status:'inprogress' },
-      { id:'#1030', dest:'Kazanchis, Addis Ababa', customer:'Fitsum E.', phone:'+251934567890', status:'done' }
-    ];
-
-    const INVENTORY_ALERT = [
-      { product:'Luminous Glow Serum', remaining:8, threshold:10, status:'low' },
-      { product:'Velvet Matte Lipstick', remaining:3, threshold:5, status:'critical' },
-      { product:'Silk Shine Shampoo', remaining:15, threshold:10, status:'ok' },
-      { product:'Rosewater Mist', remaining:4, threshold:8, status:'low' }
-    ];
-
-    // ================================================================
-    // STATE
-    // ================================================================
-    const state = {
-      telegramId: '123456789',
-      username: '@guest',
-      phone: '',
-      authorizedRoles: ['BUYER'],
-      activePortal: 'BUYER',
-      isOwner: false,
-      cart: [],
-      currentCategory: 'all',
-      currentLang: 'en',
-      cartOpen: false
-    };
-
-    // ================================================================
-    // DOM REFS
-    // ================================================================
-    const $ = (s) => document.querySelector(s);
-    const $$ = (s) => document.querySelectorAll(s);
-    const mainContent = $('#mainContent');
-    const buyerPortal = $('#buyerPortal');
-    const sellerPortal = $('#sellerPortal');
-    const ownerPortal = $('#ownerPortal');
-    const driverPortal = $('#driverPortal');
-    const productGrid = $('#productGrid');
-    const categoryTabs = $('#categoryTabs');
-    const cartOverlay = $('#cartOverlay');
-    const cartItems = $('#cartItems');
-    const cartTotal = $('#cartTotal');
-    const cartCount = $('#cartCount');
-    const navCartBadge = $('#navCartBadge');
-    const roleBadge = $('#roleBadge');
-    const roleLabel = $('#roleLabel');
-    const userTag = $('#userTag');
-    const portalSwitcher = $('#portalSwitcher');
-    const toast = $('#toast');
-    const globalScanFab = $('#globalScanFab');
-    const navBuyer = $('#navBuyer');
-    const navSeller = $('#navSeller');
-    const navOwner = $('#navOwner');
-    const navDriver = $('#navDriver');
-    const navCart = $('#navCart');
-    const addStockModal = $('#addStockModal');
-    const checkoutModal = $('#checkoutModal');
-    const accountSelect = $('#accountSelect');
-    const pendingCount = $('#pendingCount');
-
-    // ================================================================
-    // TOAST
-    // ================================================================
-    let toastTimer;
-    function showToast(msg, duration = 2200) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    // ================================================================
-    // ROLE / PORTAL MANAGEMENT
-    // ================================================================
-    function detectRole(telegramId) {
-      if (telegramId === '999999999') {
-        return { roles: ['OWNER','SELLER'], isOwner: true, username: '@mama51R', phone: '+251920353460' };
-      }
-      if (telegramId === '987654321') {
-        return { roles: ['SELLER'], isOwner: false, username: '@silencer01m', phone: '+251948479301' };
-      }
-      if (telegramId === '777777777') {
-        return { roles: ['DRIVER'], isOwner: false, username: '@driver_eth', phone: '+251900000000' };
-      }
-      return { roles: ['BUYER'], isOwner: false, username: '@guest', phone: '' };
-    }
-
-    function login(telegramId) {
-      const result = detectRole(telegramId);
-      state.telegramId = telegramId;
-      state.username = result.username || '@guest';
-      state.phone = result.phone || '';
-      state.authorizedRoles = result.roles;
-      state.isOwner = result.isOwner;
-      state.activePortal = result.roles[0];
-      if (state.isOwner) state.activePortal = 'OWNER';
-      else if (state.authorizedRoles.includes('SELLER')) state.activePortal = 'SELLER';
-      else if (state.authorizedRoles.includes('DRIVER')) state.activePortal = 'DRIVER';
-      else state.activePortal = 'BUYER';
-
-      // Update the account select to match
-      accountSelect.value = telegramId;
-
-      updateRoleBadge();
-      updatePortalSwitcher();
-      renderAll();
-      showToast(`Logged in as ${state.activePortal} · ${state.username}`, 1800);
-    }
-
-    function updateRoleBadge() {
-      const role = state.activePortal;
-      const label = role === 'OWNER' ? '👑 OWNER' :
-                    role === 'SELLER' ? '🏪 SELLER' :
-                    role === 'DRIVER' ? '🚚 DRIVER' : '🛒 BUYER';
-      roleLabel.textContent = label;
-      userTag.textContent = state.username + (state.phone ? ' · ' + state.phone : '');
-      navBuyer.classList.toggle('active', role === 'BUYER');
-      navSeller.classList.toggle('active', role === 'SELLER');
-      navOwner.classList.toggle('active', role === 'OWNER');
-      navDriver.classList.toggle('active', role === 'DRIVER');
-    }
-
-    function updatePortalSwitcher() {
-      portalSwitcher.classList.toggle('hidden', !state.isOwner);
-      if (state.isOwner) {
-        const btns = portalSwitcher.querySelectorAll('button');
-        btns.forEach(b => b.classList.toggle('active', b.dataset.portal === state.activePortal.toLowerCase()));
-      }
-    }
-
-    function switchPortal(portal) {
-      if (!state.isOwner) return;
-      if (!state.authorizedRoles.includes(portal.toUpperCase())) {
-        showToast('You are not authorized for this portal.');
-        return;
-      }
-      state.activePortal = portal.toUpperCase();
-      updateRoleBadge();
-      updatePortalSwitcher();
-      renderAll();
-      showToast(`Switched to ${portal.toUpperCase()} Portal`);
-    }
-
-    // ================================================================
-    // RENDER ENGINE
-    // ================================================================
-    function renderAll() {
-      const active = state.activePortal;
-      buyerPortal.classList.toggle('hidden', active !== 'BUYER');
-      sellerPortal.classList.toggle('hidden', active !== 'SELLER');
-      ownerPortal.classList.toggle('hidden', active !== 'OWNER');
-      driverPortal.classList.toggle('hidden', active !== 'DRIVER');
-
-      const roles = state.authorizedRoles;
-      navBuyer.classList.remove('hidden');
-      navSeller.classList.toggle('hidden', !roles.includes('SELLER') && !state.isOwner);
-      navOwner.classList.toggle('hidden', !state.isOwner);
-      navDriver.classList.toggle('hidden', !roles.includes('DRIVER'));
-
-      globalScanFab.classList.toggle('hidden', active === 'BUYER' || active === 'DRIVER');
-
-      if (active === 'BUYER') renderBuyer();
-      if (active === 'SELLER') renderSeller();
-      if (active === 'OWNER') renderOwner();
-      if (active === 'DRIVER') renderDriver();
-
-      renderCart();
-      const count = state.cart.reduce((sum, i) => sum + i.quantity, 0);
-      cartCount.textContent = count;
-      navCartBadge.style.display = count > 0 ? 'block' : 'none';
-      pendingCount.textContent = PENDING_ORDERS.filter(o => o.status === 'pending').length;
-      mainContent.scrollTop = 0;
-    }
-
-    // ---- BUYER ----
-    function renderBuyer() {
-      const cat = state.currentCategory;
-      let filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === cat);
-      let html = '';
-      filtered.forEach(p => {
-        const inCart = state.cart.find(c => c.productId === p.id);
-        const qty = inCart ? inCart.quantity : 0;
-        html += `
-          <div class="product-card" data-id="${p.id}">
-            <div class="product-img">
-              ${p.emoji}
-              ${p.tag ? `<span class="tag">${p.tag}</span>` : ''}
-            </div>
-            <div class="product-info">
-              <h5>${p.name}</h5>
-              <div class="category-label">${p.category}</div>
-              <div class="price-row">
-                <span class="price">₿ ${p.price} <small>ETB</small></span>
-                <button class="add-btn" data-id="${p.id}" data-action="toggle-cart">${qty > 0 ? qty : '+'}</button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-      productGrid.innerHTML = html || '<p style="padding:20px;text-align:center;color:var(--slate-light);">No products in this category.</p>';
-      $$('.cat-tab').forEach(tab => tab.classList.toggle('active', tab.dataset.cat === cat));
-    }
-
-    // ---- SELLER ----
-    function renderSeller() {
-      let ordersHtml = '';
-      PENDING_ORDERS.forEach(o => {
-        const cls = o.status === 'pending' ? 'pending' : o.status === 'confirmed' ? 'confirmed' : 'delivered';
-        let actions = '';
-        if (o.status === 'pending') {
-          actions += `<button class="verify-btn" data-order="${o.id}">✓ Verify</button>`;
-          actions += `<button class="assign-btn" data-order="${o.id}">🚚 Assign</button>`;
-        } else if (o.status === 'confirmed') {
-          actions += `<span style="font-size:9px;color:var(--emerald);">✓ Verified</span>`;
-        } else {
-          actions += `<span style="font-size:9px;color:var(--slate-light);">Done</span>`;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>soYam cosmo — Mini App</title>
+    <!-- Google Fonts for Editorial Luxury Aesthetics -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg-primary: #121212;
+            --color-bg-surface: #1E1E1E;
+            --color-brand-gold: #D4AF37;
+            --color-brand-gold-muted: rgba(212, 175, 55, 0.2);
+            --color-accent-chocolate: #3D2314;
+            --color-text-luxury: #F5E6D3;
+            --color-text-muted: #A0A0A0;
+            --color-status-active: #10B981;
+            --color-status-pending: #F59E0B;
+            --color-status-danger: #EF4444;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+            --border-gold: 1px solid rgba(212, 175, 55, 0.2);
         }
-        ordersHtml += `
-          <div class="order-item">
-            <div>
-              <div class="order-id">${o.id}</div>
-              <div class="order-meta">${o.customer} · ${o.items} items · ${o.type}</div>
-            </div>
-            <div style="text-align:right;">
-              <span class="order-status ${cls}">${o.status}</span>
-              <div class="order-meta">₿ ${o.total}</div>
-              ${actions}
-            </div>
-          </div>
-        `;
-      });
-      $('#sellerOrderList').innerHTML = ordersHtml;
 
-      let dispHtml = '';
-      DISPATCHES.forEach(d => {
-        const label = d.status === 'en route' ? '🚛 En Route' : d.status === 'delivered' ? '✅ Delivered' : '📦 Assigned';
-        dispHtml += `
-          <div class="order-item">
-            <div><div class="order-id">${d.order}</div><div class="order-meta">${d.driver} → ${d.dest}</div></div>
-            <span style="font-size:10px;font-weight:600;color:var(--slate-light);">${label}</span>
-          </div>
-        `;
-      });
-      $('#dispatchList').innerHTML = dispHtml;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    // ---- OWNER ----
-    function renderOwner() {
-      let staffHtml = '';
-      STAFF.forEach(s => {
-        const isActive = s.status === 'Active';
-        staffHtml += `
-          <div class="staff-item">
-            <div class="info">
-              <span class="name">${s.name} <span class="role-tag">${s.role}</span></span>
-              <span class="username">${s.username} · ${s.phone}</span>
-            </div>
-            <div class="actions">
-              <span style="font-size:9px;color:${isActive ? 'var(--emerald)' : 'var(--ruby)'};font-weight:600;">${s.status}</span>
-              <button class="edit" title="Edit"><i class="fas fa-pen" style="font-size:11px;"></i></button>
-              <button title="Revoke" style="color:var(--ruby);"><i class="fas fa-trash" style="font-size:11px;"></i></button>
-            </div>
-          </div>
-        `;
-      });
-      $('#staffList').innerHTML = staffHtml;
+        body {
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-luxury);
+            font-family: var(--font-sans);
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
 
-      let alertHtml = '';
-      INVENTORY_ALERT.forEach(a => {
-        const isLow = a.status === 'low' || a.status === 'critical';
-        alertHtml += `
-          <div class="order-item" style="${isLow ? 'border-left:3px solid var(--amber);' : ''}">
-            <div><div class="order-id">${a.product}</div><div class="order-meta">${a.remaining} remaining · threshold ${a.threshold}</div></div>
-            <span style="font-size:10px;font-weight:600;color:${a.status === 'critical' ? 'var(--ruby)' : a.status === 'low' ? 'var(--amber)' : 'var(--emerald)'};">${a.status.toUpperCase()}</span>
-          </div>
-        `;
-      });
-      $('#inventoryAlert').innerHTML = alertHtml;
-    }
+        /* ------------------ COMMON GLOBAL COMPONENTS ------------------ */
+        .brand-crown {
+            text-align: center;
+            padding: 24px 16px;
+            background: linear-gradient(180deg, var(--color-accent-chocolate) 0%, var(--color-bg-primary) 100%);
+            border-bottom: var(--border-gold);
+        }
 
-    // ---- DRIVER ----
-    function renderDriver() {
-      let html = '';
-      DRIVER_DELIVERIES.forEach(d => {
-        const cls = d.status === 'assigned' ? 'assigned' : d.status === 'inprogress' ? 'inprogress' : 'done';
-        const label = d.status === 'assigned' ? '📦 Assigned' : d.status === 'inprogress' ? '🚛 In Progress' : '✅ Done';
-        html += `
-          <div class="delivery-card">
-            <div class="dest">${d.dest}</div>
-            <div class="meta">${d.customer} · ${d.phone} · Order ${d.id}</div>
-            <span class="status-badge ${cls}">${label}</span>
-            <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-              <button class="nav-btn" onclick="window.showToast('Opening Google Maps for ${d.dest}')"><i class="fas fa-map-location-dot"></i> Navigate</button>
-              <button class="nav-btn" style="background:var(--gold);color:var(--choco-dark);" onclick="window.markDeliveryDone('${d.id}')">Mark Done</button>
-            </div>
-          </div>
-        `;
-      });
-      $('#driverDeliveries').innerHTML = html;
-    }
+        .brand-logo-emblem {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 2px solid var(--color-brand-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-family: var(--font-serif);
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--color-brand-gold);
+            background-color: var(--color-bg-surface);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
 
-    // ---- CART ----
-    function renderCart() {
-      if (state.cart.length === 0) {
-        cartItems.innerHTML = '<p style="text-align:center;color:var(--slate-light);padding:20px 0;">Your cart is empty.</p>';
-        cartTotal.textContent = '₿ 0';
-        return;
-      }
-      let html = '', total = 0;
-      state.cart.forEach(item => {
-        const p = PRODUCTS.find(pr => pr.id === item.productId);
-        if (!p) return;
-        const subtotal = p.price * item.quantity;
-        total += subtotal;
-        html += `
-          <div class="cart-item">
-            <span class="qty">${item.quantity}</span>
-            <span class="name">${p.emoji} ${p.name}</span>
-            <span class="price">₿ ${subtotal}</span>
-            <button class="remove" data-id="${item.productId}" data-action="remove-cart">✕</button>
-          </div>
-        `;
-      });
-      cartItems.innerHTML = html;
-      cartTotal.textContent = `₿ ${total}`;
-    }
+        .brand-title {
+            font-family: var(--font-serif);
+            font-size: 32px;
+            letter-spacing: 0.18em;
+            text-transform: lowercase;
+            color: var(--color-brand-gold);
+            margin-bottom: 2px;
+        }
 
-    // ================================================================
-    // CART OPERATIONS
-    // ================================================================
-    function toggleCart(productId) {
-      const idx = state.cart.findIndex(c => c.productId === productId);
-      if (idx >= 0) state.cart[idx].quantity += 1;
-      else state.cart.push({ productId, quantity: 1 });
-      renderAll();
-      showToast('Added to cart 🛒');
-    }
+        .brand-amharic {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--color-text-luxury);
+            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+        }
 
-    function removeCartItem(productId) {
-      state.cart = state.cart.filter(c => c.productId !== productId);
-      renderAll();
-      if (state.cart.length === 0) { cartOverlay.classList.remove('open'); state.cartOpen = false; }
-    }
+        .brand-subtitle {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--color-text-muted);
+            margin-bottom: 12px;
+        }
 
-    // ================================================================
-    // CHECKOUT WITH DELIVERY DETAILS
-    // ================================================================
-    function openCheckoutModal() {
-      if (state.cart.length === 0) { showToast('Your cart is empty!'); return; }
-      checkoutModal.classList.add('open');
-    }
+        .brand-tagline {
+            font-size: 12px;
+            font-style: italic;
+            color: var(--color-brand-gold);
+            max-width: 280px;
+            margin: 0 auto;
+        }
 
-    function submitOrder() {
-      const name = $('#deliveryName').value.trim();
-      const phone = $('#deliveryPhone').value.trim();
-      const address = $('#deliveryAddress').value.trim();
-      if (!name || !phone || !address) {
-        showToast('Please fill all delivery details.');
-        return;
-      }
-      // Create new order
-      const total = state.cart.reduce((sum, item) => {
-        const p = PRODUCTS.find(pr => pr.id === item.productId);
-        return sum + (p ? p.price * item.quantity : 0);
-      }, 0);
-      const orderId = '#' + String(1000 + PENDING_ORDERS.length + 1);
-      const newOrder = {
-        id: orderId,
-        customer: name,
-        items: state.cart.reduce((s, i) => s + i.quantity, 0),
-        total: total,
-        status: 'pending',
-        type: 'Delivery'
-      };
-      PENDING_ORDERS.push(newOrder);
-      // Clear cart and close modals
-      state.cart = [];
-      checkoutModal.classList.remove('open');
-      cartOverlay.classList.remove('open');
-      state.cartOpen = false;
-      renderAll();
-      showToast(`✅ Order ${orderId} placed! Pending verification.`);
-    }
+        .standardized-address {
+            padding: 12px 16px;
+            background-color: var(--color-bg-surface);
+            border-bottom: var(--border-gold);
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.6;
+            color: var(--color-text-luxury);
+        }
 
-    // ================================================================
-    // SELLER ACTIONS: VERIFY & ASSIGN
-    // ================================================================
-    function verifyOrder(orderId) {
-      const order = PENDING_ORDERS.find(o => o.id === orderId);
-      if (order && order.status === 'pending') {
-        order.status = 'confirmed';
-        showToast(`✅ Payment verified for ${orderId}`);
-        renderAll();
-      }
-    }
+        .address-link {
+            color: var(--color-brand-gold);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 6px;
+            font-weight: bold;
+        }
 
-    function assignDriver(orderId) {
-      const order = PENDING_ORDERS.find(o => o.id === orderId);
-      if (order && order.status === 'confirmed') {
-        // Simulate assigning a driver
-        const driverName = 'Driver ' + Math.floor(Math.random() * 100);
-        const dest = 'Addis Ababa'; // simplified
-        DISPATCHES.push({ driver: driverName, dest: dest, order: orderId, status: 'assigned' });
-        // Also add to driver deliveries
-        DRIVER_DELIVERIES.push({
-          id: orderId,
-          dest: dest,
-          customer: order.customer,
-          phone: '+2519XXXXXXX', // placeholder
-          status: 'assigned'
-        });
-        order.status = 'delivered'; // move to completed for seller
-        showToast(`🚚 Driver ${driverName} assigned to ${orderId}`);
-        renderAll();
-      } else {
-        showToast('Order must be verified first.');
-      }
-    }
+        .language-bar {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 8px;
+            background-color: #161616;
+            border-bottom: var(--border-gold);
+            gap: 16px;
+            justify-content: center;
+        }
 
-    // ================================================================
-    // DRIVER ACTION: MARK DONE
-    // ================================================================
-    window.markDeliveryDone = function(orderId) {
-      const delivery = DRIVER_DELIVERIES.find(d => d.id === orderId);
-      if (delivery && delivery.status !== 'done') {
-        delivery.status = 'done';
-        // Also update dispatch
-        const dispatch = DISPATCHES.find(d => d.order === orderId);
-        if (dispatch) dispatch.status = 'delivered';
-        showToast(`✅ Delivery ${orderId} marked as done.`);
-        renderAll();
-      } else {
-        showToast('Already delivered.');
-      }
-    };
+        .language-bar::-webkit-scrollbar {
+            display: none;
+        }
 
-    // ================================================================
-    // EVENT BINDING
-    // ================================================================
-    // Product add
-    productGrid.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action="toggle-cart"]');
-      if (btn) { toggleCart(parseInt(btn.dataset.id)); return; }
-      const card = e.target.closest('.product-card');
-      if (card && state.activePortal === 'BUYER') {
-        const id = parseInt(card.dataset.id);
-        const p = PRODUCTS.find(pr => pr.id === id);
-        if (p) showToast(`${p.emoji} ${p.name} — ₿ ${p.price} ETB`);
-      }
-    });
+        .lang-chip {
+            font-size: 11px;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
 
-    categoryTabs.addEventListener('click', (e) => {
-      const tab = e.target.closest('.cat-tab');
-      if (tab) { state.currentCategory = tab.dataset.cat; renderBuyer(); }
-    });
+        .lang-chip.active {
+            color: var(--color-brand-gold);
+            font-weight: 600;
+        }
 
-    $('#cartToggleBtn').addEventListener('click', () => {
-      state.cartOpen = !state.cartOpen;
-      cartOverlay.classList.toggle('open', state.cartOpen);
-      if (state.cartOpen) renderCart();
-    });
-    $('#closeCartBtn').addEventListener('click', () => {
-      cartOverlay.classList.remove('open');
-      state.cartOpen = false;
-    });
-    $('#checkoutBtn').addEventListener('click', openCheckoutModal);
-    cartItems.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-action="remove-cart"]');
-      if (btn) removeCartItem(parseInt(btn.dataset.id));
-    });
+        .social-redirects-row {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 12px;
+            background-color: var(--color-bg-primary);
+            border-bottom: var(--border-gold);
+        }
 
-    // Checkout modal
-    $('#cancelDelivery').addEventListener('click', () => checkoutModal.classList.remove('open'));
-    $('#submitDelivery').addEventListener('click', submitOrder);
+        .social-icon {
+            color: var(--color-text-muted);
+            font-size: 18px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
 
-    // Seller verify & assign (delegated)
-    document.addEventListener('click', (e) => {
-      const verifyBtn = e.target.closest('.verify-btn');
-      if (verifyBtn) {
-        const orderId = verifyBtn.dataset.order;
-        verifyOrder(orderId);
-        return;
-      }
-      const assignBtn = e.target.closest('.assign-btn');
-      if (assignBtn) {
-        const orderId = assignBtn.dataset.order;
-        assignDriver(orderId);
-        return;
-      }
-    });
+        .social-icon:hover {
+            color: var(--color-brand-gold);
+        }
 
-    // Bottom nav
-    navBuyer.addEventListener('click', () => {
-      if (state.authorizedRoles.includes('BUYER') || state.isOwner) { state.activePortal = 'BUYER'; updateRoleBadge(); updatePortalSwitcher(); renderAll(); }
-      else showToast('Buyer portal not available.');
-    });
-    navSeller.addEventListener('click', () => {
-      if (state.authorizedRoles.includes('SELLER') || state.isOwner) { state.activePortal = 'SELLER'; updateRoleBadge(); updatePortalSwitcher(); renderAll(); }
-      else showToast('You are not authorized as a Seller.');
-    });
-    navOwner.addEventListener('click', () => {
-      if (state.isOwner) { state.activePortal = 'OWNER'; updateRoleBadge(); updatePortalSwitcher(); renderAll(); }
-      else showToast('Owner portal is restricted.');
-    });
-    navDriver.addEventListener('click', () => {
-      if (state.authorizedRoles.includes('DRIVER')) { state.activePortal = 'DRIVER'; updateRoleBadge(); updatePortalSwitcher(); renderAll(); }
-      else showToast('Driver portal not available.');
-    });
-    navCart.addEventListener('click', () => {
-      state.cartOpen = !state.cartOpen;
-      cartOverlay.classList.toggle('open', state.cartOpen);
-      if (state.cartOpen) renderCart();
-    });
+        /* ------------------ PORTAL STRUCTURE ------------------ */
+        .portal-view {
+            display: none;
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-    // Portal switcher
-    portalSwitcher.addEventListener('click', (e) => {
-      const btn = e.target.closest('button');
-      if (btn) switchPortal(btn.dataset.portal);
-    });
+        .portal-view.active {
+            display: block;
+        }
 
-    // Language
-    $('#langBar').addEventListener('click', (e) => {
-      const chip = e.target.closest('.lang-chip');
-      if (chip) {
-        $$('.lang-chip').forEach(c => c.classList.remove('active'));
-        chip.classList.add('active');
-        state.currentLang = chip.dataset.lang;
-        const names = { en:'English', am:'አማርኛ', ti:'ትግርኛ', or:'Oromiffa', gu:'Gurage', so:'Soomaali' };
-        showToast(`Language: ${names[state.currentLang] || 'English'}`);
-      }
-    });
+        /* ------------------ BASE ELEMENT STYLE ------------------ */
+        h2 {
+            font-family: var(--font-serif);
+            font-size: 24px;
+            color: var(--color-brand-gold);
+            margin-bottom: 16px;
+            letter-spacing: 0.05em;
+        }
 
-    // Scan FABs
-    globalScanFab.addEventListener('click', () => showToast('📸 QR Scanner activated (simulated)'));
-    $('#scanFab')?.addEventListener('click', () => showToast('📸 QR Scanner activated (simulated)'));
+        .card {
+            background-color: var(--color-bg-surface);
+            border: var(--border-gold);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
 
-    // Owner actions
-    $('#addStockBtn')?.addEventListener('click', () => {
-      addStockModal.classList.add('open');
-      $('#stockCategory').value = 'Cosmetics & Beauty';
-      $('#stockName').value = 'New Product';
-      $('#stockPrice').value = '250';
-      $('#stockQty').value = '100';
-    });
-    $('#stockDiscard')?.addEventListener('click', () => {
-      addStockModal.classList.remove('open');
-      showToast('Discarded changes');
-    });
-    $('#stockSave')?.addEventListener('click', () => {
-      const cat = $('#stockCategory').value;
-      const name = $('#stockName').value;
-      const price = $('#stockPrice').value;
-      const qty = $('#stockQty').value;
-      if (!name || !price || !qty) { showToast('Please fill all fields'); return; }
-      showToast(`✅ Stock added: ${name} (${qty} units at ${price} ETB)`);
-      addStockModal.classList.remove('open');
-    });
-    $('#stockEdit')?.addEventListener('click', () => showToast('✏️ Edit mode: modify fields then click Save'));
-    $('#stockGallery')?.addEventListener('click', () => showToast('📂 Gallery picker (simulated)'));
-    $('#stockCamera')?.addEventListener('click', () => showToast('📸 Camera scanner (simulated)'));
+        .btn {
+            background-color: transparent;
+            border: 1px solid var(--color-brand-gold);
+            color: var(--color-brand-gold);
+            padding: 12px 20px;
+            font-family: var(--font-sans);
+            font-size: 13px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: center;
+        }
 
-    $('#editPricesBtn')?.addEventListener('click', () => showToast('✏️ Price editor opened (simulated)'));
-    $('#removeProductBtn')?.addEventListener('click', () => showToast('🗑️ Product removal mode (simulated)'));
-    $('#refreshInventoryBtn')?.addEventListener('click', () => showToast('🔄 Inventory refreshed!'));
-    $('#closeDailyBtn')?.addEventListener('click', () => showToast('🔒 Daily transactions closed. Ledger locked.'));
-    $('#addSellerBtn')?.addEventListener('click', () => showToast('👤 Add Seller form opened (simulated)'));
+        .btn:active {
+            background-color: var(--color-brand-gold);
+            color: var(--color-bg-primary);
+        }
 
-    // Request product
-    $('#requestProductBtn')?.addEventListener('click', () => showToast('📸 Upload product photo or name — request sent.'));
+        .btn-success {
+            border-color: var(--color-status-active);
+            color: var(--color-status-active);
+        }
 
-    // ================================================================
-    // DEMO ACCOUNT SWITCHER (dropdown)
-    // ================================================================
-    accountSelect.addEventListener('change', (e) => {
-      const id = e.target.value;
-      login(id);
-    });
+        .btn-success:active {
+            background-color: var(--color-status-active);
+            color: white;
+        }
 
-    // ================================================================
-    // INIT - AUTO DETECT TELEGRAM USER
-    // ================================================================
-    function getTelegramUserId() {
-      // In production, use Telegram.WebApp.initData
-      if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
-        try {
-          const params = new URLSearchParams(window.Telegram.WebApp.initData);
-          const user = params.get('user');
-          if (user) {
-            const parsed = JSON.parse(decodeURIComponent(user));
-            return String(parsed.id);
-          }
-        } catch(e) {}
-      }
-      // Fallback: check URL param ?user_id
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get('user_id');
-      if (id) return id;
-      // Default: buyer
-      return '123456789';
-    }
+        .btn-danger {
+            border-color: var(--color-status-danger);
+            color: var(--color-status-danger);
+        }
 
-    const userId = getTelegramUserId();
-    login(userId);
+        .btn-danger:active {
+            background-color: var(--color-status-danger);
+            color: white;
+        }
 
-    // Expose for driver inline onclick
-    window.showToast = showToast;
-    window.markDeliveryDone = window.markDeliveryDone;
+        /* Form elements */
+        .form-group {
+            margin-bottom: 14px;
+        }
 
-    if (window.Telegram && window.Telegram.WebApp) {
-      Telegram.WebApp.ready();
-      Telegram.WebApp.expand();
-    }
-    console.log('🚀 soYam cosmo Mini App ready — full workflow.');
-    console.log('👑 Owner: @mama51R (ID 999999999) | 🏪 Seller: @silencer01m (ID 987654321)');
-    console.log('📌 Use the dropdown in the top‑right to switch accounts instantly.');
-    console.log('📦 Buyer can add to cart, checkout with delivery details, then seller verifies & assigns driver.');
-  })();
-</script>
-</body>
-</html>
+        label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--color-text-muted);
+            margin-bottom: 6px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            background-color: #121212;
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 4px;
+            padding: 10px;
+            color: var(--color-text-luxury);
+            font-family: var(--font-sans);
+            font-size: 13px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--color-brand-gold);
+        }
+
+        /* ------------------ INTRO IDENTITY ROUTER ------------------ */
+        #identity-router-screen {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .selector-box {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* ------------------ PORTAL: BUYER ------------------ */
+        .promo-block {
+            background: linear-gradient(135deg, var(--color-accent-chocolate) 0%, #1a0f0a 100%);
+            border: var(--border-gold);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .category-tabs {
+            display: flex;
+            overflow-x: auto;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding-bottom: 4px;
+        }
+
+        .category-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-btn {
+            background-color: var(--color-bg-surface);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            color: var(--color-text-muted);
+            padding: 8px 16px;
+            font-size: 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            border-color: var(--color-brand-gold);
+            color: var(--color-brand-gold);
+            background-color: rgba(212,175,55,0.05);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .product-card {
+            background-color: var(--color-bg-surface);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .product-img-dummy {
+            width: 100%;
+            aspect-ratio: 1;
+            background-color: #151515;
+            border-radius: 4px;

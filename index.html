@@ -9,7 +9,6 @@
 <style>
 /* ============================================================
    soYam Cosmo — Premium Cosmetic Brand Style
-   Color Palette: Deep Brown, Rose Gold, Soft Pink, Cream
    ============================================================ */
 :root {
   --brown: #1a0e0a;
@@ -46,7 +45,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== BUTTONS & ELEMENTS ===== */
+/* ===== BUTTONS ===== */
 button { font: inherit; cursor: pointer; border: 0; background: none; }
 button:active { transform: scale(0.97); }
 .btn {
@@ -463,14 +462,16 @@ select.form-control { appearance: none; background-image: url("data:image/svg+xm
 <div id="root"></div>
 <script>
 /* ============================================================
-   soYam Cosmo v2 — Premium Cosmetic Mini App
+   soYam Cosmo v3 — Fixed Authentication & Portal Access
+   @mama51R → Owner Portal with Switch to Seller
+   Other Users → Buyer Portal Only
    ============================================================ */
 
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
-const DB_KEY = 'soyam_cosmo_db_v2';
-const SESSION_KEY = 'soyam_session_v2';
+const DB_KEY = 'soyam_cosmo_db_v3';
+const SESSION_KEY = 'soyam_session_v3';
 
 // ===== SEED DATA =====
 const SEED = {
@@ -510,20 +511,34 @@ function saveDB() { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 const API = {
   async login() {
     let id = tg?.initDataUnsafe?.user?.id?.toString() || localStorage.getItem('demoTelegramId') || '000000000';
+    let username = tg?.initDataUnsafe?.user?.username || 'customer';
+    let firstName = tg?.initDataUnsafe?.user?.first_name || 'Customer';
+    
+    // Check if user exists in db
     let u = db.users.find(x => x.telegram_user_id === id);
+    
+    // If not found, create as BUYER only
     if (!u) {
       u = {
         id: Date.now(),
         telegram_user_id: id,
-        telegram_username: tg?.initDataUnsafe?.user?.username || 'customer',
-        first_name: tg?.initDataUnsafe?.user?.first_name || 'Customer',
+        telegram_username: username,
+        first_name: firstName,
+        phone: '',
         roles: ['BUYER'],
         permissions: ['BUY'],
         store_id: 'STORE001',
         account_status: 'ACTIVE'
       };
-      db.users.push(u); saveDB();
+      db.users.push(u);
+      saveDB();
     }
+    
+    // If user is not active
+    if (u.account_status !== 'ACTIVE') {
+      return { ...u, account_status: 'SUSPENDED' };
+    }
+    
     return u;
   },
   products: () => db.products,
@@ -577,8 +592,7 @@ function icon(name) {
     close: 'M6 18L18 6M6 6l12 12',
     plus: 'M12 4v16m8-8H4',
     shop: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
-    heart: 'M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z',
-    star: 'M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z'
+    switch: 'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'
   };
   const d = icons[name] || icons.home;
   return `<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
@@ -673,7 +687,7 @@ const LANG = {
     buyer: 'المشتري', payment: 'الدفع', fulfillment: 'التوصيل', amount: 'المبلغ'
   }
 };
-LANG.GU = LANG.AM; // Gurage fallback
+LANG.GU = LANG.AM;
 
 function t(key) {
   const langData = LANG[state.lang] || LANG.EN;
@@ -685,45 +699,35 @@ function selectLanguage(lang, el) {
   localStorage.setItem('soyam_lang', lang);
   document.querySelectorAll('.lang-bar button').forEach(b => b.classList.toggle('active', b === el));
   render();
-  toast(t('language_selected') || 'Language changed');
+  toast('Language changed');
 }
 
 // ===== RENDER ENGINE =====
 async function boot() {
   state.user = await API.login();
-  if (state.user.account_status !== 'ACTIVE') { renderRevoked(); return; }
-  if (state.user.roles.includes('OWNER')) { renderPortalSelector(); return; }
-  state.portal = 'BUYER';
-  state.view = 'home';
-  render();
-}
-
-function renderPortalSelector() {
-  document.getElementById('root').innerHTML = `
-    <div style="min-height:100vh;display:grid;place-items:center;padding:20px;background:linear-gradient(145deg,#1a0e0a,#3d241c);">
-      <div style="background:var(--white);border-radius:24px;padding:28px 24px;max-width:400px;width:100%;text-align:center;">
-        <div style="display:flex;justify-content:center;margin-bottom:12px;">${brandLogo()}</div>
-        <h1 style="font-family:Georgia,serif;font-size:22px;color:var(--brown);">soYam Cosmo</h1>
-        <p style="color:var(--muted);font-size:12px;margin-bottom:16px;">Choose your workspace</p>
-        <div style="display:grid;gap:10px;">
-          <button class="btn btn-primary btn-full" onclick="choosePortal('OWNER')">
-            ${icon('users')} Owner Command Center
-          </button>
-          <button class="btn btn-gold btn-full" onclick="choosePortal('SELLER')">
-            ${icon('shop')} Seller Operations
-          </button>
-        </div>
-        <p style="font-size:10px;color:var(--muted);margin-top:14px;">@${esc(state.user.telegram_username)}</p>
-      </div>
-    </div>
-  `;
-}
-
-function choosePortal(role) {
-  if (!state.user.roles.includes(role)) { toast('Access denied'); return; }
-  state.portal = role;
-  state.view = 'home';
-  audit('PORTAL_SWITCHED', role);
+  
+  // Check if user is suspended
+  if (state.user.account_status === 'SUSPENDED') {
+    renderRevoked();
+    return;
+  }
+  
+  // ===== CRITICAL FIX: Portal Access Logic =====
+  // @mama51R (telegram_user_id: '999999999') → Owner Portal
+  // Any other user → Buyer Portal only
+  
+  const OWNER_ID = '999999999'; // @mama51R's Telegram ID
+  
+  if (state.user.telegram_user_id === OWNER_ID) {
+    // Owner user → Owner Portal with Switch to Seller
+    state.portal = 'OWNER';
+    state.view = 'home';
+  } else {
+    // Any other user → Buyer Portal only
+    state.portal = 'BUYER';
+    state.view = 'home';
+  }
+  
   render();
 }
 
@@ -734,15 +738,10 @@ function renderRevoked() {
         <div style="font-size:48px;">⛔</div>
         <h2>Access Revoked</h2>
         <p style="color:var(--muted);font-size:13px;">Your access has been revoked by the owner.</p>
-        <button class="btn btn-primary btn-full" onclick="demoBuyer()">Return to Storefront</button>
+        <button class="btn btn-primary btn-full" onclick="tg?.close()">Close</button>
       </div>
     </div>
   `;
-}
-
-function demoBuyer() {
-  localStorage.setItem('demoTelegramId', '000000000');
-  location.reload();
 }
 
 // ===== LANGUAGE BAR =====
@@ -822,7 +821,9 @@ function footer() {
 
 function go(view) { state.view = view; render(); }
 
-// ===== BUYER PORTAL =====
+// ============================================================
+// BUYER PORTAL — For all users except @mama51R
+// ============================================================
 function renderBuyer() {
   let body = '';
   if (state.view === 'home') body = buyerHome();
@@ -1123,25 +1124,33 @@ function showStoreQR() {
   `);
 }
 
-// ===== SELLER PORTAL =====
-function renderSeller() {
+// ============================================================
+// OWNER PORTAL — Only for @mama51R (telegram_user_id: '999999999')
+// ============================================================
+function renderOwner() {
   let body = '';
-  if (state.view === 'home') body = sellerDashboard();
-  else if (state.view === 'orders') body = sellerOrders();
-  else if (state.view === 'scan') body = scannerView();
-  else if (state.view === 'stock') body = stockView(false);
-  else if (state.view === 'delivery') body = sellerDelivery();
+  if (state.view === 'home') body = ownerDashboard();
+  else if (state.view === 'staff') body = ownerStaff();
+  else if (state.view === 'inventory') body = stockView(true);
+  else if (state.view === 'orders') body = ownerOrders();
+  else if (state.view === 'audit') body = ownerAudit();
+  else if (state.view === 'reports') body = ownerReports();
+  else if (state.view === 'settings') body = ownerSettings();
+  else if (state.view === 'seller') body = renderSellerContent();
 
   document.getElementById('root').innerHTML = `
     <div class="app">
-      ${portalHeader('Seller Operations', 'POS & Orders')}
+      ${portalHeader('Owner Command Center', 'Overall Control')}
       <div class="toolbar">
         ${[
           ['home', 'home', 'dashboard'],
+          ['staff', 'users', 'staff'],
+          ['inventory', 'stock', 'inventory'],
           ['orders', 'orders', 'orders'],
-          ['scan', 'scan', 'scan'],
-          ['stock', 'stock', 'stock'],
-          ['delivery', 'truck', 'delivery']
+          ['audit', 'chart', 'audit'],
+          ['reports', 'chart', 'reports'],
+          ['settings', 'settings', 'settings'],
+          ['seller', 'switch', 'seller']
         ].map(([id, ic, label]) => 
           `<button class="${state.view === id ? 'active' : ''}" onclick="go('${id}')">${icon(ic)} ${t(label)}</button>`
         ).join('')}
@@ -1150,262 +1159,172 @@ function renderSeller() {
       ${footer()}
       ${bottomNav([
         ['home', 'home', 'home'],
+        ['staff', 'users', 'staff'],
+        ['inventory', 'stock', 'inventory'],
         ['orders', 'orders', 'orders'],
-        ['scan', 'scan', 'scan'],
-        ['stock', 'stock', 'stock'],
-        ['delivery', 'truck', 'delivery']
+        ['audit', 'chart', 'audit']
       ])}
     </div>
   `;
 }
 
-function sellerDashboard() {
+function ownerDashboard() {
+  const sales = db.transactions.filter(t => t.type === 'SALE').reduce((s, t) => s + Number(t.amount || 0), 0);
+  const cost = db.products.reduce((s, p) => s + p.stock * p.cost, 0);
+  const balance = db.products.reduce((s, p) => s + p.stock, 0);
+  const retail = db.products.reduce((s, p) => s + p.stock * p.price, 0);
   const pending = db.orders.filter(o => o.status === 'PENDING').length;
-  const pay = db.orders.filter(o => o.payment_status === 'SUBMITTED').length;
-  const del = db.orders.filter(o => o.fulfillment === 'DELIVERY' && o.status !== 'COMPLETED').length;
+  const low = db.products.filter(p => p.stock < 10).length;
+  const completed = db.orders.filter(o => o.status === 'COMPLETED').length;
+
   return `
     <div class="grid-4">
-      <div class="kpi"><div class="label">Orders</div><div class="value">${pending}</div></div>
-      <div class="kpi"><div class="label">Payments</div><div class="value">${pay}</div></div>
-      <div class="kpi"><div class="label">Delivery</div><div class="value">${del}</div></div>
-      <div class="kpi"><div class="label">Products</div><div class="value">${db.products.length}</div></div>
+      <div class="kpi"><div class="label">${t('sales')}</div><div class="value">${money(sales)}</div></div>
+      <div class="kpi"><div class="label">Stock Cost</div><div class="value">${money(cost)}</div></div>
+      <div class="kpi"><div class="label">${t('balance')}</div><div class="value">${balance}</div></div>
+      <div class="kpi"><div class="label">Retail Value</div><div class="value">${money(retail)}</div></div>
     </div>
     <div class="card">
-      <div class="card-title">${icon('home')} Quick Actions</div>
+      <div class="card-title">${icon('chart')} Business Overview</div>
       <div class="grid-4">
-        <button class="btn btn-outline btn-sm" onclick="go('orders')">${icon('orders')} Orders</button>
-        <button class="btn btn-outline btn-sm" onclick="go('scan')">${icon('scan')} Scan</button>
-        <button class="btn btn-outline btn-sm" onclick="go('stock')">${icon('stock')} Stock</button>
-        <button class="btn btn-outline btn-sm" onclick="go('delivery')">${icon('truck')} Delivery</button>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('orders')}</div><div class="value">${db.orders.length}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('completed')}</div><div class="value">${completed}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('pending')}</div><div class="value">${pending}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('lowStock')}</div><div class="value">${low}</div></div>
       </div>
     </div>
     <div class="card">
-      <div class="card-title">${icon('stock')} Low Stock</div>
-      ${db.products.filter(p => p.stock < 15).map(p => `
+      <div class="card-title">${icon('home')} Management Menu</div>
+      <div class="grid-4">
+        <button class="btn btn-outline btn-sm" onclick="go('staff')">${icon('users')} ${t('staff')}</button>
+        <button class="btn btn-outline btn-sm" onclick="go('inventory')">${icon('stock')} ${t('inventory')}</button>
+        <button class="btn btn-outline btn-sm" onclick="go('orders')">${icon('orders')} ${t('orders')}</button>
+        <button class="btn btn-outline btn-sm" onclick="go('audit')">${icon('chart')} ${t('audit')}</button>
+        <button class="btn btn-outline btn-sm" onclick="go('reports')">${icon('chart')} ${t('reports')}</button>
+        <button class="btn btn-outline btn-sm" onclick="go('settings')">${icon('settings')} ${t('settings')}</button>
+        <button class="btn btn-gold btn-sm" onclick="go('seller')">${icon('switch')} ${t('seller')}</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">${icon('stock')} ${t('lowStock')} Alert</div>
+      ${db.products.filter(p => p.stock < 10).slice(0,5).map(p => `
         <div class="flex-between" style="padding:6px 0;border-bottom:1px solid #f0e8e0;">
           <span>${p.emoji} ${esc(p.name)}</span>
-          <span class="stock-badge ${p.stock < 10 ? 'low' : 'warn'}">${p.stock} left</span>
+          <span class="stock-badge low">${p.stock} units</span>
         </div>
-      `).join('') || '<p class="text-muted">No low-stock items.</p>'}
+      `).join('') || '<p class="text-muted">All stock levels are good.</p>'}
     </div>
   `;
 }
 
-function sellerOrders() {
-  return `
-    <div class="card">
-      <div class="card-title">${icon('orders')} Orders & Payment Verification</div>
-      ${db.orders.length ? db.orders.slice().reverse().map(o => `
-        <div style="padding:10px 0;border-bottom:1px solid #f0e8e0;">
-          <div class="flex-between">
-            <b>${o.id}</b>
-            <span class="stock-badge ${o.payment_status === 'VERIFIED' || o.payment_status === 'PAID' ? 'ok' : 'warn'}">${o.payment_status}</span>
-          </div>
-          <div class="text-muted" style="font-size:10px;">${money(o.total)} · ${o.fulfillment}</div>
-          ${o.payment_status === 'SUBMITTED' ? `
-            <div style="display:flex;gap:6px;margin-top:6px;">
-              <button class="btn btn-primary btn-sm" onclick="verifyPayment('${o.id}')">✓ Verify</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectPayment('${o.id}')">Reject</button>
-            </div>
-          ` : ''}
-          ${o.fulfillment === 'DELIVERY' && o.payment_status !== 'PENDING' ? `
-            <button class="btn btn-gold btn-sm" style="margin-top:6px;" onclick="assignDriver('${o.id}')">Assign Driver</button>
-          ` : ''}
-        </div>
-      `).join('') : '<p class="text-muted">No orders.</p>'}
-    </div>
-  `;
-}
-
-function verifyPayment(id) {
-  const o = db.orders.find(x => x.id === id);
-  if (!o) return;
-  if (!finalizeOrderStock(o)) return;
-  o.payment_status = 'VERIFIED';
-  o.status = 'READY';
-  db.dailyLedger.cash += Number(o.total || 0);
-  saveDB();
-  audit('PAYMENT_VERIFIED', id);
-  toast('Payment verified · stock updated');
-  render();
-}
-
-function rejectPayment(id) {
-  const o = db.orders.find(x => x.id === id);
-  o.payment_status = 'REJECTED';
-  saveDB();
-  audit('PAYMENT_REJECTED', id);
-  toast('Payment rejected');
-  render();
-}
-
-function assignDriver(id) {
-  const o = db.orders.find(x => x.id === id);
-  o.driver_name = 'Demo Driver';
-  o.driver_phone = '+251900000000';
-  o.plate = 'ABC-123';
-  o.status = 'DRIVER_ASSIGNED';
-  db.deliveries.push({ order_id: id, driver: 'Demo Driver', status: 'ASSIGNED' });
-  saveDB();
-  audit('DRIVER_ASSIGNED', id);
-  toast('Driver assigned');
-  render();
-}
-
-function sellerDelivery() {
-  return `
-    <div class="card">
-      <div class="card-title">${icon('truck')} Delivery Queue</div>
-      ${db.orders.filter(o => o.fulfillment === 'DELIVERY').map(o => `
-        <div style="padding:10px 0;border-bottom:1px solid #f0e8e0;">
-          <div class="flex-between">
-            <b>${o.id}</b>
-            <span class="stock-badge warn">${o.status}</span>
-          </div>
-          <div class="text-muted" style="font-size:10px;">${esc(o.dropoff || 'No destination')}</div>
-        </div>
-      `).join('') || '<p class="text-muted">No delivery orders.</p>'}
-    </div>
-  `;
-}
-
-// ===== SCANNER =====
-let scannerStream = null;
-let scannerLoop = null;
-
-function scannerView() {
+function ownerStaff() {
   return `
     <div class="card">
       <div class="flex-between">
-        <div class="card-title" style="margin:0;">${icon('scan')} QR / Barcode Scanner</div>
-        <span class="stock-badge ok">LIVE</span>
+        <div class="card-title" style="margin:0;">${icon('users')} ${t('staff')}</div>
+        <button class="btn btn-gold btn-sm" onclick="showAddUser()">${icon('plus')} Add</button>
       </div>
-      <div class="scanner-box">
-        <video id="scanVideo" autoplay playsinline muted></video>
-        <div class="scanner-overlay"></div>
-        <div id="scanStatus" class="scanner-status">Camera not started</div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>User</th><th>${t('role')}</th><th>${t('status')}</th><th>${t('action')}</th></tr></thead>
+          <tbody>
+            ${db.users.map(u => `
+              <tr>
+                <td>@${esc(u.telegram_username)}<br><span class="text-muted" style="font-size:8px;">${esc(u.first_name)}</span></td>
+                <td>${u.roles.join(', ')}</td>
+                <td><span class="stock-badge ${u.account_status === 'ACTIVE' ? 'ok' : 'low'}">${u.account_status}</span></td>
+                <td>
+                  ${u.telegram_username === 'mama51R' ? 'MASTER' : `
+                    <div style="display:flex;gap:4px;">
+                      <button class="btn btn-outline btn-sm" onclick="toggleUser(${u.id})" style="padding:4px 6px;font-size:9px;">${u.account_status === 'ACTIVE' ? 'Suspend' : 'Activate'}</button>
+                      <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})" style="padding:4px 6px;">${icon('trash')}</button>
+                    </div>
+                  `}
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
       </div>
-      <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-sm" onclick="startScanner()">${icon('scan')} Start</button>
-        <button class="btn btn-gold btn-sm" onclick="pickScanImage()">${icon('edit')} Image</button>
-        <button class="btn btn-danger btn-sm" onclick="stopScanner()">Stop</button>
+    </div>
+    <div class="card">
+      <div class="card-title">${icon('plus')} Invite Seller</div>
+      <div class="flex" style="gap:6px;">
+        <input class="form-control" id="inviteUser" placeholder="Telegram username">
+        <button class="btn btn-primary" onclick="createInvite()" style="white-space:nowrap;">Invite</button>
       </div>
-      <input id="scanImageInput" type="file" accept="image/*" capture="environment" hidden onchange="decodeImageFile(event)">
-      <div class="form-group" style="margin-top:8px;">
-        <label>Manual Entry</label>
-        <input class="form-control" id="barcode" placeholder="Enter product ID or order ID">
-      </div>
-      <button class="btn btn-primary btn-full" onclick="lookupBarcode()">Lookup</button>
-      <div id="scanResult" style="margin-top:10px;"></div>
     </div>
   `;
 }
 
-async function startScanner() {
-  const v = document.getElementById('scanVideo');
-  const st = document.getElementById('scanStatus');
-  if (!v) return;
-  try {
-    scannerStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: false
-    });
-    v.srcObject = scannerStream;
-    st.textContent = 'Point at QR or barcode';
-    if ('BarcodeDetector' in window) {
-      const detector = new BarcodeDetector({ formats: ['qr_code', 'ean_13', 'ean_8', 'code_128', 'code_39', 'upc_a', 'upc_e'] });
-      const tick = async () => {
-        if (!scannerStream || !v.videoWidth) return;
-        try {
-          const codes = await detector.detect(v);
-          if (codes.length && codes[0].rawValue) {
-            document.getElementById('barcode').value = codes[0].rawValue;
-            st.textContent = 'Detected: ' + codes[0].rawValue;
-            lookupBarcode();
-            stopScanner();
-            return;
-          }
-        } catch (e) {}
-        scannerLoop = requestAnimationFrame(tick);
-      };
-      tick();
-    } else {
-      st.textContent = 'Camera active. Use image scan on this browser.';
-    }
-  } catch (e) {
-    st.textContent = 'Camera permission denied. Use manual entry.';
-    toast('Camera permission was not granted');
-  }
-}
-
-function stopScanner() {
-  if (scannerStream) { scannerStream.getTracks().forEach(t => t.stop()); scannerStream = null; }
-  if (scannerLoop) { cancelAnimationFrame(scannerLoop); scannerLoop = null; }
-}
-
-function pickScanImage() { document.getElementById('scanImageInput')?.click(); }
-
-async function decodeImageFile(e) {
-  const f = e.target.files?.[0];
-  if (!f) return;
-  if ('BarcodeDetector' in window) {
-    try {
-      const d = new BarcodeDetector({ formats: ['qr_code', 'ean_13', 'ean_8', 'code_128', 'code_39', 'upc_a', 'upc_e'] });
-      const codes = await d.detect(await createImageBitmap(f));
-      if (codes[0]?.rawValue) {
-        document.getElementById('barcode').value = codes[0].rawValue;
-        lookupBarcode();
-        return;
-      }
-    } catch (err) {}
-  }
-  toast('Could not decode image. Enter code manually.');
-}
-
-function lookupBarcode() {
-  const code = document.getElementById('barcode').value.trim();
-  const p = db.products.find(x => x.id === code);
-  const o = db.orders.find(x => x.id === code);
-  const result = document.getElementById('scanResult');
-  if (p) {
-    result.innerHTML = `
-      <div class="card" style="margin-top:8px;padding:12px;">
-        <div class="flex-between">
-          <div><b>${p.emoji} ${esc(p.name)}</b><br><span class="text-muted">${p.category} · ${money(p.price)} · Stock ${p.stock}</span></div>
-          <button class="btn btn-primary btn-sm" onclick="addScannedItem('${p.id}')">Add to Basket</button>
+function showAddUser() {
+  document.body.insertAdjacentHTML('beforeend', `
+    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
+      <div class="modal-sheet">
+        <div class="flex-between"><h3>${icon('plus')} Add User</h3><button onclick="closeModal()">${icon('close')}</button></div>
+        <div class="form-group"><label>Telegram User ID</label><input class="form-control" id="auId" placeholder="123456789"></div>
+        <div class="form-group"><label>Telegram Username</label><input class="form-control" id="auUsername" placeholder="username"></div>
+        <div class="form-group"><label>Full Name</label><input class="form-control" id="auName" placeholder="Full name"></div>
+        <div class="form-group"><label>Phone</label><input class="form-control" id="auPhone" placeholder="+251900000000"></div>
+        <div class="form-group"><label>Role</label>
+          <select class="form-control" id="auRole"><option>SELLER</option><option>DRIVER</option></select>
         </div>
+        <button class="btn btn-primary btn-full" onclick="saveUser()">${icon('save')} Save User</button>
       </div>
-    `;
-  } else if (o) {
-    result.innerHTML = `
-      <div class="card" style="margin-top:8px;padding:12px;">
-        <div class="flex-between">
-          <div><b>🧾 ${o.id}</b><br><span class="text-muted">${money(o.total)} · ${o.fulfillment} · ${o.payment_status}</span></div>
-          <span class="stock-badge ${o.status === 'COMPLETED' ? 'ok' : 'warn'}">${o.status}</span>
-        </div>
-        ${o.payment_status === 'SUBMITTED' ? `<button class="btn btn-primary btn-sm" onclick="verifyPayment('${o.id}')">Verify Payment</button>` : ''}
-        ${o.fulfillment === 'IN_PERSON' ? `<button class="btn btn-gold btn-sm" onclick="confirmPickup('${o.id}')">Confirm Pickup</button>` : ''}
-      </div>
-    `;
-  } else {
-    result.innerHTML = `<div class="card" style="margin-top:8px;padding:12px;"><p class="text-muted">No match found for "${esc(code)}"</p></div>`;
-  }
+    </div>
+  `);
 }
 
-function addScannedItem(id) {
-  toast('Item added to basket');
-  audit('ITEM_SCANNED', id);
-}
-
-function confirmPickup(id) {
-  const o = db.orders.find(x => x.id === id);
-  if (!o) return;
-  if (!finalizeOrderStock(o)) return;
-  o.status = 'COMPLETED';
+function saveUser() {
+  const u = {
+    id: Date.now(),
+    telegram_user_id: document.getElementById('auId').value.trim(),
+    telegram_username: document.getElementById('auUsername').value.trim().replace(/^@/, ''),
+    first_name: document.getElementById('auName').value.trim(),
+    phone: document.getElementById('auPhone').value.trim(),
+    roles: [document.getElementById('auRole').value],
+    permissions: [document.getElementById('auRole').value === 'SELLER' ? 'SELL' : 'DELIVERY'],
+    store_id: 'STORE001',
+    account_status: 'ACTIVE'
+  };
+  if (!u.telegram_user_id || !u.telegram_username) { toast('Telegram ID and username required'); return; }
+  db.users.push(u);
   saveDB();
-  audit('PICKUP_CONFIRMED', id);
-  toast('Pickup confirmed · stock updated');
+  audit('USER_ADDED', u.telegram_username);
+  closeModal();
+  toast('User added: @' + u.telegram_username);
   render();
+}
+
+function toggleUser(id) {
+  const u = db.users.find(x => x.id === id);
+  u.account_status = u.account_status === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
+  saveDB();
+  audit('USER_TOGGLED', u.telegram_username);
+  toast('User status changed');
+  render();
+}
+
+function deleteUser(id) {
+  const u = db.users.find(x => x.id === id);
+  if (!u || u.telegram_username === 'mama51R') { toast('Cannot delete master user'); return; }
+  if (!confirm(`Delete @${u.telegram_username} permanently?`)) return;
+  db.users = db.users.filter(x => x.id !== id);
+  saveDB();
+  audit('USER_DELETED', u.telegram_username);
+  toast('User deleted');
+  render();
+}
+
+function createInvite() {
+  const username = document.getElementById('inviteUser').value.trim();
+  if (!username) { toast('Enter username'); return; }
+  const code = 'SOYAM-' + Math.random().toString(36).slice(2, 8).toUpperCase();
+  db.invitations.push({ code, username, status: 'PENDING' });
+  saveDB();
+  audit('INVITE_CREATED', code);
+  alert(`Invitation code: ${code}\nShare with @${username}`);
+  document.getElementById('inviteUser').value = '';
 }
 
 // ===== STOCK VIEW =====
@@ -1544,206 +1463,6 @@ function saveEditedStock(id) {
   render();
 }
 
-// ===== OWNER PORTAL =====
-function renderOwner() {
-  let body = '';
-  if (state.view === 'home') body = ownerDashboard();
-  else if (state.view === 'staff') body = ownerStaff();
-  else if (state.view === 'inventory') body = stockView(true);
-  else if (state.view === 'orders') body = ownerOrders();
-  else if (state.view === 'audit') body = ownerAudit();
-  else if (state.view === 'reports') body = ownerReports();
-  else if (state.view === 'settings') body = ownerSettings();
-
-  document.getElementById('root').innerHTML = `
-    <div class="app">
-      ${portalHeader('Owner Command Center', 'Overall Control')}
-      <div class="toolbar">
-        ${[
-          ['home', 'home', 'dashboard'],
-          ['staff', 'users', 'staff'],
-          ['inventory', 'stock', 'inventory'],
-          ['orders', 'orders', 'orders'],
-          ['audit', 'chart', 'audit'],
-          ['reports', 'chart', 'reports'],
-          ['settings', 'settings', 'settings']
-        ].map(([id, ic, label]) => 
-          `<button class="${state.view === id ? 'active' : ''}" onclick="go('${id}')">${icon(ic)} ${t(label)}</button>`
-        ).join('')}
-      </div>
-      <main class="view">${body}</main>
-      ${footer()}
-      ${bottomNav([
-        ['home', 'home', 'home'],
-        ['staff', 'users', 'staff'],
-        ['inventory', 'stock', 'inventory'],
-        ['orders', 'orders', 'orders'],
-        ['audit', 'chart', 'audit']
-      ])}
-    </div>
-  `;
-}
-
-function ownerDashboard() {
-  const sales = db.transactions.filter(t => t.type === 'SALE').reduce((s, t) => s + Number(t.amount || 0), 0);
-  const cost = db.products.reduce((s, p) => s + p.stock * p.cost, 0);
-  const balance = db.products.reduce((s, p) => s + p.stock, 0);
-  const retail = db.products.reduce((s, p) => s + p.stock * p.price, 0);
-  const pending = db.orders.filter(o => o.status === 'PENDING').length;
-  const low = db.products.filter(p => p.stock < 10).length;
-  const completed = db.orders.filter(o => o.status === 'COMPLETED').length;
-
-  return `
-    <div class="grid-4">
-      <div class="kpi"><div class="label">${t('sales')}</div><div class="value">${money(sales)}</div></div>
-      <div class="kpi"><div class="label">Stock Cost</div><div class="value">${money(cost)}</div></div>
-      <div class="kpi"><div class="label">${t('balance')}</div><div class="value">${balance}</div></div>
-      <div class="kpi"><div class="label">Retail Value</div><div class="value">${money(retail)}</div></div>
-    </div>
-    <div class="card">
-      <div class="card-title">${icon('chart')} Business Overview</div>
-      <div class="grid-4">
-        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('orders')}</div><div class="value">${db.orders.length}</div></div>
-        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('completed')}</div><div class="value">${completed}</div></div>
-        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('pending')}</div><div class="value">${pending}</div></div>
-        <div class="kpi" style="border:none;padding:6px;"><div class="label">${t('lowStock')}</div><div class="value">${low}</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">${icon('home')} Management Menu</div>
-      <div class="grid-4">
-        <button class="btn btn-outline btn-sm" onclick="go('staff')">${icon('users')} ${t('staff')}</button>
-        <button class="btn btn-outline btn-sm" onclick="go('inventory')">${icon('stock')} ${t('inventory')}</button>
-        <button class="btn btn-outline btn-sm" onclick="go('orders')">${icon('orders')} ${t('orders')}</button>
-        <button class="btn btn-outline btn-sm" onclick="go('audit')">${icon('chart')} ${t('audit')}</button>
-        <button class="btn btn-outline btn-sm" onclick="go('reports')">${icon('chart')} ${t('reports')}</button>
-        <button class="btn btn-outline btn-sm" onclick="go('settings')">${icon('settings')} ${t('settings')}</button>
-        <button class="btn btn-gold btn-sm" onclick="choosePortal('SELLER')">${icon('shop')} ${t('seller')}</button>
-        <button class="btn btn-primary btn-sm" onclick="renderPortalSelector()">${icon('switch')} ${t('switch')}</button>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">${icon('stock')} ${t('lowStock')} Alert</div>
-      ${db.products.filter(p => p.stock < 10).slice(0,5).map(p => `
-        <div class="flex-between" style="padding:6px 0;border-bottom:1px solid #f0e8e0;">
-          <span>${p.emoji} ${esc(p.name)}</span>
-          <span class="stock-badge low">${p.stock} units</span>
-        </div>
-      `).join('') || '<p class="text-muted">All stock levels are good.</p>'}
-    </div>
-  `;
-}
-
-function ownerStaff() {
-  return `
-    <div class="card">
-      <div class="flex-between">
-        <div class="card-title" style="margin:0;">${icon('users')} ${t('staff')}</div>
-        <button class="btn btn-gold btn-sm" onclick="showAddUser()">${icon('plus')} Add</button>
-      </div>
-      <div class="table-wrap">
-        <table class="table">
-          <thead><tr><th>User</th><th>${t('role')}</th><th>${t('status')}</th><th>${t('action')}</th></tr></thead>
-          <tbody>
-            ${db.users.map(u => `
-              <tr>
-                <td>@${esc(u.telegram_username)}<br><span class="text-muted" style="font-size:8px;">${esc(u.first_name)}</span></td>
-                <td>${u.roles.join(', ')}</td>
-                <td><span class="stock-badge ${u.account_status === 'ACTIVE' ? 'ok' : 'low'}">${u.account_status}</span></td>
-                <td>
-                  ${u.telegram_username === 'mama51R' ? 'MASTER' : `
-                    <div style="display:flex;gap:4px;">
-                      <button class="btn btn-outline btn-sm" onclick="toggleUser(${u.id})" style="padding:4px 6px;font-size:9px;">${u.account_status === 'ACTIVE' ? 'Suspend' : 'Activate'}</button>
-                      <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})" style="padding:4px 6px;">${icon('trash')}</button>
-                    </div>
-                  `}
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-title">${icon('plus')} Invite Seller</div>
-      <div class="flex" style="gap:6px;">
-        <input class="form-control" id="inviteUser" placeholder="Telegram username">
-        <button class="btn btn-primary" onclick="createInvite()" style="white-space:nowrap;">Invite</button>
-      </div>
-    </div>
-  `;
-}
-
-function showAddUser() {
-  document.body.insertAdjacentHTML('beforeend', `
-    <div class="modal-overlay" onclick="if(event.target===this)closeModal()">
-      <div class="modal-sheet">
-        <div class="flex-between"><h3>${icon('plus')} Add User</h3><button onclick="closeModal()">${icon('close')}</button></div>
-        <div class="form-group"><label>Telegram User ID</label><input class="form-control" id="auId" placeholder="123456789"></div>
-        <div class="form-group"><label>Telegram Username</label><input class="form-control" id="auUsername" placeholder="username"></div>
-        <div class="form-group"><label>Full Name</label><input class="form-control" id="auName" placeholder="Full name"></div>
-        <div class="form-group"><label>Phone</label><input class="form-control" id="auPhone" placeholder="+251900000000"></div>
-        <div class="form-group"><label>Role</label>
-          <select class="form-control" id="auRole"><option>SELLER</option><option>DRIVER</option></select>
-        </div>
-        <button class="btn btn-primary btn-full" onclick="saveUser()">${icon('save')} Save User</button>
-      </div>
-    </div>
-  `);
-}
-
-function saveUser() {
-  const u = {
-    id: Date.now(),
-    telegram_user_id: document.getElementById('auId').value.trim(),
-    telegram_username: document.getElementById('auUsername').value.trim().replace(/^@/, ''),
-    first_name: document.getElementById('auName').value.trim(),
-    phone: document.getElementById('auPhone').value.trim(),
-    roles: [document.getElementById('auRole').value],
-    permissions: [document.getElementById('auRole').value === 'SELLER' ? 'SELL' : 'DELIVERY'],
-    store_id: 'STORE001',
-    account_status: 'ACTIVE'
-  };
-  if (!u.telegram_user_id || !u.telegram_username) { toast('Telegram ID and username required'); return; }
-  db.users.push(u);
-  saveDB();
-  audit('USER_ADDED', u.telegram_username);
-  closeModal();
-  toast('User added: @' + u.telegram_username);
-  render();
-}
-
-function toggleUser(id) {
-  const u = db.users.find(x => x.id === id);
-  u.account_status = u.account_status === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
-  saveDB();
-  audit('USER_TOGGLED', u.telegram_username);
-  toast('User status changed');
-  render();
-}
-
-function deleteUser(id) {
-  const u = db.users.find(x => x.id === id);
-  if (!u || u.telegram_username === 'mama51R') { toast('Cannot delete master user'); return; }
-  if (!confirm(`Delete @${u.telegram_username} permanently?`)) return;
-  db.users = db.users.filter(x => x.id !== id);
-  saveDB();
-  audit('USER_DELETED', u.telegram_username);
-  toast('User deleted');
-  render();
-}
-
-function createInvite() {
-  const username = document.getElementById('inviteUser').value.trim();
-  if (!username) { toast('Enter username'); return; }
-  const code = 'SOYAM-' + Math.random().toString(36).slice(2, 8).toUpperCase();
-  db.invitations.push({ code, username, status: 'PENDING' });
-  saveDB();
-  audit('INVITE_CREATED', code);
-  alert(`Invitation code: ${code}\nShare with @${username}`);
-  document.getElementById('inviteUser').value = '';
-}
-
 function ownerOrders() {
   return `
     <div class="card">
@@ -1867,54 +1586,35 @@ function ownerSettings() {
   `;
 }
 
-// ===== DRIVER PORTAL =====
-function renderDriver() {
-  const assigned = db.orders.filter(o => o.driver_name === 'Demo Driver' && o.status !== 'COMPLETED');
-  document.getElementById('root').innerHTML = `
-    <div class="app">
-      ${portalHeader('Driver Hub', 'Delivery Management')}
-      <main class="view">
-        <div class="card">
-          <div class="card-title">${icon('truck')} Assigned Deliveries</div>
-          ${assigned.map(o => `
-            <div style="padding:10px 0;border-bottom:1px solid #f0e8e0;">
-              <div class="flex-between">
-                <b>${o.id}</b>
-                <span class="stock-badge warn">${o.status}</span>
-              </div>
-              <div class="text-muted" style="font-size:10px;">${esc(o.dropoff || 'Destination')}</div>
-              <div style="display:flex;gap:6px;margin-top:6px;">
-                <button class="btn btn-primary btn-sm" onclick="updateDelivery('${o.id}','IN_TRANSIT')">Start</button>
-                <button class="btn btn-gold btn-sm" onclick="updateDelivery('${o.id}','COMPLETED')">Delivered</button>
-              </div>
-            </div>
-          `).join('') || '<p class="text-muted">No assigned deliveries.</p>'}
-        </div>
-      </main>
-      ${footer()}
-      ${bottomNav([['home', 'home', 'home']])}
+// ============================================================
+// SELLER CONTENT — Accessible from Owner Portal via Switch
+// ============================================================
+function renderSellerContent() {
+  return `
+    <div class="card">
+      <div class="card-title">${icon('shop')} Seller Operations</div>
+      <p class="text-muted">Switch to Seller view. Owner can manage sales, stock, and orders.</p>
+      <div style="display:grid;gap:8px;margin-top:12px;">
+        <button class="btn btn-primary btn-full" onclick="go('orders')">${icon('orders')} View Orders</button>
+        <button class="btn btn-gold btn-full" onclick="go('inventory')">${icon('stock')} Manage Stock</button>
+        <button class="btn btn-outline btn-full" onclick="go('audit')">${icon('chart')} View Audit</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">${icon('stock')} Quick Stock Overview</div>
+      <div class="grid-4">
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">Products</div><div class="value">${db.products.length}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">Total Units</div><div class="value">${db.products.reduce((a, p) => a + p.stock, 0)}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">Low Stock</div><div class="value">${db.products.filter(p => p.stock < 10).length}</div></div>
+        <div class="kpi" style="border:none;padding:6px;"><div class="label">Orders</div><div class="value">${db.orders.length}</div></div>
+      </div>
     </div>
   `;
 }
 
-function updateDelivery(id, status) {
-  const o = db.orders.find(x => x.id === id);
-  o.status = status;
-  saveDB();
-  audit('DELIVERY_UPDATE', id + ' → ' + status);
-  toast('Delivery: ' + status);
-  render();
-}
-
-// ===== MAIN RENDER =====
-function render() {
-  if (state.portal === 'BUYER') renderBuyer();
-  else if (state.portal === 'SELLER') renderSeller();
-  else if (state.portal === 'DRIVER') renderDriver();
-  else renderOwner();
-}
-
-// ===== GLOBAL EXPOSURE =====
+// ============================================================
+// GLOBAL EXPOSURE
+// ============================================================
 window.go = go;
 window.setCat = setCat;
 window.changeCart = changeCart;
@@ -1926,17 +1626,6 @@ window.closeModal = closeModal;
 window.uploadProof = uploadProof;
 window.track = track;
 window.submitRequest = submitRequest;
-window.verifyPayment = verifyPayment;
-window.rejectPayment = rejectPayment;
-window.assignDriver = assignDriver;
-window.updateDelivery = updateDelivery;
-window.startScanner = startScanner;
-window.stopScanner = stopScanner;
-window.pickScanImage = pickScanImage;
-window.decodeImageFile = decodeImageFile;
-window.lookupBarcode = lookupBarcode;
-window.addScannedItem = addScannedItem;
-window.confirmPickup = confirmPickup;
 window.removeStock = removeStock;
 window.showAddStock = showAddStock;
 window.saveStock = saveStock;
@@ -1953,7 +1642,9 @@ window.showStoreQR = showStoreQR;
 window.selectLanguage = selectLanguage;
 window.t = t;
 
-// ===== BOOT =====
+// ============================================================
+// BOOT
+// ============================================================
 boot();
 </script>
 </body>

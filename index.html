@@ -559,6 +559,40 @@
             margin: 2px 0;
         }
 
+        /* ─── DEMO USER SWITCHER ─── */
+        .demo-switcher {
+            background: #1a150f;
+            border-radius: 60px;
+            padding: 6px 10px;
+            margin-top: 14px;
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            border: 1px solid #d4af37;
+        }
+        .demo-switcher button {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: #e6dccb;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 9px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: 'Montserrat', sans-serif;
+            white-space: nowrap;
+        }
+        .demo-switcher button.active-user {
+            background: #d4af37;
+            color: #1a150f;
+            border-color: #d4af37;
+        }
+        .demo-switcher button:hover:not(.active-user) {
+            background: rgba(212, 175, 55, 0.2);
+        }
+
         /* ─── MISC ─── */
         .hidden {
             display: none !important;
@@ -607,7 +641,7 @@
             letter-spacing: 0.4px;
         }
 
-        /* ─── TOAST / ALERT ─── */
+        /* ─── TOAST ─── */
         .toast {
             background: #1a150f;
             color: #f0e6d8;
@@ -618,34 +652,16 @@
             text-align: center;
             margin-top: 10px;
             border-left: 4px solid #d4af37;
+            animation: fadeIn 0.3s;
         }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 440px) {
-            .app-frame {
-                border-radius: 28px;
-                padding: 12px 10px 16px;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
             }
-            .brand-crown .logo-symbol {
-                font-size: 36px;
-            }
-            .brand-crown .sub-brand {
-                font-size: 12px;
-                padding: 0 12px;
-            }
-            .product-grid {
-                gap: 8px;
-            }
-            .product-card .img-placeholder {
-                height: 56px;
-                font-size: 20px;
-            }
-            .metric-tiles {
-                grid-template-columns: 1fr 1fr;
-            }
-            .role-btn {
-                font-size: 10px;
-                padding: 4px 12px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
@@ -702,6 +718,15 @@
         <!-- ─── PORTAL CONTAINER ─── -->
         <div class="portal-container" id="portalContainer">
             <div id="portalContent"></div>
+        </div>
+
+        <!-- ─── DEMO USER SWITCHER ─── -->
+        <div class="demo-switcher">
+            <button data-user="999999999" class="active-user">👑 Owner</button>
+            <button data-user="888888888">🏪 Seller</button>
+            <button data-user="777777777">🚚 Driver</button>
+            <button data-user="111111111">🛍️ Buyer</button>
+            <button data-user="123456789">👤 Guest</button>
         </div>
 
         <div class="footer-note">
@@ -796,12 +821,12 @@
             // 2. SESSION STATE
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             let currentTelegramUser = {
-                id: '999999999', // change to test other roles
-                username: 'mama51R',
-                first_name: 'Rahel'
+                id: '111111111', // default: buyer
+                username: 'buyer_demo',
+                first_name: 'Sam'
             };
 
-            let activePortal = 'OWNER'; // 'OWNER' | 'SELLER' | 'BUYER' | 'DRIVER'
+            let activePortal = 'BUYER'; // will be set by getSession
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             // 3. HELPERS
@@ -822,11 +847,6 @@
                 return { authorized_roles: roles, active_portal: defaultPortal, user, store_id: user.store_id };
             }
 
-            function getProductsByCategory(cat) {
-                if (cat === 'All') return DB.products;
-                return DB.products.filter(p => p.category === cat);
-            }
-
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             // 4. RENDER ENGINE
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -841,6 +861,7 @@
 
                 // determine which portal to show
                 let displayPortal = activePortal;
+                // If activePortal is not allowed, fallback to default
                 if (isOwner && activePortal === 'OWNER') displayPortal = 'OWNER';
                 else if (isOwner && activePortal === 'SELLER') displayPortal = 'SELLER';
                 else if (isSeller && !isOwner) displayPortal = 'SELLER';
@@ -849,9 +870,8 @@
                 else if (isOwner && !['OWNER', 'SELLER'].includes(activePortal)) displayPortal = 'OWNER';
                 else if (isSeller && !['SELLER'].includes(activePortal) && !isOwner) displayPortal = 'SELLER';
                 else if (isDriver && !['DRIVER'].includes(activePortal) && !isOwner && !isSeller) displayPortal = 'DRIVER';
-
-                // If owner, but activePortal is not set, default to OWNER
-                if (isOwner && !['OWNER', 'SELLER'].includes(activePortal)) displayPortal = 'OWNER';
+                // Fallback: if still not set, use buyer
+                if (!displayPortal) displayPortal = 'BUYER';
 
                 let html = '';
 
@@ -879,7 +899,7 @@
                 container.innerHTML = html;
 
                 // ─── EVENT BINDINGS ───
-                // Role switcher
+                // Role switcher (Owner)
                 document.querySelectorAll('.role-btn[data-portal]').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         const newPortal = this.dataset.portal;
@@ -888,11 +908,12 @@
                                 'SELLER')) {
                             activePortal = newPortal;
                             renderApp();
+                            updateActiveUserButton();
                         }
                     });
                 });
 
-                // Product add buttons
+                // Product add
                 document.querySelectorAll('.btn-add[data-product-id]').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -906,7 +927,7 @@
                     });
                 });
 
-                // Verify payment buttons
+                // Verify payment
                 document.querySelectorAll('.verify-payment-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('✅ Payment verified successfully!');
@@ -916,21 +937,21 @@
                     });
                 });
 
-                // Assign driver buttons
+                // Assign driver
                 document.querySelectorAll('.assign-driver-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('🚛 Driver assigned: Abebe (🚗 ABC-1234)');
                     });
                 });
 
-                // Close daily transactions
+                // Close daily
                 document.querySelectorAll('.close-daily-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('📆 Daily ledger closed. Revenue: ETB 24,850');
                     });
                 });
 
-                // Add seller (owner)
+                // Add seller
                 document.querySelectorAll('.add-seller-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         const input = document.querySelector('.seller-input');
@@ -957,53 +978,48 @@
                     });
                 });
 
-                // Save stock (owner)
+                // Save stock
                 document.querySelectorAll('.save-stock-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('📦 Stock item saved successfully!');
                     });
                 });
-
-                // Discard stock
                 document.querySelectorAll('.discard-stock-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('🗑️ Form discarded');
                     });
                 });
 
-                // Start delivery (driver)
+                // Driver actions
                 document.querySelectorAll('.start-delivery-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('🚚 Delivery started · navigating to pickup');
                     });
                 });
-
-                // Mark delivered (driver)
                 document.querySelectorAll('.mark-delivered-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('✅ Delivery marked as COMPLETED');
                     });
                 });
 
-                // Tab navigation (buyer)
+                // Tabs (buyer)
                 document.querySelectorAll('.nav-tab').forEach(tab => {
                     tab.addEventListener('click', function() {
                         document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
                         this.classList.add('active');
                         const cat = this.textContent.trim();
-                        // Simple filter visual
                         showToast(`📂 Showing: ${cat}`);
                     });
                 });
 
-                // "Can't find" button
+                // Custom request
                 document.querySelectorAll('.custom-request-btn').forEach(btn => {
                     btn.addEventListener('click', function() {
                         showToast('📸 Upload a photo or describe the product');
                     });
                 });
 
-                // In-person / Delivery toggle
+                // Fulfillment toggle
                 document.querySelectorAll('.fulfillment-toggle .pill').forEach(pill => {
                     pill.addEventListener('click', function() {
                         document.querySelectorAll('.fulfillment-toggle .pill').forEach(p => p.style
@@ -1013,13 +1029,14 @@
                         showToast(`📦 ${this.textContent.trim()} selected`);
                     });
                 });
+
+                updateActiveUserButton();
             }
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             // 5. PORTAL RENDERERS
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-            // ─── BUYER PORTAL ───
             function renderBuyerPortal() {
                 let html = `
                     <div class="flex-between" style="margin-bottom:6px;">
@@ -1064,7 +1081,6 @@
                 return html;
             }
 
-            // ─── SELLER PORTAL ───
             function renderSellerPortal() {
                 const pendingOrders = DB.orders.filter(o => o.status === 'PENDING');
                 const pendingCount = pendingOrders.length;
@@ -1114,7 +1130,6 @@
                 return html;
             }
 
-            // ─── OWNER PORTAL ───
             function renderOwnerPortal() {
                 const totalRevenue = 24850;
                 const stockValue = 18200;
@@ -1223,7 +1238,6 @@
                 return html;
             }
 
-            // ─── DRIVER PORTAL ───
             function renderDriverPortal() {
                 const deliveries = DB.pendingDeliveries;
 
@@ -1271,7 +1285,7 @@
             }
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 6. TOAST NOTIFICATION
+            // 6. TOAST
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             function showToast(msg) {
                 const container = document.getElementById('portalContainer');
@@ -1289,47 +1303,60 @@
             }
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // 7. USER SWITCHER (for demo)
+            // 7. USER SWITCHER (demo buttons)
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            window.switchUser = function(tgId) {
-                const user = getUserByTelegramId(tgId);
-                if (user) {
-                    currentTelegramUser.id = tgId;
-                    currentTelegramUser.username = user.telegram_username;
-                    currentTelegramUser.first_name = user.first_name || '';
-                    const sess = getSession(tgId);
-                    activePortal = sess.active_portal;
-                    renderApp();
-                    showToast(`👤 Switched to @${user.telegram_username} (${user.roles.join(', ')})`);
-                } else {
-                    // treat as buyer
-                    currentTelegramUser.id = tgId;
-                    currentTelegramUser.username = 'guest_' + tgId.slice(-4);
-                    activePortal = 'BUYER';
-                    renderApp();
-                    showToast(`👤 Guest buyer (${tgId})`);
-                }
-            };
+            function updateActiveUserButton() {
+                document.querySelectorAll('.demo-switcher button').forEach(btn => {
+                    btn.classList.remove('active-user');
+                    if (btn.dataset.user === currentTelegramUser.id) {
+                        btn.classList.add('active-user');
+                    }
+                });
+            }
+
+            document.querySelectorAll('.demo-switcher button').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tgId = this.dataset.user;
+                    const user = getUserByTelegramId(tgId);
+                    if (user) {
+                        currentTelegramUser.id = tgId;
+                        currentTelegramUser.username = user.telegram_username;
+                        currentTelegramUser.first_name = user.first_name || '';
+                        const sess = getSession(tgId);
+                        activePortal = sess.active_portal;
+                        renderApp();
+                        showToast(`👤 Switched to @${user.telegram_username} (${user.roles.join(', ')})`);
+                    } else {
+                        // guest
+                        currentTelegramUser.id = tgId;
+                        currentTelegramUser.username = 'guest_' + tgId.slice(-4);
+                        activePortal = 'BUYER';
+                        renderApp();
+                        showToast(`👤 Guest buyer (${tgId})`);
+                    }
+                });
+            });
 
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
             // 8. INIT
             // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-            // Set initial active portal based on user
-            const initSession = getSession(currentTelegramUser.id);
-            activePortal = initSession.active_portal;
+            // Start with buyer (111111111) by default
+            const defaultUser = getUserByTelegramId('111111111');
+            if (defaultUser) {
+                currentTelegramUser.id = '111111111';
+                currentTelegramUser.username = defaultUser.telegram_username;
+                currentTelegramUser.first_name = defaultUser.first_name || '';
+                activePortal = 'BUYER';
+            }
             renderApp();
 
-            // Expose for console testing
-            window.DB = DB;
-            window.currentUser = currentTelegramUser;
-            window.switchUser = switchUser;
-
             console.log('🔐 soYam cosmo Mini App loaded');
-            console.log('📌 Switch roles: switchUser("999999999")  [Owner]');
-            console.log('   switchUser("888888888")  [Seller]');
-            console.log('   switchUser("777777777")  [Driver]');
-            console.log('   switchUser("111111111")  [Buyer]');
-            console.log('   switchUser("123456789")  [Guest Buyer]');
+            console.log('📌 Use the buttons below to switch roles.');
+            console.log('   Owner: @mama51R (999999999)');
+            console.log('   Seller: @silencer01m (888888888)');
+            console.log('   Driver: @driver_abebe (777777777)');
+            console.log('   Buyer: @buyer_demo (111111111)');
+            console.log('   Guest: any other ID');
 
         })();
     </script>

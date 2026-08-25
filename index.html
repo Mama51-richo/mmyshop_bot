@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +6,28 @@
 <meta name="theme-color" content="#24130d">
 <title>soYam cosmo — Telegram Mini App</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
-:root{--brown:#24130d;--brown2:#3a2118;--gold:#c9a45b;--cream:#f7f1e8;--white:#fff;--ink:#201914;--muted:#786d65;--green:#16724a;--amber:#b97800;--red:#a52b2b;--line:#e7ddd0;--shadow:0 10px 30px rgba(36,19,13,.10)}
-*{box-sizing:border-box}html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{max-width:720px;margin:auto;min-height:100vh;background:#fff;box-shadow:0 0 40px #00000012}.hidden{display:none!important}.hero{background:linear-gradient(145deg,#24130d,#513023);color:#fff;padding:28px 18px 22px;text-align:center}.logo{width:62px;height:62px;border:1px solid #c9a45b;border-radius:50%;display:grid;place-items:center;margin:0 auto 12px;color:#e6c77d;font-weight:800;font-size:22px}.hero h1{margin:0;font-family:Georgia,serif;font-size:29px}.hero h2{font-size:15px;font-weight:500;color:#ead8bc;margin:6px 0}.hero p{margin:4px 0;color:#d8c7b8;font-size:12px}.langbar{display:flex;gap:6px;overflow:auto;padding:10px 12px;border-bottom:1px solid var(--line)}.langbar button{white-space:nowrap;background:#f6efe5;padding:7px 10px;border-radius:20px;font-size:11px}.langbar button.active{background:var(--brown);color:#fff}.social{display:flex;justify-content:center;gap:10px;padding:12px}.social a{width:38px;height:38px;border-radius:50%;background:#f4ede4;display:grid;place-items:center;color:var(--brown);text-decoration:none;font-weight:700}.promo{margin:8px 14px 14px;padding:17px;border-radius:18px;background:linear-gradient(135deg,#29160f,#4a2a1e);color:white}.promo small{color:#d9c39d}.promo h3{margin:5px 0}.section{padding:0 14px 18px}.cats{display:flex;gap:8px;overflow:auto;padding-bottom:10px}.cats button{white-space:nowrap;padding:9px 12px;border-radius:20px;background:#f3ece3}.cats button.active{background:var(--brown);color:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--shadow)}.product-img{height:145px;background:linear-gradient(145deg,#eee2d5,#f9f7f3);display:grid;place-items:center;font-size:44px}.card-body{padding:12px}.card h4{margin:0 0 4px;font-size:14px}.price{font-weight:800;color:var(--brown)}.muted{font-size:11px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:8px}.qty{display:flex;align-items:center;gap:8px;margin-top:9px}.qty button{width:30px;height:30px;border-radius:9px;background:#f0e8de}.primary{background:var(--brown);color:#fff;border-radius:11px;padding:11px 14px}.gold{background:var(--gold);color:#21150e;border-radius:11px;padding:11px 14px}.danger{background:#f8e1e1;color:var(--red);border-radius:10px;padding:9px}.full{width:100%}.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:20}.bottom button{padding:10px 3px;background:#fff;font-size:10px;color:#675b52}.bottom button.active{color:var(--brown);font-weight:800}.view{padding-bottom:12px}.panel{margin:12px 14px;padding:16px;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow)}.panel h3{margin:0 0 12px}.metricgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric{padding:14px;border:1px solid var(--line);border-radius:14px;background:#fff}.metric b{display:block;font-size:20px}.badge{display:inline-block;padding:4px 8px;border-radius:20px;font-size:10px;font-weight:700}.ok{background:#dff2e9;color:var(--green)}.pending{background:#fff0cc;color:var(--amber)}.bad{background:#f9dddd;color:var(--red)}.table{width:100%;border-collapse:collapse;font-size:11px}.table th,.table td{padding:9px 5px;border-bottom:1px solid var(--line);text-align:left}.input{width:100%;padding:11px;border:1px solid #d9cec2;border-radius:10px;background:#fff}.formgrid{display:grid;gap:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.scanner{height:240px;border-radius:18px;background:#17110e;color:#fff;display:grid;place-items:center;text-align:center}.scanner .frame{width:180px;height:180px;border:2px solid var(--gold);border-radius:18px}.modal{position:fixed;inset:0;background:#0008;z-index:100;display:grid;align-items:end}.sheet{background:#fff;border-radius:24px 24px 0 0;max-height:88vh;overflow:auto;padding:18px;max-width:720px;width:100%;margin:auto}.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#24130d;color:#fff;padding:10px 16px;border-radius:20px;z-index:200;font-size:12px}.login{min-height:100vh;display:grid;place-items:center;padding:24px;background:linear-gradient(145deg,#24130d,#5a3325)}.loginbox{max-width:460px;width:100%;background:#fff;border-radius:28px;padding:26px;text-align:center}.rolecards{display:grid;gap:12px;margin-top:18px}.rolecard{padding:18px;border:1px solid var(--line);border-radius:18px;text-align:left;background:#fff}.rolecard strong{display:block;font-size:17px}.toolbar{display:flex;gap:8px;overflow:auto;padding:12px 14px;border-bottom:1px solid var(--line)}.toolbar button{white-space:nowrap;background:#f2ebe2;padding:9px 12px;border-radius:10px}.toolbar button.active{background:var(--brown);color:#fff}@media(min-width:700px){.grid{grid-template-columns:repeat(3,1fr)}.metricgrid{grid-template-columns:repeat(4,1fr)}}
+:root{--brown:#26150f;--brown2:#4a2a1e;--gold:#c9a45b;--gold2:#e6cf96;--cream:#fbf7f1;--paper:#fffdf9;--ink:#211914;--muted:#766b62;--line:#eadfd3;--green:#16724a;--amber:#b97800;--red:#a52b2b;--shadow:0 7px 22px rgba(55,31,19,.09)}
+*{box-sizing:border-box}html,body{margin:0;background:#eee7df;color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}body{overflow-x:hidden}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{width:100%;max-width:760px;margin:auto;min-height:100vh;background:var(--cream);box-shadow:0 0 35px #0001}
+.hero{background:linear-gradient(145deg,#24130d,#573126);color:#fff;padding:16px 12px 13px;text-align:center}.brandmark{width:53px;height:53px;margin:0 auto 6px;display:grid;place-items:center;border:1px solid var(--gold2);border-radius:17px;background:#25140e}.brandmark svg{width:42px;height:42px}.hero h1{margin:0;font-family:Georgia,serif;font-size:24px}.hero h2{font-size:11px;color:#ead8bc;margin:3px 0}.hero p{margin:2px 0;color:#d8c7b8;font-size:9px}
+.langbar{display:flex;gap:5px;overflow-x:auto;padding:7px 9px;border-bottom:1px solid var(--line);background:#fff}.langbar button{flex:0 0 auto;white-space:nowrap;background:#f5eee6;padding:5px 8px;border-radius:15px;font-size:9px}.langbar button.active{background:var(--brown);color:#fff}
+.social{display:flex;justify-content:center;gap:6px;padding:7px;background:#fff}.social a{width:29px;height:29px;border-radius:50%;background:#f3ebe2;display:grid;place-items:center;color:var(--brown);text-decoration:none;font-weight:800;font-size:10px}
+.promo{margin:8px 10px 10px;padding:13px;border-radius:17px;background:linear-gradient(135deg,#29160f,#4d2b20);color:#fff;box-shadow:var(--shadow)}.promo small{color:#e1c99b;font-size:8px}.promo h3{margin:3px 0;font-size:15px}.promo span{font-size:10px;color:#eaded4}
+.section{padding:0 10px 14px}.cats{display:flex;gap:5px;overflow-x:auto;padding:1px 0 8px}.cats button{white-space:nowrap;padding:6px 9px;border-radius:15px;background:#f1e9df;font-size:9px}.cats button.active{background:var(--brown);color:#fff}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.card{border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#fff;box-shadow:var(--shadow);min-width:0}.product-img{height:112px;background:radial-gradient(circle at 50% 30%,#fff,#eee2d5);display:grid;place-items:center}.card-body{padding:8px}.card h4{margin:0 0 3px;font-size:12px}.price{font-weight:800;color:var(--brown);font-size:11px}.muted{font-size:8px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:6px;min-width:0}.qty{display:flex;align-items:center;gap:4px;margin-top:6px}.qty button{width:26px;height:26px;border-radius:8px;background:#f0e8de;font-size:11px}
+.primary,.gold,.danger{border-radius:9px;padding:8px 10px;font-size:10px}.primary{background:var(--brown);color:#fff}.gold{background:var(--gold);color:#21150e}.danger{background:#f8e1e1;color:var(--red)}.full{width:100%}
+.bottom{position:sticky;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:20}.bottom button{padding:7px 2px;background:#fff;font-size:8px;color:#675b52}.bottom button.active{color:var(--brown);font-weight:800}
+.view{padding-bottom:8px}.panel{margin:8px 10px;padding:11px;border:1px solid var(--line);border-radius:15px;background:var(--paper);box-shadow:var(--shadow)}.panel h3{margin:0 0 8px;font-size:14px}.metricgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.metric{padding:9px;border:1px solid var(--line);border-radius:11px;background:#fff}.metric b{display:block;font-size:16px}.badge{display:inline-block;padding:3px 6px;border-radius:14px;font-size:8px;font-weight:800;white-space:nowrap}.ok{background:#dff2e9;color:var(--green)}.pending{background:#fff0cc;color:var(--amber)}.bad{background:#f9dddd;color:var(--red)}
+.table{width:100%;border-collapse:collapse;font-size:8px}.table th,.table td{padding:6px 3px;border-bottom:1px solid var(--line);text-align:left}.input{width:100%;padding:8px;border:1px solid #d9cec2;border-radius:8px;background:#fff;font-size:10px}.formgrid{display:grid;gap:7px}.actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.scanner{height:195px;border-radius:15px;background:#17110e;color:#fff;display:grid;place-items:center;text-align:center}.scanner .frame{width:145px;height:145px;border:2px solid var(--gold);border-radius:16px}.modal{position:fixed;inset:0;background:#0008;z-index:100;display:grid;align-items:end}.sheet{background:#fff;border-radius:21px 21px 0 0;max-height:88vh;overflow:auto;padding:15px;max-width:760px;width:100%;margin:auto}.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#24130d;color:#fff;padding:8px 13px;border-radius:18px;z-index:200;font-size:9px}
+.login{min-height:100vh;display:grid;place-items:center;padding:17px;background:linear-gradient(145deg,#24130d,#5a3325)}.loginbox{max-width:440px;width:100%;background:#fff;border-radius:23px;padding:21px;text-align:center}.rolecards{display:grid;gap:8px;margin-top:13px}.rolecard{padding:12px;border:1px solid var(--line);border-radius:14px;text-align:left;background:#fff}.rolecard strong{display:block;font-size:13px}.rolecard span{font-size:9px;color:var(--muted)}
+.toolbar{display:flex;gap:5px;overflow-x:auto;padding:7px 9px;border-bottom:1px solid var(--line);background:#fff}.toolbar button{white-space:nowrap;background:#f2ebe2;padding:6px 8px;border-radius:8px;font-size:8px}.toolbar button.active{background:var(--brown);color:#fff}
+.kpi-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;padding:8px 10px}.kpi{background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px;min-width:0}.kpi b{display:block;font-size:12px}.kpi span{font-size:7px;color:var(--muted)}
+.progress{height:5px;background:#eee4d9;border-radius:8px;overflow:hidden;margin-top:5px}.progress i{display:block;height:100%;background:var(--gold);border-radius:8px}.quickgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.quick{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 3px;text-align:center;font-size:8px}.statline{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--line)}.statline:last-child{border-bottom:0}.reportcard{display:grid;grid-template-columns:1fr auto;gap:4px;padding:7px 0;border-bottom:1px solid var(--line);font-size:9px}.owner-head,.seller-head{background:linear-gradient(145deg,#24130d,#4d2a1e);color:#fff;margin:8px 10px 0;border-radius:15px;padding:11px}.seller-head{margin:0;border-radius:0}.owner-head small{color:#d9c39d;font-size:7px}.owner-head b{font-size:11px}.product-visual{width:35px;height:35px;border-radius:10px;background:#f3e8dc;display:grid;place-items:center;font-size:18px;flex:0 0 auto}
+.chart{height:120px;display:flex;align-items:end;gap:4px;padding:6px}.bar{flex:1;background:var(--gold);border-radius:5px 5px 2px 2px}
+@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metricgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:130px}}
 </style>
 </head>
 <body>
@@ -20,6 +38,7 @@
    Frontend + local mock backend/data layer.
    Production: replace MockAPI methods with secure server APIs.
    ========================================================= */
+function brandLogo(){return `<div class="brandmark" aria-label="soYam Cosmo logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="none" stroke="#c9a45b" stroke-width="2"/><path d="M28 62C35 47 40 36 50 29C60 36 65 47 72 62" fill="none" stroke="#e6cf96" stroke-width="4" stroke-linecap="round"/><path d="M38 61C43 51 46 45 50 40C54 45 57 51 62 61" fill="none" stroke="#fff6dc" stroke-width="3" stroke-linecap="round"/><text x="50" y="78" text-anchor="middle" fill="#fff6dc" font-size="13" font-family="Georgia" font-weight="700">SY</text></svg></div>`}
 const tg=window.Telegram?.WebApp;
 if(tg){tg.ready();tg.expand();}
 
@@ -113,7 +132,7 @@ async function boot(){
 }
 function renderPortalSelector(){
  document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox">
- <div class="logo">SY</div><h1>Welcome back, Owner</h1><p>How would you like to continue?</p>
+ ${brandLogo()}<h1>Welcome back, Owner</h1><p>How would you like to continue?</p>
  <div class="rolecards">
   <button class="rolecard" onclick="choosePortal('OWNER')"><strong>👑 Owner Portal</strong><span>Manage SoYam</span></button>
   <button class="rolecard" onclick="choosePortal('SELLER')"><strong>🏪 Seller Portal</strong><span>Manage your store</span></button>
@@ -131,8 +150,8 @@ function choosePortal(p){
 function renderRevoked(){document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox"><div style="font-size:50px">⛔</div><h2>Access Revoked</h2><p>Your access has been revoked by the Owner.</p><button class="primary full" onclick="demoBuyer()">Return to Storefront</button></div></div>`}
 function demoBuyer(){localStorage.setItem("demoTelegramId","000000000");location.reload()}
 function header(){
- return `<header class="hero"><div class="logo">SY</div><h1>soYam cosmo</h1><h2>ሶያም ኮስሞΤΙΚΣ · COSMETICS & BEAUTY</h2><p>🇪🇹 Ethiopia · Addis Ababa · Betel Building, Ground Floor</p><p>+251 91 909 6451 · <a style="color:#e6c77d" href="https://www.google.com/maps/search/?api=1&query=Betel+Building+Addis+Ababa" target="_blank">📍 Location</a></p></header>
- <div class="langbar">${["English","አማርኛ","ትግርኛ","Oromiffa","Gurage","Soomaali"].map((x,i)=>`<button class="${i===0?"active":""}" onclick="toast('${x} selected')">${x}</button>`).join("")}</div>
+ return `<header class="hero">${brandLogo()}<h1>soYam cosmo</h1><h2>ሶያም ኮስሞΤΙΚΣ · COSMETICS & BEAUTY</h2><p>🇪🇹 Ethiopia · Addis Ababa · Betel Building, Ground Floor</p><p>+251 91 909 6451 · <a style="color:#e6c77d" href="https://www.google.com/maps/search/?api=1&query=Betel+Building+Addis+Ababa" target="_blank">📍 Location</a></p></header>
+ <div class="langbar">${["EN","አማ","ትግ","ORO","GUR","SOM"].map((x,i)=>`<button class="${i===0?"active":""}" onclick="toast('${x} selected')">${x}</button>`).join("")}</div>
  <div class="social"><a href="https://www.tiktok.com/" target="_blank">TT</a><a href="https://www.facebook.com/" target="_blank">f</a><a href="https://wa.me/251919096451" target="_blank">WA</a></div>`;
 }
 function bottom(items){
@@ -197,7 +216,7 @@ function track(id){let o=db.orders.find(x=>x.id===id);alert(`Order ${id}\nStatus
 function buyerRequests(){return `<div class="panel"><h3>? Can you get this item?</h3><div class="formgrid"><input class="input" id="reqName" placeholder="Product name"><input class="input" id="reqImage" type="file" accept="image/*"><textarea class="input" id="reqNote" placeholder="Describe the product"></textarea><button class="primary" onclick="submitRequest()">Submit Request</button></div></div><div class="panel"><h3>My Requests</h3>${db.requests.filter(r=>r.buyer===state.user.telegram_user_id).map(r=>`<p><b>${esc(r.name)}</b> · <span class="badge pending">${r.status}</span></p>`).join("")||'<p class="muted">No requests.</p>'}</div>`}
 function submitRequest(){let r={id:"REQ-"+Date.now(),buyer:state.user.telegram_user_id,name:document.getElementById("reqName").value,note:document.getElementById("reqNote").value,status:"PENDING",created_at:new Date().toISOString()};db.requests.push(r);saveDB();audit("PRODUCT_REQUEST",r.id);toast("Request submitted");render()}
 function buyerProfile(){return `<div class="panel"><h3>Profile</h3><p><b>${esc(state.user.first_name)}</b></p><p class="muted">@${esc(state.user.telegram_username||"customer")}</p><p class="muted">Telegram ID: ${esc(state.user.telegram_user_id)}</p><button class="primary" onclick="tg?.close()">Close Mini App</button></div>`}
-function sellerHeader(){return `<div class="hero"><div class="logo">SY</div><h1>🏪 Seller Hub</h1><p>SoYam Cosmo · ${esc(state.user.telegram_username||"seller")}</p></div>`}
+function sellerHeader(){return `<div class="hero">${brandLogo()}<h1>🏪 Seller Hub</h1><p>SoYam Cosmo · ${esc(state.user.telegram_username||"seller")}</p></div>`}
 function renderSeller(){
  let body="";
  if(state.view==="home")body=sellerDashboard();
@@ -208,7 +227,16 @@ function renderSeller(){
  else if(state.view==="delivery")body=sellerDelivery();
  document.getElementById("root").innerHTML=`<div class="app">${sellerHeader()}<div class="toolbar"><button class="${state.view==="home"?"active":""}" onclick="go('home')">Dashboard</button><button class="${state.view==="orders"?"active":""}" onclick="go('orders')">Orders</button><button class="${state.view==="scan"?"active":""}" onclick="go('scan')">📷 Scan</button><button class="${state.view==="stock"?"active":""}" onclick="go('stock')">Stock</button><button class="${state.view==="delivery"?"active":""}" onclick="go('delivery')">Delivery</button><button onclick="renderPortalSelector()">🔄 Switch</button></div><main class="view">${body}</main>${bottom([["home","⌂","Home"],["orders","▣","Orders"],["scan","📷","Scan"],["stock","□","Stock"],["delivery","🚚","Delivery"]])}</div>`;
 }
-function sellerDashboard(){let pending=db.orders.filter(o=>o.status==="PENDING").length, payments=db.orders.filter(o=>o.payment_status==="SUBMITTED").length;return `<div class="panel"><h3>Today's Operations</h3><div class="metricgrid"><div class="metric"><span class="muted">Pending Orders</span><b>${pending}</b></div><div class="metric"><span class="muted">Payment Review</span><b>${payments}</b></div><div class="metric"><span class="muted">Delivery Queue</span><b>${db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length}</b></div><div class="metric"><span class="muted">Products</span><b>${db.products.length}</b></div></div><button class="primary full" style="margin-top:12px" onclick="go('scan')">📷 Scan Item QR / Barcode</button></div>`}
+function sellerDashboard(){
+ let pending=db.orders.filter(o=>o.status==="PENDING").length;
+ let payments=db.orders.filter(o=>o.payment_status==="SUBMITTED").length;
+ let delivery=db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length;
+ let low=db.products.filter(p=>p.stock<15).length;
+ return `<div class="seller-head">${brandLogo()}<h1>🏪 Seller Hub</h1><p>@${esc(state.user.telegram_username||"seller")} · SoYam Cosmo</p></div>
+ <div class="kpi-strip"><div class="kpi"><span>Orders</span><b>${pending}</b></div><div class="kpi"><span>Payment</span><b>${payments}</b></div><div class="kpi"><span>Delivery</span><b>${delivery}</b></div><div class="kpi"><span>Stock Alerts</span><b>${low}</b></div></div>
+ <div class="panel"><h3>⚡ Seller Actions</h3><div class="quickgrid"><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('scan')">📷<br>Scan</button><button class="quick" onclick="go('stock')">📦<br>Stock</button><button class="quick" onclick="go('delivery')">🚚<br>Delivery</button></div></div>
+ <div class="panel"><h3>📦 Stock Alerts</h3>${db.products.filter(p=>p.stock<15).slice(0,5).map(p=>`<div class="statline"><div class="product-visual">${p.emoji}</div><div style="flex:1"><b style="font-size:9px">${esc(p.name)}</b><div class="muted">${p.category}</div></div><span class="badge ${p.stock<10?"bad":"pending"}">${p.stock} left</span></div>`).join("")||'<p class="muted">Stock levels are healthy.</p>'}</div>`;
+}
 function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
 function verifyPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="VERIFIED";o.status="READY";saveDB();audit("PAYMENT_VERIFIED",id);toast("Payment verified");render()}
 function rejectPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="REJECTED";saveDB();audit("PAYMENT_REJECTED",id);render()}
@@ -220,7 +248,7 @@ function scanner(){
  </div>
  <div class="scanner"><div><div class="frame"></div><p id="scanHint">Point camera at product QR / barcode</p><small>Camera hardware integration point</small></div></div>
  <input class="input" id="barcode" style="margin-top:10px" placeholder="Demo input: P001 or SOYAM-ORDER-ID">
- <button class="primary full" style="margin-top:10px" onclick="lookupBarcode()">Scan / Lookup</button>
+ <button class="primary full" style="margin-top:10px" onclick="startPhoneScanner()">📷 Open Phone Camera</button><button class="gold full" style="margin-top:6px" onclick="lookupBarcode()">⌕ Lookup Code</button><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden onchange="handleCameraFile(event)">
  <div id="scanResult" class="scan-result"></div></div>`
 }
 let scanMode="ITEM";
@@ -231,6 +259,15 @@ function setScanMode(mode){
  document.getElementById("scanHint").textContent=mode==="ITEM"?"Point camera at product QR / barcode":"Point camera at customer's Order ID / QR";
  document.getElementById("barcode").placeholder=mode==="ITEM"?"Demo input: P001":"Demo input: SOYAM-ORDER-ID";
 }
+async function startPhoneScanner(){
+ const input=document.getElementById("cameraInput");
+ try{
+  if(navigator.mediaDevices?.getUserMedia){const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});stream.getTracks().forEach(t=>t.stop());}
+ }catch(e){}
+ input?.click();
+}
+function handleCameraFile(e){if(e.target.files?.[0])toast("Camera image captured. QR/barcode decoding can be connected to a production decoder.");}
+
 function lookupBarcode(){
  let code=document.getElementById("barcode").value.trim();
  if(scanMode==="ORDER"){
@@ -270,7 +307,10 @@ function showAddStock(){
  </div></div>`)
 }
 function previewStockImage(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>document.getElementById("stockPreview").innerHTML=`<img src="${r.result}">`;r.readAsDataURL(f)}
-function openStockScanner(){toast("Camera scanner opened — hardware QR/barcode integration point")}
+async function openStockScanner(){
+ const camera=document.createElement("input");camera.type="file";camera.accept="image/*";camera.capture="environment";
+ camera.onchange=e=>previewStockImage(e);camera.click();
+}
 function saveStock(){
  let name=document.getElementById("newName").value.trim(),cat=document.getElementById("newCat").value,cost=Number(document.getElementById("newCost").value||0),qty=Number(document.getElementById("newQty").value||0);
  if(!name||qty<=0){toast("Enter product name and quantity");return}
@@ -285,7 +325,7 @@ function sellerDelivery(){return `<div class="panel"><h3>Delivery Queue</h3>${db
 function assignDriver(id){let o=db.orders.find(x=>x.id===id);o.driver_name="Demo Driver";o.driver_phone="+251900000000";o.plate="ABC-123";o.status="DRIVER_ASSIGNED";db.deliveries.push({order_id:id,driver:"Demo Driver",status:"ASSIGNED"});saveDB();audit("DRIVER_ASSIGNED",id);toast("Driver assigned");render()}
 function renderDriver(){
  let assigned=db.orders.filter(o=>o.driver_name==="Demo Driver"&&o.status!=="COMPLETED");
- document.getElementById("root").innerHTML=`<div class="app"><div class="hero"><div class="logo">SY</div><h1>🚚 Driver Hub</h1><p>Assigned deliveries</p></div><main class="view"><div class="panel"><h3>Assigned Deliveries</h3>${assigned.map(o=>`<div style="padding:13px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge pending">${o.status}</span></div><p>${esc(o.dropoff||"Destination")}</p><div class="actions"><button class="primary" onclick="updateDelivery('${o.id}','IN_TRANSIT')">Start Delivery</button><button class="gold" onclick="updateDelivery('${o.id}','COMPLETED')">Mark Delivered</button><button onclick="scanOrder('${o.id}')">Scan QR</button></div></div>`).join("")||"<p class='muted'>No assigned deliveries.</p>"}</div></main>${bottom([["home","⌂","Home"]])}</div>`;
+ document.getElementById("root").innerHTML=`<div class="app"><div class="hero">${brandLogo()}<h1>🚚 Driver Hub</h1><p>Assigned deliveries</p></div><main class="view"><div class="panel"><h3>Assigned Deliveries</h3>${assigned.map(o=>`<div style="padding:13px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge pending">${o.status}</span></div><p>${esc(o.dropoff||"Destination")}</p><div class="actions"><button class="primary" onclick="updateDelivery('${o.id}','IN_TRANSIT')">Start Delivery</button><button class="gold" onclick="updateDelivery('${o.id}','COMPLETED')">Mark Delivered</button><button onclick="scanOrder('${o.id}')">Scan QR</button></div></div>`).join("")||"<p class='muted'>No assigned deliveries.</p>"}</div></main>${bottom([["home","⌂","Home"]])}</div>`;
 }
 function updateDelivery(id,status){let o=db.orders.find(x=>x.id===id);o.status=status;saveDB();audit("DELIVERY_STATUS",id+" "+status);toast(status);render()}
 function scanOrder(id){toast("Order QR verified: "+id)}
@@ -299,7 +339,7 @@ function renderOwner(){
  else if(state.view==="reports")body=ownerReports();
  else if(state.view==="settings")body=ownerSettings();
  document.getElementById("root").innerHTML=`<div class="app">
- <div class="hero"><div class="logo">SY</div><h1>👑 Owner Command Center</h1><p>soYam cosmo · ሶያም ኮስሞቲክስ · COSMETICS & BEAUTY</p><p>Betel Building, Ground Floor · Addis Ababa · +251 91 909 6451</p></div>
+ <div class="hero">${brandLogo()}<h1>👑 Owner Command Center</h1><p>soYam cosmo · ሶያም ኮስሞቲክስ · COSMETICS & BEAUTY</p><p>Betel Building, Ground Floor · Addis Ababa · +251 91 909 6451</p></div>
  <div class="panel" style="margin:12px 14px 0;background:#24130d;color:#fff;border:0">
    <div class="row"><div><small style="color:#d9c39d">MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div></div><span class="badge ok">ACTIVE</span></div>
    <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="renderPortalSelector()">🔄 Switch Portal</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Seller Portal</button><button class="gold" onclick="choosePortal('BUYER')">🛍️ Buyer Portal</button></div>
@@ -313,7 +353,29 @@ function renderOwner(){
  <button class="${state.view==="settings"?"active":""}" onclick="go('settings')">⚙ Settings</button>
  </div><main class="view">${body}</main>${bottom([["home","⌂","Dashboard"],["inventory","□","Inventory"],["orders","▣","Orders"],["audit","✓","Audit"],["reports","◫","Reports"]])}</div>`;
 }
-function ownerDashboard(){let revenue=db.transactions.filter(t=>t.type==="SALE").reduce((s,t)=>s+t.amount,0),stock=db.products.reduce((s,p)=>s+p.stock*p.cost,0);return `<div class="panel"><h3>Business Overview</h3><div class="metricgrid"><div class="metric"><span class="muted">Total Revenue</span><b>${money(revenue)}</b></div><div class="metric"><span class="muted">Stock Capital</span><b>${money(stock)}</b></div><div class="metric"><span class="muted">Orders</span><b>${db.orders.length}</b></div><div class="metric"><span class="muted">Pending Audit</span><b>${db.transactions.filter(t=>t.status==="OWNER_PENDING").length}</b></div></div></div><div class="panel"><h3>Quick Controls</h3><div class="actions"><button class="primary" onclick="go('staff')">Manage Staff</button><button class="gold" onclick="go('inventory')">Inventory</button><button class="primary" onclick="go('audit')">Daily Audit</button><button class="danger" onclick="closeDay()">Close Daily Transactions</button></div></div>`}
+function ownerDashboard(){
+ let revenue=db.transactions.filter(t=>t.type==="SALE").reduce((s,t)=>s+t.amount,0);
+ let stockValue=db.products.reduce((s,p)=>s+p.stock*p.cost,0);
+ let retailValue=db.products.reduce((s,p)=>s+p.stock*p.price,0);
+ let units=db.products.reduce((s,p)=>s+p.stock,0);
+ let pending=db.orders.filter(o=>o.status==="PENDING").length;
+ let delivery=db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length;
+ let low=db.products.filter(p=>p.stock<10);
+ let margin=retailValue?Math.round((retailValue-stockValue)/retailValue*100):0;
+ return `<div class="owner-head"><div class="row"><div><small>MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div><div style="font-size:8px;color:#e7d8cc">soYam Cosmo · Overall actuals</div></div><span class="badge ok">ACTIVE</span></div></div>
+ <div class="kpi-strip"><div class="kpi"><span>Actual Sales</span><b>${money(revenue)}</b></div><div class="kpi"><span>Stock Cost</span><b>${money(stockValue)}</b></div><div class="kpi"><span>Stock Units</span><b>${units}</b></div><div class="kpi"><span>Gross Margin*</span><b>${margin}%</b></div></div>
+ <div class="panel"><div class="row"><h3>📊 Live Snapshot</h3><span class="badge ${pending?"pending":"ok"}">${pending} pending</span></div>
+  <div class="statline"><span>💰</span><div style="flex:1"><b style="font-size:10px">Sales / revenue</b><div class="progress"><i style="width:${revenue?75:0}%"></i></div></div><b style="font-size:9px">${money(revenue)}</b></div>
+  <div class="statline"><span>📦</span><div style="flex:1"><b style="font-size:10px">Retail stock value</b><div class="progress"><i style="width:${retailValue?80:0}%"></i></div></div><b style="font-size:9px">${money(retailValue)}</b></div>
+  <div class="statline"><span>🚚</span><div style="flex:1"><b style="font-size:10px">Delivery queue</b></div><b style="font-size:9px">${delivery}</b></div>
+ </div>
+ <div class="panel"><div class="row"><h3>⚡ Quick Controls</h3><span class="muted">one tap</span></div><div class="quickgrid">
+  <button class="quick" onclick="go('staff')">👥<br>Staff</button><button class="quick" onclick="go('inventory')">📦<br>Inventory</button><button class="quick" onclick="go('orders')">🧾<br>Orders</button><button class="quick" onclick="go('audit')">💰<br>Audit</button>
+ </div></div>
+ <div class="panel"><div class="row"><h3>⚠️ Attention</h3><span class="badge ${low.length?"bad":"ok"}">${low.length} low stock</span></div>
+ ${low.slice(0,4).map(p=>`<div class="reportcard"><span>🧴 ${esc(p.name)}</span><b>${p.stock} units</b></div>`).join("")||'<p class="muted">No low-stock items.</p>'}</div>
+ <div class="panel"><h3>📈 Recent Actual Trend</h3><div class="chart">${[18,35,28,52,42,68,55].map((x,i)=>`<div class="bar" style="height:${x}%"></div>`).join("")}</div><p class="muted">*Gross margin here is a demo catalog calculation; connect real accounting data for production reporting.</p></div>`;
+}
 function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 Authorized Users</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<button class="danger" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
 function showAuthorizedUser(){document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="userModal"><div class="sheet"><h3>＋ Add Authorized User</h3><div class="formgrid"><input class="input" id="auId" placeholder="Telegram User ID"><input class="input" id="auUsername" placeholder="Telegram Username"><input class="input" id="auName" placeholder="Name"><input class="input" id="auPhone" placeholder="Phone"><select class="input" id="auRole"><option>SELLER</option><option>DRIVER</option></select><select class="input"><option>STORE001 — SoYam Cosmetics</option></select><button class="primary full" onclick="saveAuthorizedUser()">SAVE USER</button><button class="danger full" onclick="document.getElementById('userModal').remove()">DISCARD</button></div></div></div>`)}
 function saveAuthorizedUser(){let u={id:Date.now(),telegram_user_id:document.getElementById('auId').value.trim(),telegram_username:document.getElementById('auUsername').value.trim().replace(/^@/,''),first_name:document.getElementById('auName').value.trim(),phone:document.getElementById('auPhone').value.trim(),roles:[document.getElementById('auRole').value],permissions:[document.getElementById('auRole').value==="SELLER"?"SELL":"DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"};if(!u.telegram_user_id||!u.telegram_username){toast("Telegram ID and username required");return}db.users.push(u);saveDB();audit("AUTHORIZED_USER_ADDED",u.telegram_username);document.getElementById('userModal').remove();toast("Authorized user saved");render()}

@@ -1,1729 +1,720 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>soYam cosmo · Mini App</title>
-    <!-- Font Awesome 6 (Free) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>soYam cosmo · Mini App</title>
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        :root {
-            --gold: #d4af37;
-            --gold-light: #e8c84a;
-            --gold-dim: rgba(212, 175, 55, 0.15);
-            --gold-border: 1px solid rgba(212, 175, 55, 0.25);
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --bg-card-hover: #2a2a2a;
-            --bg-input: #2c2c2c;
-            --text-primary: #f5f0eb;
-            --text-secondary: #b8b0a8;
-            --text-muted: #7a726a;
-            --emerald: #2ecc71;
-            --ruby: #e74c3c;
-            --amber: #f39c12;
-            --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --transition: 0.25s ease;
-        }
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #0b0a0a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 12px;
+    }
 
-        html,
-        body {
-            background: var(--bg-dark);
-            color: var(--text-primary);
-            min-height: 100vh;
-            height: 100%;
-            overflow: hidden;
-        }
+    /* main phone frame */
+    .app-frame {
+      max-width: 400px;
+      width: 100%;
+      background: #f8f5f0;
+      border-radius: 40px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7), 0 0 0 2px #d4af37 inset;
+      overflow: hidden;
+      position: relative;
+      padding: 16px 12px 20px;
+      transition: background 0.2s;
+    }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-dark);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--gold);
-            border-radius: 8px;
-        }
+    /* header brand */
+    .brand-crown {
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .brand-crown .logo-symbol {
+      font-size: 42px;
+      font-weight: 700;
+      font-family: 'Cormorant Garamond', serif;
+      color: #1e1a16;
+      letter-spacing: 0.18em;
+      background: linear-gradient(145deg, #d4af37, #b8952a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+      line-height: 1;
+    }
+    .brand-crown .sub-brand {
+      font-size: 15px;
+      font-weight: 500;
+      color: #3d2e1b;
+      letter-spacing: 2px;
+      margin-top: -4px;
+      background: #e3d5c0;
+      display: inline-block;
+      padding: 0 12px;
+      border-radius: 30px;
+      font-family: 'Montserrat', sans-serif;
+      -webkit-text-fill-color: #3d2e1b;
+    }
+    .brand-crown .amharic {
+      font-size: 16px;
+      font-weight: 400;
+      color: #5a4a34;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+    .brand-crown .address-mini {
+      font-size: 9px;
+      font-weight: 400;
+      color: #6f5e48;
+      letter-spacing: 0.4px;
+      background: rgba(255, 248, 235, 0.6);
+      padding: 2px 12px;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 6px;
+      backdrop-filter: blur(2px);
+      border: 1px solid #d4af3740;
+    }
 
-        /* ===== APP SHELL ===== */
-        #app {
-            max-width: 430px;
-            width: 100%;
-            height: 100vh;
-            height: 100dvh;
-            margin: 0 auto;
-            background: var(--bg-dark);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.8);
-        }
+    /* language row */
+    .lang-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 4px 8px;
+      background: #2b241d;
+      padding: 6px 8px;
+      border-radius: 60px;
+      margin: 8px 0 12px;
+    }
+    .lang-chip {
+      font-size: 9px;
+      font-weight: 600;
+      color: #e6dccb;
+      background: #3f352b;
+      padding: 3px 10px;
+      border-radius: 40px;
+      letter-spacing: 0.3px;
+      border: 1px solid #d4af3740;
+      transition: 0.2s;
+      cursor: default;
+    }
+    .lang-chip.active {
+      background: #d4af37;
+      color: #1a150f;
+      border-color: #d4af37;
+    }
 
-        /* ===== STATUS BAR (simulated) ===== */
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 20px 4px;
-            font-size: 11px;
-            color: var(--text-muted);
-            letter-spacing: 0.3px;
-            background: var(--bg-dark);
-            flex-shrink: 0;
-        }
-        .status-bar i {
-            margin-right: 4px;
-            font-size: 10px;
-        }
+    /* social row */
+    .social-row {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin: 6px 0 16px;
+    }
+    .social-icon {
+      color: #3d2e1b;
+      font-size: 22px;
+      transition: 0.2s;
+      opacity: 0.8;
+      text-decoration: none;
+    }
+    .social-icon:hover { opacity: 1; transform: scale(1.05); }
 
-        /* ===== MAIN VIEWPORT ===== */
-        .viewport {
-            flex: 1;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 14px 16px 80px;
-            scroll-behavior: smooth;
-        }
-        .viewport::-webkit-scrollbar {
-            width: 3px;
-        }
+    /* main content area */
+    .portal-container {
+      background: #fcf9f5;
+      border-radius: 28px;
+      padding: 16px 12px;
+      box-shadow: inset 0 1px 6px rgba(0,0,0,0.03);
+      min-height: 400px;
+      transition: all 0.2s;
+      border: 1px solid #e9dfd1;
+    }
 
-        /* ===== VIEW CONTAINERS ===== */
-        .view {
-            display: none;
-            animation: fadeUp 0.3s ease;
-        }
-        .view.active {
-            display: block;
-        }
+    /* tabs / navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #e2d4c2;
+      padding-bottom: 10px;
+    }
+    .nav-tab {
+      font-size: 10px;
+      font-weight: 600;
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 40px;
+      color: #5c4b35;
+      cursor: pointer;
+      transition: 0.2s;
+      letter-spacing: 0.3px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .nav-tab.active {
+      background: #d4af37;
+      color: #1f1a14;
+    }
+    .nav-tab i { margin-right: 4px; }
 
-        @keyframes fadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* role switcher (owner only) */
+    .role-switcher {
+      display: flex;
+      gap: 8px;
+      background: #eaddd0;
+      padding: 8px 10px;
+      border-radius: 60px;
+      margin-bottom: 16px;
+      justify-content: center;
+    }
+    .role-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 11px;
+      font-family: 'Montserrat', sans-serif;
+      color: #2d241c;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+    .role-btn.active {
+      background: #1a150f;
+      color: #f0e6d8;
+      border-color: #d4af37;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
 
-        /* ============================================================
-           BUYER VIEW
-           ============================================================ */
-        .brand-crown {
-            text-align: center;
-            padding: 16px 0 14px;
-            border-bottom: var(--gold-border);
-            margin-bottom: 16px;
-            background: linear-gradient(145deg, #2b1a0e, #1a0f08);
-            border-radius: var(--radius);
-            border: var(--gold-border);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-        }
+    /* product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 4px;
+    }
+    .product-card {
+      background: white;
+      border-radius: 20px;
+      padding: 10px 8px 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.02);
+      border: 1px solid #ede5d8;
+      transition: 0.15s;
+      text-align: center;
+    }
+    .product-card .img-placeholder {
+      background: #e9dfd1;
+      border-radius: 16px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6f5e48;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+    .product-card .p-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: #1e1710;
+      letter-spacing: 0.2px;
+    }
+    .product-card .p-price {
+      font-size: 13px;
+      font-weight: 700;
+      color: #b8952a;
+      margin: 2px 0 6px;
+    }
+    .btn-add {
+      background: #1a150f;
+      border: none;
+      color: #f0e6d8;
+      font-size: 10px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.15s;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .btn-add:hover { background: #d4af37; color: #1a150f; }
 
-        .brand-logo {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-            margin-bottom: 6px;
-            font-size: 26px;
-            font-weight: 700;
-            color: var(--gold);
-            letter-spacing: 1px;
-            position: relative;
-        }
-        .brand-logo::before {
-            content: "✦";
-            position: absolute;
-            top: -10px;
-            left: -12px;
-            font-size: 16px;
-            color: var(--gold-light);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-            animation: glowPulse 2s infinite;
-        }
-        .brand-logo::after {
-            content: "✦";
-            position: absolute;
-            bottom: -10px;
-            right: -12px;
-            font-size: 16px;
-            color: var(--gold-light);
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-            animation: glowPulse 2s infinite 0.5s;
-        }
-        @keyframes glowPulse {
-            0%,
-            100% {
-                opacity: 0.6;
-                transform: scale(0.9);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
-        }
+    /* seller / owner cards */
+    .stat-card {
+      background: #f3ede6;
+      border-radius: 20px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border-left: 4px solid #d4af37;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+    .stat-card h4 {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2d241c;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stat-card .badge {
+      background: #1a150f;
+      color: #f0e6d8;
+      padding: 0 10px;
+      border-radius: 40px;
+      font-size: 9px;
+    }
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .flex-row .pill {
+      background: white;
+      border-radius: 60px;
+      padding: 4px 12px;
+      font-size: 10px;
+      border: 1px solid #d4af3740;
+    }
+    .action-btn {
+      background: #d4af37;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 12px;
+      color: #1a150f;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.15s;
+      font-family: 'Montserrat', sans-serif;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+    .action-btn.secondary {
+      background: #2b241d;
+      color: #f0e6d8;
+    }
+    .action-btn.danger {
+      background: #9f3a2b;
+      color: white;
+    }
 
-        .brand-name {
-            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
-            font-size: 26px;
-            font-weight: 600;
-            letter-spacing: 0.18em;
-            color: var(--text-primary);
-            line-height: 1.2;
-        }
-        .brand-name .gold {
-            color: var(--gold);
-            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-        .brand-sub {
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            margin-top: 2px;
-        }
-        .brand-amharic {
-            font-size: 16px;
-            color: var(--gold-light);
-            letter-spacing: 0.1em;
-            margin-top: 4px;
-            font-weight: 500;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
-        }
+    /* owner management */
+    .mgmt-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 10px 0;
+    }
+    .mgmt-row input {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 60px;
+      border: 1px solid #d0c0ac;
+      background: white;
+      font-size: 10px;
+      font-family: 'Montserrat', sans-serif;
+      min-width: 80px;
+    }
+    .mgmt-row button {
+      background: #1a150f;
+      border: none;
+      color: #f0e6d8;
+      padding: 8px 16px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+    }
 
-        .brand-address {
-            font-size: 10px;
-            color: var(--text-muted);
-            letter-spacing: 0.4px;
-            margin-top: 8px;
-            border-top: var(--gold-border);
-            padding-top: 8px;
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .brand-address span {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .brand-address i {
-            color: var(--gold);
-            font-size: 10px;
-        }
-        .brand-address a {
-            color: var(--text-muted);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            transition: var(--transition);
-        }
-        .brand-address a:hover {
-            color: var(--gold-light);
-        }
+    .footer-note {
+      font-size: 8px;
+      color: #6f5e48;
+      text-align: center;
+      margin-top: 16px;
+      opacity: 0.6;
+      letter-spacing: 0.3px;
+    }
 
-        .lang-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            padding: 8px 0 12px;
-            border-bottom: var(--gold-border);
-            margin-bottom: 14px;
-            justify-content: center;
-        }
-        .lang-chip {
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: var(--bg-card);
-            border: 1px solid rgba(212, 175, 55, 0.12);
-            font-size: 11px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: var(--transition);
-            cursor: default;
-        }
-        .lang-chip.active {
-            background: var(--gold-dim);
-            border-color: var(--gold);
-            color: var(--gold-light);
-        }
+    /* hidden utility */
+    .hidden { display: none !important; }
 
-        .social-row {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            padding: 6px 0 14px;
-            border-bottom: var(--gold-border);
-            margin-bottom: 16px;
-        }
-        .social-row a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            border: var(--gold-border);
-            color: var(--text-secondary);
-            font-size: 16px;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-        .social-row a:hover {
-            background: var(--gold);
-            color: #121212;
-            transform: scale(1.05);
-        }
-
-        .contact-links {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            padding: 8px 0 14px;
-            border-bottom: var(--gold-border);
-            margin-bottom: 16px;
-            flex-wrap: wrap;
-        }
-        .contact-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 18px;
-            border-radius: 30px;
-            background: var(--bg-card);
-            border: var(--gold-border);
-            color: var(--text-secondary);
-            font-size: 12px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        .contact-link:hover {
-            background: var(--gold);
-            color: #121212;
-            border-color: var(--gold);
-            transform: translateY(-2px);
-        }
-        .contact-link i {
-            font-size: 14px;
-            color: var(--gold);
-        }
-        .contact-link:hover i {
-            color: #121212;
-        }
-        .contact-link.telegram i {
-            color: #0088cc;
-        }
-        .contact-link.telegram:hover i {
-            color: #121212;
-        }
-        .contact-link.phone i {
-            color: var(--emerald);
-        }
-        .contact-link.phone:hover i {
-            color: #121212;
-        }
-        .contact-link.whatsapp i {
-            color: #25D366;
-        }
-        .contact-link.whatsapp:hover i {
-            color: #121212;
-        }
-
-        .promo-card {
-            background: linear-gradient(145deg, #1a1108, #0d0a05);
-            border: var(--gold-border);
-            border-radius: var(--radius);
-            padding: 14px 18px;
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .promo-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-        .promo-card .promo-text {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .promo-card .promo-text .title {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--gold-light);
-        }
-        .promo-card .promo-text .sub {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .promo-card .promo-icon {
-            font-size: 28px;
-            color: var(--gold);
-        }
-
-        .fulfillment-toggle {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .fulfillment-option {
-            background: var(--bg-card);
-            border: var(--gold-border);
-            border-radius: var(--radius);
-            padding: 14px 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .fulfillment-option:hover {
-            border-color: var(--gold);
-        }
-        .fulfillment-option.active {
-            border-color: var(--gold);
-            background: var(--gold-dim);
-        }
-        .fulfillment-option i {
-            font-size: 24px;
-            color: var(--gold);
-            margin-bottom: 4px;
-            display: block;
-        }
-        .fulfillment-option .label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        .fulfillment-option .desc {
-            font-size: 10px;
-            color: var(--text-muted);
-        }
-
-        .cat-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 2px 0 12px;
-            margin-bottom: 4px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .cat-tabs::-webkit-scrollbar {
-            display: none;
-        }
-        .cat-tab {
-            flex-shrink: 0;
-            padding: 6px 16px;
-            border-radius: 30px;
-            background: var(--bg-card);
-            border: 1px solid transparent;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-        .cat-tab.active {
-            background: var(--gold);
-            color: #121212;
-            border-color: var(--gold);
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 4px;
-        }
-        .product-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            border: var(--gold-border);
-            overflow: hidden;
-            transition: var(--transition);
-            padding: 12px 12px 14px;
-            display: flex;
-            flex-direction: column;
-        }
-        .product-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-            border-color: var(--gold);
-        }
-        .product-img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            color: var(--gold-dim);
-            border: 1px solid rgba(212, 175, 55, 0.08);
-            margin-bottom: 8px;
-        }
-        .product-name {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--text-primary);
-            line-height: 1.3;
-            margin-bottom: 2px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        .product-category {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-        .product-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: auto;
-            padding-top: 6px;
-            border-top: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .product-price {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--gold-light);
-        }
-        .product-price small {
-            font-size: 9px;
-            font-weight: 400;
-            color: var(--text-muted);
-            margin-right: 2px;
-        }
-        .btn-add {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: var(--gold);
-            color: #121212;
-            font-size: 14px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .btn-add:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-        }
-
-        .custom-sourcing {
-            margin-top: 18px;
-            padding: 14px;
-            border-radius: var(--radius);
-            border: 1px dashed var(--gold);
-            background: var(--bg-card);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .custom-sourcing:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--gold-light);
-        }
-        .custom-sourcing i {
-            color: var(--gold);
-            font-size: 18px;
-        }
-        .custom-sourcing span {
-            font-size: 13px;
-            color: var(--text-secondary);
-        }
-        .custom-sourcing strong {
-            color: var(--text-primary);
-        }
-
-        /* ============================================================
-           SELLER VIEW
-           ============================================================ */
-        .seller-metrics {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .metric-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 14px 16px;
-            border: var(--gold-border);
-        }
-        .metric-card .label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-        }
-        .metric-card .value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-top: 2px;
-        }
-        .metric-card .value.gold {
-            color: var(--gold-light);
-        }
-
-        .qr-scan-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 14px;
-            border-radius: var(--radius);
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border: 2px solid var(--gold);
-            color: var(--gold-light);
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-bottom: 16px;
-            width: 100%;
-        }
-        .qr-scan-btn:hover {
-            background: var(--gold);
-            color: #121212;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
-        }
-        .qr-scan-btn i {
-            font-size: 22px;
-        }
-
-        .order-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 4px;
-        }
-        .order-item {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 14px 16px;
-            border: var(--gold-border);
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            transition: var(--transition);
-        }
-        .order-item:hover {
-            border-color: var(--gold);
-        }
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .order-id {
-            font-size: 13px;
-            font-weight: 600;
-            color: var(--gold-light);
-        }
-        .order-status {
-            font-size: 10px;
-            padding: 3px 10px;
-            border-radius: 20px;
-            background: var(--amber);
-            color: #121212;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .order-status.delivered {
-            background: var(--emerald);
-        }
-        .order-status.pending {
-            background: var(--amber);
-        }
-        .order-details {
-            font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-        .order-details i {
-            color: var(--gold);
-            width: 14px;
-        }
-        .order-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 4px;
-            flex-wrap: wrap;
-        }
-        .order-actions button {
-            padding: 5px 14px;
-            border-radius: 20px;
-            border: none;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--bg-input);
-            color: var(--text-secondary);
-        }
-        .order-actions button.primary {
-            background: var(--gold);
-            color: #121212;
-        }
-        .order-actions button.primary:hover {
-            background: var(--gold-light);
-        }
-        .order-actions button.success {
-            background: var(--emerald);
-            color: #121212;
-        }
-        .order-actions button.danger {
-            background: var(--ruby);
-            color: #fff;
-        }
-
-        .receipt-box {
-            margin-top: 6px;
-            padding: 10px 12px;
-            border: 1px dashed rgba(212, 175, 55, 0.3);
-            border-radius: var(--radius-sm);
-            background: rgba(212, 175, 55, 0.04);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .receipt-box i {
-            font-size: 28px;
-            color: var(--gold);
-        }
-        .receipt-box .receipt-info {
-            font-size: 11px;
-            color: var(--text-secondary);
-            flex: 1;
-        }
-        .receipt-box .receipt-info strong {
-            color: var(--text-primary);
-        }
-
-        /* ============================================================
-           OWNER VIEW
-           ============================================================ */
-        .owner-metrics {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .owner-metric {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 14px 16px;
-            border: var(--gold-border);
-        }
-        .owner-metric .label {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-muted);
-        }
-        .owner-metric .value {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-top: 2px;
-        }
-        .owner-metric .value .gold {
-            color: var(--gold-light);
-        }
-        .owner-metric .change {
-            font-size: 10px;
-            color: var(--emerald);
-            margin-top: 2px;
-        }
-
-        .owner-section {
-            margin-top: 16px;
-        }
-        .owner-section-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .owner-section-title i {
-            color: var(--gold);
-        }
-
-        .staff-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .staff-item {
-            background: var(--bg-card);
-            border-radius: var(--radius-sm);
-            padding: 12px 14px;
-            border: var(--gold-border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .staff-info {
-            display: flex;
-            flex-direction: column;
-        }
-        .staff-info .name {
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .staff-info .handle {
-            font-size: 11px;
-            color: var(--text-muted);
-        }
-        .staff-status {
-            font-size: 10px;
-            padding: 2px 10px;
-            border-radius: 20px;
-            background: var(--emerald);
-            color: #121212;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        .staff-status.suspended {
-            background: var(--ruby);
-            color: #fff;
-        }
-        .staff-actions {
-            display: flex;
-            gap: 6px;
-        }
-        .staff-actions button {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 14px;
-            transition: var(--transition);
-            padding: 4px;
-        }
-        .staff-actions button:hover {
-            color: var(--gold);
-        }
-        .staff-actions button.danger:hover {
-            color: var(--ruby);
-        }
-
-        .inventory-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-        .inventory-table th {
-            text-align: left;
-            padding: 8px 6px;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: var(--gold-border);
-        }
-        .inventory-table td {
-            padding: 8px 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            color: var(--text-secondary);
-        }
-        .inventory-table .stock-low {
-            color: var(--amber);
-            font-weight: 600;
-        }
-        .inventory-table .stock-out {
-            color: var(--ruby);
-            font-weight: 600;
-        }
-        .inventory-table .stock-ok {
-            color: var(--emerald);
-        }
-
-        .btn-owner {
-            padding: 8px 18px;
-            border-radius: 30px;
-            border: none;
-            font-size: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--gold);
-            color: #121212;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-owner:hover {
-            background: var(--gold-light);
-            transform: scale(1.02);
-        }
-        .btn-owner.outline {
-            background: transparent;
-            border: var(--gold-border);
-            color: var(--text-secondary);
-        }
-        .btn-owner.outline:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-        .btn-owner.danger {
-            background: var(--ruby);
-            color: #fff;
-        }
-        .btn-owner.danger:hover {
-            background: #c0392b;
-        }
-
-        .eod-panel {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            padding: 16px;
-            border: var(--gold-border);
-            margin-top: 10px;
-        }
-        .eod-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 13px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .eod-row:last-child {
-            border-bottom: none;
-        }
-        .eod-row .label {
-            color: var(--text-muted);
-        }
-        .eod-row .value {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        .eod-row .value.gold {
-            color: var(--gold-light);
-        }
-        .eod-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        /* ============================================================
-           BOTTOM NAV
-           ============================================================ */
-        .bottom-nav {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--bg-dark);
-            border-top: var(--gold-border);
-            display: flex;
-            padding: 6px 0 env(safe-area-inset-bottom, 8px) 0;
-            flex-shrink: 0;
-            z-index: 10;
-        }
-        .nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1px;
-            padding: 4px 0;
-            color: var(--text-muted);
-            font-size: 9px;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            background: transparent;
-        }
-        .nav-item i {
-            font-size: 18px;
-            transition: var(--transition);
-        }
-        .nav-item.active {
-            color: var(--gold);
-        }
-        .nav-item.active i {
-            transform: translateY(-2px);
-        }
-        .nav-item:hover {
-            color: var(--text-secondary);
-        }
-
-        /* ============================================================
-           MODALS & OVERLAYS
-           ============================================================ */
-        .toast {
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--bg-card);
-            border: var(--gold-border);
-            border-radius: var(--radius-sm);
-            padding: 12px 24px;
-            color: var(--text-primary);
-            font-size: 13px;
-            font-weight: 500;
-            box-shadow: var(--shadow);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            pointer-events: none;
-            max-width: 90%;
-            text-align: center;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
-        }
-        .toast i {
-            margin-right: 8px;
-            color: var(--gold);
-        }
-
-        .product-detail-modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 900;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            backdrop-filter: blur(4px);
-        }
-        .product-detail-modal.active {
-            display: flex;
-        }
-        .product-detail-card {
-            background: var(--bg-card);
-            border-radius: var(--radius);
-            border: var(--gold-border);
-            max-width: 360px;
-            width: 100%;
-            padding: 24px;
-            animation: fadeUp 0.3s ease;
-        }
-        .product-detail-card .img {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            color: var(--gold-dim);
-            margin-bottom: 12px;
-        }
-        .product-detail-card h3 {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-        .product-detail-card .price {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--gold-light);
-        }
-        .product-detail-card .desc {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin: 8px 0 16px;
-        }
-        .product-detail-card .actions {
-            display: flex;
-            gap: 10px;
-        }
-        .product-detail-card .actions button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .product-detail-card .actions .btn-primary {
-            background: var(--gold);
-            color: #121212;
-        }
-        .product-detail-card .actions .btn-primary:hover {
-            background: var(--gold-light);
-        }
-        .product-detail-card .actions .btn-secondary {
-            background: var(--bg-input);
-            color: var(--text-secondary);
-        }
-        .product-detail-card .actions .btn-secondary:hover {
-            background: var(--bg-card-hover);
-            color: var(--text-primary);
-        }
-
-        .scan-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 40px;
-            backdrop-filter: blur(8px);
-        }
-        .scan-overlay.active {
-            display: flex;
-        }
-        .scan-box {
-            width: 220px;
-            height: 220px;
-            border: 3px solid var(--gold);
-            border-radius: var(--radius);
-            position: relative;
-            animation: pulseScan 1.6s ease-in-out infinite;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .scan-box i {
-            font-size: 64px;
-            color: var(--gold-dim);
-            opacity: 0.5;
-        }
-        .scan-box .corner {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-color: var(--gold);
-            border-style: solid;
-            border-width: 0;
-        }
-        .scan-box .corner.tl {
-            top: -2px;
-            left: -2px;
-            border-top-width: 3px;
-            border-left-width: 3px;
-        }
-        .scan-box .corner.tr {
-            top: -2px;
-            right: -2px;
-            border-top-width: 3px;
-            border-right-width: 3px;
-        }
-        .scan-box .corner.bl {
-            bottom: -2px;
-            left: -2px;
-            border-bottom-width: 3px;
-            border-left-width: 3px;
-        }
-        .scan-box .corner.br {
-            bottom: -2px;
-            right: -2px;
-            border-bottom-width: 3px;
-            border-right-width: 3px;
-        }
-        @keyframes pulseScan {
-            0%,
-            100% {
-                box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-            }
-            50% {
-                box-shadow: 0 0 60px rgba(212, 175, 55, 0.25);
-            }
-        }
-        .scan-status {
-            color: var(--text-secondary);
-            font-size: 14px;
-            margin-top: 24px;
-            letter-spacing: 0.5px;
-        }
-        .scan-status i {
-            color: var(--gold);
-            margin-right: 6px;
-        }
-        .scan-close {
-            margin-top: 28px;
-            padding: 10px 32px;
-            border-radius: 30px;
-            border: var(--gold-border);
-            background: transparent;
-            color: var(--text-secondary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .scan-close:hover {
-            background: var(--bg-card);
-            color: var(--text-primary);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 380px) {
-            .product-grid {
-                gap: 8px;
-            }
-            .product-card {
-                padding: 8px 8px 10px;
-            }
-            .product-name {
-                font-size: 11px;
-            }
-            .product-price {
-                font-size: 13px;
-            }
-            .brand-name {
-                font-size: 20px;
-            }
-        }
-
-        @media (min-width: 431px) {
-            #app {
-                border-left: var(--gold-border);
-                border-right: var(--gold-border);
-            }
-        }
-    </style>
+    .mt-2 { margin-top: 12px; }
+    .text-gold { color: #b8952a; }
+    .bg-dark { background: #1a150f; color: #f0e6d8; border-radius: 60px; padding: 4px 12px; }
+  </style>
 </head>
 <body>
+<div class="app-frame" id="appFrame">
 
-    <div id="app">
-        <!-- ===== STATUS BAR ===== -->
-        <div class="status-bar">
-            <span><i class="fas fa-signal"></i> 5G</span>
-            <span><i class="fas fa-wifi"></i> soYam · 14:28</span>
-            <span><i class="fas fa-battery-three-quarters"></i> 82%</span>
-        </div>
+  <!-- BRAND CROWN -->
+  <div class="brand-crown">
+    <div class="logo-symbol">SY</div>
+    <div class="sub-brand">soYam cosmo</div>
+    <div class="amharic">ሶያም ኮስሞቲክስ</div>
+    <div class="address-mini">
+      <i class="fas fa-map-pin" style="color:#b8952a;"></i> Betel Bldg, G.Floor · Addis Ababa
+      <i class="fas fa-phone-alt" style="margin-left:6px;color:#b8952a;"></i> +251 91 909 6451
+    </div>
+  </div>
 
-        <!-- ===== VIEWPORT ===== -->
-        <div class="viewport" id="viewport">
+  <!-- LANGUAGE ROW -->
+  <div class="lang-row">
+    <span class="lang-chip active">English</span>
+    <span class="lang-chip">አማርኛ</span>
+    <span class="lang-chip">ትግርኛ</span>
+    <span class="lang-chip">Oromiffa</span>
+    <span class="lang-chip">Gurage</span>
+    <span class="lang-chip">Soomaali</span>
+  </div>
 
-            <!-- ==========================================================
-            BUYER VIEW
-            ========================================================== -->
-            <div class="view active" id="view-buyer">
-                <div class="brand-crown">
-                    <div class="brand-logo">SY</div>
-                    <div class="brand-name">soYam <span class="gold">cosmo</span></div>
-                    <div class="brand-amharic">ሶያም ኮስሞቲክስ</div>
-                    <div class="brand-sub">COSMETICS &amp; BEAUTY</div>
-                    <div class="brand-address">
-                        <span><i class="fas fa-map-pin"></i> Betel Building, Ground Floor</span>
-                        <a href="https://maps.app.goo.gl/FMJMrTvD2wDPGJUv8" target="_blank"><i class="fas fa-location-dot"></i> Google Maps</a>
-                    </div>
-                </div>
+  <!-- SOCIAL ROW -->
+  <div class="social-row">
+    <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+  </div>
 
-                <div class="lang-bar">
-                    <span class="lang-chip active">English</span>
-                    <span class="lang-chip">አማርኛ</span>
-                    <span class="lang-chip">ትግርኛ</span>
-                    <span class="lang-chip">Oromiffa</span>
-                    <span class="lang-chip">Gurage</span>
-                    <span class="lang-chip">Soomaali</span>
-                </div>
+  <!-- PORTAL CONTAINER -->
+  <div class="portal-container" id="portalContainer">
+    <!-- dynamic content rendered by js -->
+    <div id="portalContent"></div>
+  </div>
 
-                <div class="social-row">
-                    <a href="#" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                    <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                    <a href="#" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                </div>
+  <div class="footer-note">
+    <i class="fas fa-shield-alt" style="color:#d4af37;"></i> secured · role backend
+  </div>
+</div>
 
-                <div class="contact-links">
-                    <a class="contact-link telegram" href="https://t.me/rahm34" target="_blank">
-                        <i class="fab fa-telegram-plane"></i> @rahm34
-                    </a>
-                    <a class="contact-link phone" href="tel:+251919096451">
-                        <i class="fas fa-phone"></i> Call Now
-                    </a>
-                    <a class="contact-link whatsapp" href="https://wa.me/251919096451" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp
-                    </a>
-                </div>
+<script>
+  (function() {
+    // --------------------------------------------------------------
+    // BACKEND SIMULATION (in-memory)
+    // --------------------------------------------------------------
+    const DB = {
+      users: [
+        { id: 1, telegram_user_id: '999999999', telegram_username: 'mama51R', roles: ['OWNER', 'SELLER'], store_id: 'STORE001', account_status: 'ACTIVE' },
+        { id: 2, telegram_user_id: '888888888', telegram_username: 'silencer01m', roles: ['SELLER'], store_id: 'STORE001', account_status: 'ACTIVE' },
+        { id: 3, telegram_user_id: '111111111', telegram_username: 'buyer_demo', roles: ['BUYER'], store_id: null, account_status: 'ACTIVE' },
+        { id: 4, telegram_user_id: '777777777', telegram_username: 'driver_abebe', roles: ['DRIVER'], store_id: 'STORE001', account_status: 'ACTIVE' }
+      ],
+      products: [
+        { id: 101, name: 'Gold Serum', category: 'Skincare', price: 850, stock: 12, image: '✨' },
+        { id: 102, name: 'Velvet Cream', category: 'Makeup', price: 420, stock: 8, image: '🧴' },
+        { id: 103, name: 'Oud Fragrance', category: 'Fragrance', price: 1250, stock: 5, image: '🌸' },
+        { id: 104, name: 'Detergent Plus', category: 'Detergent', price: 180, stock: 30, image: '🧺' }
+      ],
+      orders: [
+        { id: 'ORD-1001', status: 'PENDING', total: 1270, buyer: 'buyer_demo' }
+      ]
+    };
 
-                <div class="promo-card" onclick="toast('✨ New Arrivals! Check out the latest collection.')">
-                    <div class="promo-text">
-                        <span class="title"><i class="fas fa-star" style="color:var(--gold);font-size:12px;"></i> New Arrivals This Week!</span>
-                        <span class="sub">Premium skincare & beauty essentials — limited stock</span>
-                    </div>
-                    <span class="promo-icon">✨</span>
-                </div>
+    // current session (simulate telegram user)
+    let currentTelegramUser = {
+      id: '999999999',   // change to '888888888' for seller, '111111111' for buyer, '777777777' for driver
+      username: 'mama51R',
+      first_name: 'Rahel'
+    };
 
-                <div class="fulfillment-toggle">
-                    <div class="fulfillment-option active" onclick="selectFulfillment(this)">
-                        <i class="fas fa-store"></i>
-                        <div class="label">In-Person</div>
-                        <div class="desc">Pick up at Betel Building</div>
-                    </div>
-                    <div class="fulfillment-option" onclick="selectFulfillment(this)">
-                        <i class="fas fa-truck"></i>
-                        <div class="label">Delivery</div>
-                        <div class="desc">Doorstep delivery</div>
-                    </div>
-                </div>
+    // --------------------------------------------------------------
+    // HELPER: get user from DB
+    // --------------------------------------------------------------
+    function getUserByTelegramId(tgId) {
+      return DB.users.find(u => u.telegram_user_id === tgId) || null;
+    }
 
-                <div class="cat-tabs">
-                    <span class="cat-tab active">All</span>
-                    <span class="cat-tab">Skincare</span>
-                    <span class="cat-tab">Makeup</span>
-                    <span class="cat-tab">Fragrance</span>
-                    <span class="cat-tab">Haircare</span>
-                    <span class="cat-tab">Detergent</span>
-                </div>
+    // --------------------------------------------------------------
+    // DETERMINE ROLES & ACTIVE PORTAL
+    // --------------------------------------------------------------
+    function getSession(tgId) {
+      const user = getUserByTelegramId(tgId);
+      if (!user) {
+        // default buyer
+        return { authorized_roles: ['BUYER'], active_portal: 'BUYER', user: null, store_id: null };
+      }
+      let roles = user.roles || ['BUYER'];
+      // if owner has seller role too
+      let activePortal = roles.includes('OWNER') ? 'OWNER' : (roles.includes('SELLER') ? 'SELLER' : (roles.includes('DRIVER') ? 'DRIVER' : 'BUYER'));
+      // if only owner, but can switch
+      return { authorized_roles: roles, active_portal: activePortal, user, store_id: user.store_id };
+    }
 
-                <div class="product-grid" id="productGrid"></div>
+    // --------------------------------------------------------------
+    // RENDER ENGINE
+    // --------------------------------------------------------------
+    function renderApp() {
+      const container = document.getElementById('portalContent');
+      const tgId = currentTelegramUser.id;
+      const session = getSession(tgId);
+      const roles = session.authorized_roles;
+      let portal = session.active_portal;
 
-                <div class="custom-sourcing" onclick="toast('📸 Custom order request sent! We\'ll find it for you.')">
-                    <i class="fas fa-camera"></i>
-                    <span><strong>Can't find a product?</strong> Upload Photo or Name</span>
-                    <i class="fas fa-chevron-right" style="color:var(--text-muted);font-size:12px;"></i>
-                </div>
-            </div>
+      // if owner and active portal is seller, show seller UI but with owner switcher
+      const isOwner = roles.includes('OWNER');
+      const isSeller = roles.includes('SELLER');
+      const isDriver = roles.includes('DRIVER');
+      const isBuyer = !isOwner && !isSeller && !isDriver; // fallback
 
-            <!-- ==========================================================
-            SELLER VIEW
-            ========================================================== -->
-            <div class="view" id="view-seller">
-                <div class="seller-metrics">
-                    <div class="metric-card">
-                        <div class="label"><i class="fas fa-clock"></i> Pending Orders</div>
-                        <div class="value gold">12</div>
-                    </div>
-                    <div class="metric-card">
-                        <div class="label"><i class="fas fa-store"></i> In-Store Picks</div>
-                        <div class="value">8</div>
-                    </div>
-                </div>
+      // determine display
+      let displayPortal = portal;
+      if (isOwner && portal === 'OWNER') displayPortal = 'OWNER';
+      else if (isOwner && portal === 'SELLER') displayPortal = 'SELLER';
+      else if (isSeller) displayPortal = 'SELLER';
+      else if (isDriver) displayPortal = 'DRIVER';
+      else displayPortal = 'BUYER';
 
-                <button class="qr-scan-btn" onclick="openScanner()">
-                    <i class="fas fa-qrcode"></i> SCAN ITEM QR
-                </button>
+      // ---- BUILD HTML ----
+      let html = '';
 
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                    <span style="font-size:14px;font-weight:600;">📋 Active Orders</span>
-                    <span style="font-size:11px;color:var(--text-muted);">live</span>
-                </div>
-                <div class="order-list" id="orderList"></div>
-            </div>
+      // ---- ROLE SWITCHER (only for owner) ----
+      if (isOwner) {
+        const isActiveOwner = (displayPortal === 'OWNER');
+        const isActiveSeller = (displayPortal === 'SELLER');
+        html += `<div class="role-switcher">
+          <button class="role-btn ${isActiveOwner ? 'active' : ''}" data-portal="OWNER">👑 Owner Portal</button>
+          <button class="role-btn ${isActiveSeller ? 'active' : ''}" data-portal="SELLER">🏪 Seller Portal</button>
+        </div>`;
+      }
 
-            <!-- ==========================================================
-            OWNER VIEW
-            ========================================================== -->
-            <div class="view" id="view-owner">
-                <div class="owner-metrics">
-                    <div class="owner-metric">
-                        <div class="label"><i class="fas fa-coins"></i> Total Revenue</div>
-                        <div class="value"><span class="gold">ETB</span> 284,750</div>
-                        <div class="change"><i class="fas fa-arrow-up"></i> +12.4% vs yesterday</div>
-                    </div>
-                    <div class="owner-metric">
-                        <div class="label"><i class="fas fa-boxes"></i> Stock Capital</div>
-                        <div class="value"><span class="gold">ETB</span> 142,300</div>
-                        <div class="change">46 items in stock</div>
-                    </div>
-                </div>
+      // ---- PORTAL CONTENT ----
+      if (displayPortal === 'OWNER') {
+        html += renderOwnerPortal();
+      } else if (displayPortal === 'SELLER') {
+        html += renderSellerPortal();
+      } else if (displayPortal === 'DRIVER') {
+        html += renderDriverPortal();
+      } else {
+        html += renderBuyerPortal();
+      }
 
-                <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
-                    <button class="btn-owner" onclick="toast('📦 Add Stock form opened.')"><i class="fas fa-plus-circle"></i> Add Stock</button>
-                    <button class="btn-owner outline" onclick="toast('🔄 Inventory refreshed.')"><i class="fas fa-sync"></i> Refresh</button>
-                    <button class="btn-owner danger" onclick="toast('⚠️ Product removal mode. Tap a product to remove.')"><i class="fas fa-trash"></i> Remove</button>
-                </div>
+      container.innerHTML = html;
 
-                <div class="owner-section">
-                    <div class="owner-section-title"><i class="fas fa-users"></i> Staff Registry</div>
-                    <div class="staff-list" id="staffList"></div>
-                    <button class="btn-owner" style="margin-top:10px;width:100%;" onclick="toast('👤 Add new seller form opened.')">
-                        <i class="fas fa-user-plus"></i> Add New Seller
-                    </button>
-                </div>
-
-                <div class="owner-section">
-                    <div class="owner-section-title"><i class="fas fa-clipboard-list"></i> Live Inventory</div>
-                    <table class="inventory-table">
-                        <thead>
-                            <tr><th>Product</th><th>Category</th><th style="text-align:right;">Stock</th><th style="text-align:right;">Price</th></tr>
-                        </thead>
-                        <tbody id="inventoryBody"></tbody>
-                    </table>
-                </div>
-
-                <div class="owner-section">
-                    <div class="owner-section-title"><i class="fas fa-lock"></i> End-of-Day Reconciliation</div>
-                    <div class="eod-panel">
-                        <div class="eod-row"><span class="label">📅 Date</span><span class="value">2026-08-25</span></div>
-                        <div class="eod-row"><span class="label">🧾 Total Sales (units)</span><span class="value">47</span></div>
-                        <div class="eod-row"><span class="label">💰 Cash in Hand</span><span class="value gold">ETB 18,200</span></div>
-                        <div class="eod-row"><span class="label">📱 Mobile Banking (CBE + Telebirr)</span><span class="value gold">ETB 32,450</span></div>
-                        <div class="eod-row"><span class="label">📊 Expected Revenue</span><span class="value gold">ETB 50,650</span></div>
-                        <div class="eod-row" style="border-bottom:2px solid var(--gold);padding-bottom:8px;margin-bottom:4px;">
-                            <span class="label" style="font-weight:600;color:var(--text-primary);">✅ Variance</span>
-                            <span class="value" style="color:var(--emerald);font-weight:700;">ETB 0 — Matched</span>
-                        </div>
-                        <div class="eod-actions">
-                            <button class="btn-owner" style="flex:1;" onclick="toast('🔒 Daily transactions closed &amp; archived.')">
-                                <i class="fas fa-check-double"></i> Close Daily Transactions
-                            </button>
-                            <button class="btn-owner outline" onclick="toast('📊 EOD report exported.')">
-                                <i class="fas fa-file-export"></i> Export
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div><!-- /viewport -->
-
-        <!-- ===== BOTTOM NAV ===== -->
-        <div class="bottom-nav" id="bottomNav">
-            <button class="nav-item active" data-tab="buyer"><i class="fas fa-store"></i><span>Shop</span></button>
-            <button class="nav-item" data-tab="seller"><i class="fas fa-clipboard-list"></i><span>Orders</span></button>
-            <button class="nav-item" data-tab="owner"><i class="fas fa-crown"></i><span>Admin</span></button>
-            <button class="nav-item" data-tab="cart" onclick="toast('🛒 Cart opened. 3 items total.')"><i class="fas fa-shopping-bag"></i><span>Cart</span></button>
-        </div>
-
-        <!-- ===== TOAST ===== -->
-        <div class="toast" id="toast"><i class="fas fa-star"></i> <span id="toastMsg">Ready</span></div>
-
-        <!-- ===== SCAN OVERLAY ===== -->
-        <div class="scan-overlay" id="scanOverlay">
-            <div class="scan-box">
-                <span class="corner tl"></span><span class="corner tr"></span>
-                <span class="corner bl"></span><span class="corner br"></span>
-                <i class="fas fa-camera"></i>
-            </div>
-            <div class="scan-status"><i class="fas fa-spinner fa-pulse"></i> Scanning barcode / QR...</div>
-            <button class="scan-close" onclick="closeScanner()"><i class="fas fa-times"></i> Cancel</button>
-        </div>
-
-        <!-- ===== PRODUCT DETAIL MODAL ===== -->
-        <div class="product-detail-modal" id="productModal">
-            <div class="product-detail-card">
-                <div class="img" id="modalImg">🧴</div>
-                <h3 id="modalName">Product Name</h3>
-                <div class="price" id="modalPrice">ETB 0</div>
-                <div class="desc" id="modalDesc">Premium quality beauty essential.</div>
-                <div class="actions">
-                    <button class="btn-secondary" onclick="closeModal()">Close</button>
-                    <button class="btn-primary" onclick="closeModal(); toast('🛒 Added to cart!')"><i class="fas fa-plus"></i> Add to Cart</button>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- /app -->
-
-    <script>
-        // ================================================================
-        // DATA
-        // ================================================================
-
-        const PRODUCTS = [
-            { id: 1, name: 'Luxury Hydrating Serum', category: 'Skincare', price: 2450, emoji: '💧',
-                desc: 'Deep hydration with hyaluronic acid & vitamin C.' },
-            { id: 2, name: 'Velvet Matte Lipstick', category: 'Makeup', price: 890, emoji: '💄',
-                desc: 'Long-wear matte finish in rich burgundy.' },
-            { id: 3, name: 'Oud & Amber Perfume', category: 'Fragrance', price: 3200, emoji: '🌸',
-                desc: 'Exotic oriental blend with precious oud.' },
-            { id: 4, name: 'Repairing Hair Mask', category: 'Haircare', price: 1650, emoji: '🧖',
-                desc: 'Intensive repair for damaged & dry hair.' },
-            { id: 5, name: 'Lavender Body Wash', category: 'Detergent', price: 720, emoji: '🧴',
-                desc: 'Gentle cleansing with calming lavender.' },
-            { id: 6, name: 'Gold Illuminating Cream', category: 'Skincare', price: 2800, emoji: '✨',
-                desc: 'Luxury cream with 24K gold particles.' },
-            { id: 7, name: 'Matte Foundation Stick', category: 'Makeup', price: 1250, emoji: '🎨',
-                desc: 'Full-coverage matte foundation in 6 shades.' },
-            { id: 8, name: 'Citrus Detergent Powder', category: 'Detergent', price: 550, emoji: '🍋',
-                desc: 'Eco-friendly, fresh citrus scent.' }
-        ];
-
-        const ORDERS = [
-            { id: '#1024', customer: 'Amanuel K.', items: 3, total: 4270, status: 'pending', address: 'Bole, Addis Ababa',
-                receipt: true },
-            { id: '#1023', customer: 'Selam T.', items: 2, total: 3250, status: 'delivered', address: 'Piassa, Addis Ababa',
-                receipt: false },
-            { id: '#1022', customer: 'Dawit M.', items: 5, total: 6100, status: 'pending', address: 'CMC, Addis Ababa',
-                receipt: true },
-            { id: '#1021', customer: 'Hana W.', items: 1, total: 2450, status: 'delivered', address: 'Mexico, Addis Ababa',
-                receipt: false }
-        ];
-
-        const STAFF = [
-            { name: 'Rahel Mulatu', handle: '@mama51R', role: 'Owner', active: true },
-            { name: 'Silencer M.', handle: '@silencer01m', role: 'Seller', active: true },
-            { name: 'Bereket H.', handle: '@bere_h', role: 'Seller', active: true },
-            { name: 'Sami A.', handle: '@sami_a', role: 'Seller', active: false }
-        ];
-
-        const INVENTORY = [
-            { name: 'Hydrating Serum', category: 'Skincare', stock: 24, price: 2450 },
-            { name: 'Matte Lipstick', category: 'Makeup', stock: 42, price: 890 },
-            { name: 'Oud Perfume', category: 'Fragrance', stock: 12, price: 3200 },
-            { name: 'Hair Mask', category: 'Haircare', stock: 8, price: 1650 },
-            { name: 'Lavender Body Wash', category: 'Detergent', stock: 56, price: 720 },
-            { name: 'Gold Cream', category: 'Skincare', stock: 5, price: 2800 },
-            { name: 'Foundation Stick', category: 'Makeup', stock: 18, price: 1250 },
-            { name: 'Citrus Detergent', category: 'Detergent', stock: 31, price: 550 }
-        ];
-
-        // ================================================================
-        // RENDER FUNCTIONS
-        // ================================================================
-
-        function renderProducts(filter = 'All') {
-            const grid = document.getElementById('productGrid');
-            const filtered = filter === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
-            grid.innerHTML = filtered.map(p => `
-                        <div class="product-card" onclick="openProduct(${p.id})">
-                            <div class="product-img">${p.emoji}</div>
-                            <div class="product-name">${p.name}</div>
-                            <div class="product-category">${p.category}</div>
-                            <div class="product-bottom">
-                                <span class="product-price"><small>ETB</small> ${p.price.toLocaleString()}</span>
-                                <button class="btn-add" onclick="event.stopPropagation(); toast('🛒 Added ${p.name} to cart')"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-                    `).join('');
-        }
-
-        function renderOrders() {
-            const list = document.getElementById('orderList');
-            list.innerHTML = ORDERS.map(o => `
-                        <div class="order-item">
-                            <div class="order-header">
-                                <span class="order-id">${o.id}</span>
-                                <span class="order-status ${o.status}">${o.status}</span>
-                            </div>
-                            <div class="order-details">
-                                <span><i class="fas fa-user"></i> ${o.customer}</span>
-                                <span><i class="fas fa-box"></i> ${o.items} items</span>
-                                <span><i class="fas fa-tag"></i> ETB ${o.total.toLocaleString()}</span>
-                                <span><i class="fas fa-map-pin"></i> ${o.address}</span>
-                            </div>
-                            ${o.receipt ? `
-                                <div class="receipt-box">
-                                    <i class="fas fa-receipt"></i>
-                                    <div class="receipt-info">
-                                        <strong>Receipt uploaded</strong> — <span style="font-size:10px;color:var(--text-muted);">Bank transfer screenshot</span>
-                                    </div>
-                                    <button class="btn-add" style="width:auto;padding:4px 14px;border-radius:20px;font-size:11px;background:var(--emerald);color:#121212;" onclick="toast('✅ Payment verified for ${o.id}')">
-                                        <i class="fas fa-check"></i> Verify
-                                    </button>
-                                </div>
-                            ` : ''}
-                            <div class="order-actions">
-                                ${o.status === 'pending' ? `
-                                    <button class="primary" onclick="toast('📦 Order ${o.id} confirmed. Driver assigned.')"><i class="fas fa-check-circle"></i> Confirm</button>
-                                    <button class="success" onclick="toast('✅ Payment verified for ${o.id}')"><i class="fas fa-check"></i> Verify Payment</button>
-                                ` : `
-                                    <button class="primary" onclick="toast('📋 Order ${o.id} details opened.')"><i class="fas fa-eye"></i> View</button>
-                                `}
-                                <button class="danger" onclick="toast('⚠️ Order ${o.id} flagged for review.')"><i class="fas fa-flag"></i></button>
-                            </div>
-                        </div>
-                    `).join('');
-        }
-
-        function renderStaff() {
-            const list = document.getElementById('staffList');
-            list.innerHTML = STAFF.map(s => `
-                        <div class="staff-item">
-                            <div class="staff-info">
-                                <span class="name">${s.name}</span>
-                                <span class="handle">${s.handle} · ${s.role}</span>
-                            </div>
-                            <span class="staff-status ${s.active ? '' : 'suspended'}">${s.active ? 'Active' : 'Suspended'}</span>
-                            <div class="staff-actions">
-                                <button onclick="toast('✏️ Edit permissions for ${s.name}')" title="Edit"><i class="fas fa-pen"></i></button>
-                                <button class="danger" onclick="toast('⚠️ Revoked access for ${s.name}')" title="Revoke"><i class="fas fa-user-slash"></i></button>
-                            </div>
-                        </div>
-                    `).join('');
-        }
-
-        function renderInventory() {
-            const tbody = document.getElementById('inventoryBody');
-            tbody.innerHTML = INVENTORY.map(item => {
-                let stockClass = 'stock-ok';
-                let stockLabel = item.stock;
-                if (item.stock <= 5) { stockClass = 'stock-out';
-                    stockLabel = `${item.stock} ⚠️`; } else if (item.stock <= 15) { stockClass = 'stock-low';
-                    stockLabel = `${item.stock}`; }
-                return `
-                            <tr>
-                                <td style="font-weight:500;color:var(--text-primary);">${item.name}</td>
-                                <td style="font-size:10px;color:var(--text-muted);">${item.category}</td>
-                                <td style="text-align:right;" class="${stockClass}">${stockLabel}</td>
-                                <td style="text-align:right;color:var(--gold-light);">ETB ${item.price.toLocaleString()}</td>
-                            </tr>
-                        `;
-            }).join('');
-        }
-
-        // ================================================================
-        // INTERACTIONS
-        // ================================================================
-
-        function selectFulfillment(el) {
-            document.querySelectorAll('.fulfillment-option').forEach(opt => opt.classList.remove('active'));
-            el.classList.add('active');
-            toast(`📍 ${el.querySelector('.label')?.textContent || 'option'} selected.`);
-        }
-
-        function openProduct(id) {
-            const p = PRODUCTS.find(x => x.id === id);
-            if (!p) return;
-            document.getElementById('modalImg').textContent = p.emoji;
-            document.getElementById('modalName').textContent = p.name;
-            document.getElementById('modalPrice').textContent = `ETB ${p.price.toLocaleString()}`;
-            document.getElementById('modalDesc').textContent = p.desc;
-            document.getElementById('productModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('productModal').classList.remove('active');
-        }
-        document.getElementById('productModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
+      // attach event listeners for role switcher
+      document.querySelectorAll('.role-btn[data-portal]').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          const newPortal = this.dataset.portal;
+          const sessionNow = getSession(currentTelegramUser.id);
+          if (sessionNow.authorized_roles.includes('OWNER') && (newPortal === 'OWNER' || newPortal === 'SELLER')) {
+            // update active portal (simulate backend)
+            sessionNow.active_portal = newPortal;
+            renderApp();
+          }
         });
+      });
 
-        function openScanner() {
-            document.getElementById('scanOverlay').classList.add('active');
-            setTimeout(() => {
-                closeScanner();
-                toast('📸 Scanned: Product "Luxury Serum" — added to basket.');
-            }, 2500);
-        }
+      // additional listener for add product etc (demo)
+      attachDemoListeners();
+    }
 
-        function closeScanner() {
-            document.getElementById('scanOverlay').classList.remove('active');
-        }
+    // --------------------------------------------------------------
+    // RENDER FUNCTIONS
+    // --------------------------------------------------------------
+    function renderBuyerPortal() {
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:16px; font-weight:600; color:#1a150f;">🛍️ Buyer</span>
+          <span class="bg-dark" style="font-size:9px;">${currentTelegramUser.username}</span>
+        </div>
+        <div class="nav-tabs">
+          <button class="nav-tab active"><i class="fas fa-th"></i> All</button>
+          <button class="nav-tab">Skincare</button>
+          <button class="nav-tab">Makeup</button>
+          <button class="nav-tab">Fragrance</button>
+          <button class="nav-tab">Detergent</button>
+        </div>
+        <div class="product-grid">
+      `;
+      DB.products.forEach(p => {
+        html += `
+          <div class="product-card">
+            <div class="img-placeholder">${p.image}</div>
+            <div class="p-name">${p.name}</div>
+            <div class="p-price">ETB ${p.price}</div>
+            <button class="btn-add" data-product-id="${p.id}"><i class="fas fa-plus"></i> Add</button>
+          </div>
+        `;
+      });
+      html += `</div>
+        <div style="margin-top:14px; background:#ede5d8; border-radius:60px; padding:10px; text-align:center; font-size:11px; font-weight:500;">
+          <i class="fas fa-camera" style="color:#b8952a;"></i> Can't find a product? Upload Photo or Name
+        </div>
+        <div style="margin-top:12px; display:flex; gap:6px; flex-wrap:wrap;">
+          <span class="pill" style="background:#d4af37; color:#1a150f;">📦 In-Person</span>
+          <span class="pill">🚚 Delivery</span>
+          <span class="pill"><i class="fas fa-qrcode"></i> Scan QR</span>
+        </div>
+      `;
+      return html;
+    }
 
-        // ================================================================
-        // TOAST
-        // ================================================================
+    function renderSellerPortal() {
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:16px; font-weight:600; color:#1a150f;">🏪 Seller Hub</span>
+          <span class="bg-dark" style="font-size:9px;">${currentTelegramUser.username}</span>
+        </div>
+        <div class="stat-card">
+          <h4>📋 Pending Orders <span class="badge">3</span></h4>
+          <div class="flex-row">
+            <span class="pill">🟡 ORD-1001</span>
+            <span class="pill">🟡 ORD-1004</span>
+          </div>
+        </div>
+        <div class="stat-card" style="border-left-color:#2b241d;">
+          <h4>💳 Verify Payment <span class="badge">#1024</span></h4>
+          <div style="background:white; border-radius:16px; padding:8px; margin:6px 0; border:1px dashed #b8952a;">
+            <i class="fas fa-receipt"></i> receipt_slip.png
+          </div>
+          <button class="action-btn" style="width:auto; padding:6px 18px;">✓ Verify Payment</button>
+        </div>
+        <div style="display:flex; gap:10px; margin:12px 0;">
+          <button class="action-btn secondary" style="flex:1;"><i class="fas fa-camera"></i> SCAN ITEM QR</button>
+          <button class="action-btn" style="flex:1; background:#2b241d; color:#f0e6d8;">🚛 Assign Driver</button>
+        </div>
+        <div class="stat-card" style="border-left-color:#6f5e48;">
+          <h4>🚚 Logistics Dispatch</h4>
+          <div style="font-size:10px; color:#3d2e1b;">Abebe · 🛵 to Bole · ETA 12min</div>
+        </div>
+      `;
+      return html;
+    }
 
-        let toastTimeout;
+    function renderOwnerPortal() {
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:16px; font-weight:600; color:#1a150f;">👑 Owner Command</span>
+          <span class="bg-dark" style="font-size:9px;">${currentTelegramUser.username}</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+          <div style="background:#1a150f; padding:12px; border-radius:20px; color:#f0e6d8;">
+            <div style="font-size:10px; opacity:0.7;">Revenue</div>
+            <div style="font-size:18px; font-weight:700;">ETB 24,850</div>
+          </div>
+          <div style="background:#2b241d; padding:12px; border-radius:20px; color:#f0e6d8;">
+            <div style="font-size:10px; opacity:0.7;">Stock Value</div>
+            <div style="font-size:18px; font-weight:700;">ETB 18,200</div>
+          </div>
+        </div>
+        <div style="background:#eaddd0; border-radius:20px; padding:10px; margin-bottom:12px;">
+          <div style="font-size:10px; font-weight:600;">📈 Weekly trend <span style="float:right;">+12%</span></div>
+          <div style="height:30px; background: #d0c0ac; border-radius:40px; margin:6px 0; display:flex; align-items:center; padding:0 4px;">
+            <span style="background:#d4af37; height:14px; width:70%; border-radius:40px;"></span>
+            <span style="background:#b8952a; height:14px; width:30%; border-radius:40px; margin-left:2px;"></span>
+          </div>
+        </div>
+        <div class="stat-card" style="border-left-color:#9f3a2b;">
+          <h4>⚠️ Inventory Alerts</h4>
+          <div style="font-size:11px; color:#9f3a2b;">Oud Fragrance · 5 left (low)</div>
+          <div style="font-size:11px;">Velvet Cream · 8 left</div>
+        </div>
+        <div style="background:#f3ede6; border-radius:20px; padding:10px;">
+          <div style="display:flex; justify-content:space-between; font-size:10px; font-weight:600;">
+            <span>Staff Mgmt</span>
+            <button class="action-btn" style="width:auto; padding:2px 14px; font-size:9px;">+ Add Seller</button>
+          </div>
+          <div style="margin-top:6px;">
+            <div style="display:flex; justify-content:space-between; background:white; border-radius:40px; padding:4px 10px; margin-bottom:4px;">
+              <span>@silencer01m</span>
+              <span style="color:#1a8a4a;">● active</span>
+              <span style="color:#9f3a2b; cursor:pointer;">revoke</span>
+            </div>
+          </div>
+        </div>
+        <button class="action-btn secondary" style="margin-top:12px;"><i class="fas fa-lock"></i> Close Daily Transactions</button>
+      `;
+      return html;
+    }
 
-        function toast(msg) {
-            const el = document.getElementById('toast');
-            document.getElementById('toastMsg').textContent = msg;
-            el.classList.add('show');
-            clearTimeout(toastTimeout);
-            toastTimeout = setTimeout(() => el.classList.remove('show'), 2800);
-        }
+    function renderDriverPortal() {
+      let html = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <span style="font-size:16px; font-weight:600; color:#1a150f;">🚚 Driver</span>
+          <span class="bg-dark" style="font-size:9px;">${currentTelegramUser.username}</span>
+        </div>
+        <div class="stat-card" style="border-left-color:#1a8a4a;">
+          <h4>📍 Assigned Delivery <span class="badge">ORD-1001</span></h4>
+          <div style="font-size:11px;">Pickup: Betel Bldg</div>
+          <div style="font-size:11px;">Drop: Bole, Addis</div>
+          <button class="action-btn" style="width:auto; padding:4px 18px; margin-top:6px;"><i class="fas fa-map"></i> Google Maps</button>
+        </div>
+        <div style="display:flex; gap:6px; margin:8px 0;">
+          <button class="action-btn secondary" style="flex:1;">✅ Start</button>
+          <button class="action-btn" style="flex:1; background:#1a8a4a;">✅ Delivered</button>
+        </div>
+        <div style="background:#ede5d8; border-radius:20px; padding:12px; text-align:center; font-size:11px;">
+          <i class="fas fa-qrcode"></i> Scan Order QR to verify
+        </div>
+      `;
+      return html;
+    }
 
-        // ================================================================
-        // ROLE SWITCHING VIA BOTTOM NAV
-        // ================================================================
-
-        const views = {
-            buyer: document.getElementById('view-buyer'),
-            seller: document.getElementById('view-seller'),
-            owner: document.getElementById('view-owner')
-        };
-        const navItems = document.querySelectorAll('.nav-item');
-
-        function switchRole(role) {
-            Object.keys(views).forEach(key => views[key].classList.toggle('active', key === role));
-            navItems.forEach(item => {
-                if (item.dataset.tab === 'cart') return;
-                item.classList.toggle('active', item.dataset.tab === role);
-            });
-            document.getElementById('viewport').scrollTop = 0;
-        }
-
-        navItems.forEach(item => {
-            if (item.dataset.tab === 'cart') {
-                item.addEventListener('click', () => toast('🛒 Cart opened. 3 items total.'));
-                return;
-            }
-            item.addEventListener('click', function() {
-                switchRole(this.dataset.tab);
-            });
+    // --------------------------------------------------------------
+    // DEMO EVENT BINDINGS (simulate actions)
+    // --------------------------------------------------------------
+    function attachDemoListeners() {
+      // add to cart demo
+      document.querySelectorAll('.btn-add[data-product-id]').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          alert('🛒 Added to basket (demo)');
         });
+      });
+      // verify payment
+      document.querySelectorAll('.action-btn').forEach(b => {
+        if (b.textContent.includes('Verify')) {
+          b.addEventListener('click', () => alert('✅ Payment verified (simulated)'));
+        }
+        if (b.textContent.includes('Close Daily')) {
+          b.addEventListener('click', () => alert('📆 Daily ledger closed.'));
+        }
+        if (b.textContent.includes('Add Seller')) {
+          b.addEventListener('click', () => alert('👤 Invitation code: SOYAM-SELLER-8F42'));
+        }
+      });
+    }
 
-        // ================================================================
-        // CATEGORY FILTER
-        // ================================================================
+    // --------------------------------------------------------------
+    // INIT: set demo user from quick toggle (for testing)
+    // --------------------------------------------------------------
+    window.switchUser = function(tgId) {
+      currentTelegramUser.id = tgId;
+      const user = getUserByTelegramId(tgId);
+      if (user) {
+        currentTelegramUser.username = user.telegram_username;
+      } else {
+        currentTelegramUser.username = 'guest';
+      }
+      renderApp();
+    };
 
-        document.querySelectorAll('.cat-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                renderProducts(this.textContent.trim());
-            });
-        });
+    // initial render
+    renderApp();
 
-        // ================================================================
-        // INIT
-        // ================================================================
+    // expose for debugging
+    window.DB = DB;
+    window.currentTelegramUser = currentTelegramUser;
 
-        renderProducts('All');
-        renderOrders();
-        renderStaff();
-        renderInventory();
-
-        // Simulate live stock update
-        setInterval(() => {
-            const idx = Math.floor(Math.random() * INVENTORY.length);
-            if (Math.random() > 0.6) {
-                INVENTORY[idx].stock = Math.max(0, INVENTORY[idx].stock - 1);
-                renderInventory();
-            }
-        }, 12000);
-
-        console.log('🚀 soYam cosmo · Full app ready');
-    </script>
-
+  })();
+</script>
 </body>
 </html>

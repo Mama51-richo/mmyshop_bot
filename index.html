@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -471,7 +472,6 @@ const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
 
 const DB_KEY = 'soyam_cosmo_db_v3';
-const SESSION_KEY = 'soyam_session_v3';
 
 // ===== SEED DATA =====
 const SEED = {
@@ -514,10 +514,8 @@ const API = {
     let username = tg?.initDataUnsafe?.user?.username || 'customer';
     let firstName = tg?.initDataUnsafe?.user?.first_name || 'Customer';
     
-    // Check if user exists in db
     let u = db.users.find(x => x.telegram_user_id === id);
     
-    // If not found, create as BUYER only
     if (!u) {
       u = {
         id: Date.now(),
@@ -534,7 +532,6 @@ const API = {
       saveDB();
     }
     
-    // If user is not active
     if (u.account_status !== 'ACTIVE') {
       return { ...u, account_status: 'SUSPENDED' };
     }
@@ -706,7 +703,6 @@ function selectLanguage(lang, el) {
 async function boot() {
   state.user = await API.login();
   
-  // Check if user is suspended
   if (state.user.account_status === 'SUSPENDED') {
     renderRevoked();
     return;
@@ -716,14 +712,12 @@ async function boot() {
   // @mama51R (telegram_user_id: '999999999') → Owner Portal
   // Any other user → Buyer Portal only
   
-  const OWNER_ID = '999999999'; // @mama51R's Telegram ID
+  const OWNER_ID = '999999999';
   
   if (state.user.telegram_user_id === OWNER_ID) {
-    // Owner user → Owner Portal with Switch to Seller
     state.portal = 'OWNER';
     state.view = 'home';
   } else {
-    // Any other user → Buyer Portal only
     state.portal = 'BUYER';
     state.view = 'home';
   }
@@ -1636,8 +1630,6 @@ window.saveUser = saveUser;
 window.toggleUser = toggleUser;
 window.deleteUser = deleteUser;
 window.createInvite = createInvite;
-window.choosePortal = choosePortal;
-window.demoBuyer = demoBuyer;
 window.showStoreQR = showStoreQR;
 window.selectLanguage = selectLanguage;
 window.t = t;

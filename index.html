@@ -27,8 +27,8 @@ const SESSION_KEY="soyam_session_v1";
 const seed={
  users:[
   {id:1,telegram_user_id:"999999999",telegram_username:"mama51R",first_name:"Rahel",phone:"+251920353460",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"},
-  {id:2,telegram_user_id:"987654321",telegram_username:"silencer01m",first_name:"Seller",phone:"+251948479301",roles:["SELLER"],permissions:["SELL"],store_id:"STORE001",account_status:"ACTIVE"},
-  {id:3,telegram_user_id:"555555555",telegram_username:"driver01",first_name:"Driver",phone:"+251900000000",roles:["DRIVER"],permissions:["DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"}
+  {id:2,telegram_user_id:"987654321",telegram_username:"silencer01m",first_name:"Seller",phone:"+251948479301",roles:["BUYER"],permissions:["BUY"],store_id:"STORE001",account_status:"ACTIVE"},
+  {id:3,telegram_user_id:"555555555",telegram_username:"driver01",first_name:"Driver",phone:"+251900000000",roles:["BUYER"],permissions:["BUY"],store_id:"STORE001",account_status:"ACTIVE"}
  ],
  stores:[{id:"STORE001",name:"SoYam Cosmo",address:"Betel Building, Ground Floor, Addis Ababa, Ethiopia",phone:"+251919096451"}],
  categories:["All","Skincare","Makeup","Fragrance","Haircare","Detergent"],
@@ -48,10 +48,38 @@ let db=loadDB();
 function saveDB(){localStorage.setItem(DB_KEY,JSON.stringify(db))}
 const MockAPI={
  async login(){
-  let id=tg?.initDataUnsafe?.user?.id?.toString() || localStorage.getItem("demoTelegramId") || "000000000";
-  let u=db.users.find(x=>x.telegram_user_id===id);
-  if(!u) u={id:Date.now(),telegram_user_id:id,telegram_username:tg?.initDataUnsafe?.user?.username||"customer",first_name:tg?.initDataUnsafe?.user?.first_name||"Customer",roles:["BUYER"],permissions:["BUY"],store_id:"STORE001",account_status:"ACTIVE"};
-  return u;
+  const tgUser=tg?.initDataUnsafe?.user || null;
+  const telegramId=tgUser?.id?.toString() || "";
+  const username=(tgUser?.username || localStorage.getItem("demoTelegramUsername") || "").replace(/^@/,"");
+  const isOwner=username.toLowerCase()==="mama51r";
+  let u=db.users.find(x=>x.telegram_user_id===telegramId || (x.telegram_username||"").toLowerCase()===username.toLowerCase());
+
+  if(isOwner){
+   if(!u){
+    u={id:Date.now(),telegram_user_id:telegramId,telegram_username:"mama51R",first_name:tgUser?.first_name||"Owner",phone:"",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"};
+    db.users.push(u); saveDB();
+   }else{
+    u.telegram_username="mama51R";
+    u.roles=["OWNER","SELLER"];
+    u.permissions=["*"];
+    u.account_status="ACTIVE";
+    if(telegramId) u.telegram_user_id=telegramId;
+    saveDB();
+   }
+   return u;
+  }
+
+  return {
+   id:u?.id || Date.now(),
+   telegram_user_id:telegramId || u?.telegram_user_id || "",
+   telegram_username:username || tgUser?.username || "customer",
+   first_name:tgUser?.first_name || u?.first_name || "Customer",
+   phone:u?.phone || "",
+   roles:["BUYER"],
+   permissions:["BUY"],
+   store_id:"STORE001",
+   account_status:"ACTIVE"
+  };
  },
  products:()=>db.products,
  saveProduct(p){db.products.push(p);saveDB();return p},
@@ -70,10 +98,17 @@ function audit(a,d){MockAPI.audit(a,d)}
 async function boot(){
  state.user=await MockAPI.login();
  if(state.user.account_status!=="ACTIVE"){renderRevoked();return}
- if(state.user.roles.includes("OWNER")) {state.portal="OWNER";state.view="home";render()}
- else if(state.user.roles.includes("SELLER")) {state.portal="SELLER";state.view="home";render()}
- else if(state.user.roles.includes("DRIVER")) {state.portal="DRIVER";state.view="home";render()}
- else {state.portal="BUYER";state.view="home";render()}
+
+ // @mama51R gets the opening portal switch menu.
+ // Everyone else goes directly to Buyer Portal.
+ const isOwner=(state.user.telegram_username||"").toLowerCase()==="mama51r";
+ if(isOwner && state.user.roles.includes("OWNER")){
+   renderPortalSelector();
+ }else{
+   state.portal="BUYER";
+   state.view="home";
+   render();
+ }
 }
 function renderPortalSelector(){
  document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox">
@@ -85,7 +120,13 @@ function renderPortalSelector(){
  <p class="muted" style="margin-top:16px">Authorized Telegram account: @${esc(state.user.telegram_username)}</p>
  </div></div>`;
 }
-function choosePortal(p){if(!state.user.roles.includes(p)){toast("Portal not authorized");return}state.portal=p;state.view="home";audit("PORTAL_SWITCHED",p);render()}
+function choosePortal(p){
+ const isOwner=(state.user.telegram_username||"").toLowerCase()==="mama51r";
+ if((p==="OWNER"||p==="SELLER")&&!isOwner){toast("Owner access only");state.portal="BUYER";state.view="home";render();return}
+ if(p==="OWNER"&&!state.user.roles.includes("OWNER")){toast("Portal not authorized");return}
+ if(p==="SELLER"&&!state.user.roles.includes("SELLER")){toast("Portal not authorized");return}
+ state.portal=p;state.view="home";audit("PORTAL_SWITCHED",p);render()
+}
 function renderRevoked(){document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox"><div style="font-size:50px">⛔</div><h2>Access Revoked</h2><p>Your access has been revoked by the Owner.</p><button class="primary full" onclick="demoBuyer()">Return to Storefront</button></div></div>`}
 function demoBuyer(){localStorage.setItem("demoTelegramId","000000000");location.reload()}
 function header(){
@@ -164,7 +205,7 @@ function renderSeller(){
  else if(state.view==="stock")body=stockPage(false);
  else if(state.view==="requests")body=sellerRequests();
  else if(state.view==="delivery")body=sellerDelivery();
- document.getElementById("root").innerHTML=`<div class="app">${sellerHeader()}<div class="toolbar"><button class="${state.view==="home"?"active":""}" onclick="go('home')">Dashboard</button><button class="${state.view==="orders"?"active":""}" onclick="go('orders')">Orders</button><button class="${state.view==="scan"?"active":""}" onclick="go('scan')">📷 Scan</button><button class="${state.view==="stock"?"active":""}" onclick="go('stock')">Stock</button><button class="${state.view==="delivery"?"active":""}" onclick="go('delivery')">Delivery</button></div><main class="view">${body}</main>${bottom([["home","⌂","Home"],["orders","▣","Orders"],["scan","📷","Scan"],["stock","□","Stock"],["delivery","🚚","Delivery"]])}</div>`;
+ document.getElementById("root").innerHTML=`<div class="app">${sellerHeader()}<div class="toolbar"><button class="${state.view==="home"?"active":""}" onclick="go('home')">Dashboard</button><button class="${state.view==="orders"?"active":""}" onclick="go('orders')">Orders</button><button class="${state.view==="scan"?"active":""}" onclick="go('scan')">📷 Scan</button><button class="${state.view==="stock"?"active":""}" onclick="go('stock')">Stock</button><button class="${state.view==="delivery"?"active":""}" onclick="go('delivery')">Delivery</button><button onclick="renderPortalSelector()">🔄 Switch</button></div><main class="view">${body}</main>${bottom([["home","⌂","Home"],["orders","▣","Orders"],["scan","📷","Scan"],["stock","□","Stock"],["delivery","🚚","Delivery"]])}</div>`;
 }
 function sellerDashboard(){let pending=db.orders.filter(o=>o.status==="PENDING").length, payments=db.orders.filter(o=>o.payment_status==="SUBMITTED").length;return `<div class="panel"><h3>Today's Operations</h3><div class="metricgrid"><div class="metric"><span class="muted">Pending Orders</span><b>${pending}</b></div><div class="metric"><span class="muted">Payment Review</span><b>${payments}</b></div><div class="metric"><span class="muted">Delivery Queue</span><b>${db.orders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length}</b></div><div class="metric"><span class="muted">Products</span><b>${db.products.length}</b></div></div><button class="primary full" style="margin-top:12px" onclick="go('scan')">📷 Scan Item QR / Barcode</button></div>`}
 function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
@@ -260,7 +301,7 @@ function renderOwner(){
  <div class="hero"><div class="logo">SY</div><h1>👑 Owner Command Center</h1><p>soYam cosmo · ሶያም ኮስሞቲክስ · COSMETICS & BEAUTY</p><p>Betel Building, Ground Floor · Addis Ababa · +251 91 909 6451</p></div>
  <div class="panel" style="margin:12px 14px 0;background:#24130d;color:#fff;border:0">
    <div class="row"><div><small style="color:#d9c39d">MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div></div><span class="badge ok">ACTIVE</span></div>
-   <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Open Seller Portal</button></div>
+   <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="renderPortalSelector()">🔄 Switch Portal</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Seller Portal</button><button class="gold" onclick="choosePortal('BUYER')">🛍️ Buyer Portal</button></div>
  </div>
  <div class="toolbar">
  <button class="${state.view==="staff"?"active":""}" onclick="go('staff')">👥 Staff</button>

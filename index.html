@@ -1,557 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#24130d">
-<title>soYam cosmo — Telegram Mini App</title>
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-:root{--brown:#2a1710;--brown2:#4b2a1d;--gold:#c7a15a;--gold2:#ead39b;--cream:#faf6f0;--paper:#fffdf9;--ink:#211712;--muted:#776b61;--line:#e8ddd2;--green:#14734a;--amber:#aa6d00;--red:#a92f2f;--rose:#f1e2d8;--shadow:0 5px 18px rgba(42,23,16,.08)}
-*{box-sizing:border-box}html,body{margin:0;background:#e9e2db;color:var(--ink);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}body{overflow-x:hidden}
-button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{width:100%;max-width:760px;min-height:100vh;margin:auto;background:var(--cream);box-shadow:0 0 32px #0002}
-.hero{background:linear-gradient(145deg,#24130d,#553023);color:#fff;text-align:center;padding:13px 10px 10px}.brandmark{width:49px;height:49px;margin:0 auto 5px;display:grid;place-items:center;border:1px solid var(--gold2);border-radius:15px;background:#28160f}.brandmark svg{width:39px;height:39px}.hero h1{font:700 23px Georgia,serif;margin:0}.hero h2{font-size:10px;color:#e9d7ba;margin:2px 0}.hero p{font-size:8px;color:#d9c9bc;margin:2px 0}.hero a{color:var(--gold2)!important}
-.langbar{display:flex;flex-wrap:nowrap;gap:4px;padding:6px 7px;background:#fff;border-bottom:1px solid var(--line);overflow:hidden}.langbar button{flex:1 1 0;min-width:0;white-space:nowrap;padding:6px 3px;border-radius:10px;background:#f3ece4;color:var(--brown);font-size:8px}.langbar button.active{background:var(--brown);color:#fff}
-.social{display:flex;justify-content:center;gap:7px;background:#fff;padding:6px;border-bottom:1px solid var(--line)}.social a{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;text-decoration:none;background:#f2e9df;color:var(--brown);font-weight:900;font-size:9px}
-.promo{margin:8px 9px;padding:12px;border-radius:15px;background:linear-gradient(135deg,#2a1710,#543023);color:#fff}.promo small{font-size:7px;color:var(--gold2)}.promo h3{font-size:15px;margin:3px 0}.promo span{font-size:9px;color:#e7d8cc}
-.section{padding:0 9px 12px}.cats{display:flex;gap:4px;overflow-x:auto;padding:0 0 7px}.cats button{white-space:nowrap;background:#eee6de;border-radius:13px;padding:6px 8px;font-size:8px}.cats button.active{background:var(--brown);color:#fff}
-.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.card{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;box-shadow:var(--shadow);min-width:0}.product-img{height:105px;display:grid;place-items:center;background:radial-gradient(circle,#fff,#eee1d5);font-size:38px}.card-body{padding:7px}.card h4{font-size:11px;line-height:1.25;margin:2px 0}.price{font-size:10px;font-weight:800;color:var(--brown)}.muted{font-size:8px;color:var(--muted)}.row{display:flex;align-items:center;justify-content:space-between;gap:5px;min-width:0}.qty{display:flex;align-items:center;gap:4px;margin-top:5px}.qty button{width:25px;height:25px;border-radius:7px;background:#eee6dd;font-size:10px}
-.primary,.gold,.danger{border-radius:8px;padding:8px 9px;font-size:9px}.primary{background:var(--brown);color:#fff}.gold{background:var(--gold);color:#25160e}.danger{background:#f8dddd;color:var(--red)}.full{width:100%}.actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
-.toolbar{display:flex;gap:4px;overflow-x:auto;padding:6px 8px;background:#fff;border-bottom:1px solid var(--line)}.toolbar button{flex:0 0 auto;white-space:nowrap;background:#f1e9e0;padding:6px 8px;border-radius:8px;font-size:8px}.toolbar button.active{background:var(--brown);color:#fff}
-.view{padding-bottom:8px}.panel{margin:7px 9px;padding:10px;border-radius:13px;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow)}.panel h3{font-size:13px;margin:0 0 7px}.formgrid{display:grid;gap:6px}.input{width:100%;padding:8px;border:1px solid #d9cec2;border-radius:8px;background:#fff;font-size:9px}
-.metricgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}.metric{padding:8px;border:1px solid var(--line);border-radius:10px;background:#fff;min-width:0}.metric b{display:block;font-size:14px;margin-top:2px}.metric span{font-size:7px;color:var(--muted)}
-.kpi-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:7px 9px}.kpi{padding:7px;border:1px solid var(--line);border-radius:9px;background:#fff;min-width:0}.kpi span{font-size:6.5px;color:var(--muted)}.kpi b{display:block;font-size:11px;margin-top:2px}
-.quickgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.quick{padding:8px 2px;border:1px solid var(--line);border-radius:9px;background:#fff;font-size:8px;text-align:center}.statline{display:flex;align-items:center;gap:6px;padding:6px 0;border-bottom:1px solid var(--line);font-size:8px}.statline:last-child{border-bottom:0}.reportcard{display:grid;grid-template-columns:1fr auto;gap:5px;padding:7px 0;border-bottom:1px solid var(--line);font-size:8px}.badge{display:inline-block;padding:3px 6px;border-radius:12px;font-size:6.5px;font-weight:800;white-space:nowrap}.ok{background:#dff2e9;color:var(--green)}.pending{background:#fff0cc;color:var(--amber)}.bad{background:#f8dcdc;color:var(--red)}
-.tablewrap{width:100%;overflow-x:auto}.table{width:100%;border-collapse:collapse;min-width:560px;font-size:7.5px}.table th,.table td{padding:6px 5px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.table th{background:#f3ece4;position:sticky;top:0}
-.owner-head,.seller-head{background:linear-gradient(145deg,#25140e,#4c2a1e);color:#fff;padding:10px;margin:7px 9px 0;border-radius:13px}.seller-head{margin:0;border-radius:0;text-align:center}.owner-head small{font-size:6.5px;color:var(--gold2)}.owner-head b{font-size:11px}.seller-head h1{margin:0;font:700 20px Georgia,serif}.seller-head p{margin:2px;font-size:7.5px;color:#e6d7cb}
-.progress{height:5px;background:#eee5dc;border-radius:8px;overflow:hidden}.progress i{display:block;height:100%;background:var(--gold)}.chart{height:110px;display:flex;align-items:end;gap:4px}.bar{flex:1;background:var(--gold);border-radius:5px 5px 2px 2px}
-.stocktable td:nth-child(3),.stocktable th:nth-child(3){text-align:right}.stocktable td:nth-child(4),.stocktable th:nth-child(4){text-align:right}.stocktable td:nth-child(5),.stocktable th:nth-child(5){text-align:right}
-.preview{width:38px;height:38px;border-radius:9px;background:#f1e6dc;display:grid;place-items:center;overflow:hidden}.preview img{width:100%;height:100%;object-fit:cover}
-.scanner{position:relative;height:230px;border-radius:13px;background:#120e0c;color:#fff;display:grid;place-items:center;overflow:hidden}.scanner video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.scan-overlay{position:relative;z-index:2;width:170px;height:170px;border:2px solid var(--gold2);border-radius:14px;box-shadow:0 0 0 999px #0005}.scan-status{position:absolute;bottom:8px;left:8px;right:8px;z-index:3;background:#0008;padding:6px;border-radius:8px;text-align:center;font-size:8px}
-.modal{position:fixed;inset:0;background:#0008;z-index:100;display:grid;align-items:end}.sheet{width:100%;max-width:760px;margin:auto;background:#fff;border-radius:20px 20px 0 0;padding:14px;max-height:90vh;overflow:auto}.toast{position:fixed;z-index:300;bottom:65px;left:50%;transform:translateX(-50%);background:#25140e;color:#fff;padding:8px 12px;border-radius:18px;font-size:8px}
-.login{min-height:100vh;display:grid;place-items:center;padding:16px;background:linear-gradient(145deg,#24130d,#5a3325)}.loginbox{width:100%;max-width:430px;background:#fff;border-radius:22px;padding:20px;text-align:center}.rolecards{display:grid;gap:7px;margin-top:12px}.rolecard{padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;text-align:left}.rolecard strong{font-size:12px;display:block}.rolecard span{font-size:8px;color:var(--muted)}
-.bottom{position:sticky;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid var(--line)}.bottom button{padding:7px 2px;background:#fff;font-size:7px;color:#665b53}.bottom button.active{color:var(--brown);font-weight:800}
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.metricgrid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-img{height:125px}}
-
-.stock-mobile-list{display:none}.stock-mobile-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:9px;margin-top:7px}.stock-mobile-top{display:flex;align-items:center;justify-content:space-between;gap:7px}.stock-item{display:flex;align-items:center;gap:7px;min-width:0}.stock-item-icon{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#f4e9df;flex:0 0 auto}.stock-item b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:190px}.stock-item small{display:block;color:var(--muted);font-size:7px;margin-top:2px}.stock-mobile-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:8px}.stock-mobile-grid>div{background:#faf6f1;border-radius:8px;padding:6px;min-width:0}.stock-mobile-grid small{display:block;font-size:6.5px;color:var(--muted);white-space:nowrap}.stock-mobile-grid b{display:block;font-size:8px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stock-actions{display:flex;gap:4px;align-items:center}.stock-actions button{width:25px;height:25px;padding:4px;display:grid;place-items:center;border-radius:7px}.stock-actions svg{width:13px;height:13px}@media(max-width:599px){.stock-desktop-table{display:none}.stock-mobile-list{display:block}.stock-mobile-grid>div:last-child{grid-column:span 1}.tablewrap{overflow:visible}.toolbar{scrollbar-width:none}.toolbar::-webkit-scrollbar,.langbar::-webkit-scrollbar{display:none}}
-
-/* ===== DASHBOARD-ONLY PROFESSIONAL UPGRADE ===== */
-.dashboard-shell{padding:10px;display:grid;gap:10px;max-width:1180px;margin:auto}
-.dashboard-hero{position:relative;overflow:hidden;padding:15px;border:1px solid rgba(201,164,91,.30);border-radius:20px;background:radial-gradient(circle at 85% 15%,rgba(201,164,91,.18),transparent 34%),linear-gradient(145deg,#1d100b,#382016 58%,#24130d);box-shadow:0 10px 35px rgba(30,15,8,.20);color:#fff}
-.dashboard-hero:after{content:"";position:absolute;width:170px;height:170px;right:-80px;bottom:-100px;border:1px solid rgba(229,201,132,.18);border-radius:50%;box-shadow:0 0 35px rgba(201,164,91,.10);pointer-events:none}
-.dashboard-eyebrow{color:#d9bd7d;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;font-weight:800}.dashboard-title{margin:3px 0 2px;font-family:Georgia,serif;font-size:21px;line-height:1.15}.dashboard-subtitle{margin:0;color:#d9c9bb;font-size:9px}.dashboard-live{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 8px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(229,201,132,.18);color:#ead8bc;font-size:8px}.dashboard-live i{width:6px;height:6px;border-radius:50%;background:#56c28a;box-shadow:0 0 10px #56c28a;animation:dashboardPulse 1.8s infinite}@keyframes dashboardPulse{0%,100%{opacity:.45;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
-.dashboard-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.dashboard-kpi{position:relative;overflow:hidden;min-width:0;padding:11px;border:1px solid rgba(201,164,91,.24);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.82),rgba(255,250,244,.55));backdrop-filter:blur(12px);box-shadow:0 7px 22px rgba(55,31,19,.08)}.dashboard-kpi-top{display:flex;justify-content:space-between;align-items:center;gap:6px}.dashboard-icon{width:30px;height:30px;flex:0 0 30px;display:grid;place-items:center;border-radius:10px;color:#e5c984;background:linear-gradient(145deg,#392015,#24130d);box-shadow:0 0 18px rgba(201,164,91,.18)}.dashboard-icon svg{width:16px;height:16px}.dashboard-kpi-label{min-width:0;font-size:8px;color:#786b61;font-weight:700}.dashboard-kpi-value{margin-top:5px;font-size:17px;line-height:1;font-weight:900;color:#281710;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dashboard-trend{margin-top:6px;font-size:8px;font-weight:800}.dashboard-trend.up{color:#16724a}.dashboard-trend.flat{color:#9b6b15}.dashboard-trend.down{color:#a52b2b}
-.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:10px}.dashboard-panel{min-width:0;padding:12px;border:1px solid rgba(201,164,91,.20);border-radius:17px;background:rgba(255,253,249,.82);backdrop-filter:blur(12px);box-shadow:0 7px 22px rgba(55,31,19,.07)}.dashboard-panel-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}.dashboard-panel-title{margin:0;font-size:12px;font-weight:900}.dashboard-panel-sub{font-size:8px;color:#83766d}.dashboard-chart{height:125px;display:flex;align-items:flex-end;gap:5px;padding:7px 2px 2px}.dashboard-bar{flex:1;min-width:4px;max-width:28px;margin:auto;border-radius:7px 7px 3px 3px;background:linear-gradient(to top,#7c5632,#e1bd70);box-shadow:0 0 12px rgba(201,164,91,.14);transition:height .35s ease}.dashboard-list{display:grid;gap:6px}.dashboard-list-row{display:flex;align-items:center;gap:8px;min-width:0;padding:7px 0;border-bottom:1px solid #eadfd3}.dashboard-list-row:last-child{border-bottom:0}.dashboard-rank{width:23px;height:23px;flex:0 0 23px;display:grid;place-items:center;border-radius:8px;background:#f1e7da;color:#4a2a1e;font-size:8px;font-weight:900}.dashboard-list-main{flex:1;min-width:0}.dashboard-list-name{font-size:9px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dashboard-list-meta{margin-top:2px;color:#877970;font-size:7px}.dashboard-list-value{flex:0 0 auto;text-align:right;font-size:9px;font-weight:900}.dashboard-alert{display:flex;align-items:center;gap:8px;padding:8px;border-radius:11px;background:#fff7e8;border:1px solid #ead2a4}.dashboard-alert.danger{background:#fff0ef;border-color:#edc0bc}.dashboard-alert-icon{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border-radius:9px;background:#fff;font-size:12px}.dashboard-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.dashboard-action{min-width:0;min-height:62px;padding:8px 4px;border:1px solid #eadfd3;border-radius:13px;background:#fff;color:#39231a;text-align:center;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}.dashboard-action:active{transform:scale(.96)}.dashboard-action:hover{border-color:#c9a45b;box-shadow:0 5px 15px rgba(55,31,19,.08)}.dashboard-action-icon{width:27px;height:27px;margin:0 auto 5px;display:grid;place-items:center;border-radius:9px;background:#2a170f;color:#e5c984}.dashboard-action-icon svg{width:14px;height:14px}.dashboard-action span{display:block;font-size:7px;font-weight:800;line-height:1.15}.dashboard-wide{grid-column:1/-1}.dashboard-empty{padding:18px 8px;text-align:center;color:#8b7d73;font-size:9px}
-@media(max-width:599px){.dashboard-shell{padding:8px}.dashboard-grid{grid-template-columns:1fr}.dashboard-wide{grid-column:auto}.dashboard-title{font-size:19px}.dashboard-kpi-value{font-size:15px}.dashboard-actions{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(min-width:700px){.dashboard-kpis{grid-template-columns:repeat(4,minmax(0,1fr))}.dashboard-shell{padding:14px}}
-</style>
-<style>
-/* v4 visual language: refined cosmetics icon system */
-.icon{width:18px;height:18px;display:inline-block;vertical-align:-4px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.iconbox{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(145deg,#fffaf4,#ead8ca);color:var(--brown);border:1px solid #ead8ca;box-shadow:0 4px 10px #3b211513}.quick .icon{width:20px;height:20px;margin-bottom:3px}.bottom .icon{width:17px;height:17px}.toolbar .icon{width:14px;height:14px}
-.brandmark{width:58px;height:58px;border-radius:19px;background:radial-gradient(circle at 35% 25%,#6b4030,#24130d 68%);border:1px solid #e8cb8c;box-shadow:0 7px 18px #0004}.brandmark svg{width:48px;height:48px}
-.hero h1{letter-spacing:.2px}.hero h2{letter-spacing:.8px}.langbar{padding:7px 8px;gap:4px}.langbar button{font-size:8px;border:1px solid #e7ddd3;background:#faf6f0}.langbar button.active{box-shadow:0 3px 8px #2a171020}
-.social a{font-size:0}.social a .icon{width:15px;height:15px}.social a{border:1px solid #e7ddd3}
-.panel h3{display:flex;align-items:center;gap:6px}.panel h3 .icon{color:var(--gold)}
-.quick{min-height:57px}.quick:hover,.rolecard:hover{transform:translateY(-1px);box-shadow:0 6px 14px #3b211512}.quick,.rolecard{transition:.15s ease}
-.stocktable .danger{padding:5px 7px;font-size:8px}.delete-btn{background:#fff0f0!important;border:1px solid #efcaca!important;color:#a52b2b!important}.edit-btn{background:#f5eee4!important;color:#4a2a1e!important}
-.cosmetic-chip{display:inline-flex;align-items:center;gap:4px;padding:5px 7px;border-radius:12px;background:#f5ece4;color:var(--brown);font-size:8px;border:1px solid #eadfd4}
-.buyer-brand{padding:13px 10px 10px}.buyer-brand .brandmark{margin-bottom:4px}.buyer-brand .address{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;font-size:8px;color:#dbcabd}.buyer-brand .address span{white-space:nowrap}
-@media(max-width:370px){.langbar button{font-size:7px;padding:5px 2px}.kpi span{font-size:6px}.kpi b{font-size:10px}}
-</style>
-<style>
-.iconbox{width:36px;height:36px;border-radius:12px;display:inline-grid;place-items:center;background:linear-gradient(145deg,#fffaf5,#ead9cc);border:1px solid #e4d4c7;color:#684332;box-shadow:0 5px 12px #3a20120d}.product-img .iconbox{width:58px;height:58px;border-radius:20px}.product-img .icon{width:30px;height:30px}.quick{min-height:58px}.quick .icon{width:20px;height:20px}.toolbar button{display:flex;align-items:center;gap:4px}.toolbar .icon{width:13px;height:13px}.bottom button{display:flex;flex-direction:column;align-items:center;gap:2px}.social a{font-size:0}.social a .icon{width:15px;height:15px}.brandmark{width:62px;height:62px;border-radius:21px}.footer-logo .brandmark{width:34px;height:34px}.footer-logo .brandmark svg{width:27px;height:27px}.buyer-brand .address span{background:#ffffff12;border:1px solid #ffffff20;padding:3px 6px;border-radius:9px}
-</style></head>
-<body>
-<div id="root"></div>
-<script>
-/* =========================================================
-   soYam cosmo — single-file Telegram Mini App prototype
-   Frontend + local mock backend/data layer.
-   Production: replace MockAPI methods with secure server APIs.
-   ========================================================= */
-
-function ico(n){const m={home:'M3 11l9-8 9 8v9h-6v-6H9v6H3z',bag:'M6 8h12l1 12H5L6 8zm3 0a3 3 0 016 0',orders:'M6 3h12v18H6zM9 7h6M9 11h6M9 15h4',users:'M16 20v-1a4 4 0 00-4-4H8a4 4 0 00-4 4v1m6-9a3 3 0 100-6 3 3 0 000 6m7 0a2.5 2.5 0 100-5 2.5 2.5 0 000 5',stock:'M3 7l9-4 9 4-9 4-9-4zm0 5l9 4 9-4M3 17l9 4 9-4',scan:'M4 7V4h3M17 4h3v3M20 17v3h-3M7 20H4v-3M8 8h8v8H8z',truck:'M3 6h11v10H3zM14 10h4l3 3v3h-7zM7 19a2 2 0 100-4 2 2 0 000 4m11 0a2 2 0 100-4 2 2 0 000 4',chart:'M4 19V5m0 14h17M8 16v-5m4 5V7m4 9v-9',edit:'M4 20h4L19 9l-4-4L4 16v4zm10.2-13.2l2 2',trash:'M5 7h14M10 11v6M14 11v6M9 7l1-2h4l1 2M7 7l1 14h10L18 7',spark:'M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6',heart:'M20 9c0 5-8 10-8 10S4 14 4 9a4 4 0 017-2 4 4 0 017 2z',facebook:'M14 8h3V4h-3c-3 0-5 2-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1',whatsapp:'M20 12a8 8 0 01-12 7l-4 1 1-4a8 8 0 1115  -4z',telegram:'M21 4L3 11l6 2 2 6 3-5 4-3 3-7z',instagram:'M7 3h10a4 4 0 014 4v10a4 4 0 01-4 4H7a4 4 0 01-4-4V7a4 4 0 014-4zm5 5a4 4 0 100 8 4 4 0 000-8z',settings:'M12 15.5a3.5 0 100-7 3.5 3.5 0 000 7zM19.4 15a1.7 1.7 0 00.3 1.9l.1.1-1.7 1.7-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5v.2h-2.4v-.2a1.7 1.7 0 00-1-1.5 1.7 1.7 0 00-1.9.3l-.1.1L8 17l.1-.1A1.7 1.7 0 008.4 15a1.7 1.7 0 00-1.5-1H6.7v-2.4h.2a1.7 1.7 0 001.5-1A1.7 1.7 0 008.1 8.7L8 8.6l1.7-1.7.1.1a1.7 1.7 0 001.9.3 1.7 1.7 0 001-1.5v-.2h2.4v.2a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1 1.7 1.7-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.5 1h.2V14h-.2a1.7 1.7 0 00-1.5 1z'};return `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${m[n]||m.home}"/></svg>`}
-function productIcon(p){const c=(p.category||"").toLowerCase();const k=c.includes("makeup")?"spark":c.includes("fragrance")?"heart":c.includes("hair")?"heart":c.includes("detergent")||c.includes("soap")?"bag":"heart";return `<span class="iconbox">${ico(k)}</span>`}
-function brandLogo(){return `<div class="brandmark" aria-label="soYam Cosmo logo"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="#ead39b" stroke-width="1.8"/><path d="M31 66V39c0-5 4-9 9-9h20c5 0 9 4 9 9v27c0 5-4 8-9 8H40c-5 0-9-3-9-8Z" fill="#3b2017" stroke="#c7a15a" stroke-width="2"/><path d="M39 30v-5c0-4 3-7 7-7h8c4 0 7 3 7 7v5" fill="none" stroke="#ead39b" stroke-width="3"/><path d="M39 43h22M39 51h22" stroke="#ead39b" stroke-width="2" stroke-linecap="round"/><path d="M50 57c-6-5-12 3 0 11 12-8 6-16 0-11Z" fill="#ead39b"/><text x="50" y="68" text-anchor="middle" fill="#2a1710" font-size="7" font-family="Georgia" font-weight="700">SY</text></svg></div>`}
-const tg=window.Telegram?.WebApp;
-if(tg){tg.ready();tg.expand();}
-
-const DB_KEY="soyam_cosmo_db_v1";
-const SESSION_KEY="soyam_session_v1";
-const seed={
- users:[
-  {id:1,telegram_user_id:"999999999",telegram_username:"mama51R",first_name:"Rahel",phone:"+251920353460",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"},
-  {id:2,telegram_user_id:"987654321",telegram_username:"silencer01m",first_name:"Seller",phone:"+251948479301",roles:["SELLER"],permissions:["SELL"],store_id:"STORE001",account_status:"ACTIVE"},
-  {id:3,telegram_user_id:"555555555",telegram_username:"driver01",first_name:"Driver",phone:"+251900000000",roles:["DRIVER"],permissions:["DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"}
- ],
- stores:[{id:"STORE001",name:"SoYam Cosmo",address:"Betel Building, Ground Floor, Addis Ababa, Ethiopia",phone:"+251919096451"}],
- categories:["All","Skincare","Makeup","Fragrance","Haircare","Detergent"],
- products:[
-  {id:"P001",name:"Luxury Face Cream",category:"Skincare",price:650,stock:24,emoji:"🧴",cost:390},
-  {id:"P002",name:"Hydrating Lotion",category:"Skincare",price:500,stock:38,emoji:"🧴",cost:300},
-  {id:"P003",name:"Beauty Soap",category:"Detergent",price:180,stock:76,emoji:"🧼",cost:90},
-  {id:"P004",name:"Fresh Fragrance",category:"Fragrance",price:900,stock:15,emoji:"🌸",cost:540},
-  {id:"P005",name:"Hair Care Oil",category:"Haircare",price:420,stock:31,emoji:"💧",cost:250},
-  {id:"P006",name:"Premium Makeup",category:"Makeup",price:780,stock:12,emoji:"💄",cost:470}
- ],
- orders:[],transactions:[],requests:[],deliveries:[],invitations:[],audit:[],
- dailyLedger:{date:new Date().toISOString().slice(0,10),status:"OPEN",cash:0,bank:0,telebirr:0}
-};
-const IDB_NAME="soyam_cosmo_persistent_v1",IDB_STORE="state";
-function loadDB(){try{const raw=localStorage.getItem(DB_KEY);return raw?JSON.parse(raw):structuredClone(seed)}catch(e){return structuredClone(seed)}}
-let db=loadDB();
-function openPersistentDB(){
- return new Promise((resolve,reject)=>{
-  if(!window.indexedDB)return resolve(null);
-  const r=indexedDB.open(IDB_NAME,1);
-  r.onupgradeneeded=()=>{if(!r.result.objectStoreNames.contains(IDB_STORE))r.result.createObjectStore(IDB_STORE)};
-  r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);
- });
-}
-async function persistSnapshot(snapshot){
- try{const idb=await openPersistentDB();if(idb){await new Promise((res,rej)=>{const tx=idb.transaction(IDB_STORE,"readwrite");tx.objectStore(IDB_STORE).put(snapshot,"db");tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});idb.close()}}catch(e){}
-}
-function saveDB(){
- const snapshot=JSON.stringify(db);
- localStorage.setItem(DB_KEY,snapshot);
- localStorage.setItem("soyam_sync_tick",String(Date.now()));
- persistSnapshot(snapshot);
- window.dispatchEvent(new CustomEvent("soyam:data-updated"));
-}
-async function hydratePersistentData(){
- try{
-  const idb=await openPersistentDB();
-  if(!idb)return;
-  const snapshot=await new Promise((res,rej)=>{const tx=idb.transaction(IDB_STORE,"readonly");const r=tx.objectStore(IDB_STORE).get("db");r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
-  idb.close();
-  if(snapshot){
-   const parsed=typeof snapshot==="string"?JSON.parse(snapshot):snapshot;
-   if(parsed&&typeof parsed==="object"){
-    db=parsed;
-    localStorage.setItem(DB_KEY,JSON.stringify(db));
-   }
-  }else{
-   await persistSnapshot(JSON.stringify(db));
-  }
- }catch(e){}
-}
-const MockAPI={
- async login(){
-  const tu=tg?.initDataUnsafe?.user||{};
-  const id=tu.id?.toString()||localStorage.getItem("demoTelegramId")||"";
-  const username=(tu.username||localStorage.getItem("demoTelegramUsername")||"").replace(/^@/,"");
-  const isOwner=username.toLowerCase()==="mama51r";
-  if(isOwner){
-    let u=db.users.find(x=>
-      (x.telegram_user_id&&id&&x.telegram_user_id===id) ||
-      ((x.telegram_username||"").toLowerCase()==="mama51r")
-    );
-    if(!u){
-      u={id:Date.now(),telegram_user_id:id,telegram_username:"mama51R",first_name:tu.first_name||"Owner",phone:"",roles:["OWNER","SELLER"],permissions:["*"],store_id:"STORE001",account_status:"ACTIVE"};
-      db.users.push(u);
-    }else{
-      u.telegram_user_id=id||u.telegram_user_id||"";
-      u.telegram_username="mama51R";
-      u.roles=["OWNER","SELLER"];
-      u.permissions=["*"];
-      u.account_status="ACTIVE";
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>SoYam Cosmo · 3 Portal</title>
+  <!-- Google Fonts (clean modern) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
-    saveDB();
-    return u;
-  }
-  // Every non-owner opening the bot starts in the Buyer Portal.
-  // Seller tools remain available only after the authorized owner switches portal.
-  return {
-    id:Date.now(),
-    telegram_user_id:id,
-    telegram_username:username||"customer",
-    first_name:tu.first_name||"Customer",
-    phone:"",
-    roles:["BUYER"],
-    permissions:["BUY"],
-    store_id:"STORE001",
-    account_status:"ACTIVE"
-  };
- },
- products:()=>db.products,
- saveProduct(p){db.products.push(p);saveDB();return p},
- addOrder(o){o.id="SOYAM-"+String(Date.now()).slice(-8);db.orders.push(o);saveDB();return o},
- addTransaction(t){db.transactions.push(t);saveDB();return t},
- audit(action,detail){db.audit.push({action,detail,at:new Date().toISOString()});saveDB()}
-};
+    body {
+      background: #0b0b0f;
+      color: #f0f0f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    /* main container – mobile first */
+    .app-container {
+      max-width: 430px;
+      width: 100%;
+      background: #14141c;
+      border-radius: 36px;
+      padding: 16px 14px 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      backdrop-filter: blur(2px);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255,215,0,0.08);
+    }
+    /* glassmorphism base */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+    /* premium brand header */
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 4px 16px;
+    }
+    .logo-emblem {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .monogram {
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle at 30% 30%, #f7e8c0, #d4af37);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 22px;
+      color: #1a1410;
+      box-shadow: 0 0 0 2px rgba(212,175,55,0.3), 0 8px 16px rgba(0,0,0,0.5);
+      position: relative;
+    }
+    .monogram::after {
+      content: "✦";
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      font-size: 14px;
+      color: #d4af37;
+    }
+    .brand-text {
+      line-height: 1.2;
+    }
+    .brand-text h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      background: linear-gradient(135deg, #f5e6b0, #d4af37);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .brand-text span {
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #a09880;
+      display: block;
+      margin-top: -2px;
+    }
+    .portal-badge {
+      background: rgba(212,175,55,0.15);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid rgba(212,175,55,0.2);
+      color: #d4af37;
+      letter-spacing: 0.5px;
+    }
+    /* portal theme colors */
+    .buyer-theme { --portal-primary: #f06292; --portal-glow: rgba(240,98,146,0.2); }
+    .seller-theme { --portal-primary: #42a5f5; --portal-glow: rgba(66,165,245,0.2); }
+    .owner-theme { --portal-primary: #26a69a; --portal-glow: rgba(38,166,154,0.2); }
+    /* role indicator */
+    .role-indicator {
+      display: flex;
+      gap: 6px;
+      margin: 4px 0 12px;
+    }
+    .role-pill {
+      padding: 4px 14px;
+      border-radius: 40px;
+      font-size: 10px;
+      font-weight: 600;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #aaa;
+    }
+    .role-pill.active-buyer { background: #f06292; color: #1a1410; border-color: #f06292; }
+    .role-pill.active-seller { background: #42a5f5; color: #1a1410; border-color: #42a5f5; }
+    .role-pill.active-owner { background: #26a69a; color: #1a1410; border-color: #26a69a; }
+    /* navigation tabs */
+    .bottom-nav {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(20,20,30,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 40px;
+      padding: 6px 4px;
+      margin-top: 16px;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 10px;
+      color: #888;
+      padding: 6px 12px;
+      border-radius: 30px;
+      transition: 0.2s;
+      background: transparent;
+      border: none;
+    }
+    .nav-item i { font-size: 20px; margin-bottom: 2px; }
+    .nav-item.active { color: #f0f0f5; background: rgba(255,255,255,0.06); }
+    .nav-item.active-buyer { color: #f06292; }
+    .nav-item.active-seller { color: #42a5f5; }
+    .nav-item.active-owner { color: #26a69a; }
+    /* cards */
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin: 18px 0 10px;
+    }
+    .section-title h3 {
+      font-weight: 600;
+      font-size: 16px;
+      letter-spacing: -0.2px;
+    }
+    .section-title a {
+      font-size: 12px;
+      color: #888;
+      text-decoration: none;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      padding: 12px 10px 14px;
+      border: 1px solid rgba(255,255,255,0.04);
+      transition: 0.2s;
+    }
+    .product-card img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #222;
+    }
+    .product-card .name {
+      font-weight: 500;
+      font-size: 13px;
+      margin: 8px 0 2px;
+    }
+    .product-card .price {
+      font-weight: 600;
+      color: #d4af37;
+      font-size: 14px;
+    }
+    .product-card .seller-tag {
+      font-size: 9px;
+      color: #888;
+      background: rgba(255,255,255,0.04);
+      padding: 2px 10px;
+      border-radius: 40px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+    /* assistant */
+    .assistant-bubble {
+      background: rgba(255,255,255,0.03);
+      border-radius: 40px;
+      padding: 14px 18px;
+      margin: 16px 0 8px;
+      border-left: 3px solid #d4af37;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .assistant-bubble i {
+      font-size: 28px;
+      color: #d4af37;
+    }
+    .assistant-bubble .text {
+      font-size: 13px;
+      color: #ccc;
+      flex: 1;
+    }
+    .assistant-quick {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .assistant-quick button {
+      background: rgba(255,255,255,0.05);
+      border: none;
+      color: #ccc;
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 10px;
+      font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+    /* map simulation */
+    .map-placeholder {
+      background: #1e1e2a;
+      border-radius: 24px;
+      height: 120px;
+      margin: 12px 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background-image: radial-gradient(circle at 20% 30%, #2a2a3a, #12121c);
+      border: 1px solid rgba(255,215,0,0.05);
+      position: relative;
+    }
+    .map-route {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #aaa;
+    }
+    .map-route i { color: #42a5f5; }
+    .map-route .driver { color: #f06292; }
+    /* footer */
+    .premium-footer {
+      margin-top: 24px;
+      padding: 16px 4px 8px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      text-align: center;
+    }
+    .premium-footer .social {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      font-size: 20px;
+      color: #888;
+      margin: 10px 0;
+    }
+    .premium-footer .social a { color: #888; transition: 0.2s; }
+    .premium-footer .social a:hover { color: #d4af37; }
+    .premium-footer .links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 10px;
+      color: #666;
+      margin: 8px 0;
+    }
+    .premium-footer .copy {
+      font-size: 9px;
+      color: #444;
+      letter-spacing: 0.5px;
+    }
+    /* owner / seller specific */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .kpi-card {
+      background: rgba(255,255,255,0.02);
+      border-radius: 16px;
+      padding: 10px 6px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .kpi-card .value { font-weight: 700; font-size: 18px; }
+    .kpi-card .label { font-size: 8px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-badge {
+      font-size: 9px;
+      padding: 2px 10px;
+      border-radius: 40px;
+      background: rgba(38,166,154,0.2);
+      color: #26a69a;
+    }
+    .flex-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mt-2 { margin-top: 12px; }
+    .mb-1 { margin-bottom: 6px; }
+    .text-gold { color: #d4af37; }
+    .text-muted { color: #888; }
+    /* scan qr */
+    .scan-btn {
+      background: rgba(212,175,55,0.08);
+      border: 1px solid rgba(212,175,55,0.2);
+      border-radius: 40px;
+      padding: 8px 16px;
+      color: #d4af37;
+      font-weight: 500;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    /* responsive */
+    @media (max-width: 420px) {
+      .product-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .brand-text h1 { font-size: 18px; }
+    }
+    /* scroll */
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 20px; }
+  </style>
+</head>
+<body>
+<div class="app-container buyer-theme" id="appContainer">
+  <!-- ====== BRAND HEADER ====== -->
+  <div class="brand-header">
+    <div class="logo-emblem">
+      <div class="monogram">SY</div>
+      <div class="brand-text">
+        <h1>SoYam</h1>
+        <span>COSMETICS &amp; BEAUTY</span>
+      </div>
+    </div>
+    <div class="portal-badge" id="portalBadge"><i class="fas fa-crown" style="margin-right:6px;"></i>BUYER</div>
+  </div>
 
-let state={user:null,portal:null,view:"home",category:"All",cart:[],search:"",lang:localStorage.getItem("soyam_lang")||"EN"};
+  <!-- ====== ROLE SWITCHER (multi-role) ====== -->
+  <div class="role-indicator">
+    <span class="role-pill active-buyer" id="roleBuyer">👤 Buyer</span>
+    <span class="role-pill" id="roleSeller">🏪 Seller</span>
+    <span class="role-pill" id="roleOwner">👑 Owner</span>
+    <span style="margin-left:auto;font-size:10px;color:#555;"><i class="fas fa-exchange-alt"></i> switch</span>
+  </div>
 
-const money=n=>"ETB "+Number(n||0).toLocaleString("en-US");
-const esc=s=>String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
-function toast(m){let x=document.createElement("div");x.className="toast";x.textContent=m;document.body.appendChild(x);setTimeout(()=>x.remove(),2200)}
-function audit(a,d){MockAPI.audit(a,d)}
+  <!-- ====== BUYER PORTAL ====== -->
+  <div id="buyerPortal">
+    <!-- search & cart -->
+    <div style="display:flex;gap:8px;align-items:center;margin:4px 0 12px;">
+      <div style="flex:1;background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.04);">
+        <i class="fas fa-search" style="color:#888;"></i>
+        <input type="text" placeholder="Search products..." style="background:transparent;border:none;color:#f0f0f5;width:100%;outline:none;font-size:13px;">
+      </div>
+      <div style="display:flex;gap:8px;">
+        <div style="background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 12px;"><i class="fas fa-bell"></i></div>
+        <div style="background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 12px;"><i class="fas fa-shopping-bag"></i><span style="background:#f06292;color:#0b0b0f;border-radius:20px;padding:0 6px;font-size:9px;margin-left:4px;">3</span></div>
+      </div>
+    </div>
 
-async function boot(){
- state.user=await MockAPI.login();
- if(state.user.account_status!=="ACTIVE"){renderRevoked();return}
- const un=(state.user.telegram_username||"").toLowerCase();
- if(un==="mama51r"&&state.user.roles.includes("OWNER")){renderPortalSelector();return}
- if(state.user.roles.includes("SELLER")){state.portal="SELLER";state.view="home";render();return}
- state.portal="BUYER";state.view="home";render();
-}
-function renderPortalSelector(){
- document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox">
- ${brandLogo()}<h1 style="font:700 24px Georgia,serif;margin:4px 0">soYam Cosmo</h1><p class="muted">Choose your business workspace</p>
- <div class="rolecards">
-  <button class="rolecard" onclick="choosePortal('OWNER')"><strong>👑 Owner Command Center</strong><span>Overall actuals · staff · stock · orders · reports</span></button>
-  <button class="rolecard" onclick="choosePortal('SELLER')"><strong>🏪 Seller Operations</strong><span>Orders · stock · payments · scanner · delivery</span></button>
- </div>
- <p class="muted" style="margin-top:12px">Authorized account: @${esc(state.user.telegram_username)}</p>
- </div></div>`;
-}
-function choosePortal(p){const owner=(state.user.telegram_username||"").toLowerCase()==="mama51r";if((p==="OWNER"||p==="SELLER")&&!owner){toast("Portal not authorized");return}if(!state.user.roles.includes(p)){toast("Portal not authorized");return}state.portal=p;state.view="home";audit("PORTAL_SWITCHED",p);render()}
-function renderRevoked(){document.getElementById("root").innerHTML=`<div class="login"><div class="loginbox"><div style="font-size:50px">⛔</div><h2>Access Revoked</h2><p>Your access has been revoked by the Owner.</p><button class="primary full" onclick="demoBuyer()">Return to Storefront</button></div></div>`}
-function demoBuyer(){localStorage.setItem("demoTelegramId","000000000");location.reload()}
-function header(){return `<header class="hero buyer-brand">${brandLogo()}<h1>soYam Cosmo</h1><h2>PREMIUM COSMETICS · BEAUTY · CARE</h2><div class="address"><span>🇪🇹 Addis Ababa</span><span>⌖ Betel Building</span><span>☎ +251 91 909 6451</span></div></header><div class="langbar">${["EN","AM","TIG","ORO","GUR","SOM","AR"].map(x=>`<button class="${state.lang===x?"active":""}" onclick="selectLanguage('${x}',this)">${x==="AM"?"አማ":x==="TIG"?"ትግ":x}</button>`).join("")}</div><div class="social"><a aria-label="Facebook" href="https://www.facebook.com/" target="_blank">${ico("facebook")}</a><a aria-label="WhatsApp" href="https://wa.me/251919096451" target="_blank">${ico("whatsapp")}</a><a aria-label="Telegram" href="https://t.me/" target="_blank">${ico("telegram")}</a><a aria-label="Instagram" href="https://www.instagram.com/" target="_blank">${ico("instagram")}</a><a aria-label="TikTok" href="https://www.tiktok.com/" target="_blank">${ico("spark")}</a></div>`}
-function selectLanguage(x,el){state.lang=x;localStorage.setItem("soyam_lang",x);document.querySelectorAll(".langbar button").forEach(b=>b.classList.toggle("active",b===el));render();toast(languageName(x)+" selected")}
-const LANG={EN:{Home:"Home",Cart:"Cart",Orders:"Orders",Requests:"Requests",Profile:"Profile",Dashboard:"Dashboard",Inventory:"Inventory",Staff:"Staff",Audit:"Audit",Reports:"Reports",Settings:"Settings",Add:"Add",Delete:"Delete",Edit:"Edit",Save:"Save",Cancel:"Cancel",Search:"Search",Stock:"Stock",Delivery:"Delivery",Scan:"Scan",Seller:"Seller",Switch:"Switch"},AM:{Home:"መነሻ",Cart:"ጋሪ",Orders:"ትዕዛዞች",Requests:"ጥያቄዎች",Profile:"መገለጫ",Dashboard:"ዳሽቦርድ",Inventory:"እቃ ክምችት",Staff:"ሰራተኞች",Audit:"ኦዲት",Reports:"ሪፖርት",Settings:"ቅንብር",Add:"ጨምር",Delete:"ሰርዝ",Edit:"አርም",Save:"አስቀምጥ",Cancel:"ሰርዝ",Search:"ፈልግ",Stock:"ክምችት",Delivery:"ዴሊቨሪ",Scan:"ስካን",Seller:"ሻጭ",Switch:"ቀይር"},ORO:{Home:"Mana",Cart:"Gaarii",Orders:"Ajaja",Requests:"Gaaffii",Profile:"Profaayilii",Dashboard:"Daashboordii",Inventory:"Kuusaa",Staff:"Hojjettoota",Audit:"Oodiitii",Reports:"Gabaasa",Settings:"Qindaa'ina",Add:"Dabali",Delete:"Haqi",Edit:"Sirreessi",Save:"Olkaa'i",Cancel:"Haqi",Search:"Barbaadi",Stock:"Kuusaa",Delivery:"Geessisa",Scan:"Skaanii",Seller:"Gurguraa",Switch:"Jijjiiri"}};
-LANG.TIG={Home:"መበገሲ",Cart:"ዕዳጋ",Orders:"ትእዛዛት",Requests:"ሕቶታት",Profile:"መገለጺ",Dashboard:"ዳሽቦርድ",Inventory:"ክዝነት",Staff:"ሰራሕተኛታት",Audit:"ኦዲት",Reports:"ሪፖርት",Settings:"ምትካእ",Add:"ወስኽ",Delete:"ደምስስ",Edit:"ኣርም",Save:"ዕቀብ",Cancel:"ሰርዝ",Search:"ድለ",Stock:"ክዝነት",Delivery:"ዴሊቨሪ",Scan:"ስካን",Seller:"ሻጣይ",Switch:"ቀይር"};
-LANG.SOM={Home:"Hoyga",Cart:"Gaariga",Orders:"Dalabyo",Requests:"Codsiyo",Profile:"Xogta",Dashboard:"Dashboard",Inventory:"Kayd",Staff:"Shaqaale",Audit:"Audit",Reports:"Warbixin",Settings:"Dejin",Add:"Ku dar",Delete:"Tirtir",Edit:"Wax ka beddel",Save:"Kaydi",Cancel:"Jooji",Search:"Raadi",Stock:"Kayd",Delivery:"Gaarsiin",Scan:"Scan",Seller:"Iibiye",Switch:"Beddel"};
-LANG.AR={Home:"الرئيسية",Cart:"السلة",Orders:"الطلبات",Requests:"الطلبات",Profile:"الملف",Dashboard:"لوحة التحكم",Inventory:"المخزون",Staff:"الموظفون",Audit:"التدقيق",Reports:"التقارير",Settings:"الإعدادات",Add:"إضافة",Delete:"حذف",Edit:"تعديل",Save:"حفظ",Cancel:"إلغاء",Search:"بحث",Stock:"المخزون",Delivery:"التوصيل",Scan:"مسح",Seller:"البائع",Switch:"تبديل"};
-function languageName(x){return ({EN:"English",AM:"አማርኛ",ORO:"Oromiffa",AR:"العربية",SOM:"Soomaali",GUR:"Gurage",TIG:"ትግርኛ"})[x]||x}
-function t(k){return (LANG[state.lang]&&LANG[state.lang][k])||LANG.EN[k]||k}
-function applyLanguage(){document.querySelectorAll("[data-i18n]").forEach(e=>e.textContent=t(e.dataset.i18n))}
-function footer(){return `<footer style="padding:12px 9px 15px;text-align:center;color:#8a7b70;font-size:7px;border-top:1px solid var(--line);background:#fff">${brandLogo()}<div>soYam Cosmo · Addis Ababa · +251 91 909 6451</div><b>App built by Mekuria</b> · Advertisements</footer>`}
-function bottom(items){
- return `<nav class="bottom">${items.map(([id,icon,label])=>`<button class="${state.view===id?"active":""}" onclick="go('${id}')">${icon}<br>${label}</button>`).join("")}</nav>`;
-}
-function go(v){stopScanner();state.view=v;render()}
-function render(){if(state.portal==="BUYER")renderBuyer();else if(state.portal==="SELLER")renderSeller();else if(state.portal==="DRIVER")renderDriver();else renderOwner();setTimeout(applyLanguage,0)}
-function productCard(p){
- const inCart=state.cart.find(x=>x.id===p.id)?.qty||0;
- return `<article class="card"><div class="product-img">${productIcon(p)}</div><div class="card-body">
- <div class="muted">${esc(p.category)}</div><h4>${esc(p.name)}</h4><div class="row"><span class="price">${money(p.price)}</span><span class="badge ${p.stock<10?"bad":p.stock<20?"pending":"ok"}">${p.stock} left</span></div>
- <div class="qty"><button onclick="changeCart('${p.id}',-1)">−</button><b>${inCart}</b><button onclick="changeCart('${p.id}',1)">+</button><button class="primary" style="margin-left:auto" onclick="changeCart('${p.id}',1)">Add</button></div></div></article>`;
-}
-function renderBuyer(){
- let body="";
- if(state.view==="home"){body=`<div class="panel" style="margin-top:12px"><div class="row"><div><small class="muted">PREMIUM BEAUTY MARKETPLACE</small><h2 style="margin:4px 0">Everything Beauty. One Place.</h2></div><span style="font-size:28px">✦</span></div><div class="formgrid"><input class="input" placeholder="🔎 Search cosmetics, soaps, creams..." oninput="state.search=this.value;render()"></div></div><div class="promo"><small>WEEKLY PROMOTION</small><h3>New Arrivals This Week!</h3><span>Premium beauty essentials: detergents, soaps, creams & more.</span></div><div class="section"><div class="cats">${db.categories.map(c=>`<button class="${state.category===c?"active":""}" onclick="setCat('${c}')">${c}</button>`).join("")}</div><div class="grid">${filteredProducts().map(productCard).join("")}</div></div>`}
- else if(state.view==="cart") body=buyerCart();
- else if(state.view==="orders") body=buyerOrders();
- else if(state.view==="requests") body=buyerRequests();
- else if(state.view==="profile") body=buyerProfile();
- document.getElementById("root").innerHTML=`<div class="app">${header()}<main class="view">${body}</main>${footer()}${bottom([["home",ico("home"),t("Home")],["cart",ico("bag"),t("Cart")],["orders",ico("orders"),t("Orders")],["requests",ico("orders"),t("Requests")],["profile",ico("users"),t("Profile")]])}</div>`;
-}
-function filteredProducts(){return db.products.filter(p=>(state.category==="All"||p.category===state.category)&&(!state.search||p.name.toLowerCase().includes(state.search.toLowerCase())))}
-function setCat(c){state.category=c;render()}
-function changeCart(id,d){
- let p=db.products.find(x=>x.id===id), item=state.cart.find(x=>x.id===id);
- if(d>0 && (!item||item.qty<p.stock)){if(item)item.qty++;else state.cart.push({id,qty:1})}
- if(d<0&&item){item.qty--;if(item.qty<=0)state.cart=state.cart.filter(x=>x.id!==id)}
- render();toast(d>0?"Added to cart":"Cart updated")
-}
-function buyerCart(){
- let items=state.cart.map(x=>({...x,p:db.products.find(p=>p.id===x.id)}));let total=items.reduce((s,x)=>s+x.qty*x.p.price,0);
- return `<div class="panel"><h3>🛒 Your Cart</h3>${items.length?items.map(x=>`<div class="row" style="padding:10px 0;border-bottom:1px solid var(--line)"><span>${productIcon(x.p)} ${esc(x.p.name)} × ${x.qty}</span><b>${money(x.qty*x.p.price)}</b></div>`).join(""):`<p class="muted">Your cart is empty.</p>`}<div class="row" style="margin-top:14px"><b>Total</b><strong>${money(total)}</strong></div>${items.length?`<div class="actions"><button class="primary full" onclick="checkout()">Checkout</button></div>`:""}</div>`;
-}
-function checkout(){
- let items=state.cart.map(x=>({product_id:x.id,quantity:x.qty,unit_price:db.products.find(p=>p.id===x.id).price}));
- let total=items.reduce((s,x)=>s+x.quantity*x.unit_price,0);
- document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="checkoutModal"><div class="sheet"><h3>Checkout</h3><p>Choose fulfillment.</p><div class="actions"><button class="primary" onclick="placeOrder('IN_PERSON',${total})">🏬 In-Person</button><button class="gold" onclick="deliveryForm(${total})">🛵 Delivery</button></div><button class="full" style="margin-top:10px;padding:10px" onclick="closeModal()">Cancel</button></div></div>`);
-}
-function deliveryForm(total){
- document.querySelector(".sheet").innerHTML=`<h3>Delivery Details</h3><div class="formgrid"><input class="input" id="custName" placeholder="Full name"><input class="input" id="custPhone" placeholder="Phone number"><textarea class="input" id="dropoff" placeholder="Drop-off location"></textarea><input class="input" id="deliveryFee" type="number" placeholder="Delivery fee"></div><button class="primary full" style="margin-top:12px" onclick="submitDelivery(${total})">Request Delivery Quote</button>`;
-}
-function submitDelivery(total){
- let fee=Number(document.getElementById("deliveryFee").value||0), items=state.cart.map(x=>({product_id:x.id,quantity:x.qty,unit_price:db.products.find(p=>p.id===x.id).price}));
- let o=MockAPI.addOrder({buyer:state.user.telegram_user_id,buyer_name:document.getElementById("custName").value,buyer_phone:document.getElementById("custPhone").value,dropoff:document.getElementById("dropoff").value,items,total:total+fee,delivery_fee:fee,fulfillment:"DELIVERY",payment_status:"PENDING",status:"PENDING",created_at:new Date().toISOString()});
- state.cart=[];closeModal();audit("DELIVERY_REQUEST",o.id);toast("Delivery quote requested: "+o.id);state.view="orders";render();
-}
-function finalizeOrderStock(o){
- if(o.stock_deducted)return true;
- for(const x of o.items||[]){let p=db.products.find(p=>p.id===x.product_id);if(!p||p.stock<x.quantity){toast("Insufficient stock for "+(p?.name||x.product_id));return false}}
- for(const x of o.items||[]){let p=db.products.find(p=>p.id===x.product_id);p.stock-=x.quantity}
- o.stock_deducted=true;
- let existing=db.transactions.find(t=>t.order_id===o.id&&t.type==="SALE");
- if(!existing)MockAPI.addTransaction({order_id:o.id,type:"SALE",amount:o.total,status:"OWNER_PENDING",created_at:new Date().toISOString()});
- return true;
-}
+    <!-- promo banner -->
+    <div style="background:linear-gradient(135deg,#2a1a2a,#1a1a2a);border-radius:24px;padding:16px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.1);">
+      <div style="display:flex;justify-content:space-between;">
+        <div><span style="font-size:12px;color:#d4af37;">FLASH SALE</span><div style="font-weight:600;font-size:16px;">Up to 40% off</div><span style="font-size:10px;color:#888;">Ends in 2h 14m</span></div>
+        <div style="background:#d4af37;color:#0b0b0f;padding:4px 16px;border-radius:40px;font-weight:600;font-size:12px;">Shop</div>
+      </div>
+    </div>
 
-function placeOrder(type,total){
- let items=state.cart.map(x=>({product_id:x.id,quantity:x.qty,unit_price:db.products.find(p=>p.id===x.id).price}));
- let o=MockAPI.addOrder({buyer:state.user.telegram_user_id,items,total,fulfillment:type,payment_status:"PAID",status:"COMPLETED",created_at:new Date().toISOString()});
- if(!finalizeOrderStock(o)){db.orders=db.orders.filter(x=>x.id!==o.id);saveDB();return}
- db.dailyLedger.cash+=total;saveDB();state.cart=[];closeModal();audit("SALE_COMPLETED",o.id);toast("Sale completed: "+o.id);state.view="orders";render();
-}
-function buyerOrders(){
- let os=db.orders.filter(o=>o.buyer===state.user.telegram_user_id);
- return `<div class="panel"><h3>▣ My Orders</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.status==="COMPLETED"?"ok":"pending"}">${o.status}</span></div><p class="muted">${o.fulfillment} · ${money(o.total)}</p>${o.payment_status==="PENDING"?`<button class="gold" onclick="uploadProof('${o.id}')">Upload Payment Proof</button>`:""}${o.fulfillment==="DELIVERY"?`<button class="primary" onclick="track('${o.id}')">Track Delivery</button>`:""}</div>`).join(""):`<p class="muted">No orders yet.</p>`}</div>`;
-}
-function uploadProof(id){toast("Demo: payment proof uploaded");let o=db.orders.find(x=>x.id===id);o.payment_proof="demo-receipt";o.payment_status="SUBMITTED";saveDB();render()}
-function track(id){let o=db.orders.find(x=>x.id===id);alert(`Order ${id}\nStatus: ${o.status}\nDriver: ${o.driver_name||"Awaiting assignment"}\nPlate: ${o.plate||"—"}`)}
-function buyerRequests(){return `<div class="panel"><h3>? Can you get this item?</h3><div class="formgrid"><input class="input" id="reqName" placeholder="Product name"><input class="input" id="reqImage" type="file" accept="image/*"><textarea class="input" id="reqNote" placeholder="Describe the product"></textarea><button class="primary" onclick="submitRequest()">Submit Request</button></div></div><div class="panel"><h3>My Requests</h3>${db.requests.filter(r=>r.buyer===state.user.telegram_user_id).map(r=>`<p><b>${esc(r.name)}</b> · <span class="badge pending">${r.status}</span></p>`).join("")||'<p class="muted">No requests.</p>'}</div>`}
-function submitRequest(){let r={id:"REQ-"+Date.now(),buyer:state.user.telegram_user_id,name:document.getElementById("reqName").value,note:document.getElementById("reqNote").value,status:"PENDING",created_at:new Date().toISOString()};db.requests.push(r);saveDB();audit("PRODUCT_REQUEST",r.id);toast("Request submitted");render()}
-function buyerProfile(){return `<div class="panel"><h3>Profile</h3><button class="gold full" onclick="showStoreQR()">▦ Open SoYam QR</button><div style="height:6px"></div><p><b>${esc(state.user.first_name)}</b></p><p class="muted">@${esc(state.user.telegram_username||"customer")}</p><p class="muted">Telegram ID: ${esc(state.user.telegram_user_id)}</p><button class="primary" onclick="tg?.close()">Close Mini App</button></div>`}
-function sellerHeader(){return `<div class="hero">${brandLogo()}<h1>Seller Operations</h1><p>SoYam Cosmo · ${esc(state.user.telegram_username||"seller")}</p></div>`}
-function renderSeller(){
- let body="";
- if(state.view==="home")body=sellerDashboard();
- else if(state.view==="orders")body=sellerOrders();
- else if(state.view==="scan")body=scanner();
- else if(state.view==="stock")body=stockPage(false);
- else if(state.view==="requests")body=sellerRequests();
- else if(state.view==="delivery")body=sellerDelivery();
- document.getElementById("root").innerHTML=`<div class="app">${sellerHeader()}<div class="toolbar"><button class="${state.view==="home"?"active":""}" onclick="go('home')">${ico("home")}${t("Dashboard")}</button><button class="${state.view==="orders"?"active":""}" onclick="go('orders')">${ico("orders")}${t("Orders")}</button><button class="${state.view==="scan"?"active":""}" onclick="go('scan')">${ico("scan")}${t("Scan")}</button><button class="${state.view==="stock"?"active":""}" onclick="go('stock')">${ico("stock")}${t("Stock")}</button><button class="${state.view==="delivery"?"active":""}" onclick="go('delivery')">${ico("truck")}${t("Delivery")}</button></div><main class="view">${body}</main>${footer()}${bottom([["home",ico("home"),t("Home")],["orders",ico("orders"),t("Orders")],["scan",ico("scan"),t("Scan")],["stock",ico("stock"),t("Stock")],["delivery",ico("truck"),t("Delivery")]])}</div>`;
-}
+    <!-- categories -->
+    <div style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;white-space:nowrap;">
+      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">💄 Makeup</span>
+      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">🧴 Skincare</span>
+      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">🌸 Fragrance</span>
+      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">💇 Hair</span>
+    </div>
 
-function dashboardIcon(type){const icons={revenue:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M16 7.5c0-1.7-1.8-2.5-4-2.5s-4 1-4 3 1.5 2.6 4 3 4 1.2 4 3-1.8 3-4 3-4-.9-4-2.5"/></svg>`,orders:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>`,stock:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/></svg>`,conversion:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 17 9 12l3 3 8-9"/><path d="M16 6h4v4"/></svg>`,scan:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4H4a1 1 0 0 0-1 1v3M19 4h1a1 1 0 0 1 1 1v3M5 20H4a1 1 0 0 1-1-1v-3M19 20h1a1 1 0 0 0 1-1v-3"/><path d="M7 12h10"/></svg>`,product:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l1 12H5L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>`,ledger:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>`};return icons[type]||icons.product}
-function dashboardDateKey(v){return String(v||"").slice(0,10)}
-function dashboardToday(){return new Date().toISOString().slice(0,10)}
-function dashboardRevenue(){return db.transactions.filter(t=>t.type==="SALE").reduce((s,t)=>s+Number(t.amount||0),0)}
-function dashboardStockValue(){return db.products.reduce((s,p)=>s+Number(p.stock||0)*Number(p.cost||0),0)}
-function dashboardTodayOrders(){const today=dashboardToday();return db.orders.filter(o=>dashboardDateKey(o.created_at)===today)}
-function dashboardWeekRevenue(offsetWeeks=0){const now=new Date(),end=new Date(now);end.setDate(now.getDate()-(offsetWeeks*7));const start=new Date(end);start.setDate(end.getDate()-6);return db.transactions.filter(t=>{if(t.type!=="SALE")return false;const d=new Date(t.created_at||0);return d>=new Date(start.getFullYear(),start.getMonth(),start.getDate())&&d<=new Date(end.getFullYear(),end.getMonth(),end.getDate(),23,59,59)}).reduce((s,t)=>s+Number(t.amount||0),0)}
-function dashboardTrendText(current,previous,label){const v=previous?((current-previous)/previous)*100:(current>0?100:0);const cls=v>0?"up":v<0?"down":"flat";return `<div class="dashboard-trend ${cls}">${v>0?"+":""}${v.toFixed(1)}% ${label}</div>`}
-function dashboardSalesBars(){const days=[],now=new Date();for(let i=6;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const key=d.toISOString().slice(0,10);const value=db.transactions.filter(t=>t.type==="SALE"&&dashboardDateKey(t.created_at)===key).reduce((s,t)=>s+Number(t.amount||0),0);days.push({value,label:d.toLocaleDateString("en",{weekday:"short"})})}const max=Math.max(...days.map(x=>x.value),1);return days.map(d=>`<div style="flex:1;text-align:center;min-width:0"><div class="dashboard-bar" title="${esc(d.label)} · ${money(d.value)}" style="height:${Math.max(8,(d.value/max)*100)}%"></div><div style="font-size:7px;color:#877970;margin-top:3px">${esc(d.label)}</div></div>`).join("")}
-function dashboardTopCategories(){const totals={};db.transactions.filter(t=>t.type==="SALE").forEach(t=>{const order=db.orders.find(o=>o.id===t.order_id);(order?.items||[]).forEach(item=>{const product=db.products.find(p=>p.id===item.product_id);if(!product)return;const c=product.category||"Other";totals[c]=(totals[c]||0)+Number(item.quantity||0)})});return Object.entries(totals).sort((a,b)=>b[1]-a[1]).slice(0,5)}
-function dashboardLowStock(){return db.products.filter(p=>Number(p.stock||0)<=10).sort((a,b)=>Number(a.stock||0)-Number(b.stock||0)).slice(0,5)}
+    <!-- product grid -->
+    <div class="section-title"><h3>✨ Featured</h3><a href="#">View all</a></div>
+    <div class="product-grid">
+      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%232a1a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🌸 LUXE%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Velvet Lipstick</div><div class="price">$24.50</div><span class="seller-tag">by Glow</span></div>
+      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a2a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🧴 SERUM%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Vitamin C Serum</div><div class="price">$39.00</div><span class="seller-tag">by Pure</span></div>
+      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%232a1a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E👁 MASCARA%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Volume Mascara</div><div class="price">$18.90</div><span class="seller-tag">by Lash</span></div>
+      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a2a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🌹 PERFUME%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Rose Noir</div><div class="price">$55.00</div><span class="seller-tag">by Noir</span></div>
+    </div>
 
-function sellerDashboard(){
- const todayOrders=dashboardTodayOrders(), pending=todayOrders.filter(o=>o.status==="PENDING").length, pay=todayOrders.filter(o=>o.payment_status==="SUBMITTED").length, del=todayOrders.filter(o=>o.fulfillment==="DELIVERY"&&o.status!=="COMPLETED").length, todayRevenue=db.transactions.filter(t=>t.type==="SALE"&&dashboardDateKey(t.created_at)===dashboardToday()).reduce((s,t)=>s+Number(t.amount||0),0), low=dashboardLowStock();
- return `<section class="dashboard-shell"><div class="dashboard-hero"><div class="dashboard-eyebrow">SOYAM COSMO · SELLER OPERATIONS</div><div class="dashboard-title">Seller Dashboard</div><p class="dashboard-subtitle">Orders, payments, inventory and delivery in one view</p><div class="dashboard-live"><i></i>Live operational data</div></div>
- <div class="dashboard-kpis"><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">TODAY'S SALES</div><div class="dashboard-icon">${dashboardIcon("revenue")}</div></div><div class="dashboard-kpi-value">${money(todayRevenue)}</div><div class="dashboard-trend up">Actual sales</div></div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">PENDING ORDERS</div><div class="dashboard-icon">${dashboardIcon("orders")}</div></div><div class="dashboard-kpi-value">${pending}</div><div class="dashboard-trend ${pending?"flat":"up"}">${pending?"Needs action":"All clear"}</div></div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">PAYMENT REVIEW</div><div class="dashboard-icon">${dashboardIcon("ledger")}</div></div><div class="dashboard-kpi-value">${pay}</div><div class="dashboard-trend ${pay?"flat":"up"}">${pay?"Awaiting verification":"Verified"}</div></div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">DELIVERY QUEUE</div><div class="dashboard-icon">${dashboardIcon("orders")}</div></div><div class="dashboard-kpi-value">${del}</div><div class="dashboard-trend ${del?"flat":"up"}">${del?"In operation":"No queue"}</div></div></div>
- <div class="dashboard-grid"><div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Recent Sales</h3><div class="dashboard-panel-sub">Actual transactions · last 7 days</div></div><span class="badge ok">${money(todayRevenue)}</span></div><div class="dashboard-chart">${dashboardSalesBars()}</div></div>
- <div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Stock Watch</h3><div class="dashboard-panel-sub">Current inventory</div></div><span class="badge ${low.length?"bad":"ok"}">${low.length}</span></div><div class="dashboard-list">${low.length?low.map(p=>`<div class="dashboard-list-row"><div class="dashboard-rank">!</div><div class="dashboard-list-main"><div class="dashboard-list-name">${esc(p.name)}</div><div class="dashboard-list-meta">${esc(p.category||"Product")} · ${esc(p.id)}</div></div><div class="dashboard-list-value">${Number(p.stock)||0}</div></div>`).join(""):`<div class="dashboard-empty">✓ No low-stock alerts</div>`}</div></div>
- <div class="dashboard-panel dashboard-wide"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Quick Actions</h3><div class="dashboard-panel-sub">Fast seller workflow</div></div></div><div class="dashboard-actions"><button class="dashboard-action" onclick="go('scan')"><div class="dashboard-action-icon">${dashboardIcon("scan")}</div><span>Quick Scan</span></button><button class="dashboard-action" onclick="go('stock')"><div class="dashboard-action-icon">${dashboardIcon("product")}</div><span>Manage Stock</span></button><button class="dashboard-action" onclick="go('orders')"><div class="dashboard-action-icon">${dashboardIcon("orders")}</div><span>Orders</span></button><button class="dashboard-action" onclick="go('delivery')"><div class="dashboard-action-icon">${dashboardIcon("ledger")}</div><span>Delivery</span></button></div></div>
- <div class="dashboard-panel dashboard-wide"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Today's Operations</h3><div class="dashboard-panel-sub">Current operational workload</div></div></div><div class="dashboard-list"><div class="dashboard-list-row"><div class="dashboard-rank">01</div><div class="dashboard-list-main"><div class="dashboard-list-name">Pending Orders</div><div class="dashboard-list-meta">Waiting for processing</div></div><div class="dashboard-list-value">${pending}</div></div><div class="dashboard-list-row"><div class="dashboard-rank">02</div><div class="dashboard-list-main"><div class="dashboard-list-name">Payment Review</div><div class="dashboard-list-meta">Submitted payments</div></div><div class="dashboard-list-value">${pay}</div></div><div class="dashboard-list-row"><div class="dashboard-rank">03</div><div class="dashboard-list-main"><div class="dashboard-list-name">Products</div><div class="dashboard-list-meta">Active catalog records</div></div><div class="dashboard-list-value">${db.products.length}</div></div></div></div></div></section>`;
-}
-function sellerOrders(){let os=db.orders;return `<div class="panel"><h3>Orders & Payment Verification</h3>${os.length?os.slice().reverse().map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge ${o.payment_status==="VERIFIED"||o.payment_status==="PAID"?"ok":"pending"}">${o.payment_status}</span></div><p>${money(o.total)} · ${o.fulfillment}</p>${o.payment_status==="SUBMITTED"?`<div class="actions"><button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify</button><button class="danger" onclick="rejectPayment('${o.id}')">Reject</button></div>`:""}${o.fulfillment==="DELIVERY"&&o.payment_status!=="PENDING"?`<div class="actions"><button class="gold" onclick="assignDriver('${o.id}')">Assign Driver</button></div>`:""}</div>`).join(""):`<p class="muted">No orders.</p>`}</div>`}
-function verifyPayment(id){
- let o=db.orders.find(x=>x.id===id);
- if(!o)return;
- if(!finalizeOrderStock(o))return;
- o.payment_status="VERIFIED";o.status="READY";db.dailyLedger.cash+=Number(o.total||0);
- saveDB();audit("PAYMENT_VERIFIED",id);toast("Payment verified · stock balance updated");render()
-}
-function rejectPayment(id){let o=db.orders.find(x=>x.id===id);o.payment_status="REJECTED";saveDB();audit("PAYMENT_REJECTED",id);render()}
-let scannerStream=null,scannerLoop=null;
-function scanner(){
- return `<div class="panel"><div class="row"><h3>📷 Smart QR / Barcode Scanner</h3><span class="badge ok">LIVE</span></div>
- <div class="scanner"><video id="scanVideo" autoplay playsinline muted></video><div class="scan-overlay"></div><div id="scanStatus" class="scan-status">Camera not started</div></div>
- <div class="actions"><button class="primary" onclick="startScanner()">📷 Start Camera</button><button class="gold" onclick="pickScanImage()">🖼️ Scan Image</button><button class="danger" onclick="stopScanner()">■ Stop</button></div>
- <input id="scanImageInput" type="file" accept="image/*" capture="environment" hidden onchange="decodeImageFile(event)">
- <input class="input" id="barcode" style="margin-top:6px" placeholder="Fallback: enter product ID or order ID">
- <button class="primary full" style="margin-top:6px" onclick="lookupBarcode()">⌕ Lookup</button>
- <div id="scanResult"></div></div>`;
-}
-async function startScanner(){
- const v=document.getElementById("scanVideo"),st=document.getElementById("scanStatus");
- if(!v)return;
- try{
-  scannerStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"},width:{ideal:1280},height:{ideal:720}},audio:false});
-  v.srcObject=scannerStream; st.textContent="Point the camera at a QR code or barcode";
-  if("BarcodeDetector" in window){
-   const detector=new BarcodeDetector({formats:["qr_code","ean_13","ean_8","code_128","code_39","upc_a","upc_e"]});
-   const tick=async()=>{
-    if(!scannerStream||!v.videoWidth)return;
-    try{
-     const codes=await detector.detect(v);
-     if(codes.length&&codes[0].rawValue){document.getElementById("barcode").value=codes[0].rawValue;st.textContent="Code detected: "+codes[0].rawValue;lookupBarcode();stopScanner();return;}
-    }catch(e){}
-    scannerLoop=requestAnimationFrame(tick);
-   };tick();
-  }else st.textContent="Camera active. Use Scan Image on browsers without BarcodeDetector.";
- }catch(e){st.textContent="Camera permission unavailable. Use Scan Image or enter the code.";toast("Camera permission was not granted")}
-}
-function stopScanner(){if(scannerStream){scannerStream.getTracks().forEach(t=>t.stop());scannerStream=null}if(scannerLoop)cancelAnimationFrame(scannerLoop);scannerLoop=null}
-function pickScanImage(){document.getElementById("scanImageInput")?.click()}
-async function decodeImageFile(e){
- const f=e.target.files?.[0];if(!f)return;
- if("BarcodeDetector" in window){
-  try{
-   const d=new BarcodeDetector({formats:["qr_code","ean_13","ean_8","code_128","code_39","upc_a","upc_e"]}),codes=await d.detect(await createImageBitmap(f));
-   if(codes[0]?.rawValue){document.getElementById("barcode").value=codes[0].rawValue;lookupBarcode();return}
-  }catch(err){}
- }
- toast("Code could not be decoded on this browser. Enter the code manually.");
-}
-let scanMode="ITEM";
-function setScanMode(mode){
- scanMode=mode;
- document.getElementById("itemScanBtn")?.classList.toggle("active",mode==="ITEM");
- document.getElementById("orderScanBtn")?.classList.toggle("active",mode==="ORDER");
- if(document.getElementById("scanHint"))document.getElementById("scanHint").textContent=mode==="ITEM"?"Point camera at product QR / barcode":"Point camera at customer's Order ID / QR";
- document.getElementById("barcode").placeholder=mode==="ITEM"?"Demo input: P001":"Demo input: SOYAM-ORDER-ID";
-}
-function lookupBarcode(){
- let code=document.getElementById("barcode").value.trim();
- if(scanMode==="ORDER"){
-  let o=db.orders.find(x=>x.id===code);
-  document.getElementById("scanResult").innerHTML=o?
-   `<div class="panel"><h3>🧾 ${esc(o.id)}</h3><p><b>Order:</b> ${money(o.total)} · ${o.fulfillment}</p><p><b>Payment:</b> ${o.payment_status}</p><p><b>Status:</b> ${o.status}</p>
-   <div class="actions">${o.payment_status==="SUBMITTED"?`<button class="primary" onclick="verifyPayment('${o.id}')">✓ Verify Payment</button>`:""}${o.fulfillment==="IN_PERSON"?`<button class="gold" onclick="confirmPickup('${o.id}')">Confirm Pickup</button>`:""}</div></div>`
-   :`<div class="panel"><p>Order QR/ID not found in this store.</p></div>`;
-  return;
- }
- let p=db.products.find(x=>x.id===code);
- document.getElementById("scanResult").innerHTML=p?
-  `<div class="panel"><div class="row"><div><h3>${p.emoji} ${esc(p.name)}</h3><p>${p.category} · ${money(p.price)} · Stock ${p.stock}</p></div><div class="preview">${p.emoji}</div></div>
-  <button class="primary full" onclick="addScannedItem('${p.id}')">Add to Checkout Basket</button></div>`
-  :`<div class="panel"><p><b>External lookup required.</b></p><p class="muted">The documented production flow checks the internal catalog first; if no match exists, the backend calls an external retail barcode dictionary and injects product title, category and primary image into the registration form.</p><button class="gold" onclick="externalLookupDemo('${esc(code)}')">Run External Lookup Demo</button></div>`;
-}
-function addScannedItem(id){toast("Scanned item added to seller checkout");audit("ITEM_SCANNED",id)}
-function externalLookupDemo(code){document.getElementById("scanResult").innerHTML=`<div class="panel"><h3>🔎 External Product Match</h3><p><b>Raw code:</b> ${esc(code)}</p><p><b>Product Title:</b> Auto-detected product</p><p><b>Category:</b> Cosmetics & Beauty</p><div class="preview">🧴</div><p class="muted">Only buying unit cost and total inventory count remain for manual entry before SAVE.</p></div>`}
-function confirmPickup(id){
- let o=db.orders.find(x=>x.id===id);if(!o)return;
- if(!finalizeOrderStock(o))return;
- o.status="COMPLETED";saveDB();audit("PICKUP_CONFIRMED",id);toast("Pickup confirmed · stock balance updated");render()
-}
-function stockPage(owner=false){
- let rows=db.products.map(p=>{
-  const totalCost=p.stock*p.cost, retail=p.stock*p.price;
-  const status=p.stock<10?"LOW":p.stock<20?"WATCH":"OK";
-  const statusClass=p.stock<10?"bad":p.stock<20?"pending":"ok";
-  const action=owner?`<div class="stock-actions"><button class="edit-btn" onclick="editStock('${p.id}')" title="Edit">${ico("edit")}</button><button class="danger delete-btn" onclick="removeStock('${p.id}')" title="Remove">${ico("trash")}</button></div>`:"";
-  return `<div class="stock-mobile-card">
-    <div class="stock-mobile-top"><div class="stock-item"><span class="stock-item-icon">${productIcon(p)}</span><div><b>${esc(p.name)}</b><small>${esc(p.id)} · ${esc(p.category)}</small></div></div><span class="badge ${statusClass}">${status}</span></div>
-    <div class="stock-mobile-grid">
-      <div><small>Amount</small><b>${p.stock}</b></div>
-      <div><small>Unit Cost</small><b>${money(p.cost)}</b></div>
-      <div><small>Total Cost</small><b>${money(totalCost)}</b></div>
-      <div><small>Unit Price</small><b>${money(p.price)}</b></div>
-      <div><small>Balance Value</small><b>${money(retail)}</b></div>
-      ${owner?`<div><small>Action</small>${action}</div>`:""}
+    <!-- assistant -->
+    <div class="assistant-bubble">
+      <i class="fas fa-robot"></i>
+      <div class="text">Hi! I'm SoYam Assistant 🤖 <span style="display:block;font-size:11px;color:#888;">Need help? Ask me anything.</span></div>
+      <div class="assistant-quick">
+        <button>🛍️ Find</button>
+        <button>📦 Track</button>
+        <button>💳 Pay</button>
+        <button>🚚 Delivery</button>
+      </div>
+    </div>
+
+    <!-- map / delivery -->
+    <div class="map-placeholder">
+      <div class="map-route"><i class="fas fa-store"></i> Seller <span style="color:#666;">●</span> <i class="fas fa-truck" style="color:#42a5f5;"></i> Driver <span style="color:#666;">●</span> <i class="fas fa-map-pin" style="color:#f06292;"></i> You</div>
+      <div style="font-size:12px;background:rgba(0,0,0,0.4);padding:6px 14px;border-radius:40px;"><i class="fas fa-clock"></i> ETA 12 min</div>
     </div>
   </div>
-  <tr class="stock-desktop-row"><td><b>${esc(p.id)}</b></td><td>${productIcon(p)} ${esc(p.name)}<br><span class="muted">${esc(p.category)}</span></td><td>${p.stock}</td><td>${money(p.cost)}</td><td>${money(totalCost)}</td><td>${money(p.price)}</td><td>${money(retail)}</td><td><span class="badge ${statusClass}">${status}</span></td>${owner?`<td>${action}</td>`:""}</tr>`;
- }).join("");
- const desktopRows=rows.replace(/<div class="stock-mobile-card">[\s\S]*?<\/div>\s*<tr class="stock-desktop-row">/g,'<tr class="stock-desktop-row">');
- // Build desktop rows separately so mobile cards never interfere with the table DOM.
- const desktop=db.products.map(p=>{
-   const tc=p.stock*p.cost, rv=p.stock*p.price, st=p.stock<10?"LOW":p.stock<20?"WATCH":"OK", sc=p.stock<10?"bad":p.stock<20?"pending":"ok";
-   return `<tr><td><b>${esc(p.id)}</b></td><td>${productIcon(p)} ${esc(p.name)}<br><span class="muted">${esc(p.category)}</span></td><td>${p.stock}</td><td>${money(p.cost)}</td><td>${money(tc)}</td><td>${money(p.price)}</td><td>${money(rv)}</td><td><span class="badge ${sc}">${st}</span></td>${owner?`<td><div class="stock-actions"><button class="edit-btn" onclick="editStock('${p.id}')">${ico("edit")}</button><button class="danger delete-btn" onclick="removeStock('${p.id}')">${ico("trash")}</button></div></td>`:""}</tr>`;
- }).join("");
- return `<div class="panel"><div class="row"><div><h3>${ico("stock")} Stock Control</h3><span class="muted">Live balance · sales automatically deduct stock</span></div>${owner?`<button class="gold" onclick="showAddStock()">＋ Add</button>`:""}</div>
- <div class="stock-mobile-list">${rows.replace(/<tr class="stock-desktop-row">[\s\S]*?<\/tr>/g,"")}</div>
- <div class="tablewrap stock-desktop-table"><table class="table stocktable"><thead><tr><th>Stock ID</th><th>Item Name</th><th>Amount</th><th>Unit Cost</th><th>Total Cost</th><th>Unit Price</th><th>Balance Value</th><th>Status</th>${owner?"<th>Action</th>":""}</tr></thead><tbody>${desktop||`<tr><td colspan="${owner?9:8}">No stock.</td></tr>`}</tbody></table></div></div>`;
-}
-function removeStock(id){
- let p=db.products.find(x=>x.id===id);if(!p)return;
- if(!confirm("Remove "+p.name+" ("+p.id+") from the catalog?"))return;
- db.products=db.products.filter(x=>x.id!==id);saveDB();audit("STOCK_REMOVED",id);toast("Stock removed · "+id);render();
-}
-function showAddStock(){
- document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="stockModal"><div class="sheet">
- <div class="row"><h3>👑 ADD NEW STOCK ITEM</h3><button onclick="closeStockModal()">✕</button></div>
- <div class="formgrid">
-  <label>📂 ITEM CATEGORY<select class="input" id="newCat"><option>Cosmetics & Beauty</option><option>Hygiene Detergents</option><option>Skincare</option><option>Makeup</option><option>Fragrance</option><option>Haircare</option></select></label>
-  <label>🏷️ PRODUCT DETAILS<input class="input" id="newName" placeholder="Enter name here..."></label>
-  <div><b>📸 PRODUCT MEDIA ATTACHMENT</b><div class="media-actions" style="margin-top:8px"><button class="primary" onclick="document.getElementById('galleryInput').click()">🖼️ Upload from Gallery</button><button class="gold" onclick="openStockScanner()">📸 Scan via Camera</button></div><input id="galleryInput" type="file" accept="image/*" hidden onchange="previewStockImage(event)"><div id="stockPreview" class="preview" style="margin-top:8px">🧴</div></div>
-  <label>💰 Single Buying Unit Cost<input class="input" id="newCost" type="number" placeholder="ETB"></label>
-  <label>🏷️ Selling Unit Price<input class="input" id="newPrice" type="number" placeholder="ETB (optional)"></label>
-  <label>📦 Total Number of Items<input class="input" id="newQty" type="number" placeholder="Quantity"></label>
- </div>
- <div class="sticky-actions"><button class="primary" onclick="saveStock()">💾 SAVE</button><button class="danger" onclick="closeStockModal()">❌ DISCARD</button></div>
- </div></div>`)
-}
-function previewStockImage(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>document.getElementById("stockPreview").innerHTML=`<img src="${r.result}">`;r.readAsDataURL(f)}
-async function openStockScanner(){
- const input=document.getElementById("galleryInput");
- try{if(navigator.mediaDevices?.getUserMedia){const s=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:"environment"}},audio:false});s.getTracks().forEach(t=>t.stop())}}catch(e){}
- if(input){input.setAttribute("capture","environment");input.click()}
-}
-function saveStock(){
- let name=document.getElementById("newName").value.trim(),cat=document.getElementById("newCat").value,cost=Number(document.getElementById("newCost").value||0),qty=Number(document.getElementById("newQty").value||0);
- if(!name||qty<=0||cost<=0){toast("Enter item, unit cost and quantity");return}
- let retail=Number(document.getElementById("newPrice")?.value||0)||Math.round(cost*1.67);
- let p={id:"STK-"+String(Date.now()).slice(-7),name,category:cat,price:retail,stock:qty,cost,created_at:new Date().toISOString()};if(!db.categories.includes(cat))db.categories.push(cat);
- db.products.push(p);saveDB();audit("STOCK_ADDED",p.id);closeStockModal();toast("Stock added · "+p.id);render();
-}
-function editStock(id){let p=db.products.find(x=>x.id===id);if(!p)return;document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="editStockModal"><div class="sheet"><h3>${ico("edit")} ${t("Edit")} ${esc(p.name)}</h3><div class="formgrid"><input class="input" id="editName" value="${esc(p.name)}"><input class="input" id="editCost" type="number" value="${p.cost}"><input class="input" id="editPrice" type="number" value="${p.price}"><input class="input" id="editQty" type="number" value="${p.stock}"></div><div class="actions"><button class="primary full" onclick="saveEditedStock('${p.id}')">${t("Save")}</button><button class="danger full" onclick="document.getElementById('editStockModal').remove()">${t("Cancel")}</button></div></div></div>`)}
-function saveEditedStock(id){let p=db.products.find(x=>x.id===id);if(!p)return;p.name=document.getElementById("editName").value.trim();p.cost=Number(document.getElementById("editCost").value);p.price=Number(document.getElementById("editPrice").value);p.stock=Number(document.getElementById("editQty").value);if(!p.name||p.cost<=0||p.price<=0||p.stock<0){toast("Invalid stock values");return}saveDB();audit("STOCK_EDITED",id);document.getElementById("editStockModal").remove();toast("Stock updated");render()}
-function closeStockModal(){document.getElementById("stockModal")?.remove()}
-function sellerRequests(){return `<div class="panel"><h3>Product Requests</h3>${db.requests.map(r=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><b>${esc(r.name)}</b><p class="muted">${esc(r.note||"")}</p><button class="gold" onclick="offerRequest('${r.id}')">Offer Product</button></div>`).join("")||"<p class='muted'>No requests.</p>"}</div>`}
-function offerRequest(id){let r=db.requests.find(x=>x.id===id);r.status="OFFERED";r.offer={price:500,product:"Available equivalent product"};saveDB();toast("Offer sent to buyer");render()}
-function sellerDelivery(){return `<div class="panel"><h3>Delivery Queue</h3>${db.orders.filter(o=>o.fulfillment==="DELIVERY").map(o=>`<div style="padding:12px 0;border-bottom:1px solid var(--line)"><b>${o.id}</b><p>${esc(o.dropoff||"No destination")}</p><span class="badge pending">${o.status}</span></div>`).join("")||"<p class='muted'>No delivery orders.</p>"}</div>`}
-function assignDriver(id){let o=db.orders.find(x=>x.id===id);o.driver_name="Demo Driver";o.driver_phone="+251900000000";o.plate="ABC-123";o.status="DRIVER_ASSIGNED";db.deliveries.push({order_id:id,driver:"Demo Driver",status:"ASSIGNED"});saveDB();audit("DRIVER_ASSIGNED",id);toast("Driver assigned");render()}
-function renderDriver(){
- let assigned=db.orders.filter(o=>o.driver_name==="Demo Driver"&&o.status!=="COMPLETED");
- document.getElementById("root").innerHTML=`<div class="app"><div class="hero">${brandLogo()}<h1>🚚 Driver Hub</h1><p>Assigned deliveries</p></div><main class="view"><div class="panel"><h3>Assigned Deliveries</h3>${assigned.map(o=>`<div style="padding:13px 0;border-bottom:1px solid var(--line)"><div class="row"><b>${o.id}</b><span class="badge pending">${o.status}</span></div><p>${esc(o.dropoff||"Destination")}</p><div class="actions"><button class="primary" onclick="updateDelivery('${o.id}','IN_TRANSIT')">Start Delivery</button><button class="gold" onclick="updateDelivery('${o.id}','COMPLETED')">Mark Delivered</button><button onclick="scanOrder('${o.id}')">Scan QR</button></div></div>`).join("")||"<p class='muted'>No assigned deliveries.</p>"}</div></main>${bottom([["home","⌂","Home"]])}</div>`;
-}
-function updateDelivery(id,status){let o=db.orders.find(x=>x.id===id);o.status=status;saveDB();audit("DELIVERY_STATUS",id+" "+status);toast(status);render()}
-function scanOrder(id){toast("Order QR verified: "+id)}
-function renderOwner(){
- let body="";
- if(state.view==="home")body=ownerDashboard();
- else if(state.view==="staff")body=ownerStaff();
- else if(state.view==="inventory")body=stockPage(true);
- else if(state.view==="orders")body=ownerOrders();
- else if(state.view==="audit")body=ownerAudit();
- else if(state.view==="reports")body=ownerReports();
- else if(state.view==="settings")body=ownerSettings();
- document.getElementById("root").innerHTML=`<div class="app">
- <div class="hero">${brandLogo()}<h1>Owner Command Center</h1><p>soYam cosmo · ሶያም ኮስሞΤΙΚΣ · COSMETICS & BEAUTY</p><p>Betel Building, Ground Floor · Addis Ababa · +251 91 909 6451</p></div>
- <div class="panel" style="margin:12px 14px 0;background:#24130d;color:#fff;border:0">
-   <div class="row"><div><small style="color:#d9c39d">MASTER OWNER</small><div><b>@${esc(state.user.telegram_username)}</b></div></div><span class="badge ok">ACTIVE</span></div>
-   <div class="actions"><button class="gold" onclick="go('home')">📊 Dashboard</button><button class="primary" onclick="choosePortal('SELLER')">🏪 Seller</button><button class="primary" onclick="renderPortalSelector()">🔄 Switch</button></div>
- </div>
- <div class="toolbar">
- <button class="${state.view==="staff"?"active":""}" onclick="go('staff')">${ico("users")}${t("Staff")}</button>
- <button class="${state.view==="inventory"?"active":""}" onclick="go('inventory')">${ico("stock")}${t("Inventory")}</button>
- <button class="${state.view==="orders"?"active":""}" onclick="go('orders')">${ico("orders")}${t("Orders")}</button>
- <button class="${state.view==="audit"?"active":""}" onclick="go('audit')">${ico("chart")}${t("Audit")}</button>
- <button class="${state.view==="reports"?"active":""}" onclick="go('reports')">${ico("chart")}${t("Reports")}</button>
- <button class="${state.view==="settings"?"active":""}" onclick="go('settings')">${ico("settings")}${t("Settings")}</button>
- </div><main class="view">${body}</main>${footer()}${bottom([["home",ico("home"),t("Dashboard")],["inventory",ico("stock"),t("Inventory")],["orders",ico("orders"),t("Orders")],["audit",ico("chart"),t("Audit")],["reports",ico("chart"),t("Reports")]])}</div>`;
-}
-function ownerDashboard(){
- const sales=dashboardRevenue(),stockValue=dashboardStockValue(),todayOrders=dashboardTodayOrders(),active=db.orders.filter(o=>o.status!=="COMPLETED"&&o.status!=="CANCELLED"),completedToday=todayOrders.filter(o=>o.status==="COMPLETED").length,conversion=todayOrders.length?(completedToday/todayOrders.length)*100:0,week=dashboardWeekRevenue(0),prev=dashboardWeekRevenue(1),low=dashboardLowStock(),cats=dashboardTopCategories(),pendingAudit=db.transactions.filter(t=>t.status==="OWNER_PENDING").length;
- return `<section class="dashboard-shell"><div class="dashboard-hero"><div class="dashboard-eyebrow">SOYAM COSMO · OWNER COMMAND</div><div class="dashboard-title">Business Overview</div><p class="dashboard-subtitle">Live operational performance and financial snapshot</p><div class="dashboard-live"><i></i>Live data · ${new Date().toLocaleDateString()}</div></div>
- <div class="dashboard-kpis"><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">TOTAL REVENUE</div><div class="dashboard-icon">${dashboardIcon("revenue")}</div></div><div class="dashboard-kpi-value">${money(sales)}</div>${dashboardTrendText(week,prev,"this week")}</div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">ACTIVE ORDERS</div><div class="dashboard-icon">${dashboardIcon("orders")}</div></div><div class="dashboard-kpi-value">${active.length}</div><div class="dashboard-trend flat">${todayOrders.length} today</div></div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">STOCK VALUATION</div><div class="dashboard-icon">${dashboardIcon("stock")}</div></div><div class="dashboard-kpi-value">${money(stockValue)}</div><div class="dashboard-trend ${low.length?"down":"up"}">${low.length} low-stock item${low.length===1?"":"s"}</div></div><div class="dashboard-kpi"><div class="dashboard-kpi-top"><div class="dashboard-kpi-label">DAILY CONVERSION</div><div class="dashboard-icon">${dashboardIcon("conversion")}</div></div><div class="dashboard-kpi-value">${conversion.toFixed(1)}%</div><div class="dashboard-trend ${conversion>=50?"up":"flat"}">${completedToday}/${todayOrders.length||0} completed</div></div></div>
- <div class="dashboard-grid"><div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Recent Sales</h3><div class="dashboard-panel-sub">Last 7 days · actual transactions</div></div><span class="badge ${week>0?"ok":"pending"}">${money(week)}</span></div><div class="dashboard-chart">${dashboardSalesBars()}</div></div>
- <div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Top Categories</h3><div class="dashboard-panel-sub">Units sold</div></div></div><div class="dashboard-list">${cats.length?cats.map((x,i)=>`<div class="dashboard-list-row"><div class="dashboard-rank">${i+1}</div><div class="dashboard-list-main"><div class="dashboard-list-name">${esc(x[0])}</div><div class="dashboard-list-meta">Cosmetics category</div></div><div class="dashboard-list-value">${x[1]} units</div></div>`).join(""):`<div class="dashboard-empty">No completed category sales yet.</div>`}</div></div>
- <div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Low Stock Alerts</h3><div class="dashboard-panel-sub">Items requiring attention</div></div><span class="badge ${low.length?"bad":"ok"}">${low.length}</span></div><div class="dashboard-list">${low.length?low.map(p=>`<div class="dashboard-alert ${Number(p.stock)<=5?"danger":""}"><div class="dashboard-alert-icon">${p.emoji||"◈"}</div><div style="flex:1;min-width:0"><div class="dashboard-list-name">${esc(p.name)}</div><div class="dashboard-list-meta">Stock ID ${esc(p.id)}</div></div><span class="badge ${Number(p.stock)<=5?"bad":"pending"}">${Number(p.stock)||0} left</span></div>`).join(""):`<div class="dashboard-empty">✓ Stock levels are healthy.</div>`}</div></div>
- <div class="dashboard-panel"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Operations</h3><div class="dashboard-panel-sub">Current workload</div></div></div><div class="dashboard-list"><div class="dashboard-list-row"><div class="dashboard-rank">01</div><div class="dashboard-list-main"><div class="dashboard-list-name">Active Orders</div><div class="dashboard-list-meta">Not completed/cancelled</div></div><div class="dashboard-list-value">${active.length}</div></div><div class="dashboard-list-row"><div class="dashboard-rank">02</div><div class="dashboard-list-main"><div class="dashboard-list-name">Pending Audit</div><div class="dashboard-list-meta">Awaiting owner review</div></div><div class="dashboard-list-value">${pendingAudit}</div></div><div class="dashboard-list-row"><div class="dashboard-rank">03</div><div class="dashboard-list-main"><div class="dashboard-list-name">Products</div><div class="dashboard-list-meta">Current catalog</div></div><div class="dashboard-list-value">${db.products.length}</div></div></div></div>
- <div class="dashboard-panel dashboard-wide"><div class="dashboard-panel-head"><div><h3 class="dashboard-panel-title">Quick Actions</h3><div class="dashboard-panel-sub">Direct access to existing operational modules</div></div></div><div class="dashboard-actions"><button class="dashboard-action" onclick="go('inventory')"><div class="dashboard-action-icon">${dashboardIcon("scan")}</div><span>Quick Scan</span></button><button class="dashboard-action" onclick="go('inventory')"><div class="dashboard-action-icon">${dashboardIcon("product")}</div><span>Add / Manage Product</span></button><button class="dashboard-action" onclick="go('orders')"><div class="dashboard-action-icon">${dashboardIcon("orders")}</div><span>Orders</span></button><button class="dashboard-action" onclick="closeDay()"><div class="dashboard-action-icon">${dashboardIcon("ledger")}</div><span>Close Daily Ledger</span></button></div></div></div></section>`;
-}
-function ownerStaff(){return `<div class="panel"><div class="row"><h3>👥 User Management</h3><button class="gold" onclick="showAuthorizedUser()">＋ Add User</button></div><table class="table"><thead><tr><th>Telegram</th><th>Role</th><th>Store</th><th>Status</th><th>Action</th></tr></thead><tbody>${db.users.map(u=>`<tr><td>@${esc(u.telegram_username)}</td><td>${u.roles.join(", ")}</td><td>${esc(u.store_id||"—")}</td><td><span class="badge ${u.account_status==="ACTIVE"?"ok":"bad"}">${u.account_status}</span></td><td>${u.telegram_username==="mama51R"?"MASTER":`<div class="actions"><button class="edit-btn" onclick="toggleUser(${u.id})">${u.account_status==="ACTIVE"?"Suspend":"Activate"}</button><button class="danger delete-btn" onclick="deleteUser(${u.id})">Delete</button></div>`}</td></tr>`).join("")}</tbody></table><div class="panel"><h3>Seller Invitation</h3><input class="input" id="inviteUser" placeholder="Telegram username"><button class="primary full" style="margin-top:8px" onclick="createInvite()">＋ Create Invitation</button></div></div>`}
-function showAuthorizedUser(){document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="userModal"><div class="sheet"><h3>＋ Add Authorized User</h3><div class="formgrid"><input class="input" id="auId" placeholder="Telegram User ID"><input class="input" id="auUsername" placeholder="Telegram Username"><input class="input" id="auName" placeholder="Name"><input class="input" id="auPhone" placeholder="Phone"><select class="input" id="auRole"><option>SELLER</option><option>DRIVER</option></select><select class="input"><option>STORE001 — SoYam Cosmetics</option></select><button class="primary full" onclick="saveAuthorizedUser()">SAVE USER</button><button class="danger full" onclick="document.getElementById('userModal').remove()">DISCARD</button></div></div></div>`)}
-function saveAuthorizedUser(){
- let username=document.getElementById('auUsername').value.trim().replace(/^@/,'').toLowerCase();
- let telegramId=document.getElementById('auId').value.trim();
- let role=document.getElementById('auRole').value;
- if(!telegramId||!username){toast("Telegram ID and username required");return}
- if(username==="mama51r"){toast("Master owner cannot be added or replaced");return}
- if(db.users.some(x=>(x.telegram_username||"").toLowerCase()===username || (telegramId&&x.telegram_user_id===telegramId))){toast("That Telegram user already exists");return}
- let u={id:Date.now(),telegram_user_id:telegramId,telegram_username:username,first_name:document.getElementById('auName').value.trim(),phone:document.getElementById('auPhone').value.trim(),roles:[role],permissions:[role==="SELLER"?"SELL":"DELIVERY"],store_id:"STORE001",account_status:"ACTIVE"};
- db.users.push(u);saveDB();audit("AUTHORIZED_USER_ADDED",u.telegram_username);document.getElementById('userModal').remove();toast("User saved permanently");render()
-}
-function toggleUser(id){let u=db.users.find(x=>x.id===id);u.account_status=u.account_status==="ACTIVE"?"SUSPENDED":"ACTIVE";saveDB();audit("USER_STATUS_CHANGED",u.telegram_username);toast("User status changed");render()}
-function deleteUser(id){
- let u=db.users.find(x=>x.id===id);
- if(!u||String(u.telegram_username).toLowerCase()==="mama51r")return;
- if(!confirm("Permanently remove @"+u.telegram_username+"? This change is saved immediately."))return;
- db.users=db.users.filter(x=>x.id!==id);
- saveDB();audit("USER_DELETED",u.telegram_username);toast("User permanently removed");render()
-}
-function createInvite(){let username=document.getElementById("inviteUser").value;let code="SOYAM-SELLER-"+Math.random().toString(36).slice(2,7).toUpperCase();db.invitations.push({code,username,status:"PENDING"});saveDB();audit("SELLER_INVITATION_CREATED",code);alert("Invitation: "+code);render()}
-function ownerOrders(){
- return `<div class="panel"><div class="row"><div><h3>🧾 Order Register</h3><span class="muted">Order ID · buyer · items · payment · fulfillment · stock</span></div><span class="badge ok">${db.orders.length} total</span></div>
- ${db.orders.slice().reverse().map(o=>`<div class="reportcard"><div><b>${esc(o.id)}</b><br><span class="muted">${esc(o.buyer_name||o.buyer||"Buyer")} · ${o.fulfillment} · ${new Date(o.created_at||Date.now()).toLocaleString()}</span><br><span class="muted">${(o.items||[]).map(i=>`${esc(i.product_id)} × ${i.quantity}`).join(" · ")}</span></div><div style="text-align:right"><b>${money(o.total)}</b><br><span class="badge ${o.payment_status==="PAID"||o.payment_status==="VERIFIED"?"ok":"pending"}">${o.payment_status}</span><br><span class="badge ${o.stock_deducted?"ok":"pending"}">${o.stock_deducted?"STOCK POSTED":"STOCK OPEN"}</span></div></div>`).join("")||'<p class="muted">No orders recorded.</p>'}</div>`;
-}
-function ownerAudit(){return `<div class="panel"><div class="row"><h3>💰 Daily Financial Audit</h3><span class="badge ${db.dailyLedger.status==="OPEN"?"ok":"pending"}">${db.dailyLedger.status}</span></div>
- <div class="metricgrid"><div class="metric"><span>Cash</span><b>${money(db.dailyLedger.cash)}</b></div><div class="metric"><span>Bank</span><b>${money(db.dailyLedger.bank)}</b></div><div class="metric"><span>Telebirr</span><b>${money(db.dailyLedger.telebirr)}</b></div><div class="metric"><span>Ledger</span><b>${db.dailyLedger.status}</b></div></div>
- <div class="tablewrap"><table class="table"><thead><tr><th>Order ID</th><th>Type</th><th>Amount</th><th>Status</th></tr></thead><tbody>${db.transactions.slice().reverse().map(t=>`<tr><td>${esc(t.order_id)}</td><td>${esc(t.type)}</td><td>${money(t.amount)}</td><td><span class="badge ${t.status==="OWNER_PENDING"?"pending":"ok"}">${t.status}</span></td></tr>`).join("")||'<tr><td colspan="4">No transactions.</td></tr>'}</tbody></table></div></div>
- <div class="panel"><h3>Recent Activity</h3>${db.audit.slice().reverse().slice(0,20).map(a=>`<div class="reportcard"><span>${esc(a.action)}<br><span class="muted">${esc(a.detail)}</span></span><b class="muted">${new Date(a.at).toLocaleTimeString()}</b></div>`).join("")||'<p class="muted">No activity.</p>'}</div>`}
-function ownerReports(){let revenue=db.transactions.reduce((s,t)=>s+(t.type==="SALE"?Number(t.amount||0):0),0);return `<div class="panel"><div class="row"><h3>${ico("chart")} ${t("Reports")}</h3><span class="badge ok">${db.orders.length} orders</span></div><div class="metricgrid"><div class="metric"><span>Actual Sales</span><b>${money(revenue)}</b></div><div class="metric"><span>Stock Units</span><b>${db.products.reduce((a,p)=>a+p.stock,0)}</b></div><div class="metric"><span>Completed</span><b>${db.orders.filter(o=>o.status==="COMPLETED").length}</b></div><div class="metric"><span>Pending</span><b>${db.orders.filter(o=>o.status!=="COMPLETED").length}</b></div></div></div><div class="panel"><h3>${ico("orders")} Order Detail Report</h3><div class="tablewrap"><table class="table"><thead><tr><th>Order ID</th><th>Date</th><th>Buyer</th><th>Items</th><th>Amount</th><th>Payment</th><th>Status</th><th>Stock</th></tr></thead><tbody>${db.orders.slice().reverse().map(o=>`<tr><td><b>${esc(o.id)}</b></td><td>${new Date(o.created_at||Date.now()).toLocaleString()}</td><td>${esc(o.buyer_name||o.buyer||"—")}</td><td>${(o.items||[]).map(i=>`${esc(i.product_id)} × ${i.quantity}`).join("; ")}</td><td>${money(o.total)}</td><td>${esc(o.payment_status||"—")}</td><td>${esc(o.status||"—")}</td><td>${o.stock_deducted?"POSTED":"OPEN"}</td></tr>`).join("")||'<tr><td colspan="8">No orders.</td></tr>'}</tbody></table></div></div>`}function ownerSettings(){return `<div class="panel"><h3>Platform Settings</h3><p>Store: SoYam Cosmo</p><p>Location: Betel Building, Ground Floor, Addis Ababa</p><p>Phone: +251919096451</p><p>Master Owner: @mama51R</p><button class="danger" onclick="if(confirm('Reset demo database?')){localStorage.removeItem(DB_KEY);db=structuredClone(seed);state.cart=[];saveDB();toast('Data reset to owner defaults');render()}">Reset Demo Data</button></div>`}
-function persistenceStatus(){toast("Data is saved immediately to browser storage and IndexedDB.");}
-function closeDay(){if(db.dailyLedger.status==="CLOSED"){toast("Ledger already closed");return}if(confirm("Close and lock today's transactions?")){db.dailyLedger.status="CLOSED";saveDB();audit("DAILY_LEDGER_CLOSED",db.dailyLedger.date);toast("Daily transactions locked");render()}}
-function showStoreQR(){
- let url=location.href.split("#")[0];
- document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="qrModal"><div class="sheet" style="text-align:center"><h3>▦ SoYam Cosmo QR</h3><p class="muted">Scan to open this Mini App</p><img alt="SoYam QR" style="width:210px;height:210px" src="https://api.qrserver.com/v1/create-qr-code/?size=210x210&data=${encodeURIComponent(url)}"><button class="primary full" style="margin-top:10px" onclick="document.getElementById('qrModal').remove()">Close</button></div></div>`);
-}
 
-function closeModal(){document.getElementById("checkoutModal")?.remove()}
-window.addEventListener("storage",e=>{if(e.key===DB_KEY||e.key==="soyam_sync_tick"){db=loadDB();render()}});window.addEventListener("soyam:data-updated",()=>{db=loadDB();render()});
-window.showStoreQR=showStoreQR;window.removeStock=removeStock;window.go=go;window.choosePortal=choosePortal;window.setCat=setCat;window.changeCart=changeCart;window.checkout=checkout;window.deliveryForm=deliveryForm;window.submitDelivery=submitDelivery;window.placeOrder=placeOrder;window.closeModal=closeModal;window.uploadProof=uploadProof;window.track=track;window.submitRequest=submitRequest;window.verifyPayment=verifyPayment;window.rejectPayment=rejectPayment;window.lookupBarcode=lookupBarcode;window.startScanner=startScanner;window.stopScanner=stopScanner;window.pickScanImage=pickScanImage;window.decodeImageFile=decodeImageFile;window.offerRequest=offerRequest;window.assignDriver=assignDriver;window.updateDelivery=updateDelivery;window.scanOrder=scanOrder;window.toggleUser=toggleUser;window.createInvite=createInvite;window.closeDay=closeDay;window.persistenceStatus=persistenceStatus;window.demoBuyer=demoBuyer;window.setScanMode=setScanMode;window.lookupBarcode=lookupBarcode;window.addScannedItem=addScannedItem;window.externalLookupDemo=externalLookupDemo;window.confirmPickup=confirmPickup;window.showAddStock=showAddStock;window.previewStockImage=previewStockImage;window.openStockScanner=openStockScanner;window.saveStock=saveStock;window.editStock=editStock;window.closeStockModal=closeStockModal;window.showAuthorizedUser=showAuthorizedUser;window.editStock=editStock;window.saveEditedStock=saveEditedStock;window.saveAuthorizedUser=saveAuthorizedUser;
-hydratePersistentData().finally(()=>boot());
+  <!-- ====== SELLER PORTAL (hidden) ====== -->
+  <div id="sellerPortal" style="display:none;">
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="value">$1,240</div><div class="label">Today's Sales</div></div>
+      <div class="kpi-card"><div class="value">14</div><div class="label">Orders</div></div>
+      <div class="kpi-card"><div class="value">32</div><div class="label">Stock</div></div>
+    </div>
+    <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;">
+      <span class="scan-btn"><i class="fas fa-qrcode"></i> Scan Product</span>
+      <span class="scan-btn"><i class="fas fa-barcode"></i> Scan Barcode</span>
+    </div>
+    <div class="section-title"><h3>📦 Inventory</h3><a href="#">Manage</a></div>
+    <div style="background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
+      <div class="flex-row"><span>💄 Lipstick (SKU: LIP-01)</span><span>24 units <span style="color:#f06292;">low</span></span></div>
+      <div class="flex-row"><span>🧴 Serum (SKU: SER-02)</span><span>8 units <span style="color:#f06292;">critical</span></span></div>
+      <div class="flex-row"><span>👁 Mascara (SKU: MAS-03)</span><span>45 units</span></div>
+    </div>
+    <div style="margin-top:12px;background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
+      <div class="flex-row"><span><i class="fas fa-truck"></i> Delivery in progress</span><span class="status-badge">2 orders</span></div>
+      <div class="flex-row"><span><i class="fas fa-dollar-sign"></i> Balance</span><span style="font-weight:600;color:#d4af37;">$4,280.50</span></div>
+    </div>
+  </div>
+
+  <!-- ====== OWNER PORTAL (hidden) ====== -->
+  <div id="ownerPortal" style="display:none;">
+    <div class="kpi-grid">
+      <div class="kpi-card"><div class="value">$18.4k</div><div class="label">Revenue</div></div>
+      <div class="kpi-card"><div class="value">342</div><div class="label">Orders</div></div>
+      <div class="kpi-card"><div class="value">12</div><div class="label">Sellers</div></div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;">
+      <span class="scan-btn"><i class="fas fa-qrcode"></i> Audit</span>
+      <span class="scan-btn"><i class="fas fa-barcode"></i> Inventory</span>
+      <span class="scan-btn"><i class="fas fa-users"></i> Users</span>
+    </div>
+    <div class="section-title"><h3>📊 Operations</h3><a href="#">All</a></div>
+    <div style="background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
+      <div class="flex-row"><span>🔄 New order #1023</span><span class="status-badge">Pending</span></div>
+      <div class="flex-row"><span>⚠️ Low stock: Vitamin C</span><span style="color:#f06292;">critical</span></div>
+      <div class="flex-row"><span>🚚 Delivery agent #4</span><span>ETA 8 min</span></div>
+    </div>
+    <div class="section-title" style="margin-top:16px;"><h3>👥 Approvals</h3></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span style="background:rgba(255,255,255,0.03);padding:6px 14px;border-radius:40px;font-size:12px;">New seller: GlowCos</span>
+      <span style="background:rgba(255,255,255,0.03);padding:6px 14px;border-radius:40px;font-size:12px;">Product: Serum</span>
+    </div>
+  </div>
+
+  <!-- ====== BOTTOM NAV ====== -->
+  <div class="bottom-nav">
+    <button class="nav-item active active-buyer" data-target="buyerPortal"><i class="fas fa-home"></i><span>Home</span></button>
+    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-search"></i><span>Shop</span></button>
+    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-heart"></i><span>Wishlist</span></button>
+    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-shopping-bag"></i><span>Cart</span></button>
+    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-user"></i><span>Account</span></button>
+  </div>
+
+  <!-- ====== FOOTER ====== -->
+  <div class="premium-footer">
+    <div style="font-weight:300;letter-spacing:1px;font-size:12px;">SoYam <span style="color:#d4af37;">✦</span> COSMETICS &amp; BEAUTY</div>
+    <div class="social">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-telegram"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+    </div>
+    <div class="links">
+      <span>Buyer Portal</span><span>·</span>
+      <span>Seller Portal</span><span>·</span>
+      <span>Owner Portal</span>
+    </div>
+    <div style="font-size:9px;color:#555;margin:6px 0;">100% Authentic · Fast Delivery · Secure Payment</div>
+    <div class="copy">Powered by SoYam © 2026</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const container = document.getElementById('appContainer');
+    const buyerPortal = document.getElementById('buyerPortal');
+    const sellerPortal = document.getElementById('sellerPortal');
+    const ownerPortal = document.getElementById('ownerPortal');
+    const badge = document.getElementById('portalBadge');
+
+    // role pills
+    const roleBuyer = document.getElementById('roleBuyer');
+    const roleSeller = document.getElementById('roleSeller');
+    const roleOwner = document.getElementById('roleOwner');
+
+    // nav items (demo)
+    const navItems = document.querySelectorAll('.nav-item');
+
+    // current role: 'buyer' | 'seller' | 'owner'
+    let currentRole = 'buyer';
+
+    function setPortal(role) {
+      // hide all
+      buyerPortal.style.display = 'none';
+      sellerPortal.style.display = 'none';
+      ownerPortal.style.display = 'none';
+
+      // show selected
+      if (role === 'buyer') {
+        buyerPortal.style.display = 'block';
+        badge.innerHTML = '<i class="fas fa-crown" style="margin-right:6px;"></i>BUYER';
+        container.className = 'app-container buyer-theme';
+        // update active pills
+        roleBuyer.className = 'role-pill active-buyer';
+        roleSeller.className = 'role-pill';
+        roleOwner.className = 'role-pill';
+        // nav active
+        navItems.forEach(n => n.className = 'nav-item');
+        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-buyer';
+      } else if (role === 'seller') {
+        sellerPortal.style.display = 'block';
+        badge.innerHTML = '<i class="fas fa-store" style="margin-right:6px;"></i>SELLER';
+        container.className = 'app-container seller-theme';
+        roleBuyer.className = 'role-pill';
+        roleSeller.className = 'role-pill active-seller';
+        roleOwner.className = 'role-pill';
+        navItems.forEach(n => n.className = 'nav-item');
+        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-seller';
+      } else if (role === 'owner') {
+        ownerPortal.style.display = 'block';
+        badge.innerHTML = '<i class="fas fa-gem" style="margin-right:6px;"></i>OWNER';
+        container.className = 'app-container owner-theme';
+        roleBuyer.className = 'role-pill';
+        roleSeller.className = 'role-pill';
+        roleOwner.className = 'role-pill active-owner';
+        navItems.forEach(n => n.className = 'nav-item');
+        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-owner';
+      }
+      currentRole = role;
+    }
+
+    // click on role pills to switch (simulate multi-role)
+    roleBuyer.addEventListener('click', () => setPortal('buyer'));
+    roleSeller.addEventListener('click', () => setPortal('seller'));
+    roleOwner.addEventListener('click', () => setPortal('owner'));
+
+    // nav items (keep portal context)
+    navItems.forEach(item => {
+      item.addEventListener('click', function(e) {
+        const target = this.dataset.target;
+        if (target === 'buyerPortal') {
+          setPortal(currentRole); // refresh
+        }
+        // for demo just highlight
+        navItems.forEach(n => n.className = 'nav-item');
+        this.className = 'nav-item active';
+        if (currentRole === 'buyer') this.classList.add('active-buyer');
+        else if (currentRole === 'seller') this.classList.add('active-seller');
+        else if (currentRole === 'owner') this.classList.add('active-owner');
+      });
+    });
+
+    // default: buyer
+    setPortal('buyer');
+
+    // simulate Telegram auth (secure server-side enforced)
+    console.log('SoYam Cosmo · 3 Portal · Telegram identity ready');
+  })();
 </script>
 </body>
 </html>

@@ -1,613 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>SoYam Cosmo · 3 Portal</title>
-  <!-- Google Fonts (clean modern) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-  <!-- Font Awesome 6 (free) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    body {
-      background: #0b0b0f;
-      color: #f0f0f5;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-    }
-    /* main container – mobile first */
-    .app-container {
-      max-width: 430px;
-      width: 100%;
-      background: #14141c;
-      border-radius: 36px;
-      padding: 16px 14px 20px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-      backdrop-filter: blur(2px);
-      position: relative;
-      overflow: hidden;
-      border: 1px solid rgba(255,215,0,0.08);
-    }
-    /* glassmorphism base */
-    .glass-card {
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 24px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    }
-    /* premium brand header */
-    .brand-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 4px 16px;
-    }
-    .logo-emblem {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .monogram {
-      width: 48px;
-      height: 48px;
-      background: radial-gradient(circle at 30% 30%, #f7e8c0, #d4af37);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 22px;
-      color: #1a1410;
-      box-shadow: 0 0 0 2px rgba(212,175,55,0.3), 0 8px 16px rgba(0,0,0,0.5);
-      position: relative;
-    }
-    .monogram::after {
-      content: "✦";
-      position: absolute;
-      top: -6px;
-      right: -6px;
-      font-size: 14px;
-      color: #d4af37;
-    }
-    .brand-text {
-      line-height: 1.2;
-    }
-    .brand-text h1 {
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      background: linear-gradient(135deg, #f5e6b0, #d4af37);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .brand-text span {
-      font-size: 10px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      color: #a09880;
-      display: block;
-      margin-top: -2px;
-    }
-    .portal-badge {
-      background: rgba(212,175,55,0.15);
-      padding: 6px 14px;
-      border-radius: 40px;
-      font-size: 11px;
-      font-weight: 600;
-      border: 1px solid rgba(212,175,55,0.2);
-      color: #d4af37;
-      letter-spacing: 0.5px;
-    }
-    /* portal theme colors */
-    .buyer-theme { --portal-primary: #f06292; --portal-glow: rgba(240,98,146,0.2); }
-    .seller-theme { --portal-primary: #42a5f5; --portal-glow: rgba(66,165,245,0.2); }
-    .owner-theme { --portal-primary: #26a69a; --portal-glow: rgba(38,166,154,0.2); }
-    /* role indicator */
-    .role-indicator {
-      display: flex;
-      gap: 6px;
-      margin: 4px 0 12px;
-    }
-    .role-pill {
-      padding: 4px 14px;
-      border-radius: 40px;
-      font-size: 10px;
-      font-weight: 600;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-      color: #aaa;
-    }
-    .role-pill.active-buyer { background: #f06292; color: #1a1410; border-color: #f06292; }
-    .role-pill.active-seller { background: #42a5f5; color: #1a1410; border-color: #42a5f5; }
-    .role-pill.active-owner { background: #26a69a; color: #1a1410; border-color: #26a69a; }
-    /* navigation tabs */
-    .bottom-nav {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      background: rgba(20,20,30,0.7);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-radius: 40px;
-      padding: 6px 4px;
-      margin-top: 16px;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-size: 10px;
-      color: #888;
-      padding: 6px 12px;
-      border-radius: 30px;
-      transition: 0.2s;
-      background: transparent;
-      border: none;
-    }
-    .nav-item i { font-size: 20px; margin-bottom: 2px; }
-    .nav-item.active { color: #f0f0f5; background: rgba(255,255,255,0.06); }
-    .nav-item.active-buyer { color: #f06292; }
-    .nav-item.active-seller { color: #42a5f5; }
-    .nav-item.active-owner { color: #26a69a; }
-    /* cards */
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin: 18px 0 10px;
-    }
-    .section-title h3 {
-      font-weight: 600;
-      font-size: 16px;
-      letter-spacing: -0.2px;
-    }
-    .section-title a {
-      font-size: 12px;
-      color: #888;
-      text-decoration: none;
-    }
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .product-card {
-      background: rgba(255,255,255,0.03);
-      border-radius: 20px;
-      padding: 12px 10px 14px;
-      border: 1px solid rgba(255,255,255,0.04);
-      transition: 0.2s;
-    }
-    .product-card img {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      border-radius: 16px;
-      background: #222;
-    }
-    .product-card .name {
-      font-weight: 500;
-      font-size: 13px;
-      margin: 8px 0 2px;
-    }
-    .product-card .price {
-      font-weight: 600;
-      color: #d4af37;
-      font-size: 14px;
-    }
-    .product-card .seller-tag {
-      font-size: 9px;
-      color: #888;
-      background: rgba(255,255,255,0.04);
-      padding: 2px 10px;
-      border-radius: 40px;
-      display: inline-block;
-      margin-top: 4px;
-    }
-    /* assistant */
-    .assistant-bubble {
-      background: rgba(255,255,255,0.03);
-      border-radius: 40px;
-      padding: 14px 18px;
-      margin: 16px 0 8px;
-      border-left: 3px solid #d4af37;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .assistant-bubble i {
-      font-size: 28px;
-      color: #d4af37;
-    }
-    .assistant-bubble .text {
-      font-size: 13px;
-      color: #ccc;
-      flex: 1;
-    }
-    .assistant-quick {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .assistant-quick button {
-      background: rgba(255,255,255,0.05);
-      border: none;
-      color: #ccc;
-      padding: 4px 12px;
-      border-radius: 40px;
-      font-size: 10px;
-      font-weight: 500;
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-    /* map simulation */
-    .map-placeholder {
-      background: #1e1e2a;
-      border-radius: 24px;
-      height: 120px;
-      margin: 12px 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background-image: radial-gradient(circle at 20% 30%, #2a2a3a, #12121c);
-      border: 1px solid rgba(255,215,0,0.05);
-      position: relative;
-    }
-    .map-route {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: #aaa;
-    }
-    .map-route i { color: #42a5f5; }
-    .map-route .driver { color: #f06292; }
-    /* footer */
-    .premium-footer {
-      margin-top: 24px;
-      padding: 16px 4px 8px;
-      border-top: 1px solid rgba(255,255,255,0.04);
-      text-align: center;
-    }
-    .premium-footer .social {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      font-size: 20px;
-      color: #888;
-      margin: 10px 0;
-    }
-    .premium-footer .social a { color: #888; transition: 0.2s; }
-    .premium-footer .social a:hover { color: #d4af37; }
-    .premium-footer .links {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      font-size: 10px;
-      color: #666;
-      margin: 8px 0;
-    }
-    .premium-footer .copy {
-      font-size: 9px;
-      color: #444;
-      letter-spacing: 0.5px;
-    }
-    /* owner / seller specific */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 8px;
-      margin: 12px 0;
-    }
-    .kpi-card {
-      background: rgba(255,255,255,0.02);
-      border-radius: 16px;
-      padding: 10px 6px;
-      text-align: center;
-      border: 1px solid rgba(255,255,255,0.02);
-    }
-    .kpi-card .value { font-weight: 700; font-size: 18px; }
-    .kpi-card .label { font-size: 8px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; }
-    .status-badge {
-      font-size: 9px;
-      padding: 2px 10px;
-      border-radius: 40px;
-      background: rgba(38,166,154,0.2);
-      color: #26a69a;
-    }
-    .flex-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .mt-2 { margin-top: 12px; }
-    .mb-1 { margin-bottom: 6px; }
-    .text-gold { color: #d4af37; }
-    .text-muted { color: #888; }
-    /* scan qr */
-    .scan-btn {
-      background: rgba(212,175,55,0.08);
-      border: 1px solid rgba(212,175,55,0.2);
-      border-radius: 40px;
-      padding: 8px 16px;
-      color: #d4af37;
-      font-weight: 500;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    /* responsive */
-    @media (max-width: 420px) {
-      .product-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .brand-text h1 { font-size: 18px; }
-    }
-    /* scroll */
-    ::-webkit-scrollbar { width: 2px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 20px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>SoYam Cosmetics & Beauty — Telegram Mini App</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+:root{
+  --bg:#f6f7fb;--card:#fff;--text:#171820;--muted:#737783;--line:#e7e8ee;
+  --pink:#e50070;--pink2:#ff4b9a;--blue:#1466d8;--green:#087a4b;
+  --gold:#d7a72b;--shadow:0 8px 28px rgba(20,20,40,.08);
+}
+*{box-sizing:border-box} html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+button,input,select{font:inherit} button{cursor:pointer;border:0}
+.app{min-height:100vh;max-width:520px;margin:auto;background:var(--bg);padding-bottom:78px}
+.portal{display:none}.portal.active{display:block}
+.topbar{height:76px;color:#fff;padding:10px 14px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:20;box-shadow:0 5px 20px #0002}
+.buyer .topbar{background:linear-gradient(135deg,#ed006f,#b90058)} .seller .topbar{background:linear-gradient(135deg,#0751b6,#06347b)} .owner .topbar{background:linear-gradient(135deg,#075437,#032d20)}
+.iconbtn{width:40px;height:40px;border-radius:13px;background:#ffffff18;color:#fff;font-size:22px}
+.brand{flex:1;text-align:center;line-height:1}
+.logo{width:42px;height:42px;border:1px solid var(--gold);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-family:Georgia,serif;color:#fff;font-size:20px;position:relative}
+.logo:before{content:"♛";position:absolute;top:-17px;color:#f1c84b;font-size:16px}
+.brand strong{display:block;font:27px Georgia,serif}.brand small{font-size:7px;letter-spacing:1.5px;font-weight:700}
+.actions{display:flex;gap:7px}.badge{position:absolute;margin:-4px 0 0 -9px;background:#ff1744;color:#fff;border-radius:9px;font-size:9px;padding:2px 5px}
+.content{padding:12px}
+.search{display:flex;gap:7px;background:#fff;border:1px solid var(--line);padding:7px;border-radius:16px;box-shadow:var(--shadow)}
+.search input{flex:1;border:0;outline:0;padding:9px;background:transparent}.search button{background:var(--pink);color:#fff;border-radius:11px;padding:8px 15px}
+.langs{display:flex;gap:5px;overflow:auto;padding:8px 0}.langs button{flex:0 0 auto;padding:7px 13px;border-radius:20px;background:#fff;border:1px solid var(--line);font-size:12px}.buyer .langs .selected{background:var(--pink);color:#fff}
+.hero{border-radius:18px;padding:20px;color:#fff;min-height:155px;background:linear-gradient(120deg,#250021,#15002d 55%,#7b0050);position:relative;overflow:hidden;box-shadow:var(--shadow)}
+.hero:after{content:"✦  ♡  ✦";position:absolute;right:15px;top:15px;font-size:38px;color:#ff8ec8;opacity:.4}
+.hero h2{margin:0 0 8px;font:23px Georgia,serif}.hero p{margin:0 0 15px;color:#eee;font-size:13px}.cta{background:#fff;color:#d90069;padding:9px 15px;border-radius:20px;font-weight:800}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:16px 2px 9px}.section-title h3{margin:0;font-size:15px}.section-title button{background:none;color:var(--pink);font-size:12px}
+.categories{display:flex;gap:10px;overflow:auto}.cat{min-width:70px;text-align:center;font-size:10px}.cat .catpic{height:55px;width:55px;margin:auto;border-radius:50%;background:linear-gradient(135deg,#fff,#ffdce9);display:flex;align-items:center;justify-content:center;font-size:27px;border:1px solid #f6d2df}
+.products{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.product{background:#fff;border:1px solid var(--line);border-radius:16px;padding:9px;box-shadow:var(--shadow);position:relative}.product .pic{height:125px;border-radius:12px;background:linear-gradient(145deg,#fafafa,#f2e8ef);display:flex;align-items:center;justify-content:center;font-size:65px}.heart{position:absolute;right:14px;top:14px;background:#fff;border-radius:50%;width:28px;height:28px}.product h4{margin:9px 0 4px;font-size:12px}.price{font-weight:800}.old{text-decoration:line-through;color:#aaa;font-size:10px;margin-left:5px}.add{float:right;background:var(--pink);color:#fff;border-radius:50%;width:28px;height:28px}
+.banner{margin-top:14px;border-radius:16px;padding:17px;color:#fff;background:linear-gradient(120deg,#41105d,#b72875,#ffc0d7);min-height:105px}.banner strong{font-size:17px}.banner button{display:block;margin-top:12px;border-radius:20px;padding:7px 13px;background:#fff;color:#c90065;font-weight:700}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:17px;padding:12px;margin-bottom:12px;box-shadow:var(--shadow)}.seller .panel,.owner .panel{box-shadow:0 5px 20px #0000000a}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.kpi{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;min-height:82px}.kpi span{font-size:11px;color:var(--muted)}.kpi strong{display:block;font-size:19px;margin-top:5px}.up{font-size:10px;color:#159447;margin-top:3px}
+.seller .kpis,.owner .kpis{grid-template-columns:repeat(4,1fr)}.seller .kpi,.owner .kpi{padding:9px;min-height:76px}.seller .kpi strong,.owner .kpi strong{font-size:15px}
+.flow{display:flex;align-items:center;gap:4px;overflow:auto;padding:10px 0}.flowitem{text-align:center;min-width:66px}.flowicon{width:34px;height:34px;border-radius:50%;margin:auto;background:#edf4ff;display:flex;align-items:center;justify-content:center}.arrow{color:#aaa}
+.listrow{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--line)}.listrow:last-child{border:0}.thumb{width:38px;height:38px;border-radius:10px;background:#f2f3f7;display:flex;align-items:center;justify-content:center;font-size:22px}.listrow .grow{flex:1}.listrow strong{font-size:12px}.listrow small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
+.chart{height:130px;position:relative;overflow:hidden;background:linear-gradient(#fff,#fbfcff);border-radius:12px}.chart svg{width:100%;height:100%}.owner .chart{background:#f6fff9}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.quick button{padding:12px 5px;border-radius:13px;background:#f7f8fb;border:1px solid var(--line);font-size:10px}.quick b{display:block;font-size:20px;margin-bottom:4px}
+.alert{display:flex;gap:9px;padding:9px 0;border-bottom:1px solid var(--line);font-size:11px}.alert:last-child{border:0}.danger{color:#e54545}.warning{color:#db9a00}.success{color:#168e56}
+.bottom{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(520px,100%);height:68px;display:grid;grid-template-columns:repeat(5,1fr);z-index:30;border-top:1px solid #ddd;background:#fffffff2;backdrop-filter:blur(15px);padding-bottom:env(safe-area-inset-bottom)}.bottom button{background:transparent;color:#676b75;font-size:10px}.bottom button span{display:block;font-size:21px;margin-bottom:3px}.bottom .active{font-weight:800}.buyer .bottom .active{color:var(--pink)}.seller .bottom .active{color:var(--blue)}.owner .bottom .active{color:var(--green)}
+.drawer{position:fixed;inset:0;background:#0006;z-index:50;display:none}.drawer.open{display:block}.drawerbox{width:82%;max-width:390px;height:100%;background:#fff;padding:18px;overflow:auto}.drawerbox h2{font-family:Georgia,serif}.menuitem{width:100%;padding:13px;text-align:left;background:#fff;border-bottom:1px solid var(--line);font-size:13px}.switch{display:flex;gap:6px;margin:10px 0}.switch button{flex:1;padding:9px;border-radius:10px;background:#f1f2f5}.modal{position:fixed;inset:0;background:#0007;display:none;z-index:60;align-items:flex-end}.modal.open{display:flex}.modalbox{width:100%;max-width:520px;margin:auto;background:#fff;border-radius:22px 22px 0 0;padding:18px;max-height:85vh;overflow:auto}.close{float:right;background:#eee;border-radius:50%;width:32px;height:32px}
+.map{height:210px;border-radius:16px;background:#dce8df;position:relative;overflow:hidden;background-image:linear-gradient(30deg,#fff0 45%,#ffffffaa 46%,#ffffffaa 49%,#fff0 50%),linear-gradient(120deg,#fff0 40%,#ffffffaa 41%,#ffffffaa 44%,#fff0 45%)}.route{position:absolute;left:14%;right:14%;top:50%;height:4px;background:#1976d2;transform:rotate(-8deg);border-radius:9px}.pin{position:absolute;width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);display:flex;align-items:center;justify-content:center;color:#fff}.pin span{transform:rotate(45deg)}.pin.start{left:10%;top:62%;background:#18a66a}.pin.end{right:10%;top:25%;background:#e33}.driver{left:49%;top:43%;background:#1668d8}.mapnote{position:absolute;bottom:8px;left:8px;right:8px;background:#fffffff0;border-radius:12px;padding:8px;font-size:11px}
+.social{display:flex;gap:12px;justify-content:center}.social button{width:40px;height:40px;border-radius:50%;background:#f1f2f5;font-size:18px}.footer{padding:18px 10px;text-align:center;color:var(--muted);font-size:10px}.footer .brandfoot{font:25px Georgia,serif;color:var(--text)}
+.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);background:#191919;color:#fff;padding:10px 15px;border-radius:20px;font-size:12px;z-index:100;display:none}
+@media(min-width:600px){body{background:#e8ebf2}.app{box-shadow:0 0 40px #0001}}
+@media(max-width:390px){.seller .kpis,.owner .kpis{grid-template-columns:repeat(2,1fr)}.products{gap:7px}.product .pic{height:105px}.brand strong{font-size:24px}}
+</style>
 </head>
 <body>
-<div class="app-container buyer-theme" id="appContainer">
-  <!-- ====== BRAND HEADER ====== -->
-  <div class="brand-header">
-    <div class="logo-emblem">
-      <div class="monogram">SY</div>
-      <div class="brand-text">
-        <h1>SoYam</h1>
-        <span>COSMETICS &amp; BEAUTY</span>
-      </div>
-    </div>
-    <div class="portal-badge" id="portalBadge"><i class="fas fa-crown" style="margin-right:6px;"></i>BUYER</div>
-  </div>
+<div class="app buyer" id="app">
 
-  <!-- ====== ROLE SWITCHER (multi-role) ====== -->
-  <div class="role-indicator">
-    <span class="role-pill active-buyer" id="roleBuyer">👤 Buyer</span>
-    <span class="role-pill" id="roleSeller">🏪 Seller</span>
-    <span class="role-pill" id="roleOwner">👑 Owner</span>
-    <span style="margin-left:auto;font-size:10px;color:#555;"><i class="fas fa-exchange-alt"></i> switch</span>
-  </div>
+<!-- BUYER PORTAL -->
+<section class="portal buyer active" id="buyerPortal">
+<header class="topbar">
+<button class="iconbtn" onclick="openMenu('buyer')">☰</button>
+<div class="brand"><div class="logo">SY</div><strong>SoYam</strong><small>COSMETICS & BEAUTY</small></div>
+<div class="actions"><button class="iconbtn" onclick="notify()">🔔</button><button class="iconbtn" onclick="showCart()">🛒<i class="badge" id="cartBadge">0</i></button></div>
+</header>
+<div class="content">
+<div class="search"><input id="searchInput" placeholder="Search products, categories, brands..." oninput="searchProducts()"><button onclick="searchProducts()">Search</button></div>
+<div class="langs"><button class="selected">EN</button><button>አማ</button><button>ትግ</button><button>ORO</button><button>GUR</button><button>SOM</button></div>
+<div class="hero"><h2>Glow. Beauty. You.</h2><p>Premium cosmetics crafted for you.</p><button class="cta" onclick="toast('Opening Shop')">Shop Now</button></div>
+<div class="section-title"><h3>Shop by Category</h3><button>View All</button></div>
+<div class="categories">
+<div class="cat"><div class="catpic">🧴</div>Skincare</div><div class="cat"><div class="catpic">💄</div>Makeup</div><div class="cat"><div class="catpic">🌹</div>Perfume</div><div class="cat"><div class="catpic">👩</div>Hair Care</div><div class="cat"><div class="catpic">🧼</div>Body Care</div><div class="cat"><div class="catpic">🌸</div>Offers</div>
+</div>
+<div class="section-title"><h3>Flash Sale</h3><button>02:45:30 · View All</button></div>
+<div class="products" id="products"></div>
+<div class="banner"><strong>Special Offers</strong><br>Up to 40% OFF<button onclick="toast('Promotion opened')">Shop Now</button></div>
+<div class="section-title"><h3>Recommended For You</h3><button>View All ›</button></div>
+<div class="products" id="recommended"></div>
+<div class="section-title"><h3>Live Delivery Tracking</h3><button onclick="openDelivery()">Track ›</button></div>
+<div class="panel"><div class="map"><div class="route"></div><div class="pin start"><span>🏪</span></div><div class="pin driver"><span>🚚</span></div><div class="pin end"><span>📍</span></div><div class="mapnote">🚚 In Transit · ETA 15 min · 4.2 km away</div></div></div>
+<div class="panel"><div class="section-title"><h3>🤖 soYam Assistant</h3><button onclick="openAssistant()">Chat</button></div><p style="font-size:12px;color:#666">Need help finding a product, tracking an order or solving a payment issue?</p><button class="cta" onclick="openAssistant()">Ask soYam Assistant</button></div>
+<footer class="footer"><div class="brandfoot">SoYam</div><small>COSMETICS & BEAUTY</small><p>Follow Us</p><div class="social"><button onclick="social('Facebook')">f</button><button onclick="social('Instagram')">◎</button><button onclick="social('Telegram')">➤</button><button onclick="social('TikTok')">♪</button><button onclick="social('YouTube')">▶</button></div><p>100% Authentic · Fast Delivery · Secure Payment · Customer Support</p><small>© 2026 SoYam Cosmetics & Beauty</small></footer>
+</div>
+<nav class="bottom"><button class="active" onclick="buyerTab('home',this)"><span>⌂</span>Home</button><button onclick="buyerTab('shop',this)"><span>⌕</span>Shop</button><button onclick="showCart()"><span>🛒</span>Cart</button><button onclick="showOrders()"><span>▣</span>Orders</button><button onclick="showAccount()"><span>♙</span>Account</button></nav>
+</section>
 
-  <!-- ====== BUYER PORTAL ====== -->
-  <div id="buyerPortal">
-    <!-- search & cart -->
-    <div style="display:flex;gap:8px;align-items:center;margin:4px 0 12px;">
-      <div style="flex:1;background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 16px;display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,0.04);">
-        <i class="fas fa-search" style="color:#888;"></i>
-        <input type="text" placeholder="Search products..." style="background:transparent;border:none;color:#f0f0f5;width:100%;outline:none;font-size:13px;">
-      </div>
-      <div style="display:flex;gap:8px;">
-        <div style="background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 12px;"><i class="fas fa-bell"></i></div>
-        <div style="background:rgba(255,255,255,0.04);border-radius:40px;padding:8px 12px;"><i class="fas fa-shopping-bag"></i><span style="background:#f06292;color:#0b0b0f;border-radius:20px;padding:0 6px;font-size:9px;margin-left:4px;">3</span></div>
-      </div>
-    </div>
+<!-- SELLER PORTAL -->
+<section class="portal seller" id="sellerPortal">
+<header class="topbar">
+<button class="iconbtn" onclick="openMenu('seller')">☰</button>
+<div class="brand"><div class="logo">SY</div><strong>SoYam</strong><small>SELLER PORTAL</small></div>
+<div class="actions"><button class="iconbtn">🔔<i class="badge">5</i></button><button class="iconbtn">🏪</button></div>
+</header>
+<div class="content">
+<div class="section-title"><h3>Dashboard Overview</h3><select><option>Today</option><option>This Week</option><option>This Month</option></select></div>
+<div class="kpis">
+<div class="kpi"><span>Sales</span><strong>12,450 Br</strong><div class="up">+12.5%</div></div><div class="kpi"><span>Orders</span><strong>28</strong><div class="up">+8.3%</div></div><div class="kpi"><span>Products</span><strong>48</strong></div><div class="kpi"><span>Stock Units</span><strong>320</strong></div><div class="kpi"><span>Pending Orders</span><strong>12</strong></div><div class="kpi"><span>Low Stock</span><strong>7</strong></div><div class="kpi"><span>Rating</span><strong>4.8 ⭐</strong></div><div class="kpi"><span>Balance</span><strong>8,230 Br</strong></div>
+</div>
+<div class="panel"><div class="section-title"><h3>Order Management</h3><button onclick="showOrders()">View All</button></div><div class="flow"><div class="flowitem"><div class="flowicon">🧾</div><small>New</small><strong>8</strong></div><b class="arrow">→</b><div class="flowitem"><div class="flowicon">🛍️</div><small>Preparing</small><strong>6</strong></div><b class="arrow">→</b><div class="flowitem"><div class="flowicon">📋</div><small>Ready</small><strong>4</strong></div><b class="arrow">→</b><div class="flowitem"><div class="flowicon">🚚</div><small>Out</small><strong>7</strong></div><b class="arrow">→</b><div class="flowitem"><div class="flowicon">✓</div><small>Delivered</small><strong>23</strong></div></div></div>
+<div class="panel"><div class="section-title"><h3>Top Selling Products</h3><button>View All</button></div>
+<div class="listrow"><div class="thumb">🧴</div><div class="grow"><strong>Luminous Glow Serum</strong><small>320 sales</small></div><b>6,400 Br</b></div>
+<div class="listrow"><div class="thumb">💄</div><div class="grow"><strong>Velvet Matte Lipstick</strong><small>280 sales</small></div><b>5,600 Br</b></div>
+<div class="listrow"><div class="thumb">🫙</div><div class="grow"><strong>Luxury Face Cream</strong><small>210 sales</small></div><b>4,800 Br</b></div>
+</div>
+<div class="panel"><div class="section-title"><h3>Sales Analytics</h3><select><option>This Week</option><option>This Month</option></select></div><div class="chart"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><polyline points="0,125 55,90 100,108 145,65 190,80 235,50 280,75 325,45 370,60 415,30 500,12" fill="none" stroke="#1466d8" stroke-width="4"/></svg></div></div>
+<div class="panel"><div class="section-title"><h3>Quick Actions</h3></div><div class="quick"><button onclick="addProduct()"><b>＋</b>Add Product</button><button onclick="scan()"><b>▥</b>Scan Barcode</button><button onclick="showOrders()"><b>▣</b>Orders</button><button onclick="showInventory()"><b>📦</b>Inventory</button><button onclick="showReports()"><b>📈</b>Reports</button><button onclick="showFinance()"><b>💰</b>Finance</button></div></div>
+<div class="panel"><div class="section-title"><h3>Seller Workflow</h3></div><div class="listrow">📝 <div class="grow"><strong>Product lifecycle</strong><small>Draft → Submitted → Approved → Published</small></div></div><div class="listrow">📦 <div class="grow"><strong>Fulfillment</strong><small>New → Accepted → Preparing → Ready → Delivery</small></div></div><div class="listrow">💰 <div class="grow"><strong>Settlement</strong><small>Sales → Commission → Balance → Settlement</small></div></div></div>
+</div>
+<nav class="bottom"><button class="active"><span>⌂</span>Dashboard</button><button onclick="showInventory()"><span>▣</span>Products</button><button onclick="showOrders()"><span>🛒</span>Orders</button><button onclick="showInventory()"><span>◇</span>Inventory</button><button onclick="openMenu('seller')"><span>☷</span>More</button></nav>
+</section>
 
-    <!-- promo banner -->
-    <div style="background:linear-gradient(135deg,#2a1a2a,#1a1a2a);border-radius:24px;padding:16px;margin-bottom:12px;border:1px solid rgba(212,175,55,0.1);">
-      <div style="display:flex;justify-content:space-between;">
-        <div><span style="font-size:12px;color:#d4af37;">FLASH SALE</span><div style="font-weight:600;font-size:16px;">Up to 40% off</div><span style="font-size:10px;color:#888;">Ends in 2h 14m</span></div>
-        <div style="background:#d4af37;color:#0b0b0f;padding:4px 16px;border-radius:40px;font-weight:600;font-size:12px;">Shop</div>
-      </div>
-    </div>
-
-    <!-- categories -->
-    <div style="display:flex;gap:8px;overflow-x:auto;padding:4px 0 12px;white-space:nowrap;">
-      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">💄 Makeup</span>
-      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">🧴 Skincare</span>
-      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">🌸 Fragrance</span>
-      <span style="background:rgba(255,255,255,0.04);padding:6px 18px;border-radius:40px;font-size:12px;border:1px solid rgba(255,255,255,0.04);">💇 Hair</span>
-    </div>
-
-    <!-- product grid -->
-    <div class="section-title"><h3>✨ Featured</h3><a href="#">View all</a></div>
-    <div class="product-grid">
-      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%232a1a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🌸 LUXE%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Velvet Lipstick</div><div class="price">$24.50</div><span class="seller-tag">by Glow</span></div>
-      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a2a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🧴 SERUM%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Vitamin C Serum</div><div class="price">$39.00</div><span class="seller-tag">by Pure</span></div>
-      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%232a1a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E👁 MASCARA%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Volume Mascara</div><div class="price">$18.90</div><span class="seller-tag">by Lash</span></div>
-      <div class="product-card"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' fill='%231a2a2a'/%3E%3Ctext x='50' y='110' font-family='Arial' font-size='14' fill='%23d4af37'%3E🌹 PERFUME%3C/text%3E%3C/svg%3E" alt="product"><div class="name">Rose Noir</div><div class="price">$55.00</div><span class="seller-tag">by Noir</span></div>
-    </div>
-
-    <!-- assistant -->
-    <div class="assistant-bubble">
-      <i class="fas fa-robot"></i>
-      <div class="text">Hi! I'm SoYam Assistant 🤖 <span style="display:block;font-size:11px;color:#888;">Need help? Ask me anything.</span></div>
-      <div class="assistant-quick">
-        <button>🛍️ Find</button>
-        <button>📦 Track</button>
-        <button>💳 Pay</button>
-        <button>🚚 Delivery</button>
-      </div>
-    </div>
-
-    <!-- map / delivery -->
-    <div class="map-placeholder">
-      <div class="map-route"><i class="fas fa-store"></i> Seller <span style="color:#666;">●</span> <i class="fas fa-truck" style="color:#42a5f5;"></i> Driver <span style="color:#666;">●</span> <i class="fas fa-map-pin" style="color:#f06292;"></i> You</div>
-      <div style="font-size:12px;background:rgba(0,0,0,0.4);padding:6px 14px;border-radius:40px;"><i class="fas fa-clock"></i> ETA 12 min</div>
-    </div>
-  </div>
-
-  <!-- ====== SELLER PORTAL (hidden) ====== -->
-  <div id="sellerPortal" style="display:none;">
-    <div class="kpi-grid">
-      <div class="kpi-card"><div class="value">$1,240</div><div class="label">Today's Sales</div></div>
-      <div class="kpi-card"><div class="value">14</div><div class="label">Orders</div></div>
-      <div class="kpi-card"><div class="value">32</div><div class="label">Stock</div></div>
-    </div>
-    <div style="display:flex;gap:8px;margin:12px 0;flex-wrap:wrap;">
-      <span class="scan-btn"><i class="fas fa-qrcode"></i> Scan Product</span>
-      <span class="scan-btn"><i class="fas fa-barcode"></i> Scan Barcode</span>
-    </div>
-    <div class="section-title"><h3>📦 Inventory</h3><a href="#">Manage</a></div>
-    <div style="background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
-      <div class="flex-row"><span>💄 Lipstick (SKU: LIP-01)</span><span>24 units <span style="color:#f06292;">low</span></span></div>
-      <div class="flex-row"><span>🧴 Serum (SKU: SER-02)</span><span>8 units <span style="color:#f06292;">critical</span></span></div>
-      <div class="flex-row"><span>👁 Mascara (SKU: MAS-03)</span><span>45 units</span></div>
-    </div>
-    <div style="margin-top:12px;background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
-      <div class="flex-row"><span><i class="fas fa-truck"></i> Delivery in progress</span><span class="status-badge">2 orders</span></div>
-      <div class="flex-row"><span><i class="fas fa-dollar-sign"></i> Balance</span><span style="font-weight:600;color:#d4af37;">$4,280.50</span></div>
-    </div>
-  </div>
-
-  <!-- ====== OWNER PORTAL (hidden) ====== -->
-  <div id="ownerPortal" style="display:none;">
-    <div class="kpi-grid">
-      <div class="kpi-card"><div class="value">$18.4k</div><div class="label">Revenue</div></div>
-      <div class="kpi-card"><div class="value">342</div><div class="label">Orders</div></div>
-      <div class="kpi-card"><div class="value">12</div><div class="label">Sellers</div></div>
-    </div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin:6px 0;">
-      <span class="scan-btn"><i class="fas fa-qrcode"></i> Audit</span>
-      <span class="scan-btn"><i class="fas fa-barcode"></i> Inventory</span>
-      <span class="scan-btn"><i class="fas fa-users"></i> Users</span>
-    </div>
-    <div class="section-title"><h3>📊 Operations</h3><a href="#">All</a></div>
-    <div style="background:rgba(255,255,255,0.02);border-radius:20px;padding:12px;">
-      <div class="flex-row"><span>🔄 New order #1023</span><span class="status-badge">Pending</span></div>
-      <div class="flex-row"><span>⚠️ Low stock: Vitamin C</span><span style="color:#f06292;">critical</span></div>
-      <div class="flex-row"><span>🚚 Delivery agent #4</span><span>ETA 8 min</span></div>
-    </div>
-    <div class="section-title" style="margin-top:16px;"><h3>👥 Approvals</h3></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-      <span style="background:rgba(255,255,255,0.03);padding:6px 14px;border-radius:40px;font-size:12px;">New seller: GlowCos</span>
-      <span style="background:rgba(255,255,255,0.03);padding:6px 14px;border-radius:40px;font-size:12px;">Product: Serum</span>
-    </div>
-  </div>
-
-  <!-- ====== BOTTOM NAV ====== -->
-  <div class="bottom-nav">
-    <button class="nav-item active active-buyer" data-target="buyerPortal"><i class="fas fa-home"></i><span>Home</span></button>
-    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-search"></i><span>Shop</span></button>
-    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-heart"></i><span>Wishlist</span></button>
-    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-shopping-bag"></i><span>Cart</span></button>
-    <button class="nav-item" data-target="buyerPortal"><i class="fas fa-user"></i><span>Account</span></button>
-  </div>
-
-  <!-- ====== FOOTER ====== -->
-  <div class="premium-footer">
-    <div style="font-weight:300;letter-spacing:1px;font-size:12px;">SoYam <span style="color:#d4af37;">✦</span> COSMETICS &amp; BEAUTY</div>
-    <div class="social">
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-telegram"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-    </div>
-    <div class="links">
-      <span>Buyer Portal</span><span>·</span>
-      <span>Seller Portal</span><span>·</span>
-      <span>Owner Portal</span>
-    </div>
-    <div style="font-size:9px;color:#555;margin:6px 0;">100% Authentic · Fast Delivery · Secure Payment</div>
-    <div class="copy">Powered by SoYam © 2026</div>
-  </div>
+<!-- OWNER PORTAL -->
+<section class="portal owner" id="ownerPortal">
+<header class="topbar">
+<button class="iconbtn" onclick="openMenu('owner')">☰</button>
+<div class="brand"><div class="logo">SY</div><strong>SoYam</strong><small>COMMAND CENTER</small></div>
+<div class="actions"><button class="iconbtn">🔔<i class="badge">9+</i></button><button class="iconbtn">♙</button></div>
+</header>
+<div class="content">
+<div class="section-title"><h3>Business Overview</h3><select><option>This Month</option><option>This Week</option><option>This Year</option></select></div>
+<div class="kpis">
+<div class="kpi"><span>Total Revenue</span><strong>125,430 Br</strong><div class="up">+18.6%</div></div><div class="kpi"><span>Total Orders</span><strong>320</strong><div class="up">+14.3%</div></div><div class="kpi"><span>Net Profit</span><strong>28,450 Br</strong><div class="up">+22.1%</div></div><div class="kpi"><span>Total Sellers</span><strong>56</strong><div class="up">+6.2%</div></div>
+</div>
+<div class="panel"><div class="section-title"><h3>Operations Summary</h3></div><div class="quick"><button><b>👥</b>1,280<br>Customers</button><button><b>🚚</b>38<br>Deliveries</button><button><b>⚠️</b>15<br>Low Stock</button><button><b>↩</b>8<br>Returns</button></div></div>
+<div class="quick" style="margin-bottom:12px"><button onclick="ownerModule('Sellers')"><b>♟</b>Sellers<br>Manage & Approve</button><button onclick="ownerModule('Products')"><b>📦</b>Products<br>All Products</button><button onclick="ownerModule('Orders')"><b>▣</b>Orders<br>All Orders</button><button onclick="ownerModule('Delivery')"><b>🚚</b>Delivery<br>Manage Fleet</button></div>
+<div class="panel"><div class="section-title"><h3>Analytics Dashboard</h3><button onclick="showReports()">View Report ›</button></div><div class="kpis" style="grid-template-columns:1fr 1fr"><div><span>Sales Trend</span><strong>125,430 Br</strong><div class="chart"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><polyline points="0,120 45,100 90,110 135,70 180,90 225,50 270,80 315,35 360,60 405,30 450,55 500,20" fill="none" stroke="#18a660" stroke-width="4"/></svg></div></div><div><span>Orders Trend</span><strong>320</strong><div class="chart"><svg viewBox="0 0 500 150" preserveAspectRatio="none"><polyline points="20,120 60,90 100,105 140,65 180,95 220,40 260,80 300,50 340,70 380,25 420,60 460,15" fill="none" stroke="#2d8a5c" stroke-width="4"/></svg></div></div></div></div>
+<div class="panel"><div class="section-title"><h3>System Alerts</h3><button>View All</button></div><div class="alert warning">⚠️ <div><strong>15 products are low in stock</strong><small>10m ago</small></div></div><div class="alert success">💳 <div><strong>23 pending payments</strong><small>20m ago</small></div></div><div class="alert danger">⏱️ <div><strong>8 return requests</strong><small>30m ago</small></div></div><div class="alert danger">🚚 <div><strong>4 delivery issues</strong><small>50m ago</small></div></div></div>
+<div class="panel"><div class="section-title"><h3>Quick Management</h3></div><div class="quick"><button onclick="ownerModule('Users')"><b>♙</b>Users</button><button onclick="ownerModule('Sellers')"><b>♟</b>Sellers</button><button onclick="ownerModule('Products')"><b>📦</b>Products</button><button onclick="ownerModule('Orders')"><b>▣</b>Orders</button><button onclick="ownerModule('Payments')"><b>💳</b>Payments</button><button onclick="ownerModule('Delivery')"><b>🚚</b>Delivery</button><button onclick="showReports()"><b>📊</b>Reports</button><button onclick="ownerModule('Settings')"><b>⚙</b>Settings</button></div></div>
+<div class="panel"><div class="section-title"><h3>Live Delivery Control</h3><button onclick="openDelivery()">Open Map</button></div><div class="map"><div class="route"></div><div class="pin start"><span>🏪</span></div><div class="pin driver"><span>🚚</span></div><div class="pin end"><span>📍</span></div><div class="mapnote">38 active deliveries · Real-time tracking requires configured Maps/GPS service</div></div></div>
+</div>
+<nav class="bottom"><button class="active"><span>⌂</span>Dashboard</button><button onclick="ownerModule('Management')"><span>▣</span>Management</button><button onclick="showReports()"><span>📊</span>Reports</button><button onclick="ownerModule('Alerts')"><span>🔔</span>Alerts</button><button onclick="openMenu('owner')"><span>☷</span>More</button></nav>
+</section>
 </div>
 
+<div class="drawer" id="drawer" onclick="if(event.target===this)closeMenu()"><div class="drawerbox"><button class="close" onclick="closeMenu()">×</button><h2>SoYam Menu</h2><div class="switch"><button onclick="route('buyer')">🛍️ Buyer</button><button onclick="route('seller')">🏪 Seller</button><button onclick="route('owner')">👑 Owner</button></div><div id="menuItems"></div></div></div>
+<div class="modal" id="modal"><div class="modalbox"><button class="close" onclick="closeModal()">×</button><div id="modalContent"></div></div></div>
+<div class="toast" id="toast"></div>
+
 <script>
-  (function() {
-    const container = document.getElementById('appContainer');
-    const buyerPortal = document.getElementById('buyerPortal');
-    const sellerPortal = document.getElementById('sellerPortal');
-    const ownerPortal = document.getElementById('ownerPortal');
-    const badge = document.getElementById('portalBadge');
-
-    // role pills
-    const roleBuyer = document.getElementById('roleBuyer');
-    const roleSeller = document.getElementById('roleSeller');
-    const roleOwner = document.getElementById('roleOwner');
-
-    // nav items (demo)
-    const navItems = document.querySelectorAll('.nav-item');
-
-    // current role: 'buyer' | 'seller' | 'owner'
-    let currentRole = 'buyer';
-
-    function setPortal(role) {
-      // hide all
-      buyerPortal.style.display = 'none';
-      sellerPortal.style.display = 'none';
-      ownerPortal.style.display = 'none';
-
-      // show selected
-      if (role === 'buyer') {
-        buyerPortal.style.display = 'block';
-        badge.innerHTML = '<i class="fas fa-crown" style="margin-right:6px;"></i>BUYER';
-        container.className = 'app-container buyer-theme';
-        // update active pills
-        roleBuyer.className = 'role-pill active-buyer';
-        roleSeller.className = 'role-pill';
-        roleOwner.className = 'role-pill';
-        // nav active
-        navItems.forEach(n => n.className = 'nav-item');
-        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-buyer';
-      } else if (role === 'seller') {
-        sellerPortal.style.display = 'block';
-        badge.innerHTML = '<i class="fas fa-store" style="margin-right:6px;"></i>SELLER';
-        container.className = 'app-container seller-theme';
-        roleBuyer.className = 'role-pill';
-        roleSeller.className = 'role-pill active-seller';
-        roleOwner.className = 'role-pill';
-        navItems.forEach(n => n.className = 'nav-item');
-        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-seller';
-      } else if (role === 'owner') {
-        ownerPortal.style.display = 'block';
-        badge.innerHTML = '<i class="fas fa-gem" style="margin-right:6px;"></i>OWNER';
-        container.className = 'app-container owner-theme';
-        roleBuyer.className = 'role-pill';
-        roleSeller.className = 'role-pill';
-        roleOwner.className = 'role-pill active-owner';
-        navItems.forEach(n => n.className = 'nav-item');
-        document.querySelector('.nav-item[data-target="buyerPortal"]').className = 'nav-item active active-owner';
-      }
-      currentRole = role;
-    }
-
-    // click on role pills to switch (simulate multi-role)
-    roleBuyer.addEventListener('click', () => setPortal('buyer'));
-    roleSeller.addEventListener('click', () => setPortal('seller'));
-    roleOwner.addEventListener('click', () => setPortal('owner'));
-
-    // nav items (keep portal context)
-    navItems.forEach(item => {
-      item.addEventListener('click', function(e) {
-        const target = this.dataset.target;
-        if (target === 'buyerPortal') {
-          setPortal(currentRole); // refresh
-        }
-        // for demo just highlight
-        navItems.forEach(n => n.className = 'nav-item');
-        this.className = 'nav-item active';
-        if (currentRole === 'buyer') this.classList.add('active-buyer');
-        else if (currentRole === 'seller') this.classList.add('active-seller');
-        else if (currentRole === 'owner') this.classList.add('active-owner');
-      });
-    });
-
-    // default: buyer
-    setPortal('buyer');
-
-    // simulate Telegram auth (secure server-side enforced)
-    console.log('SoYam Cosmo · 3 Portal · Telegram identity ready');
-  })();
+const tg=window.Telegram?.WebApp;
+if(tg){tg.ready();tg.expand();}
+const products=[
+ {name:'Luminous Glow Serum',price:450,old:600,icon:'🧴',discount:'-25%'},
+ {name:'Velvet Matte Lipstick',price:350,old:500,icon:'💄',discount:'-30%'},
+ {name:'Luxury Face Cream',price:550,old:700,icon:'🫙',discount:'-21%'},
+ {name:'Fresh Signature Fragrance',price:750,old:900,icon:'🌹',discount:'-17%'}
+];
+let cart=0,currentPortal='buyer';
+function renderProducts(list=products){
+ const html=list.map((p,i)=>`<div class="product"><button class="heart" onclick="toast('Saved to wishlist')">♡</button><div class="pic">${p.icon}</div><h4>${p.name}</h4><div class="price">${p.price}.00 Br <span class="old">${p.old}.00</span></div><small>${p.discount}</small><button class="add" onclick="addCart()">＋</button></div>`).join('');
+ document.getElementById('products').innerHTML=html;
+ document.getElementById('recommended').innerHTML=list.slice().reverse().map(p=>`<div class="product"><div class="pic">${p.icon}</div><h4>${p.name}</h4><div class="price">${p.price}.00 Br</div><button class="add" onclick="addCart()">＋</button></div>`).join('');
+}
+function addCart(){cart++;document.getElementById('cartBadge').textContent=cart;toast('Added to cart');}
+function searchProducts(){const q=document.getElementById('searchInput').value.toLowerCase();renderProducts(products.filter(p=>p.name.toLowerCase().includes(q)||q===''))}
+function route(role){
+ document.querySelectorAll('.portal').forEach(x=>x.classList.remove('active'));
+ document.getElementById(role+'Portal').classList.add('active');document.getElementById('app').className='app '+role;currentPortal=role;closeMenu();window.scrollTo(0,0);
+}
+function openMenu(role){
+ const items={
+ buyer:['🏠 Home','🛍️ Shop','❤️ Wishlist','📦 My Orders','💳 My Payments','🎁 Rewards','👤 My Account','🎧 Customer Support'],
+ seller:['📊 Dashboard','🏪 My Store','📦 Products','🧮 Inventory','🧾 Orders','🚚 Delivery','💰 Seller Finance','📈 Analytics','📣 Marketing','📷 Scan','🎧 Seller Support'],
+ owner:['📊 Command Center','👥 Users','🏪 Sellers','📦 Products','🧮 Inventory','🧾 Orders','💳 Payments & Finance','🚚 Delivery Fleet','📣 Marketing','📈 Reports & BI','🔔 Alerts','⚙️ System & Permissions','🛡️ Audit Logs']
+ }[role];
+ document.getElementById('menuItems').innerHTML=items.map(x=>`<button class="menuitem" onclick="menuAction('${x}')">${x}</button>`).join('');
+ document.getElementById('drawer').classList.add('open');
+}
+function closeMenu(){document.getElementById('drawer').classList.remove('open')}
+function menuAction(x){closeMenu();if(x.includes('Order'))showOrders();else if(x.includes('Finance')||x.includes('Payments'))showFinance();else if(x.includes('Report')||x.includes('Analytics'))showReports();else if(x.includes('Inventory')||x.includes('Product'))showInventory();else if(x.includes('Delivery'))openDelivery();else if(x.includes('Support'))openAssistant();else toast(x+' selected');}
+function openModal(title,body){document.getElementById('modalContent').innerHTML='<h2>'+title+'</h2>'+body;document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function showCart(){openModal('🛒 Your Cart',cart?`<p>${cart} item(s) selected.</p><div class="panel"><b>Subtotal</b><strong style="float:right">${cart*450}.00 Br</strong></div><button class="cta" onclick="toast('Checkout started');closeModal()">Proceed to Checkout</button>`:'<p>Your cart is empty.</p>')}
+function showOrders(){openModal('📦 My Orders','<div class="panel"><b>#SY-10284</b><p>Luxury Face Cream × 1</p><strong>Preparing</strong></div><div class="panel"><b>#SY-10261</b><p>Glow Serum × 2</p><strong class="success">Out for Delivery</strong></div>')}
+function showAccount(){openModal('👤 My Account','<div class="listrow">👤 <div class="grow"><strong>Telegram Account</strong><small>Authenticated through Telegram WebApp</small></div></div><div class="listrow">📍 <div class="grow"><strong>Addresses</strong><small>Manage delivery locations</small></div></div><div class="listrow">🔔 <div class="grow"><strong>Notifications</strong><small>Order and promotion alerts</small></div></div>')}
+function showInventory(){openModal('📦 Inventory','<div class="kpis"><div class="kpi"><span>Units</span><strong>320</strong></div><div class="kpi"><span>Low Stock</span><strong>7</strong></div></div><p>Stock workflow: Receiving → Available → Reserved → Sold → Returned/Damaged.</p>')}
+function showReports(){openModal('📈 Reports & Business Intelligence','<div class="panel"><b>Sales</b><p>Daily / Weekly / Monthly / Annual</p></div><div class="panel"><b>Profitability</b><p>Revenue → Cost → Gross Profit → Expenses → Net Profit</p></div><div class="panel"><b>Performance</b><p>Seller, product, category, customer and delivery analytics.</p></div>')}
+function showFinance(){openModal('💳 Finance','<div class="kpis"><div class="kpi"><span>Revenue</span><strong>125,430 Br</strong></div><div class="kpi"><span>Profit</span><strong>28,450 Br</strong></div></div><p>Payment workflow: Payment → Verification → Order → Ledger → Commission → Settlement → Reconciliation.</p>')}
+function openDelivery(){openModal('🚚 Live Delivery Tracking','<div class="map"><div class="route"></div><div class="pin start"><span>🏪</span></div><div class="pin driver"><span>🚚</span></div><div class="pin end"><span>📍</span></div><div class="mapnote">Demo map layer. Configure Google Maps + backend GPS updates for real-time tracking.</div></div><p><b>Status:</b> In Transit · <b>ETA:</b> 15 min · <b>Distance:</b> 4.2 km</p><p>Driver location must be supplied by the authorized delivery device; never fabricate GPS data.</p>')}
+function openAssistant(){openModal('🤖 soYam Assistant','<p>Hello! How can I help?</p><div class="quick"><button onclick="toast(\'Searching products\')"><b>🛍️</b>Find Product</button><button onclick="showOrders()"><b>📦</b>Track Order</button><button onclick="showFinance()"><b>💳</b>Payment Help</button><button onclick="openDelivery()"><b>🚚</b>Delivery Help</button><button onclick="toast(\'Return request opened\')"><b>↩️</b>Return/Refund</button><button onclick="toast(\'Support connected\')"><b>👨‍💬</b>Support</button></div>')}
+function addProduct(){openModal('➕ Add Product','<input placeholder="Product name" style="width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:10px"><input placeholder="Selling price (Br)" style="width:100%;padding:12px;margin:7px 0;border:1px solid #ddd;border-radius:10px"><input type="file" accept="image/*" capture="environment" style="width:100%;margin:10px 0"><button class="cta" onclick="toast(\'Product saved as draft\');closeModal()">Save Draft</button>')}
+function scan(){openModal('📷 Scanner','<p>Camera access hook prepared. Connect a QR/barcode decoder library to decode real codes.</p><input type="file" accept="image/*" capture="environment" style="width:100%">')}
+function ownerModule(name){openModal('👑 Owner — '+name,'<p>Authorized Owner module: <b>'+name+'</b></p><div class="panel">Access should be enforced by server-side role and permission checks, not by frontend navigation.</div>')}
+function social(name){toast(name+' link must be configured in Owner → System → Social Media')}
+function notify(){toast('Notifications opened')}
+function buyerTab(name,el){document.querySelectorAll('.buyer .bottom button').forEach(x=>x.classList.remove('active'));el.classList.add('active');if(name==='shop')document.getElementById('products').scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.style.display='none',1800)}
+renderProducts();
 </script>
 </body>
 </html>
